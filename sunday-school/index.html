@@ -30,7 +30,7 @@
 <meta name="theme-color" content="#f5efe6" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
   *:focus { outline-color: #ac746c; }
@@ -188,6 +188,12 @@
     form[data-inq] [data-stepbtns] { display: grid !important; }
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
+  form[data-editorial-labels] > label[for] {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: .04em !important;
+  }
 </style>
 </helmet>
 
@@ -218,7 +224,7 @@
       <p style="font-size:12.5px;line-height:1.6;margin:14px 0 0;max-width:420px">Your seat is saved. New templates, free resources and course openings will reach you first.</p>
       <p style="border-top:1px dashed rgba(49,29,3,.45);font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
     </div>
-    <form noValidate="{{ true }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
+    <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
       <label for="school-notes-email" style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Email Address</label>
       <div style="align-items:center;display:grid;gap:18px;grid-template-columns:{{ gc4 }};margin-top:8px">
