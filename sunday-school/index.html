@@ -8,8 +8,8 @@
 <body>
 <x-dc>
 <helmet>
-<title>Branding &amp; Marketing Templates, Tools And Courses</title>
-<meta name="description" content="Brand strategy templates, website planning checklists, proposal systems and marketing courses for founders, freelancers and small creative teams." />
+<title>Branding &amp; Marketing Templates and Courses | Sunday School</title>
+<meta name="description" content="Shop brand strategy templates, website planning tools, proposal systems and practical marketing courses for founders, freelancers and creative teams." />
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="icon" href="/assets/icon-512.png" sizes="512x512" type="image/png" />
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
@@ -17,22 +17,26 @@
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Sunday &amp; Company" />
-<meta property="og:title" content="Branding &amp; Marketing Templates, Tools And Courses" />
-<meta property="og:description" content="Brand strategy templates, website planning checklists, proposal systems and marketing courses for founders, freelancers and small creative teams." />
+<meta property="og:title" content="Branding &amp; Marketing Templates and Courses | Sunday School" />
+<meta property="og:description" content="Shop brand strategy templates, website planning tools, proposal systems and practical marketing courses for founders, freelancers and creative teams." />
 <meta property="og:url" content="https://sundayandcompany.co/sunday-school" />
-<meta property="og:image" content="https://sundayandcompany.co/assets/sunday-school-hero.jpg" />
+<meta property="og:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta property="og:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Branding &amp; Marketing Templates, Tools And Courses" />
-<meta name="twitter:description" content="Brand strategy templates, website planning checklists, proposal systems and marketing courses for founders, freelancers and small creative teams." />
-<meta name="twitter:image" content="https://sundayandcompany.co/assets/sunday-school-hero.jpg" />
+<meta name="twitter:title" content="Branding &amp; Marketing Templates and Courses | Sunday School" />
+<meta name="twitter:description" content="Shop brand strategy templates, website planning tools, proposal systems and practical marketing courses for founders, freelancers and creative teams." />
+<meta name="twitter:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta name="twitter:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta name="theme-color" content="#f5efe6" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
+  [style*="font-family:'IBM Plex Mono'"] { font-weight: 100 !important; }
+  [style*="font-family:'IBM Plex Mono'"] strong { font-weight: 100 !important; }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -149,13 +153,14 @@
       height: 148px !important; width: 148px !important;
       left: -21px !important; top: -51px !important;
     }
-    /* newsletter popup — was filling the whole screen */
-    [aria-label="The Sunday Reservation"] { max-width: calc(100vw - 32px) !important; }
+    /* newsletter popup — taller receipt with room for the image on signup and confirmation */
+    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(700px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
-    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 116px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child { padding: 22px 20px 20px !important; }
+    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 210px !important; min-height: 190px !important; }
+    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 440px !important; padding: 30px 24px 28px !important; }
     [aria-label="The Sunday Reservation"] h2 { font-size: 21px !important; }
-    [aria-label="The Sunday Reservation"] p { font-size: 9px !important; line-height: 1.45 !important; }
+    [aria-label="The Sunday Reservation"] p { font-size: 10px !important; line-height: 1.5 !important; }
+    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 6.5px !important; line-height: 1.5 !important; }
     [aria-label="The Sunday Reservation"] label { font-size: 8px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
@@ -172,10 +177,10 @@
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
     [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { padding: 16px 16px 18px !important; }
-    #inquiry > div { padding: 16px !important; }
+    [aria-label="Project inquiry"] > div { min-height: calc(100dvh - 20px) !important; padding: 24px 18px 30px !important; }
+    #inquiry > div { padding: 20px 18px 24px !important; }
     #inquiry header h2 { font-size: 26px !important; }
-    #inquiry header p, [aria-label="Project inquiry"] header p { font-size: 11px !important; }
+    #inquiry header h2 + p { font-size: 11px !important; }
   }
 
   @media (max-width: 700px) {
@@ -205,31 +210,31 @@
     <div style="inset:0;overflow:hidden;position:absolute;z-index:-2"><img src="/assets/sunday-school-hero.jpg" alt="Laptop, keyboard, glasses and coffee arranged on a Sunday School workspace" style="height:100%;object-fit:cover;object-position:center;width:100%" /></div>
     <div aria-hidden="true" style="background:linear-gradient(90deg, rgba(34,18,2,.84) 0%, rgba(34,18,2,.65) 46%, rgba(34,18,2,.38) 100%);inset:0;position:absolute;z-index:-1"></div>
     <div style="max-width:680px">
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Coming Soon</p>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Coming Soon</p>
       <h1 id="school-title" style="font-size:clamp(58px,7.4vw,102px);font-weight:400;letter-spacing:-.065em;line-height:.86;margin:15px 0 24px">Almost <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.84em;font-style:italic;font-weight:400">In Session</em></h1>
       <p style="font-size:14px;line-height:1.67;max-width:570px">Templates, tools and guided courses for founders, freelancers and creative teams.</p>
-      <a href="#class-notes" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:9px;gap:35px;letter-spacing:.13em;margin-top:25px;padding-bottom:6px;text-transform:uppercase">Stay Close <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+      <a href="#class-notes" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:35px;letter-spacing:.13em;margin-top:25px;padding-bottom:6px;text-transform:uppercase">Stay Close <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>
   </section>
 
   <section id="class-notes" aria-labelledby="class-notes-title" style="scroll-margin-top:92px;align-items:center;background:#fffdf8;display:grid;gap:clamp(36px,6vw,88px);grid-template-columns:{{ gc0 }};padding:clamp(36px,4vw,52px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2))">
     <div>
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Class Notes</p>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Class Notes</p>
       <h2 id="class-notes-title" style="font-size:clamp(38px,4.5vw,58px);font-weight:400;letter-spacing:-.05em;line-height:.95;margin:13px 0 18px">For Curious Minds And <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.84em;font-style:italic;font-weight:400">Good Ideas.</em></h2>
       <p style="font-size:13.5px;line-height:1.62;max-width:500px">New templates, free resources, course waitlists and opening details will reach The Sunday Reservation first.</p>
     </div>
     <div style="display:{{ notesDoneDisplay }}">
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">The Sunday Reservation</p>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">The Sunday Reservation</p>
       <h3 style="font-size:clamp(26px,2.8vw,38px);font-weight:400;letter-spacing:-.05em;line-height:.96;margin:0">You’re On <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">The List.</em></h3>
       <p style="font-size:12.5px;line-height:1.6;margin:14px 0 0;max-width:420px">Your seat is saved. New templates, free resources and course openings will reach you first.</p>
-      <p style="border-top:1px dashed rgba(49,29,3,.45);font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
+      <p style="border-top:1px dashed rgba(49,29,3,.45);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
     </div>
     <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-      <label for="school-notes-email" style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Email Address</label>
+      <label for="school-notes-email" style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Email Address</label>
       <div style="align-items:center;display:grid;gap:18px;grid-template-columns:{{ gc4 }};margin-top:8px">
         <input autocomplete="email" id="school-notes-email" name="email" placeholder="hello@example.com" required="required" type="email" maxlength="120" style="background:transparent;border:0;border-bottom:1px solid #311d03;border-radius:0;color:#311d03;font-family:inherit;font-size:20px;min-width:0;outline:0;padding:8px 0" />
-        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border-radius:0;color:#f5efe6;cursor:pointer;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:8px;gap:18px;letter-spacing:.14em;padding:12px 15px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ notesLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border-radius:0;color:#f5efe6;cursor:pointer;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:18px;letter-spacing:.14em;padding:12px 15px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ notesLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
       </div>
       <p role="alert" style="color:#8c2f22;font-size:11px;min-height:18px;padding-top:6px">{{ notesError }}</p>
     </form>
@@ -241,78 +246,78 @@
       <p style="align-self:end;font-size:15px;grid-column:2;line-height:1.62;margin:0;max-width:480px">A preview of the templates, systems and courses being prepared for Sunday School.</p>
     </header>
     <div id="syl-table" style="border:1px solid #311d03">
-      <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 16px;text-transform:uppercase"><span>Sunday School</span><span>Card No. 01 · 2026</span></div>
-      <div id="syl-head" style="display:grid;font-family:Arial,Helvetica,sans-serif;font-size:7px;gap:14px;grid-template-columns:{{ rowCols }};letter-spacing:.15em;opacity:.72;padding:9px 16px;text-transform:uppercase">
+      <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'IBM Plex Mono',monospace;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 16px;text-transform:uppercase"><span>Sunday School</span><span>Card No. 01 · 2026</span></div>
+      <div id="syl-head" style="display:grid;font-family:'IBM Plex Mono',monospace;font-size:7px;gap:14px;grid-template-columns:{{ rowCols }};letter-spacing:.15em;opacity:.72;padding:9px 16px;text-transform:uppercase">
         <span>Course</span><span style="padding-left:{{ descPad }}">Description</span><span>Format</span><span>Price</span><span style="justify-self:{{ stampJustify }}">Status</span>
       </div>
       <div id="syl-rows">
         <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
           <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">01</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;opacity:.7">01</span>
             <span style="display:block">
-              <span style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Brand &amp; Strategy</span>
+              <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Brand &amp; Strategy</span>
               <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">The Foundation</span>
             </span>
           </span>
           <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Strategy decks, creative briefs and workbooks for building a clear, cohesive brand.</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Workbook</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Workbook</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
         </div>
         <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
           <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">02</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;opacity:.7">02</span>
             <span style="display:block">
-              <span style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Client Systems</span>
+              <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Client Systems</span>
               <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">Front Of House</span>
             </span>
           </span>
           <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Proposals, onboarding documents, agreements and trackers for running organized client projects.</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
         </div>
         <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
           <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">03</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;opacity:.7">03</span>
             <span style="display:block">
-              <span style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Marketing &amp; Content</span>
+              <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Marketing &amp; Content</span>
               <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">The Spread</span>
             </span>
           </span>
           <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Planning, audit and reporting tools for creating, managing and measuring marketing work.</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
         </div>
         <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
           <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">04</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;opacity:.7">04</span>
             <span style="display:block">
-              <span style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Free Resources</span>
+              <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Free Resources</span>
               <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">On The House</span>
             </span>
           </span>
           <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Useful downloads designed to help you begin without starting from a blank page.</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Download</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#ac746c;opacity:1">Free</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">Coming First</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Download</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#ac746c;opacity:1">Free</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">Coming First</span>
         </div>
         <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
           <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">05</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;opacity:.7">05</span>
             <span style="display:block">
-              <span style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Guided Learning</span>
+              <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Guided Learning</span>
               <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">The Courses</span>
             </span>
           </span>
           <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">The Freelance Table for emerging creatives, The Brand Table for founders clarifying their positioning.</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Course</span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Development</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Course</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Development</span>
         </div>
       </div>
-      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);display:flex;font-family:Arial,Helvetica,sans-serif;font-size:6.5px;justify-content:space-between;letter-spacing:.15em;opacity:.7;padding:8px 16px;text-transform:uppercase"><span>Not Yet In Circulation</span><span>Keep This Card</span></div>
+      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);display:flex;font-family:'IBM Plex Mono',monospace;font-size:6.5px;justify-content:space-between;letter-spacing:.15em;opacity:.7;padding:8px 16px;text-transform:uppercase"><span>Not Yet In Circulation</span><span>Keep This Card</span></div>
     </div>
   </section>
 

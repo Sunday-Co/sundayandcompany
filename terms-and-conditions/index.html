@@ -8,8 +8,8 @@
 <body>
 <x-dc>
 <helmet>
-<title>Terms & Conditions · Sunday & Company</title>
-<meta name="description" content="The terms governing use of the Sunday & Company website and how website information relates to our client services." />
+<title>Website Terms and Conditions | Sunday &amp; Company</title>
+<meta name="description" content="Review the terms governing use of the Sunday &amp; Company website, its content and how website information relates to studio services." />
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="icon" href="/assets/icon-512.png" sizes="512x512" type="image/png" />
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
@@ -17,22 +17,26 @@
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Sunday &amp; Company" />
-<meta property="og:title" content="Terms & Conditions · Sunday & Company" />
-<meta property="og:description" content="The terms governing use of the Sunday & Company website and how website information relates to our client services." />
+<meta property="og:title" content="Website Terms and Conditions | Sunday &amp; Company" />
+<meta property="og:description" content="Review the terms governing use of the Sunday &amp; Company website, its content and how website information relates to studio services." />
 <meta property="og:url" content="https://sundayandcompany.co/terms-and-conditions" />
-<meta property="og:image" content="https://sundayandcompany.co/assets/og-default.png" />
+<meta property="og:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta property="og:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Terms & Conditions · Sunday & Company" />
-<meta name="twitter:description" content="The terms governing use of the Sunday & Company website and how website information relates to our client services." />
-<meta name="twitter:image" content="https://sundayandcompany.co/assets/og-default.png" />
+<meta name="twitter:title" content="Website Terms and Conditions | Sunday &amp; Company" />
+<meta name="twitter:description" content="Review the terms governing use of the Sunday &amp; Company website, its content and how website information relates to studio services." />
+<meta name="twitter:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta name="twitter:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta name="theme-color" content="#f5efe6" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
+  [style*="font-family:'IBM Plex Mono'"] { font-weight: 100 !important; }
+  [style*="font-family:'IBM Plex Mono'"] strong { font-weight: 100 !important; }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -119,13 +123,14 @@
       height: 148px !important; width: 148px !important;
       left: -21px !important; top: -51px !important;
     }
-    /* newsletter popup — was filling the whole screen */
-    [aria-label="The Sunday Reservation"] { max-width: calc(100vw - 32px) !important; }
+    /* newsletter popup — taller receipt with room for the image on signup and confirmation */
+    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(700px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
-    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 116px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child { padding: 22px 20px 20px !important; }
+    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 210px !important; min-height: 190px !important; }
+    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 440px !important; padding: 30px 24px 28px !important; }
     [aria-label="The Sunday Reservation"] h2 { font-size: 21px !important; }
-    [aria-label="The Sunday Reservation"] p { font-size: 9px !important; line-height: 1.45 !important; }
+    [aria-label="The Sunday Reservation"] p { font-size: 10px !important; line-height: 1.5 !important; }
+    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 6.5px !important; line-height: 1.5 !important; }
     [aria-label="The Sunday Reservation"] label { font-size: 8px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
@@ -142,10 +147,10 @@
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
     [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { padding: 16px 16px 18px !important; }
-    #inquiry > div { padding: 16px !important; }
+    [aria-label="Project inquiry"] > div { min-height: calc(100dvh - 20px) !important; padding: 24px 18px 30px !important; }
+    #inquiry > div { padding: 20px 18px 24px !important; }
     #inquiry header h2 { font-size: 26px !important; }
-    #inquiry header p, [aria-label="Project inquiry"] header p { font-size: 11px !important; }
+    #inquiry header h2 + p { font-size: 11px !important; }
   }
 
   @media (max-width: 700px) {
@@ -166,10 +171,10 @@
   <dc-import name="/Site Header" tone="dark" hint-size="100%,0px"></dc-import>
 
   <header style="background:#fffdf8;border-bottom:1px solid rgba(49,29,3,.34);padding:clamp(132px,14vw,174px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(42px,5vw,60px)">
-    <p style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:17px;text-transform:uppercase">Website Terms</p>
+    <p style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:17px;text-transform:uppercase">Website Terms</p>
     <h1 style="font-size:clamp(48px,6.2vw,84px);font-weight:400;letter-spacing:-.06em;line-height:.9;margin:0">Terms &amp; Conditions</h1>
     <p style="font-size:13.5px;line-height:1.7;margin-top:22px;max-width:650px">These terms govern your use of the Sunday &amp; Company website and explain how website information relates to our client services.</p>
-    <div style="border-top:1px solid rgba(49,29,3,.3);display:flex;flex-wrap:wrap;font-family:Arial,Helvetica,sans-serif;font-size:7px;gap:12px 34px;justify-content:space-between;letter-spacing:.13em;margin-top:27px;padding-top:12px;text-transform:uppercase">
+    <div style="border-top:1px solid rgba(49,29,3,.3);display:flex;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:7px;gap:12px 34px;justify-content:space-between;letter-spacing:.13em;margin-top:27px;padding-top:12px;text-transform:uppercase">
       <span>Effective August 30, 2026</span>
       <span>Last Updated August 30, 2026</span>
     </div>
@@ -178,46 +183,46 @@
   <section style="display:grid;gap:clamp(46px,6vw,82px);margin:0 auto;max-width:1240px;padding:clamp(42px,5vw,64px) clamp(22px,4vw,52px) clamp(68px,7vw,96px);grid-template-columns:{{ layoutCols }}">
     <aside style="min-width:0">
       <nav aria-label="Terms & Conditions sections" style="position:sticky;top:116px;display:{{ sideDesktop }}">
-        <p style="color:#ac746c;display:block;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">On This Page</p>
+        <p style="color:#ac746c;display:block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">On This Page</p>
         <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">02</span>Website Purpose</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">05</span>Client Agreements</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">06</span>Fees And Payments</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">10</span>Acceptable Use</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">12</span>Disclaimers</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">14</span>General Terms And Contact</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">02</span>Website Purpose</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">05</span>Client Agreements</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">06</span>Fees And Payments</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">10</span>Acceptable Use</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">12</span>Disclaimers</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">14</span>General Terms And Contact</a></li>
         </ol>
         <div style="border-top:1px solid #311d03;margin-top:28px;padding-top:16px">
-          <span style="color:#ac746c;display:block;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">Questions</span>
+          <span style="color:#ac746c;display:block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">Questions</span>
           <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor;font-size:13px">hello@sundayandcompany.co</a>
         </div>
       </nav>
       <details style="border-bottom:1px solid rgba(49,29,3,.38);border-top:1px solid rgba(49,29,3,.38);display:{{ sideMobile }}">
-        <summary style="align-items:center;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.15em;padding:14px 0;text-transform:uppercase">Jump To A Section <span aria-hidden="true" style="color:#ac746c">+</span></summary>
+        <summary style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;justify-content:space-between;letter-spacing:.15em;padding:14px 0;text-transform:uppercase">Jump To A Section <span aria-hidden="true" style="color:#ac746c">+</span></summary>
         <nav aria-label="Terms & Conditions mobile sections" style="padding-bottom:12px">
           <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">02</span>Website Purpose</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">05</span>Client Agreements</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">06</span>Fees And Payments</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">10</span>Acceptable Use</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">12</span>Disclaimers</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">14</span>General Terms And Contact</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">02</span>Website Purpose</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">05</span>Client Agreements</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">06</span>Fees And Payments</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">10</span>Acceptable Use</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">12</span>Disclaimers</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.1em">14</span>General Terms And Contact</a></li>
           </ol>
         </nav>
       </details>
@@ -227,7 +232,7 @@
 
       <section id="acceptance" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">01</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">01</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Acceptance Of These Terms</h2>
         </div>
         <div style="min-width:0">
@@ -237,7 +242,7 @@
 
       <section id="website-purpose" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">02</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">02</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Website Purpose</h2>
         </div>
         <div style="min-width:0">
@@ -247,7 +252,7 @@
 
       <section id="service-information" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">03</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">03</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Services And Starting Prices</h2>
         </div>
         <div style="min-width:0">
@@ -258,7 +263,7 @@
 
       <section id="inquiries" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">04</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">04</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Inquiries And Proposals</h2>
         </div>
         <div style="min-width:0">
@@ -269,7 +274,7 @@
 
       <section id="client-agreements" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">05</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">05</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Client Agreements</h2>
         </div>
         <div style="min-width:0">
@@ -279,7 +284,7 @@
 
       <section id="payments" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">06</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">06</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Fees And Payments</h2>
         </div>
         <div style="min-width:0">
@@ -289,7 +294,7 @@
 
       <section id="client-materials" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">07</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">07</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Client-Provided Materials</h2>
         </div>
         <div style="min-width:0">
@@ -299,7 +304,7 @@
 
       <section id="intellectual-property" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">08</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">08</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Website Content And Intellectual Property</h2>
         </div>
         <div style="min-width:0">
@@ -310,7 +315,7 @@
 
       <section id="portfolio-use" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">09</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">09</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Portfolio And Case Studies</h2>
         </div>
         <div style="min-width:0">
@@ -320,7 +325,7 @@
 
       <section id="acceptable-use" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">10</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">10</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Acceptable Use</h2>
         </div>
         <div style="min-width:0">
@@ -331,7 +336,7 @@
 
       <section id="third-parties" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">11</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">11</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Third-Party Services And Links</h2>
         </div>
         <div style="min-width:0">
@@ -341,7 +346,7 @@
 
       <section id="disclaimers" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">12</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">12</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Disclaimers</h2>
         </div>
         <div style="min-width:0">
@@ -352,7 +357,7 @@
 
       <section id="liability" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">13</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">13</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Limitation Of Liability</h2>
         </div>
         <div style="min-width:0">
@@ -362,7 +367,7 @@
 
       <section id="general-terms" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">14</span>
+          <span style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;padding-top:7px">14</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">General Terms And Contact</h2>
         </div>
         <div style="min-width:0">
@@ -372,10 +377,10 @@
       </section>
 
       <div style="align-items:center;background:#311d03;color:#f5efe6;display:grid;gap:12px clamp(16px,2.5vw,34px);margin:24px 0 0;padding:14px 18px;width:100%;grid-template-columns:{{ cardCols }}">
-        <p style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">Questions</p>
+        <p style="color:#ac746c;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">Questions</p>
         <h2 style="font-size:clamp(17px,1.7vw,22px);font-weight:400;margin:0;white-space:{{ cardNowrap }}">Contact Sunday &amp; Company</h2>
         <p style="font-size:13px;line-height:1.6;margin:0">Questions about this page can be sent to <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor">hello@sundayandcompany.co</a>. We aim to respond to privacy and data requests within 30 days.</p>
-        <p style="border-top:1px solid rgba(245,239,230,.35);font-family:Arial,Helvetica,sans-serif;font-size:8px;grid-column:1 / -1;letter-spacing:.13em;line-height:1.7;margin:4px 0 0;opacity:.82;padding-top:12px;text-transform:uppercase">Sunday &amp; Company Marketing LLC is registered in the Commonwealth of Virginia.</p>
+        <p style="border-top:1px solid rgba(245,239,230,.35);font-family:'IBM Plex Mono',monospace;font-size:8px;grid-column:1 / -1;letter-spacing:.13em;line-height:1.7;margin:4px 0 0;opacity:.82;padding-top:12px;text-transform:uppercase">Sunday &amp; Company Marketing LLC is registered in the Commonwealth of Virginia.</p>
       </div>
     </article>
   </section>
