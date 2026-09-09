@@ -8,8 +8,8 @@
 <body>
 <x-dc>
 <helmet>
-<title>Careers · Marketing Internships &amp; Freelance Design Work</title>
-<meta name="description" content="Explore marketing internships, freelance design and creative membership programs with Sunday &amp; Company across the DMV and North Carolina." />
+<title>Marketing Internships &amp; Freelance Creative Work | Sunday &amp; Co.</title>
+<meta name="description" content="Explore marketing internships, paid freelance creative work and collaborator opportunities with Sunday &amp; Company in the DMV and North Carolina." />
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="icon" href="/assets/icon-512.png" sizes="512x512" type="image/png" />
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
@@ -17,22 +17,26 @@
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Sunday &amp; Company" />
-<meta property="og:title" content="Careers · Marketing Internships &amp; Freelance Design Work" />
-<meta property="og:description" content="Explore marketing internships, freelance design and creative membership programs with Sunday &amp; Company across the DMV and North Carolina." />
+<meta property="og:title" content="Marketing Internships &amp; Freelance Creative Work | Sunday &amp; Co." />
+<meta property="og:description" content="Explore marketing internships, paid freelance creative work and collaborator opportunities with Sunday &amp; Company in the DMV and North Carolina." />
 <meta property="og:url" content="https://sundayandcompany.co/join-our-team" />
-<meta property="og:image" content="https://sundayandcompany.co/assets/join-team-table.jpg" />
+<meta property="og:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta property="og:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Careers · Marketing Internships &amp; Freelance Design Work" />
-<meta name="twitter:description" content="Explore marketing internships, freelance design and creative membership programs with Sunday &amp; Company across the DMV and North Carolina." />
-<meta name="twitter:image" content="https://sundayandcompany.co/assets/join-team-table.jpg" />
+<meta name="twitter:title" content="Marketing Internships &amp; Freelance Creative Work | Sunday &amp; Co." />
+<meta name="twitter:description" content="Explore marketing internships, paid freelance creative work and collaborator opportunities with Sunday &amp; Company in the DMV and North Carolina." />
+<meta name="twitter:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta name="twitter:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta name="theme-color" content="#f5efe6" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
+  [style*="font-family:'IBM Plex Mono'"] { font-weight: 100 !important; }
+  [style*="font-family:'IBM Plex Mono'"] strong { font-weight: 100 !important; }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -118,13 +122,14 @@
       height: 148px !important; width: 148px !important;
       left: -21px !important; top: -51px !important;
     }
-    /* newsletter popup — was filling the whole screen */
-    [aria-label="The Sunday Reservation"] { max-width: calc(100vw - 32px) !important; }
+    /* newsletter popup — taller receipt with room for the image on signup and confirmation */
+    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(700px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
-    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 116px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child { padding: 22px 20px 20px !important; }
+    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 210px !important; min-height: 190px !important; }
+    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 440px !important; padding: 30px 24px 28px !important; }
     [aria-label="The Sunday Reservation"] h2 { font-size: 21px !important; }
-    [aria-label="The Sunday Reservation"] p { font-size: 9px !important; line-height: 1.45 !important; }
+    [aria-label="The Sunday Reservation"] p { font-size: 10px !important; line-height: 1.5 !important; }
+    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 6.5px !important; line-height: 1.5 !important; }
     [aria-label="The Sunday Reservation"] label { font-size: 8px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
@@ -141,10 +146,10 @@
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
     [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { padding: 16px 16px 18px !important; }
-    #inquiry > div { padding: 16px !important; }
+    [aria-label="Project inquiry"] > div { min-height: calc(100dvh - 20px) !important; padding: 24px 18px 30px !important; }
+    #inquiry > div { padding: 20px 18px 24px !important; }
     #inquiry header h2 { font-size: 26px !important; }
-    #inquiry header p, [aria-label="Project inquiry"] header p { font-size: 11px !important; }
+    #inquiry header h2 + p { font-size: 11px !important; }
   }
 
   @media (max-width: 700px) {
@@ -159,10 +164,11 @@
   }
   form[data-editorial-labels] label > span:first-child,
   form[data-editorial-labels] > div > span:first-child {
-    font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    letter-spacing: .04em !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 10px !important;
+    font-weight: 100 !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase;
   }
 </style>
 </helmet>
@@ -173,10 +179,10 @@
 
   <section aria-labelledby="join-title" style="align-items:center;background:#f5efe6;display:grid;gap:clamp(36px,6vw,92px);grid-template-columns:{{ gc0 }};min-height:76svh;overflow:hidden;padding:clamp(125px,13vw,170px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(48px,6vw,76px)">
     <div style="max-width:520px">
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Join Our Team</p>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Join Our Team</p>
       <h1 id="join-title" style="font-size:clamp(50px,5.8vw,82px);font-weight:400;letter-spacing:-.06em;line-height:.88;margin:16px 0 25px">Our Table Is Still <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.84em;font-style:italic;font-weight:400">Taking Shape</em></h1>
       <p style="font-size:14px;line-height:1.65;max-width:475px">Applications are not currently open. Leave your details and tell us which program you want to hear about. When the next opportunity opens, we will be in touch.</p>
-      <a href="#program-interest" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:9px;gap:35px;letter-spacing:.13em;margin-top:25px;padding-bottom:6px;text-transform:uppercase">Save Your Interest <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+      <a href="#program-interest" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:35px;letter-spacing:.13em;margin-top:25px;padding-bottom:6px;text-transform:uppercase">Save Your Interest <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>
     <div aria-label="Sunday and Company work and gathering details" style="align-self:center;aspect-ratio:1.16 / 1;display:grid;gap:7px;grid-template-columns:{{ gc1 }};grid-template-rows:minmax(0,1fr) minmax(0,1fr);max-height:620px;overflow:hidden;width:100%">
       <img src="/assets/join-team-table.jpg" alt="Coffee, books and a guest check on a work table" style="display:block;grid-row:1 / 3;height:100%;min-height:0;object-fit:cover;width:100%" />
@@ -187,7 +193,7 @@
 
   <section aria-labelledby="join-programs-title" style="background:#311d03;color:#f5efe6;padding:clamp(50px,6vw,76px) clamp(22px,6vw,88px)">
     <div style="margin:0 auto 35px;max-width:700px;text-align:center">
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">More Ways To Join</p>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">More Ways To Join</p>
       <h2 id="join-programs-title" style="font-size:clamp(38px,4.5vw,58px);font-weight:400;letter-spacing:-.05em;margin:10px 0 14px">Find Your <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-style:normal;font-weight:400">Seat</em></h2>
       <p style="font-size:13px;line-height:1.6;margin-inline:auto;max-width:560px">Explore each program now, then leave your interest below. These programs are not currently accepting applications.</p>
     </div>
@@ -197,25 +203,25 @@
 
   <section id="program-interest" aria-labelledby="join-interest-title" style="scroll-margin-top:92px;align-items:start;display:grid;gap:clamp(42px,7vw,110px);grid-template-columns:{{ gc3 }};margin:0 auto;max-width:1180px;padding:clamp(52px,7vw,90px) clamp(22px,5vw,60px)">
     <div>
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Stay Close</p>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Stay Close</p>
       <h2 id="join-interest-title" style="font-size:clamp(38px,4.2vw,56px);font-weight:400;letter-spacing:-.05em;line-height:.96;margin:13px 0 20px">Save Your <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-style:normal;font-weight:400">Interest</em></h2>
       <p style="font-size:14px;line-height:1.65">Tell us where you would like to join. We will keep your information on hand and reach out when Sunday is ready to open the next opportunity.</p>
     </div>
     <div style="background:#fffdf8;border:1px solid #311d03;padding:clamp(22px,3vw,32px)">
-      <div style="border-bottom:1px dashed rgba(49,29,3,.5);display:flex;font-family:Arial,Helvetica,sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.13em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Program Interest</span></div>
+      <div style="border-bottom:1px dashed rgba(49,29,3,.5);display:flex;font-family:'IBM Plex Mono',monospace;font-size:7px;justify-content:space-between;letter-spacing:.13em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Program Interest</span></div>
       <div style="padding:30px 0 22px;text-align:center;display:{{ interestDoneDisplay }}">
-        <p style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">Sunday &amp; Company</p>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">Sunday &amp; Company</p>
         <h3 style="font-size:clamp(26px,2.8vw,36px);font-weight:400;letter-spacing:-.05em;line-height:.96;margin:0">Your Interest Is <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Saved.</em></h3>
         <p style="font-size:12px;line-height:1.55;margin:14px auto 0;max-width:380px">We have your details on file and will reach out when Sunday opens the next opportunity.</p>
-        <p style="border-top:1px dashed rgba(49,29,3,.45);font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.16em;margin:20px auto 0;padding-top:12px;text-transform:uppercase;width:min(280px,100%)">Status: Interest Saved</p>
+        <p style="border-top:1px dashed rgba(49,29,3,.45);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.16em;margin:20px auto 0;padding-top:12px;text-transform:uppercase;width:min(280px,100%)">Status: Interest Saved</p>
       </div>
       <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitInterest }}" style="display:grid;gap:13px 16px;grid-template-columns:{{ gc5 }};padding-top:18px;display:{{ interestFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-        <label style="display:grid;gap:7px"><span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:38px;padding:7px 10px;width:100%" maxlength="120" /></label>
-        <label style="display:grid;gap:7px"><span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:38px;padding:7px 10px;width:100%" /></label>
-        <label style="display:grid;gap:7px"><span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:38px;padding:7px 10px;width:100%" /></label>
+        <label style="display:grid;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:38px;padding:7px 10px;width:100%" maxlength="120" /></label>
+        <label style="display:grid;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:38px;padding:7px 10px;width:100%" /></label>
+        <label style="display:grid;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:38px;padding:7px 10px;width:100%" /></label>
         <div style="display:grid;gap:7px;position:relative">
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Program Of Interest *</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Program Of Interest *</span>
           <input name="program" type="hidden" value="{{ program }}" />
           <button type="button" aria-haspopup="listbox" aria-expanded="{{ selOpen }}" onClick="{{ toggleSel }}" style="align-items:center;background:#fffdf8;border:1px solid rgba(49,29,3,.52);border-radius:0;cursor:pointer;display:flex;font-family:'Playfair Display',Georgia,serif;font-size:14px;justify-content:space-between;min-height:38px;padding:7px 10px;text-align:left;width:100%;color:{{ programColor }}">{{ programLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:15px;transition:transform 200ms ease;width:15px;transform:{{ selRot }}"><path d="m6 9 6 6 6-6"></path></svg></button>
           <div role="listbox" aria-label="Program of interest" style="background:#fffdf8;border:1px solid #311d03;left:0;position:absolute;right:0;top:100%;z-index:20;display:{{ selDisplay }}">
@@ -224,10 +230,10 @@
             <button type="button" role="option" onClick="{{ pickFounders }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Playfair Display',Georgia,serif;font-size:13px;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">The Founders Club</button>
           </div>
         </div>
-        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;gap:12px;grid-column:1 / -1;justify-content:center;letter-spacing:.18em;min-height:44px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ interestLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;gap:12px;grid-column:1 / -1;justify-content:center;letter-spacing:.18em;min-height:44px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ interestLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
       </form>
       <p role="alert" style="color:#8c2f22;font-size:11px;margin:12px 0 0;display:{{ interestErrorDisplay }}">{{ interestError }}</p>
-      <div style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.13em;margin-top:20px;padding:10px 0;text-transform:uppercase"><span>Status</span><strong style="font-weight:600">Coming Soon</strong></div>
+      <div style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'IBM Plex Mono',monospace;font-size:7px;justify-content:space-between;letter-spacing:.13em;margin-top:20px;padding:10px 0;text-transform:uppercase"><span>Status</span><strong style="font-weight:600">Coming Soon</strong></div>
     </div>
   </section>
 

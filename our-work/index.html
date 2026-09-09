@@ -8,8 +8,8 @@
 <body>
 <x-dc>
 <helmet>
-<title>Portfolio · Website Design &amp; Brand Identity Projects</title>
-<meta name="description" content="Website design, brand identity, logo and digital marketing projects for cafés, bakeries, catering and counseling businesses across the DMV and North Carolina." />
+<title>Branding &amp; Web Design Portfolio | DMV + North Carolina | Sunday &amp; Co.</title>
+<meta name="description" content="Explore branding, website design and digital marketing projects helping lifestyle and service businesses across the DMV and North Carolina grow." />
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="icon" href="/assets/icon-512.png" sizes="512x512" type="image/png" />
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
@@ -17,23 +17,27 @@
 <meta name="robots" content="index, follow" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Sunday &amp; Company" />
-<meta property="og:title" content="Portfolio · Website Design &amp; Brand Identity Projects" />
-<meta property="og:description" content="Website design, brand identity, logo and digital marketing projects for cafés, bakeries, catering and counseling businesses across the DMV and North Carolina." />
+<meta property="og:title" content="Branding &amp; Web Design Portfolio | DMV + North Carolina | Sunday &amp; Co." />
+<meta property="og:description" content="Explore branding, website design and digital marketing projects helping lifestyle and service businesses across the DMV and North Carolina grow." />
 <meta property="og:url" content="https://sundayandcompany.co/our-work" />
-<meta property="og:image" content="https://sundayandcompany.co/assets/portfolio-luckys.jpg" />
+<meta property="og:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta property="og:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Portfolio · Website Design &amp; Brand Identity Projects" />
-<meta name="twitter:description" content="Website design, brand identity, logo and digital marketing projects for cafés, bakeries, catering and counseling businesses across the DMV and North Carolina." />
-<meta name="twitter:image" content="https://sundayandcompany.co/assets/portfolio-luckys.jpg" />
+<meta name="twitter:title" content="Branding &amp; Web Design Portfolio | DMV + North Carolina | Sunday &amp; Co." />
+<meta name="twitter:description" content="Explore branding, website design and digital marketing projects helping lifestyle and service businesses across the DMV and North Carolina grow." />
+<meta name="twitter:image" content="https://sundayandcompany.co/social-preview.png" />
+<meta name="twitter:image:alt" content="Sunday &amp; Company — A Seat At Our Table" />
 <meta name="theme-color" content="#f5efe6" />
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Our Work","description":"Selected branding, website design and digital marketing projects.","publisher":{"@type":"Organization","name":"Sunday & Company","@id":"https://sundayandcompany.co/#studio"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://sundayandcompany.co/our-work/luckys-cafe-bakery","name":"Lucky’s Café & Bakery"},{"@type":"ListItem","position":2,"url":"https://sundayandcompany.co/our-work/pizzeria-coco","name":"Pizzeria Coco"},{"@type":"ListItem","position":3,"url":"https://sundayandcompany.co/our-work/petti-pathways","name":"Petti Pathways"},{"@type":"ListItem","position":4,"url":"https://sundayandcompany.co/our-work/folake","name":"Foláké & Co."}]}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
+  [style*="font-family:'IBM Plex Mono'"] { font-weight: 100 !important; }
+  [style*="font-family:'IBM Plex Mono'"] strong { font-weight: 100 !important; }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -119,13 +123,14 @@
       height: 148px !important; width: 148px !important;
       left: -21px !important; top: -51px !important;
     }
-    /* newsletter popup — was filling the whole screen */
-    [aria-label="The Sunday Reservation"] { max-width: calc(100vw - 32px) !important; }
+    /* newsletter popup — taller receipt with room for the image on signup and confirmation */
+    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(700px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
-    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 116px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child { padding: 22px 20px 20px !important; }
+    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 210px !important; min-height: 190px !important; }
+    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 440px !important; padding: 30px 24px 28px !important; }
     [aria-label="The Sunday Reservation"] h2 { font-size: 21px !important; }
-    [aria-label="The Sunday Reservation"] p { font-size: 9px !important; line-height: 1.45 !important; }
+    [aria-label="The Sunday Reservation"] p { font-size: 10px !important; line-height: 1.5 !important; }
+    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 6.5px !important; line-height: 1.5 !important; }
     [aria-label="The Sunday Reservation"] label { font-size: 8px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
@@ -142,10 +147,10 @@
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
     [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { padding: 16px 16px 18px !important; }
-    #inquiry > div { padding: 16px !important; }
+    [aria-label="Project inquiry"] > div { min-height: calc(100dvh - 20px) !important; padding: 24px 18px 30px !important; }
+    #inquiry > div { padding: 20px 18px 24px !important; }
     #inquiry header h2 { font-size: 26px !important; }
-    #inquiry header p, [aria-label="Project inquiry"] header p { font-size: 11px !important; }
+    #inquiry header h2 + p { font-size: 11px !important; }
   }
 
   @media (max-width: 700px) {
@@ -168,26 +173,26 @@
   <section id="top" aria-labelledby="work-title" style="scroll-margin-top:92px;margin:0 auto;max-width:1360px;padding:clamp(132px,13vw,172px) clamp(24px,5vw,72px) clamp(40px,5vw,60px)">
     <div style="align-items:end;display:grid;gap:clamp(36px,5vw,80px);grid-template-columns:{{ hg0 }}">
       <div>
-        <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.24em;line-height:1.4;margin:0 0 22px;text-transform:uppercase">Selected Work</p>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.24em;line-height:1.4;margin:0 0 22px;text-transform:uppercase">Selected Work</p>
         <h1 id="work-title" style="font-size:clamp(58px,7vw,108px);font-weight:400;letter-spacing:-.06em;line-height:.82;margin:0">Work With<span style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:{{ scSize }};font-weight:400;letter-spacing:-.02em;margin-left:{{ scIndent }};margin-top:.04em;white-space:{{ scWrap }}">A Point Of View.</span></h1>
-        <p style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;line-height:2;margin:clamp(26px,3vw,38px) 0 0;max-width:560px;text-transform:uppercase;text-wrap:pretty">Brand identities, websites and digital marketing built to help thoughtful businesses show up clearly, connect with the right audience and grow with intention.</p>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.2em;line-height:2;margin:clamp(26px,3vw,38px) 0 0;max-width:560px;text-transform:uppercase;text-wrap:pretty">Brand identities, websites and digital marketing built to help thoughtful businesses show up clearly, connect with the right audience and grow with intention.</p>
       </div>
       <div style="background:#fffdf8;border:1px solid #311d03;padding:0;position:relative">
-        <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Bill Of Work</span></div>
+        <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'IBM Plex Mono',monospace;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Bill Of Work</span></div>
         <div style="padding:16px 18px 14px">
           <div style="align-items:baseline;display:flex;gap:12px;justify-content:space-between">
-            <span style="font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.16em;opacity:.72;text-transform:uppercase">Borrower</span>
-            <span style="font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.16em;opacity:.72;text-transform:uppercase">No. 001</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.16em;opacity:.72;text-transform:uppercase">Borrower</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.16em;opacity:.72;text-transform:uppercase">No. 001</span>
           </div>
           <p style="border-bottom:1px solid #311d03;font-family:'Pinyon Script',cursive;font-size:30px;line-height:1;margin:2px 0 0;padding-bottom:4px">Sunday &amp; Co.</p>
-          <div style="display:grid;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.13em;margin-top:14px;text-transform:uppercase">
+          <div style="display:grid;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.13em;margin-top:14px;text-transform:uppercase">
           <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Services</span><span style="text-align:right">Branding · Websites<br />Marketing</span></div>
           <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Markets</span><span style="text-align:right">DMV<br />Serving Everywhere</span></div>
           <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Filed</span><span style="text-align:right">2026</span></div>
           <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Availability</span><span style="text-align:right">Open</span></div>
           </div>
         </div>
-        <div style="border-top:1px dashed rgba(49,29,3,.5);display:grid;font-family:Arial,Helvetica,sans-serif;font-size:7px;gap:0;grid-template-columns:1fr 1fr 1fr;letter-spacing:.13em;text-transform:uppercase">
+        <div style="border-top:1px dashed rgba(49,29,3,.5);display:grid;font-family:'IBM Plex Mono',monospace;font-size:7px;gap:0;grid-template-columns:1fr 1fr 1fr;letter-spacing:.13em;text-transform:uppercase">
           <span style="border-right:1px solid rgba(49,29,3,.3);opacity:.72;padding:8px 10px">Date Filed</span>
           <span style="border-right:1px solid rgba(49,29,3,.3);opacity:.72;padding:8px 10px">Discipline</span>
           <span style="opacity:.72;padding:8px 10px;text-align:right">Market</span>
@@ -198,7 +203,7 @@
           <span style="border-right:1px solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);padding:8px 10px">Web</span>
           <span style="border-top:1px solid rgba(49,29,3,.3);padding:8px 10px;text-align:right">DMV</span>
         </div>
-        <div style="align-items:center;border-top:1px solid #311d03;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.16em;padding:9px 18px;text-transform:uppercase"><span>On File At Sunday &amp; Co.</span><span style="opacity:.72">Keep This Card</span></div>
+        <div style="align-items:center;border-top:1px solid #311d03;display:flex;font-family:'IBM Plex Mono',monospace;font-size:7px;justify-content:space-between;letter-spacing:.16em;padding:9px 18px;text-transform:uppercase"><span>On File At Sunday &amp; Co.</span><span style="opacity:.72">Keep This Card</span></div>
       </div>
     </div>
   </section>
@@ -210,7 +215,7 @@
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-coco.jpg" alt="Pizzeria Coco website displayed on a laptop and mobile phone" style="height:100%;object-fit:cover;width:100%" /></figure>
         <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#7c8cf0;display:inline-block;height:8px;width:8px"></span>01 · Mobile Catering</span>
+            <span style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#7c8cf0;display:inline-block;height:8px;width:8px"></span>01 · Mobile Catering</span>
             <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Pizzeria Coco</span>
           </span>
         </span>
@@ -220,7 +225,7 @@
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-luckys.jpg" alt="Lucky’s Café and Bakery website displayed on a laptop and mobile phone" style="height:100%;object-fit:cover;width:100%" /></figure>
         <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#c8563f;display:inline-block;height:8px;width:8px"></span>03 · Hospitality</span>
+            <span style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#c8563f;display:inline-block;height:8px;width:8px"></span>03 · Hospitality</span>
             <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Lucky’s Café <em style="font-style:italic">&amp; Bakery</em></span>
           </span>
         </span>
@@ -233,7 +238,7 @@
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-petti.jpg" alt="Petti Pathways Counseling website displayed on a laptop and mobile phone" style="height:100%;object-fit:cover;width:100%" /></figure>
         <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6cbdb8;display:inline-block;height:8px;width:8px"></span>02 · Mental Health</span>
+            <span style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6cbdb8;display:inline-block;height:8px;width:8px"></span>02 · Mental Health</span>
             <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Petti Pathways</span>
           </span>
         </span>
@@ -243,7 +248,7 @@
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-folake-ipad.png" alt="Foláké and Company website shown on a tablet" style="height:100%;object-fit:cover;width:100%" /></figure>
         <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6fae94;display:inline-block;height:8px;width:8px"></span>04 · Mobile Café</span>
+            <span style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6fae94;display:inline-block;height:8px;width:8px"></span>04 · Mobile Café</span>
             <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Foláké <em style="font-style:italic">&amp; Co.</em></span>
           </span>
         </span>
@@ -254,10 +259,10 @@
 
   <section style="align-items:end;display:flex;gap:40px;justify-content:space-between;margin:0 auto;max-width:1200px;padding:clamp(52px,6vw,84px) clamp(24px,5vw,72px) clamp(64px,8vw,104px)">
     <div>
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">A Seat At Our Table</p>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">A Seat At Our Table</p>
       <h2 style="font-size:clamp(38px,4.2vw,60px);font-weight:400;letter-spacing:-.055em;line-height:.96;margin:14px 0 0;max-width:720px;text-wrap:pretty">Ready To Build Something <em style="color:#ac746c;font-style:italic">Worth Remembering?</em></h2>
     </div>
-    <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;display:inline-flex;flex:0 0 auto;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;gap:12px;letter-spacing:.18em;min-height:44px;padding:0 20px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#311d03">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+    <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;display:inline-flex;flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;gap:12px;letter-spacing:.18em;min-height:44px;padding:0 20px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#311d03">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
   </section>
 
   <dc-import name="/Site Footer" hint-size="100%,420px"></dc-import>
