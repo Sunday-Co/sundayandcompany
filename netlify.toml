@@ -1,0 +1,68 @@
+# Sunday & Company — Netlify configuration
+
+[build]
+  publish = "."
+
+# ---------------------------------------------------------------
+# Security headers
+#
+# Note: no Content-Security-Policy here on purpose. The page runtime
+# compiles layout in the browser, and a strict CSP silently blanks
+# every page. The headers below cover clickjacking, HTTPS, MIME
+# sniffing and referrer leakage, which is the meaningful protection
+# for a static marketing site with no logins and no user data.
+# ---------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Nobody can embed this site in an iframe.
+    X-Frame-Options = "DENY"
+
+    # Stop browsers guessing content types.
+    X-Content-Type-Options = "nosniff"
+
+    # Don't leak full URLs to other sites.
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Switch off device APIs the site never uses.
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=()"
+
+    # Force HTTPS for two years, including subdomains.
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+    # Legacy XSS filter for older browsers.
+    X-XSS-Protection = "1; mode=block"
+
+# ---------------------------------------------------------------
+# Caching — assets long-lived, HTML always fresh
+# ---------------------------------------------------------------
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ---------------------------------------------------------------
+# Canonical host — bare domain over HTTPS
+# ---------------------------------------------------------------
+[[redirects]]
+  from = "http://sundayandcompany.co/*"
+  to = "https://sundayandcompany.co/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.sundayandcompany.co/*"
+  to = "https://sundayandcompany.co/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sundayandcompany.co/*"
+  to = "https://sundayandcompany.co/:splat"
+  status = 301
+  force = true

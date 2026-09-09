@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Accessibility · Sunday & Company</title>
+<meta name="description" content="The steps Sunday & Company takes to support an accessible website, and how to report a barrier." />
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/assets/icon-512.png" sizes="512x512" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+<link rel="canonical" href="https://sundayandcompany.co/accessibility" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Sunday &amp; Company" />
+<meta property="og:title" content="Accessibility · Sunday & Company" />
+<meta property="og:description" content="The steps Sunday & Company takes to support an accessible website, and how to report a barrier." />
+<meta property="og:url" content="https://sundayandcompany.co/accessibility" />
+<meta property="og:image" content="https://sundayandcompany.co/assets/og-default.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Accessibility · Sunday & Company" />
+<meta name="twitter:description" content="The steps Sunday & Company takes to support an accessible website, and how to report a barrier." />
+<meta name="twitter:image" content="https://sundayandcompany.co/assets/og-default.png" />
+<meta name="theme-color" content="#f5efe6" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+<style>
+  :root { accent-color: #ac746c; }
+  *:focus { outline-color: #ac746c; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    border-color: #ac746c !important;
+    box-shadow: 0 0 0 1px #ac746c !important;
+    outline: none !important;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { max-width: 100%; overflow-x: clip; scroll-behavior: smooth; }
+  body { margin: 0; background: #f5efe6; color: #311d03; font-family: "Playfair Display", Georgia, serif; }
+  img { display: block; max-width: 100%; }
+  p, ol, li { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #ac746c; }
+  summary { cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
+    html { scroll-behavior: auto !important; }
+  }
+  :focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+
+  input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
+  textarea:-webkit-autofill, select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;
+    -webkit-text-fill-color: #311d03 !important;
+    caret-color: #311d03;
+    transition: background-color 9999s ease-out 0s;
+  }
+  input:autofill, textarea:autofill { background: #fffdf8 !important; color: #311d03 !important; }
+  input::placeholder, textarea::placeholder { color: rgba(49,29,3,.5); opacity: 1; }
+  input:focus, textarea:focus, select:focus, button:focus { outline: none; }
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 1px solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c;
+  }
+  input:invalid, textarea:invalid { box-shadow: none; }
+
+  [aria-label="Newsletter"] input:-webkit-autofill,
+  [aria-label="Newsletter"] input:-webkit-autofill:hover,
+  [aria-label="Newsletter"] input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;
+    -webkit-text-fill-color: #f5efe6 !important;
+    caret-color: #f5efe6;
+  }
+  [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
+  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
+  @media (max-width: 820px) {
+    input, textarea, select, button { font-size: 16px; }
+    input, textarea, select { min-height: 46px; }
+    textarea { min-height: 96px; }
+  }
+
+
+  /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
+  @media (max-width: 820px) {
+    /* iOS force-zooms any field under 16px */
+    input, textarea, select { font-size: 16px !important; min-height: 46px; }
+    textarea { min-height: 100px; }
+    button { font-size: inherit; }
+    /* CTA rows: heading and button stack instead of the button running off screen.
+       Only flex containers, so grids are untouched. */
+    /* any flex row that pushes items apart wraps instead of clipping */
+    [style*="display:flex"][style*="space-between"],
+    [style*="display: flex"][style*="space-between"] {
+      flex-wrap: wrap !important;
+      row-gap: 20px !important;
+    }
+    [style*="display:flex"][style*="space-between"] > *,
+    [style*="display: flex"][style*="space-between"] > * { min-width: 0 !important; }
+    /* service sheet interiors: title above copy, never beside it.
+       keyed on align-items:start so the card's header row is untouched. */
+    button > span[style*="align-items: start"][style*="grid-template-columns"],
+    button > span[style*="align-items:start"][style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+      row-gap: 14px !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    /* masthead logo — same size on every page */
+    header > a[aria-label] { width: 108px !important; }
+    header > a[aria-label] > span { height: 40px !important; width: 104px !important; }
+    header > a[aria-label] > span > img {
+      height: 148px !important; width: 148px !important;
+      left: -21px !important; top: -51px !important;
+    }
+    /* newsletter popup — was filling the whole screen */
+    [aria-label="The Sunday Reservation"] { max-width: calc(100vw - 32px) !important; }
+    [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
+    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 116px !important; }
+    [aria-label="The Sunday Reservation"] > div:last-child { padding: 22px 20px 20px !important; }
+    [aria-label="The Sunday Reservation"] h2 { font-size: 21px !important; }
+    [aria-label="The Sunday Reservation"] p { font-size: 9px !important; line-height: 1.45 !important; }
+    [aria-label="The Sunday Reservation"] label { font-size: 8px !important; }
+    [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
+  }
+
+  @media (max-width: 700px) {
+    /* project inquiry form: one column and condensed, popup and Services page
+       both, since they are the same component */
+    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
+    form[data-inq] fieldset { grid-template-columns: 1fr !important; }
+    form[data-inq] label > span,
+    form[data-inq] legend { font-size: 7.5px !important; }
+    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
+    form[data-inq] textarea { min-height: 74px !important; }
+    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    /* Keep the receipt identity and status rows visible on mobile. */
+    [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
+    [aria-label="Project inquiry"] > div { padding: 16px 16px 18px !important; }
+    #inquiry > div { padding: 16px !important; }
+    #inquiry header h2 { font-size: 26px !important; }
+    #inquiry header p, [aria-label="Project inquiry"] header p { font-size: 11px !important; }
+  }
+
+  @media (max-width: 700px) {
+    /* inquiry becomes three short steps so nothing needs scrolling */
+    form[data-inq] { grid-template-columns: 1fr !important; }
+    form[data-inq][data-cur="1"] [data-step]:not([data-step="1"]) { display: none !important; }
+    form[data-inq][data-cur="2"] [data-step]:not([data-step="2"]) { display: none !important; }
+    form[data-inq][data-cur="3"] [data-step]:not([data-step="3"]) { display: none !important; }
+    form[data-inq] [data-stepnav] { display: block !important; }
+    form[data-inq] [data-stepbtns] { display: grid !important; }
+    form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
+  }
+</style>
+</helmet>
+
+<div data-screen-label="Accessibility" id="top" style="background:#f5efe6;color:#311d03;overflow:hidden">
+
+  <dc-import name="/Site Header" tone="dark" hint-size="100%,0px"></dc-import>
+
+  <header style="background:#fffdf8;border-bottom:1px solid rgba(49,29,3,.34);padding:clamp(132px,14vw,174px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(42px,5vw,60px)">
+    <p style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:17px;text-transform:uppercase">Access For Everyone</p>
+    <h1 style="font-size:clamp(48px,6.2vw,84px);font-weight:400;letter-spacing:-.06em;line-height:.9;margin:0">Accessibility</h1>
+    <p style="font-size:13.5px;line-height:1.7;margin-top:22px;max-width:650px">This statement describes the steps Sunday &amp; Company takes to support an accessible website and how to report a barrier.</p>
+    <div style="border-top:1px solid rgba(49,29,3,.3);display:flex;flex-wrap:wrap;font-family:Arial,Helvetica,sans-serif;font-size:7px;gap:12px 34px;justify-content:space-between;letter-spacing:.13em;margin-top:27px;padding-top:12px;text-transform:uppercase">
+      <span>Effective August 30, 2026</span>
+      <span>Last Updated August 30, 2026</span>
+    </div>
+  </header>
+
+  <section style="display:grid;gap:clamp(46px,6vw,82px);margin:0 auto;max-width:1240px;padding:clamp(42px,5vw,64px) clamp(22px,4vw,52px) clamp(68px,7vw,96px);grid-template-columns:{{ layoutCols }}">
+    <aside style="min-width:0">
+      <nav aria-label="Accessibility sections" style="position:sticky;top:116px;display:{{ sideDesktop }}">
+        <p style="color:#ac746c;display:block;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">On This Page</p>
+        <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#commitment" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">01</span>Our Commitment</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#standard" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">02</span>Accessibility Standard</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#measures" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">03</span>Measures We Take</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#navigation" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">04</span>Keyboard And Navigation</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#forms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">05</span>Forms And Communication</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-party-content" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">06</span>Third-Party Content</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#limitations" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">07</span>Known Limitations And Ongoing Work</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#feedback" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">08</span>Accessibility Feedback</a></li>
+        </ol>
+        <div style="border-top:1px solid #311d03;margin-top:28px;padding-top:16px">
+          <span style="color:#ac746c;display:block;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">Questions</span>
+          <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor;font-size:13px">hello@sundayandcompany.co</a>
+        </div>
+      </nav>
+      <details style="border-bottom:1px solid rgba(49,29,3,.38);border-top:1px solid rgba(49,29,3,.38);display:{{ sideMobile }}">
+        <summary style="align-items:center;display:flex;font-family:Arial,Helvetica,sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.15em;padding:14px 0;text-transform:uppercase">Jump To A Section <span aria-hidden="true" style="color:#ac746c">+</span></summary>
+        <nav aria-label="Accessibility mobile sections" style="padding-bottom:12px">
+          <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#commitment" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">01</span>Our Commitment</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#standard" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">02</span>Accessibility Standard</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#measures" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">03</span>Measures We Take</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#navigation" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">04</span>Keyboard And Navigation</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#forms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">05</span>Forms And Communication</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-party-content" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">06</span>Third-Party Content</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#limitations" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">07</span>Known Limitations And Ongoing Work</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#feedback" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:.1em">08</span>Accessibility Feedback</a></li>
+          </ol>
+        </nav>
+      </details>
+    </aside>
+
+    <article style="min-width:0">
+
+      <section id="commitment" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">01</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Our Commitment</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">Sunday &amp; Company wants this website to be useful to as many people as possible. Accessibility is part of our ongoing design and maintenance work, and we review the experience as content and features change.</p>
+        </div>
+      </section>
+
+      <section id="standard" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">02</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Accessibility Standard</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">We aim to follow the Web Content Accessibility Guidelines, WCAG 2.1 Level AA, where reasonably applicable. These guidelines address common barriers affecting people who use assistive technology, keyboards, magnification or alternative ways of perceiving content.</p>
+        </div>
+      </section>
+
+      <section id="measures" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">03</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Measures We Take</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">The site uses semantic headings, descriptive labels, keyboard-accessible controls and visible focus states. We provide text alternatives for meaningful images and avoid using color as the only way to communicate required information.</p>
+          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">Layouts are designed to respond across screen sizes, and text can be enlarged through browser settings. Forms include labels, required-field information and status messages intended to work with assistive technology.</p>
+        </div>
+      </section>
+
+      <section id="navigation" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">04</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Keyboard And Navigation</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">Interactive elements are intended to be reachable by keyboard in a logical order. Menus, dialogs, accordions, links and form controls are designed to support standard keyboard interaction. Page headings and landmarks help assistive technology users move through content.</p>
+        </div>
+      </section>
+
+      <section id="forms" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">05</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Forms And Communication</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">If an online form creates a barrier, you may contact us directly by email. Please do not include sensitive personal information when describing an accessibility issue. We will work with you to provide the same information or a reasonable alternative way to communicate.</p>
+        </div>
+      </section>
+
+      <section id="third-party-content" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">06</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Third-Party Content</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">Some linked services or embedded tools are provided by third parties. We do not control every part of their accessibility. We encourage our providers to support accessible experiences and welcome notice when a third-party feature creates a barrier.</p>
+        </div>
+      </section>
+
+      <section id="limitations" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">07</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Known Limitations And Ongoing Work</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">Accessibility is an ongoing process, and some content or browser combinations may not perform as expected. We review reported issues, prioritize barriers affecting core navigation and forms, and make reasonable improvements as the website evolves.</p>
+        </div>
+      </section>
+
+      <section id="feedback" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
+          <span style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">08</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Accessibility Feedback</h2>
+        </div>
+        <div style="min-width:0">
+          <p style="font-size:13px;line-height:1.72;margin:0">To report an accessibility problem, email <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor">hello@sundayandcompany.co</a> with the page address, a short description of the issue and the browser or assistive technology you were using if you are comfortable sharing it.</p>
+          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">We will acknowledge the message and work toward a reasonable response. Requests are reviewed individually because the appropriate solution depends on the content and barrier involved.</p>
+        </div>
+      </section>
+
+      <div style="align-items:center;background:#311d03;color:#f5efe6;display:grid;gap:12px clamp(16px,2.5vw,34px);margin:24px 0 0;padding:14px 18px;width:100%;grid-template-columns:{{ cardCols }}">
+        <p style="color:#ac746c;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">Questions</p>
+        <h2 style="font-size:clamp(17px,1.7vw,22px);font-weight:400;margin:0;white-space:{{ cardNowrap }}">Contact Sunday &amp; Company</h2>
+        <p style="font-size:13px;line-height:1.6;margin:0">Questions about this page can be sent to <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor">hello@sundayandcompany.co</a>. We aim to respond to privacy and data requests within 30 days.</p>
+        <p style="border-top:1px solid rgba(245,239,230,.35);font-family:Arial,Helvetica,sans-serif;font-size:8px;grid-column:1 / -1;letter-spacing:.13em;line-height:1.7;margin:4px 0 0;opacity:.82;padding-top:12px;text-transform:uppercase">Sunday &amp; Company Marketing LLC is registered in the Commonwealth of Virginia.</p>
+      </div>
+    </article>
+  </section>
+
+  <dc-import name="/Site Footer" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { narrow: false };
+  componentDidMount() {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    this._mq = window.matchMedia('(max-width: 900px)');
+    this._sync = () => this.setState({ narrow: this._mq.matches });
+    this._sync();
+    if (this._mq.addEventListener) this._mq.addEventListener('change', this._sync);
+  }
+  componentWillUnmount() {
+    if (this._mq && this._mq.removeEventListener && this._sync) this._mq.removeEventListener('change', this._sync);
+  }
+  renderVals() {
+    const n = this.state.narrow;
+    return {
+      layoutCols: n ? '1fr' : 'minmax(200px, .32fr) minmax(0, 1fr)',
+      sideDesktop: n ? 'none' : 'block',
+      sideMobile: n ? 'block' : 'none',
+      sectionCols: n ? '1fr' : 'minmax(170px, .46fr) minmax(0, 1fr)',
+      cardCols: n ? '1fr' : 'auto auto minmax(0, 1fr)',
+      cardNowrap: n ? 'normal' : 'nowrap',
+    };
+  }
+}
+</script>
+</body>
+</html>
