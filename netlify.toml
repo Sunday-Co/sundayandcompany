@@ -1,0 +1,456 @@
+# Sunday & Company - Netlify configuration
+# Clean stability / typography / modal pass.
+# Publishes the corrected source folder, then applies a restrained global finish.
+
+[build]
+command = '''
+rm -rf _site
+mkdir -p _site
+cp -R assets _site/assets
+cp support.js web3forms.js robots.txt sitemap.xml social-preview.png _site/
+cp -R Sunday-Co-Ysabeau-Mobile-Forms-Update/. _site/
+
+node <<'NODE'
+const fs = require('fs');
+const path = require('path');
+
+const designPatch = `<style data-sunday-clean-finish>
+/* ==========================================================
+   SUNDAY & COMPANY — CLEAN FINISH
+   Secondary: Inter Tight Light (300)
+   Primary: Playfair Display
+   Accent: Pinyon Script
+   ========================================================== */
+
+/* Secondary type: lighter, narrower and quieter beside Playfair. */
+[style*="font-family:'Inter Tight'"],
+[style*='font-family:"Inter Tight"'] {
+  font-weight: 300 !important;
+}
+
+[style*="font-family:'Inter Tight'"] strong,
+[style*='font-family:"Inter Tight"'] strong {
+  font-weight: 400 !important;
+}
+
+/* Keep tiny editorial labels readable without making them oversized. */
+@media (min-width: 701px) {
+  [style*="font-family:'Inter Tight'"][style*="font-size:6.5px"] { font-size: 9.5px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:7px"]   { font-size: 10px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:7.5px"] { font-size: 10px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:8px"]   { font-size: 10.5px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:8.5px"] { font-size: 11px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:9px"]   { font-size: 11.5px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:10px"]  { font-size: 12px !important; }
+}
+
+@media (max-width: 700px) {
+  [style*="font-family:'Inter Tight'"][style*="font-size:6.5px"] { font-size: 9.5px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:7px"]   { font-size: 10px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:7.5px"] { font-size: 10.5px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:8px"]   { font-size: 11px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:8.5px"] { font-size: 11.5px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:9px"]   { font-size: 12px !important; }
+  [style*="font-family:'Inter Tight'"][style*="font-size:10px"]  { font-size: 12.5px !important; }
+
+  /* Stable Safari scrolling: don't animate page position or resize with browser chrome. */
+  html { scroll-behavior: auto !important; }
+
+  /* 16px inputs prevent iOS focus zoom. Buttons are intentionally NOT forced to 16px. */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    font-family: 'Inter Tight', sans-serif !important;
+    font-weight: 300 !important;
+  }
+}
+
+/* ==========================================================
+   FOOTER — ONE SECONDARY TYPE SYSTEM
+   ========================================================== */
+footer,
+footer a,
+footer p,
+footer span,
+footer strong,
+footer em,
+footer nav {
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 300 !important;
+}
+
+/* Keep the footer clean and consistent. */
+footer a[href="/about"],
+footer a[href="/services"],
+footer a[href="/our-work"],
+footer a[href="/contact"],
+footer a[href="/join-our-team"],
+footer a[href="/sunday-school"] {
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 300 !important;
+}
+
+footer a[href*="instagram.com/sundayand_co"] {
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 300 !important;
+}
+
+@media (max-width: 700px) {
+  footer a[href="/about"],
+  footer a[href="/services"],
+  footer a[href="/our-work"],
+  footer a[href="/contact"],
+  footer a[href="/join-our-team"],
+  footer a[href="/sunday-school"] {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+  }
+
+  footer a[href*="instagram.com/sundayand_co"] {
+    font-size: 13.5px !important;
+  }
+}
+
+/* ==========================================================
+   MODAL OVERLAYS — TRUE CENTER + STABLE SCROLL
+   ========================================================== */
+div[role="presentation"]:has(> [aria-label="Project inquiry"]),
+div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
+  align-items: center !important;
+  justify-content: center !important;
+  overscroll-behavior: contain !important;
+}
+
+/* ==========================================================
+   PROJECT INQUIRY — CENTER THE DIALOG ITSELF
+   ========================================================== */
+[aria-label="Project inquiry"] {
+  margin: auto !important;
+  padding: 0 !important;
+}
+
+[aria-label="Project inquiry"] > div {
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+/* Desktop: compact receipt, centered as one unit. */
+@media (min-width: 701px) {
+  div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
+    padding: 32px !important;
+  }
+
+  [aria-label="Project inquiry"] {
+    width: min(880px, calc(100vw - 64px)) !important;
+    max-width: 880px !important;
+    max-height: calc(100vh - 64px) !important;
+    overflow-y: auto !important;
+  }
+
+  [aria-label="Project inquiry"] > div {
+    min-height: 0 !important;
+    padding: 30px 38px 34px !important;
+  }
+
+  [aria-label="Project inquiry"] h2 {
+    font-size: 30px !important;
+    line-height: .98 !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] {
+    gap: 9px 13px !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] label > span,
+  [aria-label="Project inquiry"] form[data-inq] legend {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 11.5px !important;
+    font-weight: 300 !important;
+    line-height: 1.35 !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] input,
+  [aria-label="Project inquiry"] form[data-inq] select {
+    min-height: 40px !important;
+    font-size: 14px !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] textarea {
+    min-height: 74px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Mobile: slightly more breathing room, but not a full-screen receipt.
+   svh is deliberate: it does not jump as Safari's bars expand/collapse. */
+@media (max-width: 700px) {
+  div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
+    padding: 12px !important;
+    overflow-y: auto !important;
+  }
+
+  [aria-label="Project inquiry"] {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100svh - 24px) !important;
+    overflow-y: auto !important;
+  }
+
+  [aria-label="Project inquiry"] > div {
+    min-height: min(620px, 70svh) !important;
+    padding: 22px 18px 28px !important;
+  }
+
+  [aria-label="Project inquiry"] h2 {
+    font-size: 24px !important;
+    line-height: 1 !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] {
+    grid-template-columns: 1fr !important;
+    gap: 7px !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] fieldset {
+    grid-template-columns: 1fr !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] label > span,
+  [aria-label="Project inquiry"] form[data-inq] legend {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 300 !important;
+    line-height: 1.3 !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] input,
+  [aria-label="Project inquiry"] form[data-inq] select {
+    min-height: 43px !important;
+  }
+
+  [aria-label="Project inquiry"] form[data-inq] textarea {
+    min-height: 72px !important;
+  }
+}
+
+/* ==========================================================
+   SUNDAY RESERVATION — DESKTOP A TOUCH LARGER + FULL-BLEED PHOTO
+   ========================================================== */
+[aria-label="The Sunday Reservation"] {
+  margin: auto !important;
+  box-sizing: border-box !important;
+}
+
+@media (min-width: 701px) {
+  div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
+    padding: 28px !important;
+  }
+
+  [aria-label="The Sunday Reservation"] {
+    width: min(800px, calc(100vw - 56px)) !important;
+    max-width: 800px !important;
+    height: 540px !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 56px) !important;
+    grid-template-columns: 1fr 1.06fr !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+  }
+
+  /* Photo fills every pixel of the left half: no white strip or inset. */
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] {
+    align-self: stretch !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    overflow: hidden !important;
+  }
+
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] img {
+    display: block !important;
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+  }
+
+  [aria-label="The Sunday Reservation"] > div:last-child {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 34px 32px 28px !important;
+    overflow-y: auto !important;
+  }
+
+  [aria-label="The Sunday Reservation"] h2 {
+    font-size: 27px !important;
+    line-height: 1 !important;
+  }
+
+  [aria-label="The Sunday Reservation"] p {
+    line-height: 1.48 !important;
+  }
+
+  [aria-label="The Sunday Reservation"] label {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 10.5px !important;
+    font-weight: 300 !important;
+  }
+
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 9px !important;
+    line-height: 1.45 !important;
+  }
+}
+
+/* Mobile reservation: keep the composition you liked, only refine scale.
+   svh keeps the popup from breathing with Safari browser chrome. */
+@media (max-width: 700px) {
+  div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
+    padding: 14px !important;
+    overflow-y: auto !important;
+  }
+
+  [aria-label="The Sunday Reservation"] {
+    width: calc(100vw - 28px) !important;
+    max-width: calc(100vw - 28px) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: calc(100svh - 28px) !important;
+    grid-template-columns: 1fr !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] {
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+    overflow: hidden !important;
+  }
+
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  [aria-label="The Sunday Reservation"] > div:last-child {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 22px 20px 21px !important;
+  }
+
+  [aria-label="The Sunday Reservation"] h2 {
+    font-size: 23px !important;
+    line-height: 1.02 !important;
+  }
+
+  [aria-label="The Sunday Reservation"] label {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 11.5px !important;
+    font-weight: 300 !important;
+  }
+
+  /* This was oversized in the last pass. */
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 9.5px !important;
+    line-height: 1.45 !important;
+    letter-spacing: .08em !important;
+  }
+}
+
+/* Services-page inquiry uses the same restrained label sizing. */
+@media (max-width: 700px) {
+  #inquiry form[data-inq] label > span,
+  #inquiry form[data-inq] legend {
+    font-family: 'Inter Tight', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 300 !important;
+    line-height: 1.3 !important;
+  }
+}
+</style>`;
+
+function walk(dir) {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...walk(full));
+    else if (entry.isFile() && entry.name.endsWith('.html')) out.push(full);
+  }
+  return out;
+}
+
+const htmlFiles = walk('_site');
+
+for (const file of htmlFiles) {
+  let html = fs.readFileSync(file, 'utf8');
+
+  /* Keep all typography on the existing Google Fonts request:
+     fewer font services = less visible font swapping / layout movement. */
+  html = html.replace(
+    /family=Ysabeau:wght@300;400;500&family=/g,
+    'family=Inter+Tight:wght@300;400&family='
+  );
+
+  html = html.replace(/Ysabeau/g, 'Inter Tight');
+
+  if (!html.includes('data-sunday-clean-finish')) {
+    if (html.includes('</helmet>')) {
+      html = html.replace('</helmet>', `${designPatch}\n</helmet>`);
+    } else if (html.includes('</head>')) {
+      html = html.replace('</head>', `${designPatch}\n</head>`);
+    }
+  }
+
+  fs.writeFileSync(file, html);
+}
+
+console.log(`Sunday & Company: clean finish applied to ${htmlFiles.length} HTML files.`);
+NODE
+'''
+publish = "_site"
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=()"
+Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+X-XSS-Protection = "1; mode=block"
+
+[[headers]]
+for = "/assets/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.html"
+
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
+[[redirects]]
+from = "http://sundayandcompany.co/*"
+to = "https://sundayandcompany.co/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "http://www.sundayandcompany.co/*"
+to = "https://sundayandcompany.co/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://www.sundayandcompany.co/*"
+to = "https://sundayandcompany.co/:splat"
+status = 301
+force = true
