@@ -1,0 +1,59 @@
+# Sunday & Company - Netlify configuration
+# Fast deployment fix:
+# Keep shared assets/scripts at the repository root, but publish the
+# corrected HTML/pages from Sunday-Co-Ysabeau-Mobile-Forms-Update.
+
+[build]
+command = "rm -rf _site && mkdir -p _site && cp -R assets _site/assets && cp support.js web3forms.js robots.txt sitemap.xml social-preview.png _site/ && cp -R Sunday-Co-Ysabeau-Mobile-Forms-Update/. _site/"
+publish = "_site"
+
+# Security headers
+# No Content-Security-Policy here on purpose. The page runtime compiles
+# layout in the browser, and a strict CSP can blank the site.
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), accelerometer=()"
+Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+X-XSS-Protection = "1; mode=block"
+
+# Cache assets long-term.
+
+[[headers]]
+for = "/assets/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Always revalidate HTML.
+
+[[headers]]
+for = "/*.html"
+
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
+# Canonical host: bare domain over HTTPS.
+
+[[redirects]]
+from = "http://sundayandcompany.co/*"
+to = "https://sundayandcompany.co/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "http://www.sundayandcompany.co/*"
+to = "https://sundayandcompany.co/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://www.sundayandcompany.co/*"
+to = "https://sundayandcompany.co/:splat"
+status = 301
+force = true
