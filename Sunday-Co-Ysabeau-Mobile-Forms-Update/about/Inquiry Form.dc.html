@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; max-width: 100%; overflow-x: clip; }
+  input:focus-visible, textarea:focus-visible, button:focus-visible {
+    outline: 2px solid #ac746c;
+    outline-offset: 1px;
+  }
+  [data-inq] label > span:first-child,
+  [data-inq] fieldset > legend,
+  [data-inq] div[data-step] > span:first-child {
+    font-family: 'Ysabeau', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 300 !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase;
+  }
+  [data-inq] input,
+  [data-inq] textarea,
+  [data-inq] select,
+  [data-inq] button {
+    font-family: 'Ysabeau', sans-serif !important;
+    font-weight: 300;
+  }
+  @media (max-width: 700px) {
+    input, textarea { font-size: 16px !important; min-height: 42px !important; }
+    textarea { min-height: 76px !important; }
+  }
+</style>
+</head>
+<body>
+<x-dc>
+<div style="display:grid">
+  <div style="padding:35px 0;text-align:center;display:{{ doneDisplay }}">
+    <h3 style="font-size:clamp(28px,3vw,38px);font-weight:400;letter-spacing:-.045em;line-height:.94;margin:0">Your Inquiry Is In.</h3>
+    <p style="font-size:12px;line-height:1.5;margin:12px auto 0;max-width:520px">Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>
+    <p style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.16em;margin:18px 0 0;text-transform:uppercase">Status: Inquiry Delivered</p>
+  </div>
+  <div style="display:{{ formDisplay }}">
+  <form data-inq data-cur="{{ curStep }}" noValidate="{{ true }}" onSubmit="{{ submitInquiry }}" style="display:grid;gap:9px 12px;margin-top:14px;max-width:100%;min-width:0;grid-template-columns:{{ formCols }}">
+    <div data-stepnav style="border-bottom:1px dashed rgba(49,29,3,.5);border-top:1px dashed rgba(49,29,3,.5);display:block;grid-column:1 / -1;margin:0 0 13px;padding:9px 0">
+      <div style="align-items:center;display:flex;gap:12px;justify-content:space-between">
+        <span style="font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.13em;text-transform:uppercase">{{ stepLabel }}</span>
+        <span aria-hidden="true" style="align-items:center;display:flex;flex:0 0 auto;gap:6px">
+          <span style="align-items:center;border-radius:50%;display:flex;flex:0 0 18px;font-family:'Ysabeau',sans-serif;font-size:7px;height:18px;justify-content:center;background:{{ d1bg }};border:1px solid {{ d1bd }};color:{{ d1fg }}">1</span>
+          <span style="height:1px;width:14px;background:{{ r1 }}"></span>
+          <span style="align-items:center;border-radius:50%;display:flex;flex:0 0 18px;font-family:'Ysabeau',sans-serif;font-size:7px;height:18px;justify-content:center;background:{{ d2bg }};border:1px solid {{ d2bd }};color:{{ d2fg }}">2</span>
+          <span style="height:1px;width:14px;background:{{ r2 }}"></span>
+          <span style="align-items:center;border-radius:50%;display:flex;flex:0 0 18px;font-family:'Ysabeau',sans-serif;font-size:7px;height:18px;justify-content:center;background:{{ d3bg }};border:1px solid {{ d3bd }};color:{{ d3fg }}">3</span>
+        </span>
+      </div>
+      <button type="button" onClick="{{ goBack }}" style="align-items:center;background:none;border:0;border-bottom:1px solid currentColor;color:#311d03;cursor:pointer;font-family:'Ysabeau',sans-serif;font-size:10px;gap:8px;letter-spacing:.14em;margin-top:10px;min-height:30px;padding:5px 0 4px;text-transform:uppercase;display:{{ backShow }}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back</button>
+    </div>
+    <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
+    <label data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" maxlength="120" /></label>
+    <label data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
+    <label data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" maxlength="30" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
+    <label data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Business Name *</span><input autocomplete="organization" name="business" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" maxlength="120" /></label>
+    <label data-step="2" style="display:{{ step2Display }};gap:7px"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Current Website</span><input autocomplete="url" name="website" placeholder="https://" type="url" maxlength="200" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
+    <label data-step="2" style="display:{{ step2Display }};gap:7px"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Social Media Profile</span><input autocomplete="url" name="social_profile" placeholder="https://" type="url" maxlength="200" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
+    <label data-step="2" style="display:{{ step2Display }};gap:7px"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Estimated Budget *</span><span style="align-items:center;border:1px solid rgba(49,29,3,.48);display:flex;min-height:36px;width:100%" style-focus-within="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c"><span aria-hidden="true" style="align-self:stretch;border-right:1px solid rgba(49,29,3,.28);color:rgba(49,29,3,.65);display:flex;align-items:center;font-family:'Playfair Display',Georgia,serif;font-size:15px;padding:0 10px">$</span><input inputmode="numeric" name="budget" onInput="{{ onBudget }}" placeholder="2,500" required="required" value="{{ budget }}" style="background:transparent;border:0;border-radius:0;color:#311d03;flex:1;font-family:inherit;font-size:14px;min-width:0;padding:5px 10px;width:100%" style-focus="outline:0" maxlength="12" /></span></label>
+    <div data-step="2" style="display:{{ step2Display }};position:relative;align-content:{{ dateAlign }};gap:{{ dateGap }};min-width:0">
+      <span style="font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:300;letter-spacing:.16em;text-transform:uppercase">Ideal Start Date</span>
+      <input name="startDate" type="hidden" value="{{ startDate }}" />
+      <button type="button" aria-haspopup="dialog" aria-expanded="{{ dateOpen }}" onClick="{{ toggleDate }}" style="align-items:center;background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;cursor:pointer;display:flex;font-family:inherit;font-size:13px;justify-content:space-between;padding:0 10px;text-align:left;width:100%;color:{{ dateColor }};min-height:{{ dateTriggerH }}" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0">{{ dateLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><rect x="3" y="5" width="18" height="16" rx="1"></rect><path d="M8 3v4M16 3v4M3 11h18"></path></svg></button>
+      <div role="dialog" aria-label="Choose a start date" style="background:#fffdf8;border:1px solid #311d03;border-radius:0;box-shadow:6px 8px 0 rgba(49,29,3,.13);left:0;max-width:100%;padding:8px;position:absolute;top:100%;width:min(260px,100%);z-index:30;display:{{ datePanel }}">
+        <div style="align-items:center;display:flex;justify-content:space-between;padding:4px 4px 8px">
+          <button type="button" aria-label="Previous month" onClick="{{ prevMonth }}" style="background:transparent;border:1px solid rgba(49,29,3,.4);border-radius:0;color:#311d03;cursor:pointer;height:26px;width:26px" style-hover="background:rgba(172,116,108,.18)">‹</button>
+          <span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">{{ monthLabel }}</span>
+          <button type="button" aria-label="Next month" onClick="{{ nextMonth }}" style="background:transparent;border:1px solid rgba(49,29,3,.4);border-radius:0;color:#311d03;cursor:pointer;height:26px;width:26px" style-hover="background:rgba(172,116,108,.18)">›</button>
+        </div>
+        <div style="display:grid;font-family:'Ysabeau',sans-serif;font-size:7px;grid-template-columns:repeat(7,minmax(0,1fr));letter-spacing:.08em;opacity:.65;padding:0 4px;text-align:center;text-transform:uppercase;width:100%"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+        <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:2px 4px 4px;width:100%">{{ dayCells }}</div>
+      </div>
+    </div>
+    <fieldset data-step="3" style="border:0;display:{{ step3Display }};gap:10px;grid-column:1 / -1;margin:0;min-width:0;padding:0;grid-template-columns:{{ svcCols }}">
+      <legend style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;grid-column:1 / -1;margin-bottom:7px;padding:0">Services You Are Interested In *</legend>
+      <button type="button" role="checkbox" data-cb="1" aria-checked="{{ iqBrandOn }}" onClick="{{ iqBrandToggle }}" style="align-items:center;background:transparent;border:0;color:#311d03;-webkit-appearance:none;appearance:none;cursor:pointer;display:flex;gap:9px;min-height:28px;padding:0;text-align:left"><span aria-hidden="true" style="border:1px solid #311d03;flex:0 0 13px;height:13px;width:13px;background:{{ iqBrandBg }};box-shadow:{{ iqBrandInset }}"></span><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Branding</span></button>
+      <button type="button" role="checkbox" data-cb="1" aria-checked="{{ iqWebOn }}" onClick="{{ iqWebToggle }}" style="align-items:center;background:transparent;border:0;color:#311d03;-webkit-appearance:none;appearance:none;cursor:pointer;display:flex;gap:9px;min-height:28px;padding:0;text-align:left"><span aria-hidden="true" style="border:1px solid #311d03;flex:0 0 13px;height:13px;width:13px;background:{{ iqWebBg }};box-shadow:{{ iqWebInset }}"></span><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Website Design</span></button>
+      <button type="button" role="checkbox" data-cb="1" aria-checked="{{ iqMktOn }}" onClick="{{ iqMktToggle }}" style="align-items:center;background:transparent;border:0;color:#311d03;-webkit-appearance:none;appearance:none;cursor:pointer;display:flex;gap:9px;min-height:28px;padding:0;text-align:left"><span aria-hidden="true" style="border:1px solid #311d03;flex:0 0 13px;height:13px;width:13px;background:{{ iqMktBg }};box-shadow:{{ iqMktInset }}"></span><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Digital Marketing</span></button>
+      <button type="button" role="checkbox" data-cb="1" aria-checked="{{ iqOtherOn }}" onClick="{{ iqOtherToggle }}" style="align-items:center;background:transparent;border:0;color:#311d03;-webkit-appearance:none;appearance:none;cursor:pointer;display:flex;gap:9px;min-height:28px;padding:0;text-align:left"><span aria-hidden="true" style="border:1px solid #311d03;flex:0 0 13px;height:13px;width:13px;background:{{ iqOtherBg }};box-shadow:{{ iqOtherInset }}"></span><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Other / Tailored Service</span></button>
+      <input name="services" type="hidden" value="{{ iqPicked }}" />
+    </fieldset>
+    <label data-step="3" style="gap:7px;grid-column:1 / -1;display:{{ otherDisplay }}"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Tell Us What You Need *</span><input name="customService" placeholder="Describe the support you are looking for" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" maxlength="120" /></label>
+    <label data-step="3" style="display:{{ step3Display }};gap:7px;grid-column:1 / -1"><span style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase">Tell Us A Little More</span><textarea name="notes" rows="3" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:14px;min-height:52px;padding:6px 10px;resize:vertical;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" maxlength="2000"></textarea></label>
+    <p aria-live="polite" role="alert" style="color:#8c2f22;font-size:11px;grid-column:1 / -1;margin:0;display:{{ errorDisplay }}">{{ error }}</p>
+    <div data-stepbtns style="display:grid;grid-column:1 / -1;margin-top:4px">
+      <button type="button" onClick="{{ goNext }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;font-family:'Ysabeau',sans-serif;font-size:8px;gap:11px;justify-content:center;letter-spacing:.18em;min-height:46px;text-transform:uppercase;width:100%;display:{{ nextShow }}">Next<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+    </div>
+    <button data-step="3" type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border-radius:0;color:#f5efe6;cursor:pointer;display:{{ sendDisplay }};font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:500;gap:10px;grid-column:1 / -1;justify-content:center;justify-self:start;letter-spacing:.18em;min-height:39px;padding:0 17px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ sendLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+  </form>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":620,"height":620},"narrow":{"editor":"boolean","default":false,"tsType":"boolean"},"onDone":{"editor":null,"tsType":"() =&gt; void"}}'>
+class Component extends DCLogic {
+  validate(form, stepOnly) {
+    const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required], input[type="email"], input[type="tel"], input[type="url"]')).filter((el) => {
+      if (!stepOnly) return true;
+      const owner = el.closest('[data-step]');
+      return owner && owner.getAttribute('data-step') === String(stepOnly);
+    });
+    const labelFor = (el) => {
+      const wrap = el.closest('label');
+      const txt = wrap ? (wrap.querySelector('span') || {}).textContent : '';
+      return (txt || el.getAttribute('placeholder') || el.name || 'This field').replace(/\s*\*\s*$/, '').trim();
+    };
+    for (const el of fields) {
+      const v = (el.value || '').trim();
+      if (!v && el.required) {
+        el.focus();
+        const label = labelFor(el).toLowerCase();
+        if (/^subject/.test(label)) return 'Please add a subject.';
+        return /^your\b/.test(label) ? 'Please add ' + label + '.' : 'Please add your ' + label + '.';
+      }
+      if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+        el.focus();
+        return 'That email address does not look right. Please check it.';
+      }
+      if (el.type === 'tel' && v.replace(/[^0-9]/g, '').length < 7) {
+        el.focus();
+        return 'Please add a full phone number.';
+      }
+      if (el.type === 'url' && v && !/^https?:\/\/[^\s]+$/i.test(v)) {
+        el.focus();
+        return 'Please enter the full link beginning with http:// or https://.';
+      }
+    }
+    // the services fieldset is custom toggles behind a hidden input, so it must be
+    // read from state — focusing a hidden input is a no-op. Checked last because
+    // the fieldset sits below the text fields.
+    const anyService = Object.keys(this.state.picked || {}).some((k) => this.state.picked[k]);
+    if ((!stepOnly || Number(stepOnly) === 3) && !anyService) {
+      const first = form.querySelector('[role="checkbox"]');
+      if (first) first.focus();
+      return 'Please select at least one service.';
+    }
+    if ((!stepOnly || Number(stepOnly) === 3) && this.state.picked.iqOther) {
+      const custom = form.querySelector('[name="customService"]');
+      if (custom && !(custom.value || '').trim()) {
+        custom.focus();
+        return 'Please tell us what tailored support you need.';
+      }
+    }
+    return '';
+  }
+  state = { picked: {}, dateOpen: false, startDate: '', viewMonth: null, sending: false, done: false, error: '', budget: '', step: 1 };
+  toggle(key) {
+    return () => this.setState((s) => {
+      const next = Object.assign({}, s.picked);
+      next[key] = !next[key];
+      return { picked: next };
+    });
+  }
+  monthBase() {
+    if (this.state.viewMonth) return new Date(this.state.viewMonth);
+    const d = new Date();
+    return new Date(d.getFullYear(), d.getMonth(), 1);
+  }
+  shiftMonth(delta) {
+    return () => {
+      const b = this.monthBase();
+      this.setState({ viewMonth: new Date(b.getFullYear(), b.getMonth() + delta, 1).toISOString() });
+    };
+  }
+  buildDays() {
+    const b = this.monthBase();
+    const year = b.getFullYear();
+    const month = b.getMonth();
+    const first = new Date(year, month, 1).getDay();
+    const total = new Date(year, month + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < first; i++) cells.push(React.createElement('span', { key: 'p' + i, style: { height: '30px' } }));
+    for (let d = 1; d <= total; d++) {
+      const iso = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+      const on = this.state.startDate === iso;
+      cells.push(React.createElement('button', {
+        key: iso,
+        type: 'button',
+        onClick: () => this.setState({ startDate: iso, dateOpen: false }),
+        style: {
+          background: on ? '#ac746c' : 'transparent',
+          border: 0,
+          borderRadius: 0,
+          color: on ? '#fffdf8' : '#311d03',
+          cursor: 'pointer',
+          fontFamily: "'Ysabeau', sans-serif",
+          fontSize: '11px',
+          height: '30px',
+          width: '100%',
+        },
+      }, String(d)));
+    }
+    return cells;
+  }
+  async send(form, subject, extra) {
+    const mod = await import('./web3forms.js');
+    return mod.submitToWeb3Forms(form, mod.WEB3FORM_KEYS.inquiry, subject, extra || {});
+  }
+  renderVals() {
+    const narrow = !!this.props.narrow;
+    const keys = [['iqBrand','Branding'],['iqWeb','Website Design'],['iqMkt','Digital Marketing'],['iqOther','Other / Tailored Service']];
+    const out = {};
+    const chosen = [];
+    keys.forEach(([k, label]) => {
+      const on = !!this.state.picked[k];
+      if (on) chosen.push(label);
+      out[k + 'On'] = on;
+      // .service-choices input:checked { background: espresso; box-shadow: inset 0 0 0 3px cream; }
+      out[k + 'Bg'] = on ? '#311d03' : 'transparent';
+      out[k + 'Inset'] = on ? 'inset 0 0 0 3px #f5efe6' : 'none';
+      out[k + 'Toggle'] = this.toggle(k);
+    });
+    const mb = this.monthBase();
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    out.iqPicked = chosen.join(', ');
+    out.startDate = this.state.startDate;
+    out.dateOpen = this.state.dateOpen;
+    out.datePanel = this.state.dateOpen ? 'block' : 'none';
+    out.dateLabel = this.state.startDate || 'Select A Date';
+    out.dateColor = this.state.startDate ? '#311d03' : 'rgba(49,29,3,.55)';
+    out.monthLabel = MONTHS[mb.getMonth()] + ' ' + mb.getFullYear();
+    out.dayCells = this.buildDays();
+    out.toggleDate = () => this.setState((s) => ({ dateOpen: !s.dateOpen }));
+    out.prevMonth = this.shiftMonth(-1);
+    out.nextMonth = this.shiftMonth(1);
+    // The component owns its three-step layout. This keeps the header popup and
+    // Services-page receipt identical even when host-page CSS cannot cross the
+    // imported component boundary.
+    out.formCols = narrow ? 'minmax(0,1fr)' : 'repeat(2,minmax(0,1fr))';
+    const st = this.state.step;
+    out.curStep = String(st);
+    out.step1Display = st === 1 ? 'grid' : 'none';
+    out.step2Display = st === 2 ? 'grid' : 'none';
+    out.step3Display = st === 3 ? 'grid' : 'none';
+    out.otherDisplay = st === 3 && this.state.picked.iqOther ? 'grid' : 'none';
+    out.sendDisplay = st === 3 ? 'inline-flex' : 'none';
+    out.backShow = st === 1 ? 'none' : 'inline-flex';
+    out.stepLabel = st === 1 ? '01 · Project Basics' : st === 2 ? '02 · Timing & Budget' : '03 · Project Scope';
+    out.nextShow = st === 3 ? 'none' : 'flex';
+    for (let i = 1; i <= 3; i++) {
+      const done = st > i;
+      const now = st === i;
+      out['d' + i + 'bg'] = done ? '#ac746c' : now ? '#311d03' : 'transparent';
+      out['d' + i + 'bd'] = done ? '#ac746c' : now ? '#311d03' : 'rgba(49,29,3,.4)';
+      out['d' + i + 'fg'] = done || now ? '#f5efe6' : 'rgba(49,29,3,.5)';
+    }
+    out.r1 = st > 1 ? '#311d03' : 'rgba(49,29,3,.3)';
+    out.r2 = st > 2 ? '#311d03' : 'rgba(49,29,3,.3)';
+    out.goNext = (e) => {
+      const form = e && e.currentTarget ? e.currentTarget.closest('form') : null;
+      const bad = form ? this.validate(form, st) : '';
+      if (bad) { this.setState({ error: bad }); return; }
+      this.setState((p) => ({ error: '', dateOpen: false, step: Math.min(3, p.step + 1) }));
+    };
+    out.goBack = () => this.setState((p) => ({ error: '', dateOpen: false, step: Math.max(1, p.step - 1) }));
+    out.svcCols = narrow ? 'minmax(0,1fr)' : 'repeat(4,minmax(0,1fr))';
+    out.dateAlign = narrow ? 'stretch' : 'start';
+    out.dateGap = narrow ? '7px' : '13px';
+    out.pad = narrow ? '5px 8px' : '5px 10px';
+    out.dateTriggerH = narrow ? '36px' : '52px';
+    out.error = this.state.error;
+    out.errorDisplay = this.state.error ? 'block' : 'none';
+    out.busy = !!this.state.sending;
+    out.budget = this.state.budget;
+    // digits only, thousands separated as typed
+    out.onBudget = (e) => {
+      const digits = String(e.target.value || '').replace(/[^0-9]/g, '').slice(0, 9);
+      this.setState({ budget: digits ? Number(digits).toLocaleString('en-US') : '' });
+    };
+    out.sendLabel = this.state.sending ? 'Sending Inquiry' : 'Send Your Inquiry';
+    out.doneDisplay = this.state.done ? 'block' : 'none';
+    out.formDisplay = this.state.done ? 'none' : 'block';
+    out.submitInquiry = (e) => {
+      e.preventDefault();
+      const bad = this.validate(e.target);
+      if (bad) { this.setState({ error: bad }); return; }
+      const form = e.target;
+      if (!chosen.length) { this.setState({ error: 'Please select at least one service.' }); return; }
+      this.setState({ error: '', sending: true });
+      const who = (form.business && form.business.value) || (form.name && form.name.value) || '';
+      this.send(form, 'New Project Inquiry | ' + who, { services: chosen.join(', ') })
+        .then(() => { this.setState({ done: true, sending: false }); if (this.props.onDone) this.props.onDone(); })
+        .catch((err) => this.setState({ error: err.message, sending: false }));
+    };
+    return out;
+  }
+}
+</script>
+</body>
+</html>
