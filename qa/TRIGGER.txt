@@ -1,1 +1,0 @@
-Trigger WebKit QA after hero capture fixes, final microtype audit, isolated route checks, and Safari/WebKit program-card compatibility rules are present on the audit branch.
