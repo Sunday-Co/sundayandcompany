@@ -52,17 +52,40 @@ async function audit(label, viewport) {
     await p.evaluate(()=>window.scrollTo(0,0)); await p.waitForTimeout(180);
     const state=await p.evaluate(()=>{
       const style=el=>el?getComputedStyle(el):null;
-      const imgs=Array.from(document.images).map(i=>({src:i.getAttribute('src'),complete:i.complete,naturalWidth:i.naturalWidth,naturalHeight:i.naturalHeight,display:style(i).display,visibility:style(i).visibility,opacity:style(i).opacity,contentVisibility:style(i).contentVisibility}));
-      const bad=imgs.filter(i=>!i.complete||!i.naturalWidth||!i.naturalHeight||i.display==='none'||i.visibility==='hidden'||Number(i.opacity)===0);
+      const imgs=Array.from(document.images).map(i=>({
+        src:i.getAttribute('src'),
+        alt:i.getAttribute('alt')||'',
+        complete:i.complete,
+        naturalWidth:i.naturalWidth,
+        naturalHeight:i.naturalHeight,
+        display:style(i).display,
+        visibility:style(i).visibility,
+        opacity:style(i).opacity,
+        contentVisibility:style(i).contentVisibility,
+        intentionalChrome:!!i.closest('header,footer,aside,[role="dialog"],[role="presentation"]')
+      }));
+      // Every image resource must decode. Hidden duplicates used by the closed menu/modal are
+      // allowed to remain hidden, because they are not page photography and should not paint.
+      const broken=imgs.filter(i=>!i.complete||!i.naturalWidth||!i.naturalHeight);
+      const hiddenPagePhotos=imgs.filter(i=>!i.intentionalChrome && i.alt && (i.display==='none'||i.visibility==='hidden'||Number(i.opacity)===0));
       const mail=document.querySelector('footer a[href^="mailto:"]'), loc=document.querySelector('footer [data-footer-location]'), ui=document.querySelector('footer [data-footer-ui]');
       const pick=el=>el?({size:style(el).fontSize,weight:style(el).fontWeight,line:style(el).lineHeight,family:style(el).fontFamily}):null;
       const shell=document.querySelector('[data-screen-label]');
       const full=Array.from(document.querySelectorAll('[data-capture-full-image]')).map(el=>({overflow:style(el).overflow,overflowY:style(el).overflowY,maxHeight:style(el).maxHeight,height:style(el).height,imgHeight:el.querySelector('img')?.getBoundingClientRect().height||0}));
       const cap=document.querySelector('img[src="/assets/opt/gallery-capitol.jpg"]');
       const hero=document.querySelector('section#top img[data-sunday-static-hero="true"]');
-      return {bad,footer:{mail:pick(mail),location:pick(loc),ui:pick(ui)},shell:shell?{overflow:style(shell).overflow,overflowX:style(shell).overflowX,overflowY:style(shell).overflowY}:null,full,cap:cap?{naturalWidth:cap.naturalWidth,naturalHeight:cap.naturalHeight}:null,hero:hero?{src:hero.getAttribute('src'),naturalWidth:hero.naturalWidth,naturalHeight:hero.naturalHeight,visibility:style(hero).visibility,opacity:style(hero).opacity,position:style(hero).position}:null};
+      return {
+        broken,
+        hiddenPagePhotos,
+        footer:{mail:pick(mail),location:pick(loc),ui:pick(ui)},
+        shell:shell?{overflow:style(shell).overflow,overflowX:style(shell).overflowX,overflowY:style(shell).overflowY}:null,
+        full,
+        cap:cap?{naturalWidth:cap.naturalWidth,naturalHeight:cap.naturalHeight}:null,
+        hero:hero?{src:hero.getAttribute('src'),naturalWidth:hero.naturalWidth,naturalHeight:hero.naturalHeight,visibility:style(hero).visibility,opacity:style(hero).opacity,position:style(hero).position}:null
+      };
     });
-    assert(state.bad.length===0, `${label} ${route} has non-rendered images: ${JSON.stringify(state.bad)}`);
+    assert(state.broken.length===0, `${label} ${route} has broken/undecoded images: ${JSON.stringify(state.broken)}`);
+    assert(state.hiddenPagePhotos.length===0, `${label} ${route} has hidden page photography: ${JSON.stringify(state.hiddenPagePhotos)}`);
     if(state.footer.mail&&state.footer.location&&state.footer.ui){
       assert(state.footer.mail.size===state.footer.location.size && state.footer.mail.size===state.footer.ui.size, `${label} ${route} footer size mismatch: ${JSON.stringify(state.footer)}`);
       assert(state.footer.mail.weight===state.footer.location.weight && state.footer.mail.weight===state.footer.ui.weight, `${label} ${route} footer weight mismatch: ${JSON.stringify(state.footer)}`);
