@@ -1,0 +1,86 @@
+name: Restore Portfolio Behavior
+
+on:
+  push:
+    branches:
+      - portfolio-behavior-restore-no-deploy-2026-09-12
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore original portfolio behavior overrides
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          files = [Path('assets/site.css'), Path('assets/rendered-corrections.css')]
+          changed = []
+
+          for path in files:
+              text = path.read_text()
+              original = text
+
+              # Keep the recent correction-layer motion disabled, but do not
+              # disable the site's original data-reveal system used by the
+              # portfolio case studies.
+              text = text.replace(
+                  '/* FINAL SOURCE ALIGNMENT · 2026-09-12 */\n[data-reveal],\n.sc-reveal,',
+                  '/* FINAL SOURCE ALIGNMENT · 2026-09-12 */\n.sc-reveal,'
+              )
+              text = text.replace(
+                  '/* FINAL SOURCE-ALIGNED REVISION · 2026-09-12 */\n\n/* Remove only recent correction-layer entrance/reveal motion. */\nform[data-inq] [data-step-panel],\n[data-service-body],\n[data-process-body],\naside[data-sheet-state="open"] nav > a,\naside[data-sheet-state="open"] [data-sheet-cta],\n[data-reveal],\n.sc-reveal,',
+                  '/* FINAL SOURCE-ALIGNED REVISION · 2026-09-12 */\n\n/* Remove only recent correction-layer entrance/reveal motion. */\nform[data-inq] [data-step-panel],\n[data-service-body],\n[data-process-body],\naside[data-sheet-state="open"] nav > a,\naside[data-sheet-state="open"] [data-sheet-cta],\n.sc-reveal,'
+              )
+
+              # Restore each page shell's own original overflow behavior.
+              text = text.replace(
+                  '[data-screen-label] {\n  max-width:100% !important;\n  overflow:visible !important;\n}\n',
+                  ''
+              )
+
+              if text != original:
+                  path.write_text(text)
+                  changed.append(str(path))
+
+          if len(changed) != 2:
+              raise SystemExit(f'Expected exactly 2 CSS files to change, changed: {changed}')
+
+          # Strict validation: portfolio reveal selectors must no longer be
+          # globally neutralized, but the newer correction-layer systems stay off.
+          for path in files:
+              text = path.read_text()
+              if '[data-screen-label] {\n  max-width:100% !important;\n  overflow:visible !important;\n}' in text:
+                  raise SystemExit(f'Global page-shell overflow override remains in {path}')
+              if 'FINAL SOURCE ALIGNMENT · 2026-09-12 */\n[data-reveal],' in text:
+                  raise SystemExit(f'data-reveal still disabled in {path}')
+              if 'aside[data-sheet-state="open"] [data-sheet-cta]' not in text:
+                  raise SystemExit(f'Recent-motion neutralizer unexpectedly missing from {path}')
+
+          lucky = Path('our-work/luckys-cafe-bakery/index.html').read_text()
+          if 'data-reveal="true"' not in lucky:
+              raise SystemExit('Original portfolio data-reveal markup missing')
+          if "n.style.opacity = '0'" not in lucky or "translateY(20px)" not in lucky:
+              raise SystemExit('Original portfolio reveal runtime missing')
+          if 'max-height:640px;overflow-y:auto' not in lucky:
+              raise SystemExit('Original portfolio internal scroll frame missing')
+
+          print('Portfolio behavior restoration source validation passed.')
+          PY
+      - name: Commit restored source
+        run: |
+          if git diff --quiet -- assets/site.css assets/rendered-corrections.css; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add assets/site.css assets/rendered-corrections.css
+          git commit -m "[skip netlify] Restore original portfolio behavior"
+          git push origin HEAD
