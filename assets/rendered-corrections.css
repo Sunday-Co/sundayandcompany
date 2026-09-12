@@ -416,42 +416,7 @@ img[data-sunday-capture-ready="true"] {
   z-index:0 !important;
 }
 
-/* The OPEN sign keeps its original character, but now loops without a one-shot handoff. */
-@keyframes sc-neon-sunday-final {
-  0%,42%,100% {
-    opacity:1;
-    text-shadow:0 0 6px rgba(255,240,236,.52),0 0 18px rgba(172,116,108,.78),0 0 44px rgba(172,116,108,.42),0 0 80px rgba(172,116,108,.18);
-  }
-  50% {
-    opacity:.82;
-    text-shadow:0 0 4px rgba(255,240,236,.38),0 0 13px rgba(172,116,108,.56),0 0 32px rgba(172,116,108,.28);
-  }
-  62% {
-    opacity:.95;
-    text-shadow:0 0 7px rgba(255,240,236,.62),0 0 21px rgba(172,116,108,.84),0 0 52px rgba(172,116,108,.48);
-  }
-  72% {
-    opacity:1;
-    text-shadow:0 0 8px rgba(255,240,236,.7),0 0 25px rgba(172,116,108,.92),0 0 60px rgba(172,116,108,.56),0 0 100px rgba(172,116,108,.24);
-  }
-}
-@keyframes sc-sway-sunday-continuous {
-  0%,100% { transform:rotate(-.45deg); }
-  50% { transform:rotate(.45deg); }
-}
-[data-sign] p[aria-hidden][style*="Pinyon Script"] {
-  animation:sc-neon-sunday-final 8.4s ease-in-out infinite !important;
-}
-[data-sign] > div[style*="transform-origin"] {
-  animation:sc-sway-sunday-continuous 12s ease-in-out infinite !important;
-}
-
-@media (prefers-reduced-motion:reduce) {
-  [data-sign] p[aria-hidden][style*="Pinyon Script"],
-  [data-sign] > div[style*="transform-origin"] {
-    animation:none !important;
-  }
-}
+/* OPEN sign motion uses the original homepage sequence. */
 
 /* SUNDAY ARCHIVE LIBRARY CARD MODALS */
 [role="dialog"][aria-label="The Fellows Table"],
@@ -547,5 +512,187 @@ img[data-sunday-capture-ready="true"] {
   [role="dialog"][aria-label="The Founders Club"]::after {
     font-size:6px;
     margin-top:16px;
+  }
+}
+
+
+/* FINAL CONSOLIDATED REVISION · 2026-09-12 */
+
+/* Remove only the recent correction-layer motion. Original component motion stays. */
+form[data-inq] [data-step-panel],
+[data-service-body],
+[data-process-body],
+aside[data-sheet-state="open"] nav > a,
+aside[data-sheet-state="open"] [data-sheet-cta] {
+  animation:none !important;
+}
+
+.sc-reveal,
+.sc-reveal.sc-in,
+.sc-reveal h1 [style*="Pinyon Script"],
+.sc-reveal h2 [style*="Pinyon Script"],
+.sc-reveal h3 [style*="Pinyon Script"],
+.sc-reveal.sc-in h1 [style*="Pinyon Script"],
+.sc-reveal.sc-in h2 [style*="Pinyon Script"],
+.sc-reveal.sc-in h3 [style*="Pinyon Script"] {
+  animation:none !important;
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+[data-sheet-cta] svg,
+[data-about-team-cta] svg,
+button[onClick*="openInquiry"] svg,
+a[href="/contact"] svg,
+a[href="#inquiry"] svg {
+  transform:none !important;
+  transition:none !important;
+}
+
+/* Reuse the exact original OPEN warm-up, damped swing, neon loop and slow sway.
+   The state sits on html so a component rerender cannot erase it. */
+html[data-sunday-sign-fallback="0"] [data-sign] p[aria-hidden][style*="Pinyon Script"],
+html[data-sunday-sign-fallback="0"] [data-sign] > div[style*="transform-origin"] {
+  animation:none !important;
+}
+html[data-sunday-sign-fallback="1"] [data-sign] p[aria-hidden][style*="Pinyon Script"] {
+  animation:sc-warm 2.6s ease-out 1 both, sc-neon 3.8s ease-in-out 2.6s infinite !important;
+}
+html[data-sunday-sign-fallback="1"] [data-sign] > div[style*="transform-origin"] {
+  animation:sc-rock 5.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 7s ease-in-out 5.4s infinite !important;
+}
+
+/* Project Inquiry: rose Inter Tight eyebrow, Playfair headline, more bottom air. */
+[aria-label="Project inquiry"] [data-inquiry-kicker],
+#inquiry [data-inquiry-kicker] {
+  color:var(--sc-rose) !important;
+  font-family:var(--sc-sans) !important;
+  font-size:11.5px !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:.12em !important;
+  line-height:1.25 !important;
+  margin:0 0 3px 0 !important;
+  text-transform:uppercase !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+#inquiry [data-inquiry-kicker] + h2 {
+  color:var(--sc-espresso) !important;
+  font-family:var(--sc-serif) !important;
+  font-weight:400 !important;
+  margin-top:0 !important;
+}
+@media (min-width:701px) {
+  [aria-label="Project inquiry"] > div { padding-bottom:42px !important; }
+}
+@media (max-width:700px) {
+  [aria-label="Project inquiry"] [data-inquiry-kicker],
+  #inquiry [data-inquiry-kicker] {
+    font-size:11px !important;
+    letter-spacing:.115em !important;
+    margin-bottom:3px !important;
+  }
+  [aria-label="Project inquiry"] > div { padding-bottom:44px !important; }
+}
+
+/* Sunday Reservation: receipt hierarchy with readable fine print by viewport. */
+@media (min-width:701px) {
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] {
+    font-size:9px !important;
+    font-weight:300 !important;
+    letter-spacing:.04em !important;
+    line-height:1.45 !important;
+  }
+}
+@media (max-width:700px) {
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] {
+    font-size:7px !important;
+    font-weight:300 !important;
+    letter-spacing:.045em !important;
+    line-height:1.4 !important;
+  }
+}
+
+/* Match the footer mail link to the visual weight of the surrounding body copy. */
+footer a[href^="mailto:"] {
+  font-family:var(--sc-sans) !important;
+  font-size:12.5px !important;
+  font-weight:400 !important;
+  letter-spacing:.01em !important;
+  line-height:1.4 !important;
+  opacity:1 !important;
+}
+
+/* Static Safari Full Page/PDF capture safeguards. */
+img { content-visibility:visible !important; }
+img[data-sunday-static-hero="true"],
+section#top > img[style*="position:absolute"],
+section[data-screen-hero] > img[style*="position:absolute"] {
+  content-visibility:visible !important;
+  display:block !important;
+  height:100% !important;
+  inset:auto !important;
+  min-height:100% !important;
+  object-fit:cover !important;
+  opacity:1 !important;
+  position:relative !important;
+  visibility:visible !important;
+  width:100% !important;
+  z-index:0 !important;
+  -webkit-print-color-adjust:exact !important;
+  print-color-adjust:exact !important;
+}
+
+@media print {
+  html, body, #dc-root, #dc-root > .sc-host {
+    height:auto !important;
+    min-height:100% !important;
+    overflow:visible !important;
+  }
+  img {
+    content-visibility:visible !important;
+    visibility:visible !important;
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+  img[data-sunday-static-hero="true"],
+  section#top > img[style*="position:absolute"],
+  section[data-screen-hero] > img[style*="position:absolute"] {
+    display:block !important;
+    height:100% !important;
+    inset:auto !important;
+    min-height:100% !important;
+    object-fit:cover !important;
+    opacity:1 !important;
+    position:relative !important;
+    visibility:visible !important;
+    width:100% !important;
+  }
+}
+
+/* Our Work: keep the large Bill of Work, but give the headline its own column. */
+@media (min-width:1100px) {
+  [data-screen-label^="Our Work"] #top > div {
+    align-items:end !important;
+    gap:clamp(40px,4vw,64px) !important;
+    grid-template-columns:minmax(0,1fr) minmax(440px,500px) !important;
+  }
+  [data-screen-label^="Our Work"] #work-title {
+    font-size:clamp(58px,7vw,108px) !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+  [data-screen-label^="Our Work"] #work-title > span {
+    font-size:1.02em !important;
+    margin-left:clamp(16px,2vw,34px) !important;
+    max-width:100% !important;
+    white-space:normal !important;
+  }
+  [data-work-receipt] {
+    justify-self:end !important;
+    max-width:500px !important;
+    min-width:440px !important;
+    width:100% !important;
   }
 }
