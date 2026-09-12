@@ -36,7 +36,7 @@
 
   <article style="color:#311d03;height:360px;perspective:1400px">
     <div style="height:100%;position:relative;transform-style:preserve-3d;transition:transform 760ms cubic-bezier(.2,.78,.22,1);width:100%;transform:{{ flip0 }}">
-      <button type="button" aria-label="{{ frontLabel0 }}" onClick="{{ doFlip0 }}" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;cursor:pointer;display:grid;font:inherit;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;text-align:left;width:100%">
+      <button type="button" aria-label="{{ frontLabel0 }}" onClick="{{ doFlip0 }}" style="opacity:{{ frontOpacity0 }};pointer-events:{{ frontPointer0 }};visibility:{{ frontVisibility0 }};backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;cursor:pointer;display:grid;font:inherit;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;text-align:left;width:100%">
         <span style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Co. · No. 01</span><span style="opacity:.7">Marketing Internship</span></span>
         <span style="align-items:center;display:flex;padding:0 18px"><strong style="display:block;font-weight:400;letter-spacing:-.045em;line-height:1;font-size:{{ cardTitle }}">The Fellows Table</strong></span>
         <span style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;justify-content:space-between;padding:12px 18px 14px">
@@ -44,7 +44,7 @@
           <span data-program-action style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">{{ frontAction }} <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
         </span>
       </button>
-      <div style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:{{ backFaceDisplay }};grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
+      <div style="opacity:{{ backOpacity0 }};pointer-events:{{ backPointer0 }};visibility:{{ backVisibility0 }};backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:{{ backFaceDisplay }};grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
         <span style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Card No. 01</span><span style="opacity:.7">Catalog Entry</span></span>
         <div style="display:flex;flex-direction:column;justify-content:center;min-height:0;padding:16px 18px;position:relative">
           <span aria-hidden="true" style="align-items:center;border:1px solid rgba(49,29,3,.5);border-radius:50%;display:flex;flex-direction:column;height:76px;justify-content:center;opacity:.72;position:absolute;right:16px;top:14px;width:76px">
@@ -70,7 +70,7 @@
 
   <article style="color:#311d03;height:360px;perspective:1400px">
     <div style="height:100%;position:relative;transform-style:preserve-3d;transition:transform 760ms cubic-bezier(.2,.78,.22,1);width:100%;transform:{{ flip1 }}">
-      <button type="button" aria-label="{{ frontLabel1 }}" onClick="{{ doFlip1 }}" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;cursor:pointer;display:grid;font:inherit;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;text-align:left;width:100%">
+      <button type="button" aria-label="{{ frontLabel1 }}" onClick="{{ doFlip1 }}" style="opacity:{{ frontOpacity1 }};pointer-events:{{ frontPointer1 }};visibility:{{ frontVisibility1 }};backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;cursor:pointer;display:grid;font:inherit;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;text-align:left;width:100%">
         <span style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Co. · No. 02</span><span style="opacity:.7">Freelance Contributor</span></span>
         <span style="align-items:center;display:flex;padding:0 18px"><strong style="display:block;font-weight:400;letter-spacing:-.045em;line-height:1;font-size:{{ cardTitle }}">The Espresso Club</strong></span>
         <span style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;justify-content:space-between;padding:12px 18px 14px">
@@ -78,7 +78,7 @@
           <span data-program-action style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">{{ frontAction }} <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
         </span>
       </button>
-      <div style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:{{ backFaceDisplay }};grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
+      <div style="opacity:{{ backOpacity1 }};pointer-events:{{ backPointer1 }};visibility:{{ backVisibility1 }};backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:{{ backFaceDisplay }};grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
         <span style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Card No. 02</span><span style="opacity:.7">Catalog Entry</span></span>
         <div style="display:flex;flex-direction:column;justify-content:center;min-height:0;padding:16px 18px;position:relative">
           <span aria-hidden="true" style="align-items:center;border:1px solid rgba(49,29,3,.5);border-radius:50%;display:flex;flex-direction:column;height:76px;justify-content:center;opacity:.72;position:absolute;right:16px;top:14px;width:76px">
@@ -104,7 +104,7 @@
 
   <article style="color:#311d03;height:360px;perspective:1400px">
     <div style="height:100%;position:relative;transform-style:preserve-3d;transition:transform 760ms cubic-bezier(.2,.78,.22,1);width:100%;transform:{{ flip2 }}">
-      <button type="button" aria-label="{{ frontLabel2 }}" onClick="{{ doFlip2 }}" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;cursor:pointer;display:grid;font:inherit;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;text-align:left;width:100%">
+      <button type="button" aria-label="{{ frontLabel2 }}" onClick="{{ doFlip2 }}" style="opacity:{{ frontOpacity2 }};pointer-events:{{ frontPointer2 }};visibility:{{ frontVisibility2 }};backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;cursor:pointer;display:grid;font:inherit;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;text-align:left;width:100%">
         <span style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Co. · No. 03</span><span style="opacity:.7">Membership</span></span>
         <span style="align-items:center;display:flex;padding:0 18px"><strong style="display:block;font-weight:400;letter-spacing:-.045em;line-height:1;font-size:{{ cardTitle }}">The Founders Club</strong></span>
         <span style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;justify-content:space-between;padding:12px 18px 14px">
@@ -112,7 +112,7 @@
           <span data-program-action style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">{{ frontAction }} <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
         </span>
       </button>
-      <div style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:{{ backFaceDisplay }};grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
+      <div style="opacity:{{ backOpacity2 }};pointer-events:{{ backPointer2 }};visibility:{{ backVisibility2 }};backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:{{ backFaceDisplay }};grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
         <span style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Card No. 03</span><span style="opacity:.7">Catalog Entry</span></span>
         <div style="display:flex;flex-direction:column;justify-content:center;min-height:0;padding:16px 18px;position:relative">
           <span aria-hidden="true" style="align-items:center;border:1px solid rgba(49,29,3,.5);border-radius:50%;display:flex;flex-direction:column;height:76px;justify-content:center;opacity:.72;position:absolute;right:16px;top:14px;width:76px">
@@ -303,7 +303,17 @@ class Component extends DCLogic {
       stop: (e) => e.stopPropagation(),
     };
     for (let i = 0; i < 3; i++) {
-      out['flip' + i] = this.state.flipped === i ? 'rotateY(180deg)' : 'rotateY(0deg)';
+      const isFlipped = this.state.flipped === i;
+      out['flip' + i] = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+      // Keep the original 3D flip on phones, while explicitly hiding only
+      // the inactive face. This prevents Safari full-page capture from
+      // painting untouched cards backwards without changing the interaction.
+      out['frontOpacity' + i] = t && isFlipped ? '0' : '1';
+      out['frontVisibility' + i] = t && isFlipped ? 'hidden' : 'visible';
+      out['frontPointer' + i] = t && isFlipped ? 'none' : 'auto';
+      out['backOpacity' + i] = t && !isFlipped ? '0' : '1';
+      out['backVisibility' + i] = t && !isFlipped ? 'hidden' : 'visible';
+      out['backPointer' + i] = t && !isFlipped ? 'none' : 'auto';
       out['doFlip' + i] = () => this.setState({ flipped: i });
       out['d' + i] = this.state.dialog === i ? 'flex' : 'none';
       out['openD' + i] = () => this.setState({ dialog: i });
