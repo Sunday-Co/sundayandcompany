@@ -53,12 +53,12 @@ jobs:
           name: sunday-targeted-qa-final
           path: /tmp/sunday-qa
           if-no-files-found: ignore
-      - name: Commit verified source and remove temporary QA tooling
+      - name: Commit verified source and remove temporary QA scripts
         if: success()
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs .github/scripts/revert_inquiry_lockup.py .github/scripts/fix_open_sign.py .github/scripts/fix_program_cards.py
+          git rm .github/scripts/targeted_qa.mjs .github/scripts/revert_inquiry_lockup.py .github/scripts/fix_open_sign.py .github/scripts/fix_program_cards.py
           git add -A
           git diff --cached --check
           git commit -m "[skip ci] [skip netlify] Verify final Sunday visual batch"
