@@ -34,23 +34,26 @@ const browser = await webkit.launch();
 try {
   for (const profile of profiles) {
     const context = await browser.newContext({ viewport: profile.viewport, isMobile: profile.isMobile, userAgent: profile.userAgent, deviceScaleFactor: 1 });
-    const page = await context.newPage();
 
     for (const route of routes) {
+      const page = await context.newPage();
       const url = `http://127.0.0.1:4173${route}`;
       let status = 0;
       const consoleErrors = [];
-      const onConsole = (msg) => { if (msg.type() === 'error') consoleErrors.push(msg.text()); };
-      page.on('console', onConsole);
+      page.on('console', (msg) => { if (msg.type() === 'error') consoleErrors.push(msg.text()); });
+
       try {
-        const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 12000 });
+        const response = await page.goto(url, { waitUntil: 'commit', timeout: 12000 });
         status = response?.status() || 0;
-        await page.waitForFunction(() => document.querySelector('#dc-root .sc-host') || document.querySelector('[data-screen-label]'), null, { timeout: 7000 }).catch(() => {});
+        await page.waitForFunction(() => document.readyState !== 'loading', null, { timeout: 7000 }).catch(() => {});
+        await page.waitForFunction(() => document.querySelector('#dc-root .sc-host') || document.querySelector('[data-screen-label]'), null, { timeout: 8000 }).catch(() => {});
         await page.waitForTimeout(900);
 
         const metrics = await page.evaluate(() => {
           const root = document.documentElement;
           const body = document.body;
+          const dcRoot = document.querySelector('#dc-root');
+          const host = document.querySelector('#dc-root > .sc-host');
           const sheet = document.querySelector('aside[aria-label="Sunday & Company navigation"]');
           const rect = sheet ? sheet.getBoundingClientRect() : null;
           const sections = Array.from(document.querySelectorAll('[data-screen-label] > section, main section'));
@@ -61,6 +64,9 @@ try {
             bodyScrollWidth: body ? body.scrollWidth : 0,
             docScrollHeight: root.scrollHeight,
             bodyScrollHeight: body ? body.scrollHeight : 0,
+            rootClientHeight: root.clientHeight,
+            dcRootHeight: dcRoot ? dcRoot.getBoundingClientRect().height : null,
+            hostHeight: host ? host.getBoundingClientRect().height : null,
             sheetState: sheet?.getAttribute('data-sheet-state') || null,
             sheetDisplay: sheet ? getComputedStyle(sheet).display : null,
             sheetRight: rect ? rect.right : null,
@@ -72,18 +78,20 @@ try {
 
         const widthOverflow = Math.max(metrics.docScrollWidth, metrics.bodyScrollWidth) - metrics.innerWidth;
         const closedSheetPainted = metrics.sheetState === 'closed' && metrics.sheetDisplay !== 'none';
+        const scrollHeight = Math.max(metrics.docScrollHeight, metrics.bodyScrollHeight);
+        const runtimeRootTooShort = metrics.dcRootHeight != null && scrollHeight > metrics.innerWidth && metrics.dcRootHeight + 4 < scrollHeight;
         const routeSlug = route === '/' ? 'home' : route.replace(/^\//, '').replace(/\/$/, '').replaceAll('/', '__').replace('.html', '');
         const shot = path.join(OUT, `${profile.name}__${routeSlug}.png`);
         await page.screenshot({ path: shot, fullPage: true, animations: 'disabled' });
 
-        const passed = widthOverflow <= 2 && !closedSheetPainted && metrics.transparentSections === 0 && status < 500;
+        const passed = widthOverflow <= 2 && !closedSheetPainted && metrics.transparentSections === 0 && !runtimeRootTooShort && status < 500;
         if (!passed) failures++;
-        report.push({ profile: profile.name, route, status, passed, widthOverflow, closedSheetPainted, consoleErrors, metrics, screenshot: path.basename(shot) });
+        report.push({ profile: profile.name, route, status, passed, widthOverflow, closedSheetPainted, runtimeRootTooShort, consoleErrors, metrics, screenshot: path.basename(shot) });
       } catch (error) {
         failures++;
         report.push({ profile: profile.name, route, status, passed: false, error: String(error), consoleErrors });
       } finally {
-        page.off('console', onConsole);
+        await page.close().catch(() => {});
       }
     }
     await context.close();
