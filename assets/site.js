@@ -22,12 +22,6 @@
     });
   }
 
-  /* The DC runtime injects a standalone baseline that fixes html, body,
-     #dc-root and the root host to height:100%. That is appropriate for a
-     single-screen canvas but not for this long scrolling site. Safari's Full
-     Page capture can otherwise snapshot only the first viewport as an opaque
-     canvas and leave the remainder transparent. Normalize the runtime roots to
-     document height so the complete page is part of the painted document. */
   function normalizeRuntimeRoots() {
     var root = document.documentElement;
     root.style.setProperty('height', 'auto', 'important');
@@ -40,9 +34,7 @@
       document.body.style.setProperty('min-height', '100%', 'important');
       document.body.style.setProperty('max-width', '100%', 'important');
       document.body.style.setProperty('overflow-x', 'hidden', 'important');
-      if (!document.body.style.backgroundColor) {
-        document.body.style.backgroundColor = '#f5efe6';
-      }
+      if (!document.body.style.backgroundColor) document.body.style.backgroundColor = '#f5efe6';
     }
 
     document.querySelectorAll('#dc-root, #dc-root > .sc-host').forEach(function (node) {
@@ -53,11 +45,6 @@
     });
   }
 
-  /* Safari Full Page capture can include transformed fixed drawers outside the
-     viewport when calculating the screenshot canvas. Closed navigation sheets
-     are therefore removed from rendering entirely, not merely translated 102%
-     offscreen. This also prevents the captured page from becoming enormously
-     wide with the real site compressed into a narrow strip. */
   function stabilizeCaptureUI() {
     normalizeRuntimeRoots();
 
@@ -80,9 +67,6 @@
       });
   }
 
-  /* Large editorial imagery gets a restrained paper/photo reveal. It only runs
-     when the section is genuinely entering the viewport, so offscreen media
-     stays fully painted for Safari Full Page screenshots. */
   function animateEditorialMedia(node) {
     if (reduce || !Element.prototype.animate) return;
     var images = node.querySelectorAll('img');
@@ -106,10 +90,6 @@
     var nodes = getRevealNodes();
     if (!nodes.length) return false;
 
-    /* Full-page capture safety: offscreen sections stay fully visible in the
-       document until they actually approach the viewport. Safari/WebKit full-
-       page screenshots therefore never capture blank blocks simply because an
-       IntersectionObserver has not scrolled through the page. */
     if (reduce || !('IntersectionObserver' in window)) {
       nodes.forEach(function (node) {
         node.classList.remove('sc-reveal');
@@ -150,13 +130,8 @@
 
   function boot() {
     sync();
-
-    // The DC runtime mounts and updates shared components after document load.
-    // Watch inserted markup and navigation-sheet state changes so the capture
-    // fix and motion system stay synchronized with the rendered UI.
-    var root = document.documentElement;
     var mo = new MutationObserver(function () { sync(); });
-    mo.observe(root, {
+    mo.observe(document.documentElement, {
       childList: true,
       subtree: true,
       attributes: true,
@@ -168,9 +143,6 @@
     }, 4000);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
-  } else {
-    boot();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+  else boot();
 })();
