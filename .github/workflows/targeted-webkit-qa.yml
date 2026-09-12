@@ -31,7 +31,8 @@ jobs:
           grep -q 'sc-neon-sunday-final 8.4s' assets/rendered-corrections.css
           grep -q 'sc-sway 12s' assets/rendered-corrections.css
           grep -q 'max-width:520px' assets/rendered-corrections.css
-          grep -q 'WebKit full-page capture can paint hidden 3D backs' 'Program Cards.dc.html'
+          grep -q 'frontVisibility0' 'Program Cards.dc.html'
+          grep -q 'backVisibility2' 'Program Cards.dc.html'
           grep -q 'duration: 1300' assets/site.js
           grep -q 'duration: 1450' assets/site.js
       - name: Install WebKit
