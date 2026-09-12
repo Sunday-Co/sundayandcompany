@@ -8,6 +8,7 @@ on:
       - 'scripts/version-production-assets.py'
       - 'scripts/fix-mobile-program-cards.py'
       - 'scripts/final-source-corrections-v2.py'
+      - 'scripts/final-tiny-corrections.py'
       - '.github/workflows/version-production-assets.yml'
 
 permissions:
@@ -27,6 +28,7 @@ jobs:
           python3 scripts/version-production-assets.py
           python3 scripts/fix-mobile-program-cards.py
           python3 scripts/final-source-corrections-v2.py
+          python3 scripts/final-tiny-corrections.py
 
       - name: Commit rendered production corrections
         run: |
