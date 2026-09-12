@@ -13,7 +13,7 @@
       <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0 0 5px;text-transform:uppercase">Stay In Touch</p>
       <h2 style="font-size:clamp(21px,2.1vw,30px);font-weight:400;letter-spacing:-.055em;line-height:1;margin:0">Join The Sunday Reservation</h2>
       <p style="font-size:10px;line-height:1.35;margin-top:5px">Thoughtful notes on branding, business and the work behind both.</p>
-      <p style="font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.13em;line-height:1.6;margin-top:7px;opacity:.78;text-transform:uppercase">By subscribing you agree to receive notes from Sunday &amp; Company. Unsubscribe any time. See our <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
+      <p data-news-fineprint style="font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.13em;line-height:1.6;margin-top:7px;opacity:.78;text-transform:uppercase">By subscribing you agree to receive notes from Sunday &amp; Company. Unsubscribe any time. See our <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
     </div>
     <form noValidate="{{ true }}" onSubmit="{{ submitNews }}" style="align-items:stretch;column-gap:18px;display:{{ newsFormDisplay }};row-gap:{{ nlRowGap }};grid-template-columns:{{ nlForm }};margin-top:{{ nlFormTop }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
@@ -31,17 +31,17 @@
       <div style="align-items:center;display:flex;min-width:0;grid-column:{{ fBrandCol }};grid-row:{{ fSpanRow }};min-height:{{ fBrandMinH }}"><img src="/assets/monogram-light.svg" alt="Sunday &amp; Company SC monogram" style="height:auto;margin:0;max-width:100%;opacity:.88;width:clamp(96px,8vw,122px)" /></div>
       <div style="display:flex;flex-direction:column;gap:7px;grid-column:{{ fExploreCol }};grid-row:{{ fSpanRow }}">
         <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:4px;text-transform:uppercase">Explore</p>
-        <a href="/about" style="font-size:11.5px;line-height:1.3" style-hover="color:#ac746c">About Us</a>
-        <a href="/services" style="font-size:11.5px;line-height:1.3" style-hover="color:#ac746c">Services</a>
-        <a href="/our-work" style="font-size:11.5px;line-height:1.3" style-hover="color:#ac746c">Our Work</a>
-        <a href="/contact" style="font-size:11.5px;line-height:1.3" style-hover="color:#ac746c">Contact</a>
-        <a href="/join-our-team" style="font-size:11.5px;line-height:1.3" style-hover="color:#ac746c">Join Our Team</a>
-        <a href="/sunday-school" style="font-size:11.5px;line-height:1.3" style-hover="color:#ac746c">Sunday School</a>
+        <a data-footer-ui href="/about" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;line-height:1.35" style-hover="color:#ac746c">About Us</a>
+        <a data-footer-ui href="/services" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;line-height:1.35" style-hover="color:#ac746c">Services</a>
+        <a data-footer-ui href="/our-work" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;line-height:1.35" style-hover="color:#ac746c">Our Work</a>
+        <a data-footer-ui href="/contact" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;line-height:1.35" style-hover="color:#ac746c">Contact</a>
+        <a data-footer-ui href="/join-our-team" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;line-height:1.35" style-hover="color:#ac746c">Join Our Team</a>
+        <a data-footer-ui href="/sunday-school" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;line-height:1.35" style-hover="color:#ac746c">Sunday School</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:7px;min-width:0;grid-column:{{ fContactCol }};grid-row:{{ fTopRow }}">
         <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:4px;text-transform:uppercase">Contact</p>
-        <a href="mailto:hello@sundayandcompany.co" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;letter-spacing:.02em;line-height:1.4;overflow-wrap:anywhere" style-hover="color:#ac746c">hello@sundayandcompany.co</a>
-        <p style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;letter-spacing:.02em;line-height:1.4">DMV (D.C., Maryland, Virginia) · North Carolina · Serving Everywhere</p>
+        <a data-footer-ui href="mailto:hello@sundayandcompany.co" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;letter-spacing:.02em;line-height:1.4;overflow-wrap:anywhere" style-hover="color:#ac746c">hello@sundayandcompany.co</a>
+        <p data-footer-location style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;letter-spacing:.02em;line-height:1.4">DMV (D.C., Maryland, Virginia) · North Carolina · Serving Everywhere</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:7px;grid-column:{{ fConnectCol }};grid-row:{{ fTopRow }}">
         <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:4px;text-transform:uppercase">Connect</p>
@@ -50,11 +50,11 @@
           <a aria-label="TikTok" href="https://www.tiktok.com/@sundayand_co" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex" style-hover="color:#ac746c"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:22px;width:22px"><path d="M14.35 3v10.06a4.05 4.05 0 1 1-3.5-4.01v2.3a1.8 1.8 0 1 0 1.25 1.71V3h2.25Zm0 0c.24 1.88 1.32 3.2 3.15 3.93v2.39a6.65 6.65 0 0 1-3.15-1.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55"></path></svg></a>
           <a aria-label="LinkedIn" href="https://www.linkedin.com/company/sundayand-co/" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex" style-hover="color:#ac746c"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:22px;width:22px"><rect x="3.5" y="3.5" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5"></rect><circle cx="8" cy="8.2" r="1.1" fill="currentColor"></circle><path d="M7 10.6v6.4M11 17v-6.4m0 2.1c.65-1.36 1.75-2.15 3.15-2.15 1.95 0 2.85 1.26 2.85 3.45v3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path></svg></a>
         </div>
-        <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="font-size:11.5px;line-height:1.3" style-hover="color:#ac746c">@sundayand_co</a>
+        <a data-footer-ui href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="font-family:'Inter Tight',sans-serif;font-size:12.5px;font-weight:300;line-height:1.35" style-hover="color:#ac746c">@sundayand_co</a>
       </div>
       <p style="align-self:end;font-size:clamp(17px,1.5vw,23px);font-weight:400;letter-spacing:-.04em;line-height:.95;grid-column:{{ fTagCol }};grid-row:{{ fTagRow }};justify-self:{{ fTagJustify }};margin-top:{{ fTagTop }};text-align:{{ fTagAlign }}">A Seat At <em style="color:#ac746c;font-weight:400">Our Table.</em></p>
     </div>
-    <div style="align-items:start;border-top:1px solid rgba(245,239,230,.42);column-gap:clamp(20px,3vw,48px);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.16em;padding-top:12px;text-transform:uppercase;grid-template-columns:{{ fBottom }};row-gap:{{ fBottomGap }}">
+    <div data-footer-legal style="align-items:start;border-top:1px solid rgba(245,239,230,.42);column-gap:clamp(20px,3vw,48px);display:grid;font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.16em;padding-top:12px;text-transform:uppercase;grid-template-columns:{{ fBottom }};row-gap:{{ fBottomGap }}">
       <span>© 2026 Sunday &amp; Company Marketing LLC · All Rights Reserved</span>
       <nav aria-label="Legal" style="display:flex;flex-wrap:wrap;gap:8px 13px;justify-content:{{ fLegalJustify }}">
         <a href="/privacy-policy" style="border-bottom:1px solid rgba(245,239,230,.45);padding-bottom:2px">Privacy Policy</a>

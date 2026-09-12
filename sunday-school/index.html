@@ -182,7 +182,7 @@
 
   <dc-import name="/Site Header" hint-size="100%,0px"></dc-import>
 
-  <section aria-labelledby="school-title" style="align-items:end;color:#f5efe6;display:grid;isolation:isolate;min-height:68svh;overflow:hidden;padding:118px max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) 58px;position:relative">
+  <section data-screen-hero="image" aria-labelledby="school-title" style="align-items:end;background:#311d03 url('/assets/sunday-school-hero.jpg') center / cover no-repeat;color:#f5efe6;display:grid;isolation:isolate;min-height:68svh;overflow:hidden;padding:118px max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) 58px;position:relative">
     <div style="inset:0;overflow:hidden;position:absolute;z-index:-2"><img src="/assets/sunday-school-hero.jpg" alt="Laptop, keyboard, glasses and coffee arranged on a Sunday School workspace" style="height:100%;object-fit:cover;object-position:center;width:100%" /></div>
     <div aria-hidden="true" style="background:linear-gradient(90deg, rgba(34,18,2,.84) 0%, rgba(34,18,2,.65) 46%, rgba(34,18,2,.38) 100%);inset:0;position:absolute;z-index:-1"></div>
     <div style="max-width:680px">
@@ -200,10 +200,10 @@
       <p style="font-size:13.5px;line-height:1.62;max-width:500px">New templates, free resources, course waitlists and opening details will reach The Sunday Reservation first.</p>
     </div>
     <div style="display:{{ notesDoneDisplay }}">
-      <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">The Sunday Reservation</p>
+      <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">The Sunday Reservation</p>
       <h3 style="font-size:clamp(26px,2.8vw,38px);font-weight:400;letter-spacing:-.05em;line-height:.96;margin:0">You’re On <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">The List.</em></h3>
       <p style="font-size:12.5px;line-height:1.6;margin:14px 0 0;max-width:420px">Your seat is saved. New templates, free resources and course openings will reach you first.</p>
-      <p style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
+      <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
     </div>
     <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
