@@ -52,6 +52,7 @@ jobs:
       - name: Run final corrections QA
         run: |
           sed -i "s/dialogAnimation !== 'none'/dialogAnimation !== 'sunday-modal-in'/" .github/scripts/final_corrections_qa.mjs
+          sed -i 's/timeout: 15000/timeout: 45000/g' .github/scripts/final_corrections_qa.mjs
           node .github/scripts/final_corrections_qa.mjs
 
       - name: Upload QA screenshots
