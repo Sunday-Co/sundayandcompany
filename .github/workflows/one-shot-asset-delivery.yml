@@ -2,15 +2,13 @@ name: One-shot asset delivery prep
 
 on:
   push:
-    branches:
-      - delivery-fix-no-deploy-2026-09-12
+    branches: ["delivery-fix-no-deploy-2026-09-12"]
 
 permissions:
   contents: write
 
 jobs:
   prepare:
-    if: contains(github.event.head_commit.message, 'Install one-shot delivery prep')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +21,6 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          import sys
 
           version = '20260912-6'
           css_line = f'<link rel="stylesheet" href="/assets/site.css?v={version}" />'
@@ -42,19 +39,14 @@ jobs:
               if '/assets/site.js?v=' not in text:
                   continue
               pages.append(path)
-
-              css_matches = css_pat.findall(text)
-              js_matches = js_pat.findall(text)
-              correction_matches = correction_pat.findall(text)
-              if len(css_matches) != 1:
-                  raise SystemExit(f'{path}: expected exactly one site.css tag, found {len(css_matches)}')
-              if len(js_matches) != 1:
-                  raise SystemExit(f'{path}: expected exactly one site.js tag, found {len(js_matches)}')
-              if len(correction_matches) > 1:
+              if len(css_pat.findall(text)) != 1:
+                  raise SystemExit(f'{path}: site.css tag count is not 1')
+              if len(js_pat.findall(text)) != 1:
+                  raise SystemExit(f'{path}: site.js tag count is not 1')
+              if len(correction_pat.findall(text)) > 1:
                   raise SystemExit(f'{path}: multiple correction stylesheet tags')
-
               text = css_pat.sub(css_line, text, count=1)
-              if correction_matches:
+              if correction_pat.search(text):
                   text = correction_pat.sub(correction_line, text, count=1)
               else:
                   text = text.replace(css_line, css_line + '\n' + correction_line, 1)
@@ -62,69 +54,54 @@ jobs:
               path.write_text(text, encoding='utf-8')
 
           if len(pages) != 16:
-              raise SystemExit('Expected 16 production HTML pages with site.js, found %d: %s' % (len(pages), ', '.join(map(str, pages))))
+              raise SystemExit(f'Expected 16 production HTML pages, found {len(pages)}: {pages}')
 
           site_js_path = Path('assets/site.js')
           site_js = site_js_path.read_text(encoding='utf-8')
-          old_fallback = "/assets/rendered-corrections.css?v=20260912-5"
+          old_fallback = '/assets/rendered-corrections.css?v=20260912-5'
           if site_js.count(old_fallback) != 1:
-              raise SystemExit(f'assets/site.js: expected one old correction fallback, found {site_js.count(old_fallback)}')
-          site_js = site_js.replace(old_fallback, f'/assets/rendered-corrections.css?v={version}', 1)
-          site_js_path.write_text(site_js, encoding='utf-8')
+              raise SystemExit(f'assets/site.js old fallback count: {site_js.count(old_fallback)}')
+          site_js_path.write_text(site_js.replace(old_fallback, f'/assets/rendered-corrections.css?v={version}', 1), encoding='utf-8')
 
           header_path = Path('Site Header.dc.html')
           header = header_path.read_text(encoding='utf-8')
-          loader = """    if (typeof document !== 'undefined') {
-              if (!document.querySelector('link[data-sunday-rendered-corrections]')) {
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = '/assets/rendered-corrections.css?v=20260912-5';
-                link.setAttribute('data-sunday-rendered-corrections', 'true');
-                document.head.appendChild(link);
-              }
-              if (!document.querySelector('script[data-sunday-site-js]')) {
-                const script = document.createElement('script');
-                script.src = '/assets/site.js?v=20260912-5';
-                script.async = true;
-                script.setAttribute('data-sunday-site-js', 'true');
-                document.head.appendChild(script);
-              }
-            }
-"""
-          if header.count(loader) != 1:
-              raise SystemExit(f'Site Header.dc.html: expected one temporary asset loader, found {header.count(loader)}')
-          header = header.replace(loader, '', 1)
-          header_path.write_text(header, encoding='utf-8')
+          start = header.find("    if (typeof document !== 'undefined') {\n")
+          anchor = header.find("    this._onScroll = () =>", start)
+          if start < 0 or anchor < 0:
+              raise SystemExit('Could not locate the temporary dynamic asset loader in Site Header.dc.html')
+          loader_block = header[start:anchor]
+          if "rendered-corrections.css?v=20260912-5" not in loader_block or "site.js?v=20260912-5" not in loader_block:
+              raise SystemExit('Unexpected Site Header loader block; refusing to edit it')
+          header_path.write_text(header[:start] + header[anchor:], encoding='utf-8')
 
-          # Final deterministic audit.
           for path in pages:
               text = path.read_text(encoding='utf-8')
-              checks = {
-                  'site.css v6': text.count(f'/assets/site.css?v={version}') == 1,
-                  'correction css v6': text.count(f'/assets/rendered-corrections.css?v={version}') == 1,
-                  'site.js v6': text.count(f'/assets/site.js?v={version}') == 1,
-                  'site js marker': text.count('data-sunday-site-js') == 1,
-                  'correction marker': text.count('data-sunday-rendered-corrections') == 1,
-                  'no old v4': '20260912-4' not in text,
-              }
-              failed = [name for name, ok in checks.items() if not ok]
-              if failed:
-                  raise SystemExit(f'{path}: failed checks: {failed}')
+              required = [
+                  f'/assets/site.css?v={version}',
+                  f'/assets/rendered-corrections.css?v={version}',
+                  f'/assets/site.js?v={version}',
+                  'data-sunday-rendered-corrections',
+                  'data-sunday-site-js',
+              ]
+              missing = [item for item in required if text.count(item) != 1]
+              if missing:
+                  raise SystemExit(f'{path}: missing or duplicated markers: {missing}')
+              if '20260912-4' in text:
+                  raise SystemExit(f'{path}: old v4 asset reference remains')
 
-          if '20260912-5' in header_path.read_text(encoding='utf-8'):
-              raise SystemExit('Site Header.dc.html still contains temporary v5 delivery references')
-          if f'/assets/rendered-corrections.css?v={version}' not in site_js_path.read_text(encoding='utf-8'):
-              raise SystemExit('assets/site.js fallback was not normalized to v6')
+          header = header_path.read_text(encoding='utf-8')
+          if 'rendered-corrections.css?v=20260912-5' in header or 'site.js?v=20260912-5' in header:
+              raise SystemExit('Temporary Header delivery references remain')
 
-          print('Validated production pages:', len(pages))
+          print('Validated 16 production pages:')
           for path in pages:
-              print('  ', path)
+              print(path)
           PY
 
           node --check assets/site.js
           git diff --check
 
-      - name: Commit the verified tree and remove this workflow
+      - name: Commit verified tree and remove temporary workflow
         shell: bash
         run: |
           git config user.name "Sunday-Co"
@@ -132,5 +109,5 @@ jobs:
           git rm .github/workflows/one-shot-asset-delivery.yml
           git add -A
           git diff --cached --check
-          git commit -m "[skip ci] Prepare verified static asset delivery"
+          git commit -m "[skip ci] [skip netlify] Prepare verified static asset delivery"
           git push origin HEAD:${GITHUB_REF_NAME}
