@@ -38,16 +38,21 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-async function settle(page) {
-  await page.waitForLoadState('domcontentloaded');
-  await page.waitForFunction(() => document.body && document.body.innerText.trim().length > 20, null, { timeout: 10000 });
+async function navigate(page, route) {
+  // Some case-study pages contain large media. WebKit can keep the document's
+  // load lifecycle open while those files stream even though the rendered page
+  // is already ready. Commit + rendered-text readiness tests the site without
+  // treating a slow below-the-fold asset as a page failure.
+  const response = await page.goto(base + route, { waitUntil: 'commit', timeout: 30000 });
+  await page.waitForFunction(() => document.body && document.body.innerText.trim().length > 20, null, { timeout: 15000 });
+  await page.waitForFunction(() => !!document.querySelector('h1'), null, { timeout: 15000 }).catch(() => {});
   await page.waitForTimeout(900);
+  return response;
 }
 
 async function basicRouteCheck(page, profile, route, report) {
-  const response = await page.goto(base + route, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  const response = await navigate(page, route);
   assert(response && response.status() < 400, `${profile.name} ${route}: HTTP ${response?.status()}`);
-  await settle(page);
 
   const metrics = await page.evaluate(() => ({
     scrollWidth: document.documentElement.scrollWidth,
@@ -67,8 +72,7 @@ async function basicRouteCheck(page, profile, route, report) {
 }
 
 async function checkHomeHero(page, profile, report) {
-  await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
-  await settle(page);
+  await navigate(page, '/');
   const hero = await page.evaluate(() => {
     const el = document.querySelector('section#top[data-screen-hero="home"]');
     const img = el?.querySelector('img');
@@ -92,14 +96,13 @@ async function checkHomeHero(page, profile, report) {
 }
 
 async function checkInquiry(page, profile, report) {
-  await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
-  await settle(page);
+  await navigate(page, '/');
   await page.evaluate(() => window.dispatchEvent(new CustomEvent('sunday:open-inquiry')));
   const dialog = page.locator('[aria-label="Project inquiry"]');
   await dialog.waitFor({ state: 'visible', timeout: 5000 });
   const data = await dialog.evaluate((el) => {
     const r = el.getBoundingClientRect();
-    const text = el.textContent || '';
+    const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
     return {
       left: r.left, top: r.top, width: r.width, height: r.height,
       vw: window.innerWidth, vh: window.innerHeight,
@@ -120,8 +123,7 @@ async function checkInquiry(page, profile, report) {
 
 async function checkMenu(page, profile, report) {
   if (!profile.isMobile) return;
-  await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
-  await settle(page);
+  await navigate(page, '/');
   await page.locator('[aria-label="Open menu"]').click();
   const aside = page.locator('aside[aria-label="Sunday & Company navigation"]');
   await aside.waitFor({ state: 'visible' });
@@ -132,14 +134,13 @@ async function checkMenu(page, profile, report) {
     width: el.getBoundingClientRect().width,
   }));
   assert(data.state === 'open', 'mobile menu state did not become open');
-  assert(data.width > 250 && data.width < window.innerWidth, `mobile menu width looks wrong (${data.width})`);
+  assert(data.width > 250 && data.width < profile.viewport.width, `mobile menu width looks wrong (${data.width})`);
   await page.screenshot({ path: path.join(outRoot, profile.name, 'home--menu.png'), fullPage: false });
   report.push({ profile: profile.name, check: 'mobile-menu', ...data });
 }
 
 async function checkServices(page, profile, report) {
-  await page.goto(base + '/services/', { waitUntil: 'domcontentloaded' });
-  await settle(page);
+  await navigate(page, '/services/');
   const first = page.locator('#service-menu button[aria-expanded]').first();
   await first.click();
   await page.waitForTimeout(300);
@@ -154,8 +155,7 @@ async function checkServices(page, profile, report) {
 
 async function checkJoinProgram(page, profile, report) {
   if (!profile.isMobile) return;
-  await page.goto(base + '/join-our-team/', { waitUntil: 'domcontentloaded' });
-  await settle(page);
+  await navigate(page, '/join-our-team/');
   const flip = page.locator('button[aria-label="Flip The Fellows Table card"]');
   await flip.click();
   await page.waitForTimeout(850);
@@ -194,6 +194,7 @@ for (const profile of profiles) {
     } catch (err) {
       failures.push(String(err?.message || err));
       console.error(`FAIL ${profile.name} ${route}:`, err?.message || err);
+      await page.goto('about:blank', { waitUntil: 'commit' }).catch(() => {});
     }
   }
 
