@@ -32,6 +32,10 @@
     var nodes = getRevealNodes();
     if (!nodes.length) return false;
 
+    /* Full-page capture safety: offscreen sections stay fully visible in the
+       document until they actually approach the viewport. That means Safari/
+       WebKit full-page screenshots never capture large blank blocks simply
+       because IntersectionObserver has not scrolled through the page. */
     if (reduce || !('IntersectionObserver' in window)) {
       nodes.forEach(function (node) {
         node.classList.remove('sc-reveal');
@@ -44,8 +48,15 @@
       observer = new IntersectionObserver(function (entries, io) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add('sc-in');
-          io.unobserve(entry.target);
+          var node = entry.target;
+          node.classList.add('sc-reveal');
+          /* Force the initial paper position to exist for one frame, then
+             reveal. The class is not added while the section is offscreen. */
+          void node.offsetWidth;
+          window.requestAnimationFrame(function () {
+            node.classList.add('sc-in');
+          });
+          io.unobserve(node);
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     }
@@ -53,7 +64,6 @@
     nodes.forEach(function (node) {
       if (revealed.has(node)) return;
       revealed.add(node);
-      node.classList.add('sc-reveal');
       observer.observe(node);
     });
     return true;
