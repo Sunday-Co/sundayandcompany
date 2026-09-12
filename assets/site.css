@@ -670,3 +670,118 @@ a[href="#inquiry"]:hover svg {
     transition: none !important;
   }
 }
+
+
+/* BATCH 8-9: HERO STABILITY + EDITORIAL MOTION */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* Full-page capture safety: the homepage keeps a real background image under
+   the absolutely positioned photo, and its height is based on width rather
+   than a changing browser-chrome viewport. */
+section#top[data-screen-hero="home"] {
+  height: clamp(680px, 66.5vw, 900px) !important;
+  min-height: 680px !important;
+  background-position: 50% 48% !important;
+}
+
+section[data-screen-hero="image"][data-hero-fallback="ready"],
+section#top[data-hero-fallback="ready"] {
+  background-color: var(--sunday-espresso) !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+@media (max-width: 700px) {
+  section#top[data-screen-hero="home"] {
+    height: clamp(680px, 185vw, 820px) !important;
+    min-height: 680px !important;
+  }
+}
+
+@keyframes sunday-step-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sunday-accordion-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sunday-menu-row-in {
+  from { opacity: 0; transform: translateX(7px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Inquiry stages feel like turning to the next part of the same receipt. */
+form[data-inq] [data-step-panel] {
+  animation: sunday-step-in 190ms cubic-bezier(.22,.75,.18,1) both;
+}
+
+/* Service/process accordions already rotate their arrows; the opened copy now
+   arrives with a restrained fade rather than snapping into place. */
+[data-service-body],
+[data-process-body] {
+  animation: sunday-accordion-in 220ms cubic-bezier(.22,.75,.18,1) both;
+}
+
+/* Pinyon heading accents follow the Playfair line by a fraction of a beat. */
+.sc-reveal h1 [style*="Pinyon Script"],
+.sc-reveal h2 [style*="Pinyon Script"],
+.sc-reveal h3 [style*="Pinyon Script"] {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 360ms ease 90ms, transform 360ms cubic-bezier(.22,.75,.18,1) 90ms;
+}
+
+.sc-reveal.sc-in h1 [style*="Pinyon Script"],
+.sc-reveal.sc-in h2 [style*="Pinyon Script"],
+.sc-reveal.sc-in h3 [style*="Pinyon Script"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile navigation: a very small row stagger, no bounce. */
+@media (max-width: 1240px) {
+  aside[data-sheet-state="open"] nav > a,
+  aside[data-sheet-state="open"] [data-sheet-cta] {
+    animation: sunday-menu-row-in 260ms cubic-bezier(.22,.75,.18,1) both;
+  }
+  aside[data-sheet-state="open"] nav > a:nth-child(1) { animation-delay: 30ms; }
+  aside[data-sheet-state="open"] nav > a:nth-child(2) { animation-delay: 55ms; }
+  aside[data-sheet-state="open"] nav > a:nth-child(3) { animation-delay: 80ms; }
+  aside[data-sheet-state="open"] nav > a:nth-child(4) { animation-delay: 105ms; }
+  aside[data-sheet-state="open"] nav > a:nth-child(5) { animation-delay: 130ms; }
+  aside[data-sheet-state="open"] [data-sheet-cta]:first-child { animation-delay: 150ms; }
+  aside[data-sheet-state="open"] [data-sheet-cta]:last-child { animation-delay: 175ms; }
+}
+
+/* Client Love Letters intentionally remain a physical paper stack. */
+[data-love-letter] {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  form[data-inq] [data-step-panel],
+  [data-service-body],
+  [data-process-body],
+  aside[data-sheet-state="open"] nav > a,
+  aside[data-sheet-state="open"] [data-sheet-cta] {
+    animation: none !important;
+  }
+
+  .sc-reveal h1 [style*="Pinyon Script"],
+  .sc-reveal h2 [style*="Pinyon Script"],
+  .sc-reveal h3 [style*="Pinyon Script"],
+  .sc-reveal.sc-in h1 [style*="Pinyon Script"],
+  .sc-reveal.sc-in h2 [style*="Pinyon Script"],
+  .sc-reveal.sc-in h3 [style*="Pinyon Script"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

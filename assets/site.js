@@ -6,8 +6,8 @@
   var revealed = new WeakSet();
 
   function markHeroFallbacks() {
-    document.querySelectorAll('section#top').forEach(function (hero) {
-      var img = hero.querySelector(':scope > img');
+    document.querySelectorAll('section#top, section[data-screen-hero]').forEach(function (hero) {
+      var img = hero.querySelector(':scope > img, :scope > div:first-child img');
       if (!img) return;
       hero.setAttribute('data-hero-fallback', 'ready');
       if (hero.closest('[data-screen-label="Home"]')) hero.setAttribute('data-screen-hero', 'home');

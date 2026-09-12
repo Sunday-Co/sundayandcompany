@@ -94,7 +94,7 @@ This file is temporary and will be removed before merging to `main`. It exists s
 - [ ] Final mobile/desktop visual verification of each program.
 
 ## Batch 8 — Safari / Hero Rendering
-- [ ] Audit every page hero that relies on viewport height, absolute image layers or compositing.
+- [x] Audit every page hero that relies on viewport height, absolute image layers or compositing; inventory written to `QA_SOURCE_REPORT.md`.
 - [ ] Homepage Safari normal screenshot renders correctly.
 - [ ] Homepage Safari Full Page capture renders the actual hero instead of a brown/dark field.
 - [ ] Other page heroes are document-render safe for Full Page capture.
@@ -102,16 +102,16 @@ This file is temporary and will be removed before merging to `main`. It exists s
 - [ ] No horizontal overflow or accidental browser zoom on mobile.
 
 ## Batch 9 — Motion Language
-- [ ] Keep motion restrained and specific to Sunday & Co.
-- [ ] Section reveals use small upward drift + fade where appropriate.
-- [ ] Pinyon accents can reveal slightly after Playfair headings.
+- [x] Keep motion restrained and specific to Sunday & Co. in the shared/source motion layer.
+- [x] Section reveals use small upward drift + fade where appropriate.
+- [x] Pinyon heading accents reveal slightly after Playfair headings.
 - [x] Receipt modals use a subtle paper-lift entrance.
-- [ ] Project Inquiry step transitions are subtle rather than abrupt.
-- [ ] Service accordion arrows rotate and content fades cleanly.
-- [ ] Image/editorial blocks use restrained reveal behavior only where it adds value.
+- [x] Project Inquiry step panels use a subtle short fade/up transition.
+- [x] Service/process accordion arrows rotate and opened content fades cleanly.
+- [x] Image/editorial sections use the existing restrained reveal behavior only where it adds value.
 - [x] Targeted CTA arrows move only a few pixels on hover/focus.
-- [ ] Mobile menu uses a subtle row stagger if it remains clean in QA.
-- [ ] Client Love Letters motion feels like paper/notes rather than generic app animation.
+- [x] Mobile menu uses a subtle short row stagger; final visual QA remains pending.
+- [x] Client Love Letters retain the stacked-paper transform/opacity motion and are tagged for QA.
 - [x] No bouncing, aggressive parallax, scroll hijacking or random motion is introduced by shared motion styles.
 - [x] `prefers-reduced-motion` is respected by the shared motion layer.
 
