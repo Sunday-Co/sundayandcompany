@@ -13,19 +13,11 @@
   --sc-script:'Pinyon Script',cursive;
 }
 
-/* ----------------------------------------------------------
-   HEADING WEIGHT CONSISTENCY
-   Brown regular Playfair and rose italic/script treatments keep the same
-   numeric weight. Styling comes from colour/style, not heaviness.
-   ---------------------------------------------------------- */
 h1,h2,h3,h4,h5,h6,
 h1 *,h2 *,h3 *,h4 *,h5 *,h6 * {
   font-weight:400 !important;
 }
 
-/* ----------------------------------------------------------
-   OUR VISION: preserve the approved Title Case editorial pull quote.
-   ---------------------------------------------------------- */
 #vision [data-vision-quote] {
   font-family:var(--sc-serif) !important;
   font-size:clamp(17px,1.35vw,20px) !important;
@@ -42,10 +34,6 @@ h1 *,h2 *,h3 *,h4 *,h5 *,h6 * {
   line-height:1.68 !important;
 }
 
-/* ----------------------------------------------------------
-   ALL FORMS: functional text is readable; receipt/decorative text can remain
-   smaller. Inter Tight Light is reserved for larger supporting/entered text.
-   ---------------------------------------------------------- */
 form[data-inq] label > span:first-child,
 form[data-inq] fieldset > legend,
 form[data-editorial-labels] label > span:first-child,
@@ -116,9 +104,6 @@ form[data-editorial-labels] [role="alert"],
   }
 }
 
-/* ----------------------------------------------------------
-   PROJECT INQUIRY RECEIPT: hierarchy first, not uniformly scaled type.
-   ---------------------------------------------------------- */
 [aria-label="Project inquiry"] [data-inquiry-kicker] {
   font-family:var(--sc-script) !important;
   font-size:38px !important;
@@ -168,9 +153,6 @@ form[data-editorial-labels] [role="alert"],
   #inquiry form[data-inq] textarea { font-size:16px !important; }
 }
 
-/* ----------------------------------------------------------
-   NEWSLETTER + FOOTER: optical consistency.
-   ---------------------------------------------------------- */
 [aria-label="Newsletter"] [data-news-fineprint] {
   font-family:var(--sc-sans) !important;
   font-weight:300 !important;
@@ -214,9 +196,6 @@ footer [data-footer-legal] {
   }
 }
 
-/* ----------------------------------------------------------
-   SERVICES / SMALL FUNCTIONAL UI
-   ---------------------------------------------------------- */
 [data-screen-label="Services"] [data-service-number],
 [data-screen-label="Services"] [data-service-meta],
 [data-screen-label="Services"] [data-service-included] {
@@ -247,11 +226,6 @@ aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
   [data-screen-label="Services"] [data-service-price] { font-size:11.5px !important; }
 }
 
-/* ----------------------------------------------------------
-   MOTION: visible enough to feel intentional, still restrained.
-   JS triggers section/media/title entrance so nothing remains hidden before
-   Safari full-page capture. These styles cover component/state interactions.
-   ---------------------------------------------------------- */
 @keyframes sc-paper-lift {
   from { opacity:0; transform:translateY(14px) scale(.992); }
   to   { opacity:1; transform:translateY(0) scale(1); }
@@ -329,7 +303,6 @@ a[href="#inquiry"]:hover svg {
   a[href="#inquiry"] svg { transition:none !important; }
 }
 
-/* FINAL RENDERED FORM + PROGRAM PASS */
 form[data-inq] > button,
 form[data-editorial-labels] button[type="submit"],
 [aria-label="Newsletter"] form button,
@@ -418,7 +391,6 @@ form[data-inq] [role="checkbox"] span:last-child {
   }
 }
 
-/* PROGRAM CARD ACTIONS: functional controls stay readable. */
 [data-program-action] {
   font-family:var(--sc-sans) !important;
   font-size:10px !important;
@@ -430,3 +402,183 @@ button[data-program-action] { min-height:44px !important; }
   [data-program-action] { font-size:10.5px !important; }
 }
 
+/* ==========================================================
+   SUNDAY REFINEMENT · 2026-09-12
+   Keep motion quiet and deliberate, correct the inquiry title hierarchy,
+   and make mobile program details unfold directly under the selected card.
+   ========================================================== */
+
+/* Inquiry receipt: Playfair lead, Pinyon response line, with a light overlap. */
+[aria-label="Project inquiry"] [data-inquiry-kicker],
+#inquiry [data-inquiry-kicker] {
+  color:var(--sc-espresso) !important;
+  font-family:var(--sc-serif) !important;
+  font-size:clamp(29px,3vw,36px) !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:-.04em !important;
+  line-height:.96 !important;
+  margin:0 !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+#inquiry [data-inquiry-kicker] + h2 {
+  color:var(--sc-rose) !important;
+  font-family:var(--sc-script) !important;
+  font-size:clamp(40px,4.5vw,56px) !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:-.01em !important;
+  line-height:.86 !important;
+  margin:-5px 0 7px 7px !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-support],
+#inquiry [data-inquiry-support] {
+  margin-top:12px !important;
+}
+
+@media (max-width:700px) {
+  [aria-label="Project inquiry"] [data-inquiry-kicker],
+  #inquiry [data-inquiry-kicker] {
+    font-size:30px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+  #inquiry [data-inquiry-kicker] + h2 {
+    font-size:clamp(38px,10vw,43px) !important;
+    line-height:.84 !important;
+    margin:-4px 0 8px 5px !important;
+  }
+}
+
+/* Mobile program cards behave like one expanding editorial card, not a
+   detached detail panel below the entire set. JS only marks the shell. */
+@keyframes sc-program-unfold-slow {
+  from { opacity:.45; transform:translateY(-5px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@media (max-width:720px) {
+  [data-program-shell] {
+    display:flex !important;
+    flex-direction:column !important;
+    gap:0 !important;
+    width:100% !important;
+  }
+  [data-program-shell] > [data-program-cards] {
+    display:contents !important;
+  }
+  [data-program-shell] > [data-program-cards] > article:nth-child(1) { order:1; margin-bottom:14px !important; }
+  [data-program-shell] > [role="presentation"]:nth-child(2) { order:2; }
+  [data-program-shell] > [data-program-cards] > article:nth-child(2) { order:3; margin-bottom:14px !important; }
+  [data-program-shell] > [role="presentation"]:nth-child(3) { order:4; }
+  [data-program-shell] > [data-program-cards] > article:nth-child(3) { order:5; margin-bottom:14px !important; }
+  [data-program-shell] > [role="presentation"]:nth-child(4) { order:6; }
+
+  [data-program-shell] > [role="presentation"] {
+    margin-top:-14px !important;
+    margin-bottom:14px !important;
+    padding:0 !important;
+    width:100% !important;
+  }
+  [data-program-shell] > [role="presentation"] > [role="dialog"] {
+    animation:sc-program-unfold-slow 820ms cubic-bezier(.22,.68,.18,1) both !important;
+    border-top:0 !important;
+    box-shadow:none !important;
+    margin:0 !important;
+    max-width:100% !important;
+    width:100% !important;
+  }
+}
+
+/* Motion is intentionally slower. The drawer itself moves; its individual
+   rows do not perform a second, separate animation. */
+@keyframes sc-paper-lift-slow {
+  from { opacity:.42; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes sc-step-turn-slow {
+  from { opacity:.48; transform:translateY(5px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes sc-accordion-open-slow {
+  from { opacity:.5; transform:translateY(4px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+[aria-label="Project inquiry"],
+[aria-label="The Sunday Reservation"] {
+  animation:sc-paper-lift-slow 820ms cubic-bezier(.22,.68,.18,1) both !important;
+}
+form[data-inq] [data-step-panel] {
+  animation:sc-step-turn-slow 620ms cubic-bezier(.22,.68,.18,1) both !important;
+}
+[data-service-body],
+[data-process-body] {
+  animation:sc-accordion-open-slow 680ms cubic-bezier(.22,.68,.18,1) both !important;
+}
+@media (max-width:1240px) {
+  aside[data-sheet-state="open"] nav > a,
+  aside[data-sheet-state="open"] [data-sheet-cta] {
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
+[data-sheet-cta] svg,
+[data-about-team-cta] svg,
+button[onClick*="openInquiry"] svg,
+a[href="/contact"] svg,
+a[href="#inquiry"] svg {
+  transition:transform 360ms cubic-bezier(.22,.68,.18,1) !important;
+}
+
+/* The Open sign keeps its original idea, but the glow/flicker now breathes
+   continuously at a slower Sunday pace. */
+@keyframes sc-neon-sunday {
+  0%,42%,100% {
+    opacity:1;
+    text-shadow:0 0 6px rgba(255,240,236,.52),0 0 18px rgba(172,116,108,.78),0 0 44px rgba(172,116,108,.42),0 0 80px rgba(172,116,108,.18);
+  }
+  48% {
+    opacity:.78;
+    text-shadow:0 0 4px rgba(255,240,236,.34),0 0 12px rgba(172,116,108,.58),0 0 31px rgba(172,116,108,.28);
+  }
+  52% {
+    opacity:.96;
+    text-shadow:0 0 7px rgba(255,240,236,.62),0 0 23px rgba(172,116,108,.88),0 0 54px rgba(172,116,108,.5);
+  }
+  56% {
+    opacity:.86;
+    text-shadow:0 0 5px rgba(255,240,236,.42),0 0 15px rgba(172,116,108,.67),0 0 36px rgba(172,116,108,.32);
+  }
+  62% {
+    opacity:1;
+    text-shadow:0 0 8px rgba(255,240,236,.7),0 0 25px rgba(172,116,108,.92),0 0 60px rgba(172,116,108,.56),0 0 100px rgba(172,116,108,.24);
+  }
+}
+*[style*="sc-warm"][style*="sc-neon"] {
+  animation:sc-warm 3.8s ease-out 1 both, sc-neon-sunday 6.8s ease-in-out 3.8s infinite !important;
+}
+*[style*="sc-rock"][style*="sc-sway"] {
+  animation:sc-rock 6.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 10s ease-in-out 6.4s infinite !important;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  [data-program-shell] > [role="presentation"] > [role="dialog"],
+  [aria-label="Project inquiry"],
+  [aria-label="The Sunday Reservation"],
+  form[data-inq] [data-step-panel],
+  [data-service-body],
+  [data-process-body] {
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+  *[style*="sc-warm"][style*="sc-neon"] {
+    animation:none !important;
+    opacity:1 !important;
+    text-shadow:0 0 6px rgba(255,240,236,.52),0 0 18px rgba(172,116,108,.78),0 0 44px rgba(172,116,108,.42) !important;
+  }
+  *[style*="sc-rock"][style*="sc-sway"] {
+    animation:none !important;
+    transform:rotate(-.3deg) !important;
+  }
+}
