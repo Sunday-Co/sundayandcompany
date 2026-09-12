@@ -1,6 +1,6 @@
 name: Rendered Corrections QA
 
-# Final run against the fully corrected production source.
+# Final verification after the mobile newsletter fine-print source correction.
 on:
   push:
     branches:
