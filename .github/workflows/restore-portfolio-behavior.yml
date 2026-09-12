@@ -49,11 +49,10 @@ jobs:
                   path.write_text(text)
                   changed.append(str(path))
 
-          if len(changed) != 2:
-              raise SystemExit(f'Expected exactly 2 CSS files to change, changed: {changed}')
+          # First run changes exactly two files; later validation-only runs change none.
+          if len(changed) not in (0, 2):
+              raise SystemExit(f'Expected 0 or 2 CSS files to change, changed: {changed}')
 
-          # Strict validation: portfolio reveal selectors must no longer be
-          # globally neutralized, but the newer correction-layer systems stay off.
           for path in files:
               text = path.read_text()
               if '[data-screen-label] {\n  max-width:100% !important;\n  overflow:visible !important;\n}' in text:
@@ -76,11 +75,76 @@ jobs:
       - name: Commit restored source
         run: |
           if git diff --quiet -- assets/site.css assets/rendered-corrections.css; then
-            echo "No changes to commit"
-            exit 0
+            echo "No source changes to commit"
+          else
+            git config user.name "Sunday-Co"
+            git config user.email "hello@sundayandcompany.co"
+            git add assets/site.css assets/rendered-corrections.css
+            git commit -m "[skip netlify] Restore original portfolio behavior"
+            git push origin HEAD
           fi
-          git config user.name "Sunday-Co"
-          git config user.email "hello@sundayandcompany.co"
-          git add assets/site.css assets/rendered-corrections.css
-          git commit -m "[skip netlify] Restore original portfolio behavior"
-          git push origin HEAD
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Serve site
+        run: |
+          python3 -m http.server 4173 >/tmp/sunday-portfolio.log 2>&1 &
+          echo $! >/tmp/sunday-portfolio.pid
+          sleep 2
+      - name: Verify original portfolio movement and frames
+        run: |
+          node <<'NODE'
+          const { webkit } = require('playwright');
+          const assert = require('assert');
+
+          (async () => {
+            const browser = await webkit.launch();
+            const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+            await page.goto('http://127.0.0.1:4173/our-work/luckys-cafe-bakery/', { waitUntil: 'domcontentloaded' });
+            await page.waitForTimeout(1100);
+
+            const reservationClose = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await reservationClose.count() && await reservationClose.first().isVisible().catch(() => false)) {
+              await reservationClose.first().evaluate(el => el.click());
+              await page.waitForTimeout(200);
+            }
+
+            const target = page.locator('#email');
+            await target.waitFor();
+            const before = await target.evaluate(el => ({
+              inlineOpacity: el.style.opacity,
+              inlineTransform: el.style.transform,
+              transitionDuration: getComputedStyle(el).transitionDuration,
+              top: el.getBoundingClientRect().top
+            }));
+            assert.strictEqual(before.inlineOpacity, '0', `Expected original reveal to initialize hidden, got ${JSON.stringify(before)}`);
+            assert.ok(before.inlineTransform.includes('translateY'), `Expected original translate reveal, got ${JSON.stringify(before)}`);
+            assert.notStrictEqual(before.transitionDuration, '0s', `Original reveal transition was still disabled: ${JSON.stringify(before)}`);
+
+            await target.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(1000);
+            const after = await target.evaluate(el => ({
+              inlineOpacity: el.style.opacity,
+              inlineTransform: el.style.transform,
+              computedOpacity: getComputedStyle(el).opacity
+            }));
+            assert.strictEqual(after.inlineOpacity, '1', `Reveal did not complete after scroll: ${JSON.stringify(after)}`);
+            assert.strictEqual(after.computedOpacity, '1', `Reveal is still visually suppressed: ${JSON.stringify(after)}`);
+
+            const frame = page.locator('img[alt="Lucky’s Café and Bakery homepage"]').locator('..');
+            const frameStyle = await frame.evaluate(el => ({
+              maxHeight: getComputedStyle(el).maxHeight,
+              overflowY: getComputedStyle(el).overflowY
+            }));
+            assert.strictEqual(frameStyle.maxHeight, '640px', `Portfolio frame height changed: ${JSON.stringify(frameStyle)}`);
+            assert.ok(['auto','scroll'].includes(frameStyle.overflowY), `Portfolio frame scrolling changed: ${JSON.stringify(frameStyle)}`);
+
+            const shell = page.locator('[data-screen-label^="Our Work"]').first();
+            const shellOverflow = await shell.evaluate(el => getComputedStyle(el).overflow);
+            assert.notStrictEqual(shellOverflow, 'visible', 'Portfolio page shell is still globally forced to overflow:visible');
+
+            await browser.close();
+            console.log('Original portfolio movement and scroll-frame behavior verified in WebKit.');
+          })().catch(err => { console.error(err); process.exit(1); });
+          NODE
