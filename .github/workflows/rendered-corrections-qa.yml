@@ -28,6 +28,19 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps webkit
 
+      - name: Make QA sessions deterministic
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('qa/rendered-corrections-qa.mjs')
+          s = p.read_text()
+          old = "async function ready(page, route) {\n  const r = await page.goto"
+          new = "async function ready(page, route) {\n  await page.addInitScript(() => { try { window.sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (e) {} });\n  const r = await page.goto"
+          if old not in s:
+              raise SystemExit('ready() patch target not found')
+          p.write_text(s.replace(old, new, 1))
+          PY
+
       - name: Start static server
         run: |
           python3 -m http.server 4173 >/tmp/sunday-rendered-server.log 2>&1 &
