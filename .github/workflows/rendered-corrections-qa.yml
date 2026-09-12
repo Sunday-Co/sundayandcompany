@@ -1,0 +1,46 @@
+name: Rendered Corrections QA
+
+on:
+  push:
+    branches:
+      - rendered-corrections-2026-09-12
+
+permissions:
+  contents: read
+
+jobs:
+  webkit-rendered:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout correction branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright WebKit
+        run: |
+          npm init -y
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+
+      - name: Start static server
+        run: |
+          python3 -m http.server 4173 >/tmp/sunday-rendered-server.log 2>&1 &
+          echo $! > /tmp/sunday-rendered-server.pid
+          sleep 3
+          curl --fail http://127.0.0.1:4173/ >/dev/null
+
+      - name: Run rendered hierarchy and motion QA
+        run: node qa/rendered-corrections-qa.mjs
+
+      - name: Upload rendered screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-corrections-qa
+          path: qa-rendered-artifacts
+          retention-days: 5
