@@ -57,13 +57,18 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps webkit
 
+      - name: Diagnose live deployed Safari rendering
+        run: node .github/scripts/live_safari_diagnostic.mjs
+
       - name: Serve site
+        if: always()
         run: |
           python3 -m http.server 4173 > /tmp/sunday-consolidated-http.log 2>&1 &
           echo $! > /tmp/sunday-consolidated-http.pid
           sleep 2
 
       - name: Run consolidated browser QA
+        if: always()
         run: |
           sed -i "/await signEl.scrollIntoViewIfNeeded();/a await signEl.evaluate((el) => el.click());" .github/scripts/consolidated_revision_qa.mjs
           sed -i "/await home.evaluate(() => window.dispatchEvent(new CustomEvent('sunday:open-inquiry')));/i const autoReservation = home.locator('[aria-label=\"The Sunday Reservation\"]'); if (await autoReservation.isVisible()) { await autoReservation.getByRole('button', { name: 'Close' }).evaluate((el) => el.click()); await home.waitForTimeout(250); }" .github/scripts/consolidated_revision_qa.mjs
@@ -74,9 +79,6 @@ jobs:
           node --check .github/scripts/consolidated_revision_qa.mjs
           node .github/scripts/consolidated_revision_qa.mjs
           node .github/scripts/source_truth_regression_qa.mjs
-
-      - name: Diagnose live deployed Safari rendering
-        run: node .github/scripts/live_safari_diagnostic.mjs
 
       - name: Upload QA screenshots
         if: always()
