@@ -218,10 +218,25 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     if (typeof window === 'undefined') return;
+    if (typeof document !== 'undefined') {
+      if (!document.querySelector('link[data-sunday-rendered-corrections]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/rendered-corrections.css?v=20260912-5';
+        link.setAttribute('data-sunday-rendered-corrections', 'true');
+        document.head.appendChild(link);
+      }
+      if (!document.querySelector('script[data-sunday-site-js]')) {
+        const script = document.createElement('script');
+        script.src = '/assets/site.js?v=20260912-5';
+        script.async = true;
+        script.setAttribute('data-sunday-site-js', 'true');
+        document.head.appendChild(script);
+      }
+    }
     this._onScroll = () => this.setState({ scrolled: window.scrollY > 36 });
     this._onScroll();
     window.addEventListener('scroll', this._onScroll, { passive: true });
-    // any page can open the inquiry receipt without owning it
     this._openInq = () => this.setState({ sheet: false, inquiry: true, inquiryDone: false });
     window.addEventListener('sunday:open-inquiry', this._openInq);
     this._onKey = (e) => {
@@ -241,7 +256,6 @@ class Component extends DCLogic {
         this._mqTight.addEventListener('change', this._sync);
       }
     }
-    // newsletter reservation: auto-opens once per session, 650ms after load
     let seen = false;
     try { seen = !!window.sessionStorage.getItem('sunday-reservation-seen'); } catch (e) { seen = false; }
     if (!seen) this._resTimer = window.setTimeout(() => this.setState({ res: true }), 650);
@@ -315,15 +329,12 @@ class Component extends DCLogic {
       actionsDisplay: n ? 'none' : 'flex',
       menuDisplay: n ? 'inline-flex' : 'none',
       hdrCols: n ? '1fr auto' : '160px 1fr auto',
-      // the 150x58 window was too heavy on a phone
       logoBox: t ? '112px' : '156px',
       logoH: t ? '42px' : '58px',
       logoW: t ? '108px' : '150px',
       logoImg: t ? '154px' : '213px',
       logoL: t ? '-22px' : '-31px',
       logoT: t ? '-53px' : '-73px',
-
-      // mobile sheet · right-side cream drawer, source values at 1240 / 560
       sheetOverlay: this.state.sheet ? 'block' : 'none',
       sheetOpacity: this.state.sheet ? 1 : 0,
       sheetVis: this.state.sheet ? 'visible' : 'hidden',
@@ -351,8 +362,6 @@ class Component extends DCLogic {
       sheetMailSize: t ? '11px' : '13px',
       openSheet: () => this.setState({ sheet: true }),
       closeSheet: () => this.setState({ sheet: false }),
-
-      // Reserve Your Seat · project inquiry receipt
       inqDisplay: this.state.inquiry ? 'flex' : 'none',
       inqKickerSize: t ? '46px' : '40px',
       inqNarrow: t,
@@ -382,8 +391,6 @@ class Component extends DCLogic {
           .then(() => this.setState({ inquiryDone: true, sending: false }))
           .catch((err) => this.setState({ inquiryError: err.message, sending: false }));
       },
-
-      // newsletter reservation popup
       resDisplay: this.state.res ? 'flex' : 'none',
       resCols: t ? '1fr' : '1fr 1.08fr',
       resPhotoDisplay: 'block',
@@ -413,7 +420,6 @@ class Component extends DCLogic {
       busy: !!this.state.sending,
       sendLabel: this.state.sending ? 'Sending' : 'Send Your Inquiry',
       resLabel: this.state.sending ? 'Saving Your Seat' : 'Reserve My Seat',
-
       stop: (e) => e.stopPropagation(),
     });
   }
