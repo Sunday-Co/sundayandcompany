@@ -1,0 +1,361 @@
+name: Final Sunday polish one pass
+
+on:
+  push:
+    branches:
+      - final-polish-no-deploy-2026-09-12
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    if: contains(github.event.head_commit.message, 'Install final polish one-pass validator')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply the complete visual polish batch
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          VERSION = '20260912-7'
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected 1 exact match, found {count}')
+              return text.replace(old, new, 1)
+
+          root_pc = Path('Program Cards.dc.html')
+          pc = root_pc.read_text(encoding='utf-8')
+          old_mobile_style = '''<style>
+  /* MOBILE INLINE PROGRAM DETAILS: no WebKit 3D card flip on phones. */
+  @media (max-width: 720px) {
+    [data-program-cards] > article { perspective:none !important; }
+    [data-program-cards] > article > div {
+      transform:none !important;
+      transform-style:flat !important;
+      -webkit-transform-style:flat !important;
+    }
+    [data-program-cards] > article > div > button:first-child {
+      backface-visibility:visible !important;
+      -webkit-backface-visibility:visible !important;
+      transform:none !important;
+      z-index:1 !important;
+    }
+    [data-program-cards] > article > div > div:nth-child(2) {
+      display:none !important;
+      transform:none !important;
+    }
+  }
+</style>'''
+          new_mobile_style = '''<style>
+  /* MOBILE FLIP CARDS: preserve the original editorial card interaction. */
+  @media (max-width: 720px) {
+    [data-program-cards] > article {
+      height:340px !important;
+      perspective:1200px !important;
+      -webkit-perspective:1200px !important;
+    }
+    [data-program-cards] > article > div {
+      transform-style:preserve-3d !important;
+      -webkit-transform-style:preserve-3d !important;
+      transition:transform 920ms cubic-bezier(.22,.68,.18,1) !important;
+    }
+    [data-program-cards] > article > div > button:first-child,
+    [data-program-cards] > article > div > div:nth-child(2) {
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
+    }
+    [data-program-cards] > article > div > div:nth-child(2) {
+      display:grid !important;
+    }
+  }
+</style>'''
+          pc = replace_once(pc, old_mobile_style, new_mobile_style, 'Program Cards mobile style')
+          pc = replace_once(pc, "backFaceDisplay: t ? 'none' : 'grid',", "backFaceDisplay: 'grid',", 'backFaceDisplay')
+          pc = replace_once(pc, "frontAction: t ? 'View Full Details' : 'Flip',", "frontAction: 'Flip',", 'frontAction')
+          pc = replace_once(pc, "frontLabel0: t ? 'View full details for The Fellows Table' : 'Flip The Fellows Table card',", "frontLabel0: 'Flip The Fellows Table card',", 'frontLabel0')
+          pc = replace_once(pc, "frontLabel1: t ? 'View full details for The Espresso Club' : 'Flip The Espresso Club card',", "frontLabel1: 'Flip The Espresso Club card',", 'frontLabel1')
+          pc = replace_once(pc, "frontLabel2: t ? 'View full details for The Founders Club' : 'Flip The Founders Club card',", "frontLabel2: 'Flip The Founders Club card',", 'frontLabel2')
+          pc = replace_once(pc, "detailButtonDisplay: t ? 'none' : 'block',", "detailButtonDisplay: 'block',", 'detailButtonDisplay')
+          pc = replace_once(pc, "out['flip' + i] = t ? 'rotateY(0deg)' : (this.state.flipped === i ? 'rotateY(180deg)' : 'rotateY(0deg)');", "out['flip' + i] = this.state.flipped === i ? 'rotateY(180deg)' : 'rotateY(0deg)';", 'flip transform logic')
+          pc = replace_once(pc, "out['doFlip' + i] = () => t ? this.setState({ dialog: i, flipped: null }) : this.setState({ flipped: i });", "out['doFlip' + i] = () => this.setState({ flipped: i });", 'flip click logic')
+          root_pc.write_text(pc, encoding='utf-8')
+
+          pc_paths = sorted(Path('.').rglob('Program Cards.dc.html'))
+          if len(pc_paths) < 2:
+              raise SystemExit('Expected route-local Program Cards copies')
+          for path in pc_paths:
+              path.write_text(pc, encoding='utf-8')
+
+          work_path = Path('our-work/index.html')
+          work = work_path.read_text(encoding='utf-8')
+          old_receipt = '<div style="background:#fffdf8;border:1px solid #311d03;padding:0;position:relative">\n        <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:\'Inter Tight\',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Bill Of Work</span></div>'
+          new_receipt = '<div data-work-receipt style="background:#fffdf8;border:1px solid #311d03;padding:0;position:relative">\n        <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:\'Inter Tight\',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Bill Of Work</span></div>'
+          work = replace_once(work, old_receipt, new_receipt, 'Our Work receipt hook')
+          work_path.write_text(work, encoding='utf-8')
+
+          css_path = Path('assets/rendered-corrections.css')
+          css = css_path.read_text(encoding='utf-8')
+          marker = '/* ==========================================================\n   SUNDAY REFINEMENT · 2026-09-12'
+          if css.count(marker) != 1:
+              raise SystemExit(f'Expected one Sunday refinement marker, found {css.count(marker)}')
+          css = css.split(marker, 1)[0].rstrip() + '\n\n' + r'''/* ==========================================================
+   SUNDAY FINAL POLISH · 2026-09-12
+   One visual system: editorial hierarchy, deliberate motion, mobile flips.
+   ========================================================== */
+
+[aria-label="Project inquiry"] [data-inquiry-kicker],
+#inquiry [data-inquiry-kicker] {
+  color:var(--sc-espresso) !important;
+  font-family:var(--sc-serif) !important;
+  font-size:clamp(36px,3.1vw,44px) !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:-.045em !important;
+  line-height:.96 !important;
+  margin:0 !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+#inquiry [data-inquiry-kicker] + h2 {
+  color:var(--sc-rose) !important;
+  font-family:var(--sc-script) !important;
+  font-size:clamp(46px,4.25vw,56px) !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:-.025em !important;
+  line-height:.84 !important;
+  margin:-8px 0 10px 13px !important;
+  max-width:94% !important;
+  text-wrap:balance !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-support],
+#inquiry [data-inquiry-support] {
+  margin-top:10px !important;
+}
+@media (max-width:700px) {
+  [aria-label="Project inquiry"] [data-inquiry-kicker],
+  #inquiry [data-inquiry-kicker] {
+    font-size:35px !important;
+    line-height:.96 !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+  #inquiry [data-inquiry-kicker] + h2 {
+    font-size:clamp(31px,8.3vw,35px) !important;
+    line-height:.82 !important;
+    margin:-7px 0 10px 6px !important;
+    max-width:100% !important;
+    text-wrap:balance !important;
+  }
+}
+
+@media (min-width:900px) {
+  [data-screen-label^="Our Work"] #top > div {
+    grid-template-columns:minmax(0,1.18fr) minmax(390px,.82fr) !important;
+  }
+  [data-work-receipt] {
+    justify-self:end !important;
+    max-width:470px !important;
+    min-width:390px !important;
+    width:100% !important;
+  }
+  [data-work-receipt] > div:first-child {
+    font-size:8px !important;
+    padding:11px 21px !important;
+  }
+  [data-work-receipt] > div:nth-child(2) {
+    padding:20px 21px 18px !important;
+  }
+  [data-work-receipt] p[style*="Pinyon Script"] {
+    font-size:36px !important;
+  }
+}
+
+@media (max-width:720px) {
+  [data-program-shell] {
+    display:block !important;
+    width:100% !important;
+  }
+  [data-program-shell] > [data-program-cards] {
+    display:grid !important;
+    gap:14px !important;
+  }
+  [data-program-shell] > [role="presentation"] {
+    margin:14px 0 !important;
+    padding:0 !important;
+    width:100% !important;
+  }
+  [data-program-shell] > [role="presentation"] > [role="dialog"] {
+    animation:sc-program-detail 900ms cubic-bezier(.22,.68,.18,1) both !important;
+    box-shadow:none !important;
+    margin:0 !important;
+    max-width:100% !important;
+    width:100% !important;
+  }
+}
+@keyframes sc-program-detail {
+  from { opacity:.5; transform:translateY(6px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@keyframes sc-paper-lift-final {
+  from { opacity:.48; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes sc-step-turn-final {
+  from { opacity:.52; transform:translateY(5px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes sc-accordion-final {
+  from { opacity:.52; transform:translateY(5px); }
+  to { opacity:1; transform:translateY(0); }
+}
+[aria-label="Project inquiry"],
+[aria-label="The Sunday Reservation"] {
+  animation:sc-paper-lift-final 980ms cubic-bezier(.22,.68,.18,1) both !important;
+}
+form[data-inq] [data-step-panel] {
+  animation:sc-step-turn-final 760ms cubic-bezier(.22,.68,.18,1) both !important;
+}
+[data-service-body],
+[data-process-body] {
+  animation:sc-accordion-final 820ms cubic-bezier(.22,.68,.18,1) both !important;
+}
+aside[data-sheet-state="open"] nav > a,
+aside[data-sheet-state="open"] [data-sheet-cta] {
+  animation:none !important;
+}
+[data-sheet-cta] svg,
+[data-about-team-cta] svg,
+button[onClick*="openInquiry"] svg,
+a[href="/contact"] svg,
+a[href="#inquiry"] svg {
+  transition:transform 380ms cubic-bezier(.22,.68,.18,1) !important;
+}
+
+@keyframes sc-neon-sunday-final {
+  0%,44%,100% {
+    opacity:1;
+    text-shadow:0 0 6px rgba(255,240,236,.52),0 0 18px rgba(172,116,108,.78),0 0 44px rgba(172,116,108,.42),0 0 80px rgba(172,116,108,.18);
+  }
+  50% {
+    opacity:.78;
+    text-shadow:0 0 4px rgba(255,240,236,.38),0 0 13px rgba(172,116,108,.56),0 0 32px rgba(172,116,108,.28);
+  }
+  58% {
+    opacity:.94;
+    text-shadow:0 0 7px rgba(255,240,236,.62),0 0 21px rgba(172,116,108,.84),0 0 52px rgba(172,116,108,.48);
+  }
+  66% {
+    opacity:1;
+    text-shadow:0 0 8px rgba(255,240,236,.7),0 0 25px rgba(172,116,108,.92),0 0 60px rgba(172,116,108,.56),0 0 100px rgba(172,116,108,.24);
+  }
+}
+*[style*="sc-warm"][style*="sc-neon"] {
+  animation:sc-warm 4.6s ease-out 1 both, sc-neon-sunday-final 8.4s ease-in-out 4.6s infinite !important;
+}
+*[style*="sc-rock"][style*="sc-sway"] {
+  animation:sc-rock 7s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 12s ease-in-out 7s infinite !important;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  [aria-label="Project inquiry"],
+  [aria-label="The Sunday Reservation"],
+  form[data-inq] [data-step-panel],
+  [data-service-body],
+  [data-process-body],
+  [data-program-shell] > [role="presentation"] > [role="dialog"] {
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+  *[style*="sc-warm"][style*="sc-neon"],
+  *[style*="sc-rock"][style*="sc-sway"] {
+    animation:none !important;
+  }
+}
+'''
+          css_path.write_text(css, encoding='utf-8')
+
+          js_path = Path('assets/site.js')
+          js = js_path.read_text(encoding='utf-8')
+          replacements = {
+              "link.href = '/assets/rendered-corrections.css?v=20260912-6';": f"link.href = '/assets/rendered-corrections.css?v={VERSION}';",
+              "sheet.style.transition = 'transform 620ms cubic-bezier(.22,.68,.18,1), visibility 620ms';": "sheet.style.transition = 'transform 760ms cubic-bezier(.22,.68,.18,1), visibility 760ms';",
+              "sheet.style.transition = 'transform 560ms cubic-bezier(.22,.68,.18,1), visibility 560ms';": "sheet.style.transition = 'transform 700ms cubic-bezier(.22,.68,.18,1), visibility 700ms';",
+              "}, 600);": "}, 740);",
+              "duration: 1250,": "duration: 1450,",
+              "delay: 180 + (index * 60),": "delay: 220 + (index * 70),",
+              "{ opacity: 0.46, transform: 'translateY(10px)' },": "{ opacity: 0.5, transform: 'translateY(9px)' },",
+              "duration: 1150,": "duration: 1300,",
+          }
+          for old, new in replacements.items():
+              js = replace_once(js, old, new, f'site.js replacement {old[:30]}')
+          js_path.write_text(js, encoding='utf-8')
+
+          pages = []
+          for path in sorted(Path('.').rglob('*.html')):
+              if path.name.endswith('.dc.html'):
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if '/assets/site.js?v=' not in text:
+                  continue
+              pages.append(path)
+              text = re.sub(r'/assets/site\.css\?v=[0-9-]+', f'/assets/site.css?v={VERSION}', text)
+              text = re.sub(r'/assets/rendered-corrections\.css\?v=[0-9-]+', f'/assets/rendered-corrections.css?v={VERSION}', text)
+              text = re.sub(r'/assets/site\.js\?v=[0-9-]+', f'/assets/site.js?v={VERSION}', text)
+              path.write_text(text, encoding='utf-8')
+          if len(pages) != 16:
+              raise SystemExit(f'Expected 16 production pages, found {len(pages)}')
+
+          for path in pages:
+              text = path.read_text(encoding='utf-8')
+              for token in (f'/assets/site.css?v={VERSION}', f'/assets/rendered-corrections.css?v={VERSION}', f'/assets/site.js?v={VERSION}'):
+                  if text.count(token) != 1:
+                      raise SystemExit(f'{path}: expected exactly one {token}')
+              for oldv in ('20260912-4','20260912-5','20260912-6'):
+                  if oldv in text:
+                      raise SystemExit(f'{path}: stale asset version {oldv}')
+
+          root_pc_check = root_pc.read_text(encoding='utf-8')
+          for token in ("backFaceDisplay: t ? 'none' : 'grid'", "frontAction: t ? 'View Full Details' : 'Flip'", "out['flip' + i] = t ? 'rotateY(0deg)'", "out['doFlip' + i] = () => t ?", 'no WebKit 3D card flip on phones'):
+              if token in root_pc_check:
+                  raise SystemExit(f'Program Cards still contains mobile non-flip behavior: {token}')
+          for token in ("frontAction: 'Flip'", "detailButtonDisplay: 'block'", "out['doFlip' + i] = () => this.setState({ flipped: i });", '-webkit-perspective:1200px'):
+              if token not in root_pc_check:
+                  raise SystemExit(f'Program Cards missing required flip behavior: {token}')
+
+          final_css = css_path.read_text(encoding='utf-8')
+          for token in ('SUNDAY FINAL POLISH','[data-work-receipt]','sc-neon-sunday-final 8.4s','animation:sc-paper-lift-final 980ms','font-size:clamp(31px,8.3vw,35px)'):
+              if token not in final_css:
+                  raise SystemExit(f'Final CSS missing {token}')
+          if 'sc-program-unfold-slow' in final_css:
+              raise SystemExit('Old mobile unfold treatment still present')
+          if work_path.read_text(encoding='utf-8').count('data-work-receipt') != 1:
+              raise SystemExit('Our Work receipt hook invalid')
+
+          print('Validated production pages:', len(pages))
+          print('Validated Program Cards copies:', len(pc_paths))
+          print('Final asset version:', VERSION)
+          PY
+
+          node --check assets/site.js
+          git diff --check
+
+      - name: Commit verified tree and remove the temporary workflow
+        shell: bash
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git rm .github/workflows/final-polish-one-pass.yml
+          git add -A
+          git diff --cached --check
+          git commit -m "[skip ci] [skip netlify] Prepare final Sunday visual polish"
+          git push origin HEAD:${GITHUB_REF_NAME}
