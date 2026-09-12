@@ -1,10 +1,15 @@
 from pathlib import Path
-p=Path('assets/site.css')
-s=p.read_text(encoding='utf-8')
-old=s
-s=s.replace('''[aria-label="Newsletter"] form input {\n  font-size: 15px !important;\n}''','''[aria-label="Newsletter"] form input {\n  font-size: 16px !important;\n}''')
-s=s.replace('''[aria-label="Newsletter"] form button {\n  min-height: 42px !important;\n}''','''[aria-label="Newsletter"] form button {\n  min-height: 44px !important;\n}''')
-if s==old:
-    raise SystemExit('newsletter correction targets not found or already applied')
-p.write_text(s,encoding='utf-8')
-print('Updated newsletter functional control sizing')
+
+p = Path('assets/site.css')
+s = p.read_text(encoding='utf-8')
+old = s
+
+target = '''  [aria-label="Newsletter"] [data-news-fineprint] {\n    font-size: 9.5px !important;\n  }'''
+replacement = '''  [aria-label="Newsletter"] [data-news-fineprint] {\n    font-size: 7.5px !important;\n    letter-spacing: .045em !important;\n    line-height: 1.45 !important;\n  }'''
+
+if target not in s:
+    raise SystemExit('newsletter fine-print target not found or already applied')
+
+s = s.replace(target, replacement, 1)
+p.write_text(s, encoding='utf-8')
+print('Updated mobile newsletter fine-print hierarchy')
