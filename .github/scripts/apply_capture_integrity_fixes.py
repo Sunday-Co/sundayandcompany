@@ -113,8 +113,8 @@ for component_name, source in [('Site Header.dc.html', root_header), ('Site Foot
             continue
         target.write_text(source_text, encoding='utf-8')
 
-# 3. Remove overflow:clip from document/page shells. Horizontal containment stays
-# on html/body/root hosts only, so the screen wrapper never becomes an inner scroller.
+# 3. Remove capture-hostile overflow from document/page shells. Horizontal containment
+# stays on html/body/root hosts only, so the screen wrapper never becomes an inner scroller.
 def normalize_shell_overflow(text: str) -> str:
     text = text.replace('overflow-x: clip;', 'overflow-x: hidden;')
     text = text.replace('overflow-x:clip;', 'overflow-x:hidden;')
@@ -123,9 +123,9 @@ def normalize_shell_overflow(text: str) -> str:
     pattern = re.compile(r'(<div\s+data-screen-label="[^"]+"\s+style=")([^"]*)(")', re.I)
     def repl(m):
         style = m.group(2)
-        style = re.sub(r'(^|;)\s*overflow\s*:\s*clip\s*;?', r'\1overflow:visible;', style, flags=re.I)
+        style = re.sub(r'(^|;)\s*overflow\s*:\s*(?:clip|hidden|auto|scroll)\s*;?', r'\1overflow:visible;', style, flags=re.I)
         style = re.sub(r'(^|;)\s*overflow-x\s*:\s*(?:clip|hidden|auto|scroll)\s*;?', r'\1overflow-x:visible;', style, flags=re.I)
-        style = re.sub(r'(^|;)\s*overflow-y\s*:\s*(?:hidden|auto|scroll)\s*;?', r'\1overflow-y:visible;', style, flags=re.I)
+        style = re.sub(r'(^|;)\s*overflow-y\s*:\s*(?:clip|hidden|auto|scroll)\s*;?', r'\1overflow-y:visible;', style, flags=re.I)
         return m.group(1) + style + m.group(3)
     return pattern.sub(repl, text)
 
