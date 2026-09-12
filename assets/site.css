@@ -86,9 +86,7 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   overscroll-behavior: contain;
 }
 
-[aria-label="Project inquiry"] {
-  margin: auto !important;
-}
+[aria-label="Project inquiry"] { margin: auto !important; }
 [aria-label="Project inquiry"] > div {
   box-sizing: border-box;
   margin: 0 !important;
@@ -100,9 +98,7 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   letter-spacing: .12em !important;
   line-height: 1.35 !important;
 }
-[aria-label="Project inquiry"] [data-inquiry-kicker] {
-  font-size: 28px !important;
-}
+[aria-label="Project inquiry"] [data-inquiry-kicker] { font-size: 28px !important; }
 [aria-label="Project inquiry"] [data-inquiry-support] {
   font-family: var(--sunday-sans) !important;
   font-size: 13px !important;
@@ -111,11 +107,13 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   line-height: 1.5 !important;
 }
 [aria-label="Project inquiry"] form[data-inq] label > span,
-[aria-label="Project inquiry"] form[data-inq] legend {
+[aria-label="Project inquiry"] form[data-inq] legend,
+#inquiry form[data-inq] label > span,
+#inquiry form[data-inq] legend {
   font-family: var(--sunday-sans) !important;
   font-size: 11.5px !important;
   font-weight: 300 !important;
-  letter-spacing: .11em !important;
+  letter-spacing: .10em !important;
   line-height: 1.35 !important;
 }
 [aria-label="Project inquiry"] form[data-inq] [data-stepbtns] button,
@@ -138,9 +136,7 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     min-height: 0 !important;
     padding: 31px 40px 38px !important;
   }
-  [aria-label="Project inquiry"] [data-inquiry-receipt-meta] {
-    font-size: 10.5px !important;
-  }
+  [aria-label="Project inquiry"] [data-inquiry-receipt-meta] { font-size: 10.5px !important; }
 }
 
 @media (max-width: 700px) {
@@ -165,18 +161,23 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   [aria-label="Project inquiry"] h2 { font-size: 25px !important; }
   [aria-label="Project inquiry"] [data-inquiry-support] { font-size: 13px !important; }
   [aria-label="Project inquiry"] [data-inquiry-receipt-meta] { font-size: 10px !important; }
-  [aria-label="Project inquiry"] form[data-inq] {
+  [aria-label="Project inquiry"] form[data-inq],
+  #inquiry form[data-inq] {
     grid-template-columns: 1fr !important;
     gap: 7px !important;
   }
-  [aria-label="Project inquiry"] form[data-inq] fieldset { grid-template-columns: 1fr !important; }
+  [aria-label="Project inquiry"] form[data-inq] fieldset,
+  #inquiry form[data-inq] fieldset { grid-template-columns: 1fr !important; }
   [aria-label="Project inquiry"] form[data-inq] label > span,
-  [aria-label="Project inquiry"] form[data-inq] legend {
-    font-size: 11.25px !important;
-  }
+  [aria-label="Project inquiry"] form[data-inq] legend,
+  #inquiry form[data-inq] label > span,
+  #inquiry form[data-inq] legend { font-size: 11.25px !important; }
   [aria-label="Project inquiry"] form[data-inq] input,
-  [aria-label="Project inquiry"] form[data-inq] select { min-height: 43px !important; }
-  [aria-label="Project inquiry"] form[data-inq] textarea { min-height: 74px !important; }
+  [aria-label="Project inquiry"] form[data-inq] select,
+  #inquiry form[data-inq] input,
+  #inquiry form[data-inq] select { min-height: 43px !important; }
+  [aria-label="Project inquiry"] form[data-inq] textarea,
+  #inquiry form[data-inq] textarea { min-height: 74px !important; }
 }
 
 /* Sunday Reservation popup: centered, desktop a little larger, mobile fine print quiet. */
@@ -240,9 +241,9 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     padding: 22px 20px 21px !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-fineprint] {
-    font-size: 8.5px !important;
+    font-size: 8.25px !important;
     line-height: 1.45 !important;
-    letter-spacing: .07em !important;
+    letter-spacing: .065em !important;
   }
 }
 
@@ -285,16 +286,10 @@ section#top[data-hero-fallback="ready"] {
   background-size: cover !important;
 }
 @media (max-width: 700px) {
-  section#top[data-screen-hero="home"] {
-    height: clamp(680px, 100svh, 820px) !important;
-  }
+  section#top[data-screen-hero="home"] { height: clamp(680px, 100svh, 820px) !important; }
 }
 
 /* Sunday & Co. motion language: paper / editorial reveals, intentionally restrained. */
-@keyframes sunday-paper-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 @keyframes sunday-modal-in {
   from { opacity: 0; transform: translateY(8px) scale(.995); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -309,8 +304,23 @@ section#top[data-hero-fallback="ready"] {
 [aria-label="The Sunday Reservation"] {
   animation: sunday-modal-in 300ms cubic-bezier(.22,.75,.18,1) both;
 }
-a svg, button svg { transition: transform 180ms ease; }
-a:hover svg, button:hover svg { transform: translate(2px,-1px); }
+
+/* Only directional CTA arrows move. Social icons, close buttons and other
+   interface glyphs stay perfectly still. */
+[data-sheet-cta] svg,
+[data-about-team-cta] svg,
+button[onClick*="openInquiry"] svg,
+a[href="/contact"] svg,
+a[href="#inquiry"] svg {
+  transition: transform 180ms ease;
+}
+[data-sheet-cta]:hover svg,
+[data-about-team-cta]:hover svg,
+button[onClick*="openInquiry"]:hover svg,
+a[href="/contact"]:hover svg,
+a[href="#inquiry"]:hover svg {
+  transform: translate(2px,-1px);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .sc-reveal,
@@ -322,5 +332,9 @@ a:hover svg, button:hover svg { transform: translate(2px,-1px); }
     transform: none !important;
     transition: none !important;
   }
-  a svg, button svg { transition: none !important; }
+  [data-sheet-cta] svg,
+  [data-about-team-cta] svg,
+  button[onClick*="openInquiry"] svg,
+  a[href="/contact"] svg,
+  a[href="#inquiry"] svg { transition: none !important; }
 }
