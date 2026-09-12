@@ -60,8 +60,8 @@ jobs:
 
       - name: Run consolidated browser QA
         run: |
-          sed -i "/await load(home, '\/');/a const autoReservation = home.locator('[aria-label=\"The Sunday Reservation\"]'); if (await autoReservation.isVisible()) { await autoReservation.getByRole('button', { name: 'Close' }).evaluate((el) => el.click()); await home.waitForTimeout(250); }" .github/scripts/consolidated_revision_qa.mjs
           sed -i "/await signEl.scrollIntoViewIfNeeded();/a await signEl.evaluate((el) => el.click());" .github/scripts/consolidated_revision_qa.mjs
+          sed -i "/await home.evaluate(() => window.dispatchEvent(new CustomEvent('sunday:open-inquiry')));/i const autoReservation = home.locator('[aria-label=\"The Sunday Reservation\"]'); if (await autoReservation.isVisible()) { await autoReservation.getByRole('button', { name: 'Close' }).evaluate((el) => el.click()); await home.waitForTimeout(250); }" .github/scripts/consolidated_revision_qa.mjs
           sed -i "s/await inquiry.getByRole('button', { name: 'Close' }).click();/await inquiry.getByRole('button', { name: 'Close' }).evaluate((el) => el.click());/" .github/scripts/consolidated_revision_qa.mjs
           sed -i "s/await reservation.getByRole('button', { name: 'Close' }).click();/await reservation.getByRole('button', { name: 'Close' }).evaluate((el) => el.click());/" .github/scripts/consolidated_revision_qa.mjs
           sed -i "s/await desktopReservation.getByRole('button', { name: 'Close' }).click();/await desktopReservation.getByRole('button', { name: 'Close' }).evaluate((el) => el.click());/" .github/scripts/consolidated_revision_qa.mjs
