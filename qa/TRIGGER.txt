@@ -1,1 +1,1 @@
-Trigger the WebKit QA workflow after the Batch 8-9 source corrections are present on the audit branch.
+Trigger the WebKit QA workflow after the Batch 8-9 source corrections and final functional microtype audit are present on the audit branch.
