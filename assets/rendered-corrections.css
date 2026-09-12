@@ -329,7 +329,6 @@ a[href="#inquiry"]:hover svg {
   a[href="#inquiry"] svg { transition:none !important; }
 }
 
-
 /* FINAL RENDERED FORM + PROGRAM PASS */
 form[data-inq] > button,
 form[data-editorial-labels] button[type="submit"],
@@ -418,3 +417,16 @@ form[data-inq] [role="checkbox"] span:last-child {
     font-size:46px !important;
   }
 }
+
+/* PROGRAM CARD ACTIONS: functional controls stay readable. */
+[data-program-action] {
+  font-family:var(--sc-sans) !important;
+  font-size:10px !important;
+  font-weight:400 !important;
+  letter-spacing:.085em !important;
+}
+button[data-program-action] { min-height:44px !important; }
+@media (max-width:720px) {
+  [data-program-action] { font-size:10.5px !important; }
+}
+
