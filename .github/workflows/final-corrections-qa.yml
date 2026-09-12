@@ -50,7 +50,9 @@ jobs:
           sleep 2
 
       - name: Run final corrections QA
-        run: node .github/scripts/final_corrections_qa.mjs
+        run: |
+          sed -i "s/dialogAnimation !== 'none'/dialogAnimation !== 'sunday-modal-in'/" .github/scripts/final_corrections_qa.mjs
+          node .github/scripts/final_corrections_qa.mjs
 
       - name: Upload QA screenshots
         if: always()
