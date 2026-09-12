@@ -122,15 +122,6 @@
       left: -24px !important; top: -57px !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
-    [aria-label="The Sunday Reservation"] { max-height: calc(100svh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100svh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
-    [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
-    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 230px !important; min-height: 210px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 500px !important; padding: 30px 24px 28px !important; }
-    [aria-label="The Sunday Reservation"] h2 { font-size: 23px !important; }
-    [aria-label="The Sunday Reservation"] p { font-size: 11px !important; line-height: 1.5 !important; }
-    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 8px !important; line-height: 1.5 !important; }
-    [aria-label="The Sunday Reservation"] label { font-size: 10px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
 
   @media (max-width: 700px) {
@@ -144,11 +135,6 @@
     form[data-inq] textarea { min-height: 74px !important; }
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
-    [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { min-height: calc(100svh - 20px) !important; padding: 24px 18px 30px !important; }
-    #inquiry > div { min-height: auto !important; padding: 20px 18px 24px !important; }
-    #inquiry header h2 { font-size: 26px !important; }
-    #inquiry header h2 + p { font-size: 11px !important; }
   }
 
   @media (max-width: 700px) {
@@ -192,7 +178,7 @@
     <div style="border-top:1px solid #311d03">
       <div style="border-bottom:1px solid #311d03">
         <button type="button" onClick="{{ tog0 }}" aria-expanded="{{ open0 }}" style="align-items:center;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;gap:22px;grid-template-columns:{{ gc1 }};padding:30px 0;text-align:left;width:100%">
-          <span data-service-number style="font-family:\'Inter Tight\',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">01</span>
+          <span data-service-number style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">01</span>
           <span style="font-size:clamp(30px,3.2vw,46px);font-weight:400;letter-spacing:-.05em;line-height:.94">Branding</span>
           <span style="display:grid;gap:8px;justify-items:end;text-align:right"><strong data-service-price style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">Starting At $2,500</strong><small data-service-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">One-Time Project</small></span>
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:18px;transition:transform 260ms ease;width:18px;transform:{{ rot0 }}"><path d="m6 9 6 6 6-6"></path></svg>
@@ -224,7 +210,7 @@
 
       <div style="border-bottom:1px solid #311d03">
         <button type="button" onClick="{{ tog1 }}" aria-expanded="{{ open1 }}" style="align-items:center;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;gap:22px;grid-template-columns:{{ gc1 }};padding:30px 0;text-align:left;width:100%">
-          <span data-service-number style="font-family:\'Inter Tight\',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">02</span>
+          <span data-service-number style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">02</span>
           <span style="font-size:clamp(30px,3.2vw,46px);font-weight:400;letter-spacing:-.05em;line-height:.94">Website Design</span>
           <span style="display:grid;gap:8px;justify-items:end;text-align:right"><strong data-service-price style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">Starting At $3,500</strong><small data-service-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">One-Time Project</small></span>
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:18px;transition:transform 260ms ease;width:18px;transform:{{ rot1 }}"><path d="m6 9 6 6 6-6"></path></svg>
@@ -254,7 +240,7 @@
 
       <div style="border-bottom:1px solid #311d03">
         <button type="button" onClick="{{ tog2 }}" aria-expanded="{{ open2 }}" style="align-items:center;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;gap:22px;grid-template-columns:{{ gc1 }};padding:30px 0;text-align:left;width:100%">
-          <span data-service-number style="font-family:\'Inter Tight\',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">03</span>
+          <span data-service-number style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">03</span>
           <span style="font-size:clamp(30px,3.2vw,46px);font-weight:400;letter-spacing:-.05em;line-height:.94">Digital Marketing</span>
           <span style="display:grid;gap:8px;justify-items:end;text-align:right"><strong data-service-price style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">Starting At $1,200 Per Month</strong><small data-service-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">Ongoing Service</small></span>
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:18px;transition:transform 260ms ease;width:18px;transform:{{ rot2 }}"><path d="m6 9 6 6 6-6"></path></svg>

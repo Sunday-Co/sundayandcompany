@@ -122,15 +122,6 @@
       left: -24px !important; top: -57px !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
-    [aria-label="The Sunday Reservation"] { max-height: calc(100svh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100svh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
-    [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
-    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 230px !important; min-height: 210px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 500px !important; padding: 30px 24px 28px !important; }
-    [aria-label="The Sunday Reservation"] h2 { font-size: 23px !important; }
-    [aria-label="The Sunday Reservation"] p { font-size: 11px !important; line-height: 1.5 !important; }
-    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 8px !important; line-height: 1.5 !important; }
-    [aria-label="The Sunday Reservation"] label { font-size: 10px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
 
   @media (max-width: 700px) {
@@ -144,11 +135,6 @@
     form[data-inq] textarea { min-height: 74px !important; }
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
-    [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { min-height: calc(100svh - 20px) !important; padding: 24px 18px 30px !important; }
-    #inquiry > div { padding: 20px 18px 24px !important; }
-    #inquiry header h2 { font-size: 26px !important; }
-    #inquiry header h2 + p { font-size: 11px !important; }
   }
 
   @media (max-width: 700px) {
