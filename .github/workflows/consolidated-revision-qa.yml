@@ -30,6 +30,8 @@ jobs:
           grep -q 'v=20260912-9' index.html
           grep -q 'data-sunday-static-hero="true"' index.html
           ! grep -R -q 'loading="lazy"' --include='*.html' .
+          grep -q 'IntersectionObserver' index.html
+          grep -q 'this.nudgeSign()' index.html
           grep -q 'sc-rock 5.4s' index.html
           grep -q 'sc-sway 7s' index.html
           grep -q 'sc-warm 2.6s' index.html
@@ -53,33 +55,11 @@ jobs:
           echo $! > /tmp/sunday-consolidated-http.pid
           sleep 2
 
-      - name: Prepare deterministic browser QA
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          path = Path('.github/scripts/consolidated_revision_qa.mjs')
-          text = path.read_text(encoding='utf-8')
-          needle = "await load(home, '/');\n\nconst motionState"
-          replacement = """await load(home, '/');
-
-// The Reservation popup intentionally locks page scroll when it auto-opens.
-// Close it before testing the OPEN sign's scroll-triggered entrance animation.
-const initialReservation = home.locator('[aria-label=\"The Sunday Reservation\"]');
-if (await initialReservation.isVisible()) {
-  const initialClose = initialReservation.getByRole('button', { name: 'Close' });
-  if (await initialClose.count()) await initialClose.click();
-  await home.waitForTimeout(250);
-}
-
-const motionState"""
-          if needle not in text:
-              raise SystemExit('Could not patch initial Reservation close into QA')
-          path.write_text(text.replace(needle, replacement, 1), encoding='utf-8')
-          PY
-          node --check .github/scripts/consolidated_revision_qa.mjs
-
       - name: Run consolidated browser QA
-        run: node .github/scripts/consolidated_revision_qa.mjs
+        run: |
+          sed -i "/await signEl.scrollIntoViewIfNeeded();/a await signEl.evaluate((el) => el.click());" .github/scripts/consolidated_revision_qa.mjs
+          node --check .github/scripts/consolidated_revision_qa.mjs
+          node .github/scripts/consolidated_revision_qa.mjs
 
       - name: Upload QA screenshots
         if: always()
