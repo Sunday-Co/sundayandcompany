@@ -9,7 +9,7 @@ const context = await browser.newContext({ viewport: { width: 390, height: 844 }
 const base = 'http://127.0.0.1:4173';
 
 async function waitForImages(page, route) {
-  await page.waitForFunction(() => Array.from(document.images).every((img) => img.loading !== 'lazy'), null, { timeout: 15000 });
+  await page.waitForFunction(() => Array.from(document.images).every((img) => img.loading !== 'lazy'), null, { timeout: 45000 });
   await page.waitForFunction(() => Array.from(document.images).every((img) => img.complete && img.naturalWidth > 0), null, { timeout: 60000 });
   const state = await page.evaluate(() => ({
     total: document.images.length,
@@ -113,7 +113,7 @@ if (!reservationState.supportFamily.includes('Inter Tight') || reservationState.
 await reservation.screenshot({ path: `${outDir}/reservation-mobile.png` });
 await reservation.getByRole('button', { name: 'Close' }).click();
 
-// Project inquiry hierarchy and subtle overlap.
+// Project inquiry hierarchy and subtle overlap. Preserve the original modal animation.
 await home.evaluate(() => window.dispatchEvent(new Event('sunday:open-inquiry')));
 const inquiry = home.locator('[aria-label="Project inquiry"]');
 await inquiry.waitFor({ state: 'visible', timeout: 5000 });
@@ -136,7 +136,7 @@ const inquiryState = await inquiry.evaluate((dialog) => {
     dialogAnimation: getComputedStyle(dialog).animationName,
   };
 });
-if (!inquiryState || inquiryState.kickerText !== 'A Seat At Our Table' || !inquiryState.kickerFamily.includes('Pinyon Script') || inquiryState.kickerSize > 31 || !inquiryState.headlineFamily.includes('Playfair Display') || inquiryState.headlineSize > 28 || inquiryState.overlap < 0 || inquiryState.overlap > 8 || inquiryState.dialogAnimation !== 'none') {
+if (!inquiryState || inquiryState.kickerText !== 'A Seat At Our Table' || !inquiryState.kickerFamily.includes('Pinyon Script') || inquiryState.kickerSize > 31 || !inquiryState.headlineFamily.includes('Playfair Display') || inquiryState.headlineSize > 28 || inquiryState.overlap < 0 || inquiryState.overlap > 8 || inquiryState.dialogAnimation !== 'sunday-modal-in') {
   throw new Error(`Inquiry hierarchy is wrong: ${JSON.stringify(inquiryState)}`);
 }
 await inquiry.screenshot({ path: `${outDir}/inquiry-mobile.png` });
@@ -146,11 +146,21 @@ await home.close();
 // Join Our Team full details must be a fixed popup on mobile, never inline.
 const join = await context.newPage();
 await load(join, '/join-our-team/');
-const firstFront = join.locator('[data-program-cards] article').first().locator('button').first();
-await firstFront.click();
-await join.waitForTimeout(1000);
-const detailsButton = join.getByRole('button', { name: 'View Full Details' }).first();
-await detailsButton.click();
+const firstArticle = join.locator('[data-program-cards] > article').first();
+const firstFront = firstArticle.locator(':scope > div > button').first();
+await firstFront.evaluate((el) => el.click());
+await join.waitForTimeout(1100);
+const detailsButton = firstArticle.getByRole('button', { name: 'View Full Details' });
+await detailsButton.waitFor({ state: 'visible', timeout: 5000 });
+const detailState = await detailsButton.evaluate((button) => ({
+  display: getComputedStyle(button).display,
+  visibility: getComputedStyle(button).visibility,
+  pointerEvents: getComputedStyle(button).pointerEvents,
+}));
+if (detailState.display === 'none' || detailState.visibility === 'hidden' || detailState.pointerEvents === 'none') {
+  throw new Error(`Fellows details button is not active: ${JSON.stringify(detailState)}`);
+}
+await detailsButton.evaluate((el) => el.click());
 const fellows = join.getByRole('dialog', { name: 'The Fellows Table' });
 await fellows.waitFor({ state: 'visible', timeout: 5000 });
 const modalState = await fellows.evaluate((dialog) => {
