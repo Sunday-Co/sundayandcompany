@@ -5,15 +5,12 @@ ROOT = Path('.')
 CSS_PATH = ROOT / 'assets' / 'rendered-corrections.css'
 css = CSS_PATH.read_text(encoding='utf-8')
 
-# Remove the correction-layer OPEN-sign override. The homepage component already
-# owns the approved IntersectionObserver-triggered sc-rock -> sc-sway and
-# sc-warm -> sc-neon sequence. That original sequence must remain in control.
 start_marker = '/* The OPEN sign keeps its original character, but now loops without a one-shot handoff. */'
 end_marker = '/* SUNDAY ARCHIVE LIBRARY CARD MODALS */'
 if start_marker in css:
     start = css.index(start_marker)
     end = css.index(end_marker, start)
-    css = css[:start] + '/* OPEN sign motion is intentionally owned by the original homepage component. */\n\n' + css[end:]
+    css = css[:start] + '/* OPEN sign motion uses the original homepage sequence. */\n\n' + css[end:]
 
 fix_marker = '/* FINAL CONSOLIDATED REVISION · 2026-09-12 */'
 old_fix_marker = '/* FINAL BOUNDED FIXES · SAFARI CAPTURE + ORIGINAL MOTION */'
@@ -57,19 +54,16 @@ a[href="#inquiry"] svg {
   transition:none !important;
 }
 
-/*
-  Preserve the homepage component's original OPEN sign sequence. If that
-  component fails to reapply its inline animation, site.js sets this fallback
-  state and reuses the exact same original animation names/timing.
-*/
-[data-sign][data-sunday-sign-fallback="0"] p[aria-hidden][style*="Pinyon Script"],
-[data-sign][data-sunday-sign-fallback="0"] > div[style*="transform-origin"] {
+/* Reuse the exact original OPEN warm-up, damped swing, neon loop and slow sway.
+   The state sits on html so a component rerender cannot erase it. */
+html[data-sunday-sign-fallback="0"] [data-sign] p[aria-hidden][style*="Pinyon Script"],
+html[data-sunday-sign-fallback="0"] [data-sign] > div[style*="transform-origin"] {
   animation:none !important;
 }
-[data-sign][data-sunday-sign-fallback="1"] p[aria-hidden][style*="Pinyon Script"] {
+html[data-sunday-sign-fallback="1"] [data-sign] p[aria-hidden][style*="Pinyon Script"] {
   animation:sc-warm 2.6s ease-out 1 both, sc-neon 3.8s ease-in-out 2.6s infinite !important;
 }
-[data-sign][data-sunday-sign-fallback="1"] > div[style*="transform-origin"] {
+html[data-sunday-sign-fallback="1"] [data-sign] > div[style*="transform-origin"] {
   animation:sc-rock 5.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 7s ease-in-out 5.4s infinite !important;
 }
 
@@ -106,7 +100,7 @@ a[href="#inquiry"] svg {
   [aria-label="Project inquiry"] > div { padding-bottom:44px !important; }
 }
 
-/* Sunday Reservation: receipt-like hierarchy with readable fine print by viewport. */
+/* Sunday Reservation: receipt hierarchy with readable fine print by viewport. */
 @media (min-width:701px) {
   [aria-label="The Sunday Reservation"] [data-res-fineprint] {
     font-size:9px !important;
@@ -124,7 +118,7 @@ a[href="#inquiry"] svg {
   }
 }
 
-/* Safari renders this mail link optically lighter; match the footer body rhythm. */
+/* Match the footer mail link to the visual weight of the surrounding body copy. */
 footer a[href^="mailto:"] {
   font-family:var(--sc-sans) !important;
   font-size:12.5px !important;
@@ -134,10 +128,7 @@ footer a[href^="mailto:"] {
   opacity:1 !important;
 }
 
-/*
-  Safari Full Page/PDF capture must see the actual image element without waiting
-  for a JS-added attribute. Static hero markers are written into rendered HTML.
-*/
+/* Static Safari Full Page/PDF capture safeguards. */
 img { content-visibility:visible !important; }
 img[data-sunday-static-hero="true"],
 section#top > img[style*="position:absolute"],
@@ -215,7 +206,6 @@ CSS_PATH.write_text(css, encoding='utf-8')
 
 
 def mark_static_hero_images(text: str) -> tuple[str, int]:
-    """Mark the first absolute-positioned image inside each hero section in source."""
     total = 0
     section_pattern = re.compile(
         r'(<section\b[^>]*(?:data-screen-hero|id="top")[^>]*>)(.*?)(</section>)',
@@ -240,8 +230,6 @@ def mark_static_hero_images(text: str) -> tuple[str, int]:
     return section_pattern.sub(section_repl, text), total
 
 
-# Static capture safety across the whole rendered site. Remove lazy image loading,
-# add source-level hero markers, and bump the correction assets to v9.
 changed = 0
 lazy_removed = 0
 hero_marked = 0
@@ -260,11 +248,10 @@ for path in sorted(ROOT.rglob('*.html')):
         path.write_text(updated, encoding='utf-8')
         changed += 1
 
-# Strict end-state markers.
 final_css = CSS_PATH.read_text(encoding='utf-8')
 required = [
     fix_marker,
-    'data-sunday-sign-fallback="1"',
+    'html[data-sunday-sign-fallback="1"]',
     'sc-rock 5.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 7s ease-in-out 5.4s infinite',
     'font-family:var(--sc-sans) !important;',
     'padding-bottom:44px !important;',
@@ -280,8 +267,6 @@ for marker in required:
     if marker not in final_css:
         raise SystemExit(f'Missing final CSS marker: {marker}')
 
-# The original modal opening animation is intentionally preserved. Do not add a
-# broad correction override that disables it.
 if re.search(r'\[aria-label="Project inquiry"\]\s*,\s*\n\[aria-label="The Sunday Reservation"\]\s*\{\s*animation:none', final_css):
     raise SystemExit('Original modal opening animation was accidentally disabled')
 
