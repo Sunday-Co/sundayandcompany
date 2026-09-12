@@ -53,13 +53,8 @@
       img.decoding = 'sync';
       try { img.fetchPriority = 'high'; } catch (e) {}
 
-      if (img.parentElement === hero) {
-        hero.setAttribute('data-sunday-grid-hero', 'true');
-      }
-
-      if (hero.closest('[data-screen-label="Home"]')) {
-        hero.setAttribute('data-screen-hero', 'home');
-      }
+      if (img.parentElement === hero) hero.setAttribute('data-sunday-grid-hero', 'true');
+      if (hero.closest('[data-screen-label="Home"]')) hero.setAttribute('data-screen-hero', 'home');
 
       var src = img.getAttribute('src');
       if (src && !hero.style.backgroundImage) {
@@ -71,54 +66,57 @@
     });
   }
 
-  var signFallbackObserver = null;
+  var signMotionObserver = null;
+  var observedSign = null;
+  var signMotionClickBound = false;
+  var signMotionRafA = 0;
+  var signMotionRafB = 0;
 
-  function ensureOpenSignFallback() {
+  function reducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function triggerOriginalOpenSignMotion() {
+    if (reducedMotion()) return;
+    var root = document.documentElement;
+    root.dataset.sundaySignFallback = '0';
+    if (signMotionRafA) window.cancelAnimationFrame(signMotionRafA);
+    if (signMotionRafB) window.cancelAnimationFrame(signMotionRafB);
+    signMotionRafA = window.requestAnimationFrame(function () {
+      signMotionRafB = window.requestAnimationFrame(function () {
+        root.dataset.sundaySignFallback = '1';
+      });
+    });
+  }
+
+  function ensureOpenSignMotion() {
     var sign = document.querySelector('[data-sign]');
-    if (!sign || sign.dataset.sundaySignFallbackBound === '1') return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!sign) return;
 
-    sign.dataset.sundaySignFallbackBound = '1';
-
-    function fallbackRestart() {
-      sign.dataset.sundaySignFallback = '0';
-      window.requestAnimationFrame(function () {
-        window.requestAnimationFrame(function () {
-          sign.dataset.sundaySignFallback = '1';
-        });
+    if (!signMotionClickBound) {
+      document.addEventListener('click', function (event) {
+        var target = event.target;
+        if (target && target.closest && target.closest('[data-sign]')) {
+          triggerOriginalOpenSignMotion();
+        }
       });
+      signMotionClickBound = true;
     }
 
-    function verifyOriginalOrFallback() {
-      if (sign.dataset.sundaySignFallback === '1') {
-        fallbackRestart();
-        return;
-      }
+    if (!('IntersectionObserver' in window)) {
+      triggerOriginalOpenSignMotion();
+      return;
+    }
 
-      window.requestAnimationFrame(function () {
-        window.requestAnimationFrame(function () {
-          var neon = sign.querySelector('p[aria-hidden][style*="Pinyon Script"]');
-          var hanger = sign.querySelector(':scope > div[style*="transform-origin"]');
-          if (!neon || !hanger) return;
-          var neonName = window.getComputedStyle(neon).animationName || 'none';
-          var hangerName = window.getComputedStyle(hanger).animationName || 'none';
-          if (neonName === 'none' || hangerName === 'none') fallbackRestart();
-        });
+    if (observedSign === sign && signMotionObserver) return;
+    if (signMotionObserver) signMotionObserver.disconnect();
+    observedSign = sign;
+    signMotionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) triggerOriginalOpenSignMotion();
       });
-    }
-
-    sign.addEventListener('click', verifyOriginalOrFallback);
-
-    if ('IntersectionObserver' in window) {
-      signFallbackObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) verifyOriginalOrFallback();
-        });
-      }, { threshold: 0.35 });
-      signFallbackObserver.observe(sign);
-    } else {
-      verifyOriginalOrFallback();
-    }
+    }, { threshold: 0.35 });
+    signMotionObserver.observe(sign);
   }
 
   function sync() {
@@ -126,7 +124,7 @@
     normalizeRuntimeRoots();
     prepareImagesForCapture(document);
     markHeroFallbacks();
-    ensureOpenSignFallback();
+    ensureOpenSignMotion();
   }
 
   function boot() {
@@ -144,11 +142,7 @@
       if (shouldSync) window.requestAnimationFrame(sync);
     });
 
-    mo.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
-
+    mo.observe(document.documentElement, { childList: true, subtree: true });
     window.addEventListener('pageshow', sync);
     window.addEventListener('resize', normalizeRuntimeRoots, { passive: true });
   }
