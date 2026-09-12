@@ -671,7 +671,6 @@ a[href="#inquiry"]:hover svg {
   }
 }
 
-
 /* BATCH 8-9: HERO STABILITY + EDITORIAL MOTION */
 html,
 body {
@@ -760,9 +759,17 @@ form[data-inq] [data-step-panel] {
   aside[data-sheet-state="open"] [data-sheet-cta]:last-child { animation-delay: 175ms; }
 }
 
-/* Client Love Letters intentionally remain a physical paper stack. */
+/* Client Love Letters behave like a physical paper stack. The active card
+   transition is already driven by the component's translate/opacity state; the
+   shared rule adds a tiny lift when a letter is directly interacted with. */
 [data-love-letter] {
   will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-love-letter]:hover {
+    filter: drop-shadow(0 9px 12px rgba(49,29,3,.08));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -785,7 +792,6 @@ form[data-inq] [data-step-panel] {
     transition: none !important;
   }
 }
-
 
 /* BATCH 1 FINAL: FUNCTIONAL MICROTYPE AUDIT
    Functional navigation/actions are brought into a readable 9–10px range.
@@ -881,7 +887,6 @@ footer [data-footer-legal] {
     min-height: 44px !important;
   }
 }
-
 
 /* BATCH 7 WEBKIT: PROGRAM CARD FLIP COMPATIBILITY
    Safari/WebKit needs the prefixed 3D context on the card wrapper itself,
