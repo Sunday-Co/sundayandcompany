@@ -13,12 +13,8 @@
       hero.setAttribute('data-hero-fallback', 'ready');
       if (hero.closest('[data-screen-label="Home"]')) hero.setAttribute('data-screen-hero', 'home');
       var src = img.getAttribute('src');
-      if (src && !hero.style.backgroundImage) {
-        hero.style.backgroundImage = 'url("' + src.replace(/"/g, '\\"') + '")';
-      }
-      if (!hero.style.backgroundPosition && img.style.objectPosition) {
-        hero.style.backgroundPosition = img.style.objectPosition;
-      }
+      if (src && !hero.style.backgroundImage) hero.style.backgroundImage = 'url("' + src.replace(/"/g, '\\"') + '")';
+      if (!hero.style.backgroundPosition && img.style.objectPosition) hero.style.backgroundPosition = img.style.objectPosition;
     });
   }
 
@@ -49,9 +45,8 @@
     normalizeRuntimeRoots();
     document.querySelectorAll('aside[aria-label="Sunday & Company navigation"][data-sheet-state]').forEach(function (sheet) {
       var open = sheet.getAttribute('data-sheet-state') === 'open';
-      if (open) {
-        sheet.style.display = 'flex';
-      } else {
+      if (open) sheet.style.display = 'flex';
+      else {
         sheet.style.display = 'none';
         sheet.style.visibility = 'hidden';
         sheet.style.transform = 'none';
@@ -68,8 +63,7 @@
 
   function animateEditorialMedia(node) {
     if (reduce || !Element.prototype.animate) return;
-    var images = node.querySelectorAll('img');
-    Array.prototype.forEach.call(images, function (img) {
+    Array.prototype.forEach.call(node.querySelectorAll('img'), function (img) {
       if (mediaAnimated.has(img)) return;
       if (img.closest('header, footer, [role="dialog"], [aria-label="Sunday & Company navigation"]')) return;
       if ((img.naturalWidth && img.naturalWidth < 420) || (img.naturalHeight && img.naturalHeight < 260)) return;
@@ -77,11 +71,7 @@
       img.animate([
         { opacity: 0.94, transform: 'scale(1.012)', clipPath: 'inset(0 0 7% 0)' },
         { opacity: 1, transform: 'scale(1)', clipPath: 'inset(0 0 0 0)' }
-      ], {
-        duration: 520,
-        easing: 'cubic-bezier(.22,.75,.18,1)',
-        fill: 'both'
-      });
+      ], { duration: 520, easing: 'cubic-bezier(.22,.75,.18,1)', fill: 'both' });
     });
   }
 
@@ -129,9 +119,8 @@
 
   function boot() {
     sync();
-    var root = document.documentElement;
     var mo = new MutationObserver(function () { sync(); });
-    mo.observe(root, {
+    mo.observe(document.documentElement, {
       childList: true,
       subtree: true,
       attributes: true,
