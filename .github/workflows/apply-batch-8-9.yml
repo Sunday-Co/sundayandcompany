@@ -1,0 +1,104 @@
+name: Apply Sunday Batch 8-9
+
+on:
+  push:
+    branches:
+      - full-correction-audit-2026-09-11
+    paths:
+      - scripts/apply-batch-8-9.py
+      - .github/workflows/apply-batch-8-9.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out audit branch
+        uses: actions/checkout@v4
+        with:
+          ref: full-correction-audit-2026-09-11
+          fetch-depth: 0
+
+      - name: Apply Batch 8-9 source corrections
+        run: python3 scripts/apply-batch-8-9.py
+
+      - name: Validate Batch 8-9 source
+        run: |
+          set -e
+          git diff --check
+          node --check assets/site.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import tomllib
+
+          with open('netlify.toml','rb') as f:
+              cfg = tomllib.load(f)
+          assert cfg['build']['publish'] == '.'
+          assert 'command' not in cfg['build']
+
+          css = Path('assets/site.css').read_text(encoding='utf-8')
+          for phrase in [
+              'BATCH 8-9: HERO STABILITY + EDITORIAL MOTION',
+              '@keyframes sunday-step-in',
+              '@keyframes sunday-accordion-in',
+              '@keyframes sunday-menu-row-in',
+              'section#top[data-screen-hero="home"]',
+              'aside[data-sheet-state="open"]',
+          ]:
+              assert phrase in css, phrase
+
+          js = Path('assets/site.js').read_text(encoding='utf-8')
+          assert "section#top, section[data-screen-hero]" in js
+          assert ":scope > img, :scope > div:first-child img" in js
+
+          home = Path('index.html').read_text(encoding='utf-8')
+          assert 'position:absolute;width:100%;z-index:0' in home
+          assert home.count('data-love-letter') == 4
+
+          about = Path('about/index.html').read_text(encoding='utf-8')
+          assert 'data-screen-hero="image"' in about
+          assert "background:#311d03 url('/assets/about-hero.jpg')" in about
+
+          school = Path('sunday-school/index.html').read_text(encoding='utf-8')
+          assert 'data-screen-hero="image"' in school
+          assert "background:#311d03 url('/assets/sunday-school-hero.jpg')" in school
+
+          inq = Path('Inquiry Form.dc.html').read_text(encoding='utf-8')
+          assert inq.count('data-step-panel') >= 8
+
+          services = Path('services/index.html').read_text(encoding='utf-8')
+          assert services.count('data-service-body') == 3
+          assert services.count('data-process-body') == 4
+
+          header = Path('Site Header.dc.html').read_text(encoding='utf-8')
+          assert 'data-sheet-state="{{ sheetState }}"' in header
+          assert "sheetState: this.state.sheet ? 'open' : 'closed'" in header
+
+          # Shared copies changed in this batch must be byte-identical to root.
+          for name in ['Inquiry Form.dc.html','Site Header.dc.html']:
+              root = Path(name).read_text(encoding='utf-8')
+              for p in Path('.').rglob(name):
+                  assert p.read_text(encoding='utf-8') == root, p
+
+          assert Path('QA_SOURCE_REPORT.md').exists()
+          report = Path('QA_SOURCE_REPORT.md').read_text(encoding='utf-8')
+          assert 'Hero / viewport audit' in report
+          assert 'Tiny functional-text scan' in report
+
+          print('Batch 8-9 validation passed.')
+          PY
+
+      - name: Commit Batch 8-9
+        run: |
+          git config user.name "Sunday & Company Corrections"
+          git config user.email "hello@sundayandcompany.co"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No Batch 8-9 changes needed."
+          else
+            git commit -m "Batch 8-9: stabilize heroes and refine motion"
+            git push origin HEAD:full-correction-audit-2026-09-11
+          fi
