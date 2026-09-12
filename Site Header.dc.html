@@ -218,22 +218,6 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     if (typeof window === 'undefined') return;
-    if (typeof document !== 'undefined') {
-      if (!document.querySelector('link[data-sunday-rendered-corrections]')) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = '/assets/rendered-corrections.css?v=20260912-5';
-        link.setAttribute('data-sunday-rendered-corrections', 'true');
-        document.head.appendChild(link);
-      }
-      if (!document.querySelector('script[data-sunday-site-js]')) {
-        const script = document.createElement('script');
-        script.src = '/assets/site.js?v=20260912-5';
-        script.async = true;
-        script.setAttribute('data-sunday-site-js', 'true');
-        document.head.appendChild(script);
-      }
-    }
     this._onScroll = () => this.setState({ scrolled: window.scrollY > 36 });
     this._onScroll();
     window.addEventListener('scroll', this._onScroll, { passive: true });
