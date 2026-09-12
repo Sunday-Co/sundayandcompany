@@ -924,7 +924,6 @@ button[data-program-action] { min-height:44px !important; }
 
 
 /* FINAL SOURCE ALIGNMENT · 2026-09-12 */
-[data-reveal],
 .sc-reveal,
 .sc-reveal.sc-in,
 form[data-inq] [data-step-panel],
@@ -977,10 +976,6 @@ footer a[href*="instagram.com/sundayand_co"] {
 html, body, #dc-root, #dc-root > .sc-host {
   max-width:100% !important;
   overflow-x:hidden !important;
-}
-[data-screen-label] {
-  max-width:100% !important;
-  overflow:visible !important;
 }
 
 /* Long portfolio screenshots must participate in the outer document instead of
