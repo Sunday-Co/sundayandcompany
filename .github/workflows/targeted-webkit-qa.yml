@@ -1,0 +1,46 @@
+name: Targeted WebKit QA
+
+on:
+  push:
+    branches:
+      - final-polish-no-deploy-2026-09-12
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Serve site
+        run: |
+          python3 -m http.server 4173 > /tmp/sunday-http.log 2>&1 &
+          echo $! > /tmp/sunday-http.pid
+          sleep 2
+      - name: Run targeted QA
+        run: node .github/scripts/targeted_qa.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-targeted-qa
+          path: /tmp/sunday-qa
+          if-no-files-found: ignore
+      - name: Remove temporary QA tooling after success
+        if: success()
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs
+          git commit -m "[skip ci] [skip netlify] Remove targeted WebKit QA tooling"
+          git push origin HEAD:${GITHUB_REF_NAME}
