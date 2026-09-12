@@ -33,11 +33,24 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CreativeWork","name":"Foláké & Co. · Case Study","headline":"Foláké & Co.","description":"Website design and digital experience for a mobile matcha café.","about":"Mobile matcha café","keywords":"café website design, mobile coffee branding","creator":{"@type":"Organization","name":"Sunday & Company","@id":"https://sundayandcompany.co/#studio"},"url":"https://sundayandcompany.co/our-work/folake","inLanguage":"en-US"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sundayandcompany.co/"},{"@type":"ListItem","position":2,"name":"Our Work","item":"https://sundayandcompany.co/our-work"},{"@type":"ListItem","position":3,"name":"Foláké & Co."}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Ysabeau:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
-  [style*="font-family:'IBM Plex Mono'"] { font-weight: 300 !important; }
-  [style*="font-family:'IBM Plex Mono'"] strong { font-weight: 300 !important; }
+  [style*="font-family:'Ysabeau'"] { font-weight: 300 !important; }
+  [style*="font-family:'Ysabeau'"] strong { font-weight: 400 !important; }
+  button[style*="font-family:'Ysabeau'"], a[style*="font-family:'Ysabeau'"] { font-weight: 400 !important; }
+  @media (min-width: 701px) {
+    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 8.5px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 9.5px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 10.5px !important; }
+  }
+  @media (max-width: 700px) {
+    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8.5px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 9px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 10px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 11px !important; }
+  }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -117,21 +130,21 @@
 
   @media (max-width: 700px) {
     /* masthead logo — same size on every page */
-    header > a[aria-label] { width: 108px !important; }
-    header > a[aria-label] > span { height: 40px !important; width: 104px !important; }
+    header > a[aria-label] { width: 120px !important; }
+    header > a[aria-label] > span { height: 44px !important; width: 116px !important; }
     header > a[aria-label] > span > img {
-      height: 148px !important; width: 148px !important;
-      left: -21px !important; top: -51px !important;
+      height: 164px !important; width: 164px !important;
+      left: -24px !important; top: -57px !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
-    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(700px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
+    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
-    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 210px !important; min-height: 190px !important; }
-    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 440px !important; padding: 30px 24px 28px !important; }
-    [aria-label="The Sunday Reservation"] h2 { font-size: 21px !important; }
-    [aria-label="The Sunday Reservation"] p { font-size: 10px !important; line-height: 1.5 !important; }
-    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 6.5px !important; line-height: 1.5 !important; }
-    [aria-label="The Sunday Reservation"] label { font-size: 8px !important; }
+    [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 230px !important; min-height: 210px !important; }
+    [aria-label="The Sunday Reservation"] > div:last-child { min-height: 500px !important; padding: 30px 24px 28px !important; }
+    [aria-label="The Sunday Reservation"] h2 { font-size: 23px !important; }
+    [aria-label="The Sunday Reservation"] p { font-size: 11px !important; line-height: 1.5 !important; }
+    [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size: 8px !important; line-height: 1.5 !important; }
+    [aria-label="The Sunday Reservation"] label { font-size: 10px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
 
@@ -141,7 +154,7 @@
     form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 7.5px !important; }
+    form[data-inq] legend { font-size: 10px !important; }
     form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
     form[data-inq] textarea { min-height: 74px !important; }
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
@@ -174,17 +187,17 @@
     <img src="/assets/folake-hero.jpg" alt="Three iced matcha drinks arranged on a tray" style="height:100%;inset:0;object-fit:cover;object-position:center 60%;position:absolute;width:100%" />
     <div aria-hidden="true" style="background:linear-gradient(90deg, rgba(33,18,4,.58) 0%, rgba(33,18,4,.13) 52%, transparent 78%), linear-gradient(0deg, rgba(33,18,4,.66) 0%, transparent 55%);inset:0;position:absolute"></div>
     <div style="bottom:clamp(34px,4.5vw,64px);left:max(24px, calc((100vw - 1320px) / 2 + 24px));max-width:720px;position:absolute;right:24px;z-index:2">
-      <a href="/our-work" style="align-items:center;display:inline-flex;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:10px;letter-spacing:.2em;margin-bottom:clamp(30px,4vw,52px);text-transform:uppercase"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> All Work</a>
-      <p style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;gap:11px;letter-spacing:.22em;margin:0 0 16px;text-transform:uppercase"><span aria-hidden="true" style="background:#6fae94;display:inline-block;height:9px;width:9px"></span>Project 04 · Mobile Café</p>
+      <a href="/our-work" style="align-items:center;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;margin-bottom:clamp(30px,4vw,52px);text-transform:uppercase"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> All Work</a>
+      <p style="align-items:center;display:flex;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;gap:11px;letter-spacing:.22em;margin:0 0 16px;text-transform:uppercase"><span aria-hidden="true" style="background:#6fae94;display:inline-block;height:9px;width:9px"></span>Project 04 · Mobile Café</p>
       <h1 id="cs-title" style="font-size:clamp(52px,6.4vw,96px);font-weight:400;letter-spacing:-.06em;line-height:.84;margin:0;text-shadow:0 2px 22px rgba(0,0,0,.3)">Foláké<span style="display:block;font-style:italic;margin-left:.06em">&amp; Co.</span></h1>
-      <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;line-height:1.5;margin:22px 0 0;text-transform:uppercase">Website Design · Digital Experience</p>
-      <p style="border:1px solid rgba(245,239,230,.6);display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.18em;margin:18px 0 0;padding:7px 11px;text-transform:uppercase">Completed Client Project · Not Published</p>
+      <p style="font-family:'Ysabeau',sans-serif;font-size:9px;letter-spacing:.2em;line-height:1.5;margin:22px 0 0;text-transform:uppercase">Website Design · Digital Experience</p>
+      <p style="border:1px solid rgba(245,239,230,.6);display:inline-block;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.18em;margin:18px 0 0;padding:7px 11px;text-transform:uppercase">Completed Client Project · Not Published</p>
     </div>
   </section>
 
   <section aria-label="Website walkthrough" style="background:#311d03;padding:clamp(28px,3.2vw,46px) clamp(24px,5vw,72px)">
     <div style="margin:0 auto;max-width:1180px">
-      <div style="align-items:baseline;color:#f5efe6;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;justify-content:space-between;letter-spacing:.18em;margin-bottom:14px;text-transform:uppercase"><span>The Website, In Motion</span><span>Completed, Not Published</span></div>
+      <div style="align-items:baseline;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;margin-bottom:14px;text-transform:uppercase"><span>The Website, In Motion</span><span>Completed, Not Published</span></div>
       <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" preload="auto" aria-label="Walkthrough of the completed Foláké and Company website" style="background:#241708;border:1px solid rgba(245,239,230,.4);height:auto;width:100%">
         <source src="/assets/folake-site-tour.mp4" type="video/mp4" />
       </video>
@@ -196,45 +209,45 @@
     <aside>
       <div style="position:sticky;top:100px">
         <div style="background:#fffdf8;border:1px solid #311d03">
-          <div style="align-items:center;background:#0f3d33;color:#f5efe6;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding:9px 14px;text-transform:uppercase"><span>Project Receipt</span><span>No. 004</span></div>
-          <div style="display:grid;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:11px;letter-spacing:.13em;padding:15px 14px;text-transform:uppercase">
+          <div style="align-items:center;background:#0f3d33;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding:9px 14px;text-transform:uppercase"><span>Project Receipt</span><span>No. 004</span></div>
+          <div style="display:grid;font-family:'Ysabeau',sans-serif;font-size:8px;gap:11px;letter-spacing:.13em;padding:15px 14px;text-transform:uppercase">
             <div style="align-items:baseline;border-bottom:1px dotted rgba(49,29,3,.45);display:flex;gap:10px;justify-content:space-between;padding-bottom:6px"><span>Client</span><span style="text-align:right;text-wrap:pretty">Foláké &amp; Co.</span></div>
             <div style="align-items:baseline;border-bottom:1px dotted rgba(49,29,3,.45);display:flex;gap:10px;justify-content:space-between;padding-bottom:6px"><span>Industry</span><span style="text-align:right;text-wrap:pretty">Mobile Café</span></div>
             <div style="align-items:baseline;border-bottom:1px dotted rgba(49,29,3,.45);display:flex;gap:10px;justify-content:space-between;padding-bottom:6px"><span>Markets</span><span style="text-align:right;text-wrap:pretty">D.C. · MD · VA</span></div>
             <div style="align-items:baseline;border-bottom:1px dotted rgba(49,29,3,.45);display:flex;gap:10px;justify-content:space-between;padding-bottom:6px"><span>Status</span><span style="text-align:right;text-wrap:pretty">Not Published</span></div>
           </div>
-          <div style="border-top:1px dashed rgba(49,29,3,.5);display:grid;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:7px;letter-spacing:.13em;padding:13px 14px;text-transform:uppercase">
+          <div style="border-top:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Ysabeau',sans-serif;font-size:8px;gap:7px;letter-spacing:.13em;padding:13px 14px;text-transform:uppercase">
             <span style="color:#0f3d33">Scope</span>
             <span>Website Design</span>
             <span>Digital Experience</span>
           </div>
-          <div style="border-top:1px solid #311d03;display:grid;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:8px;letter-spacing:.13em;padding:13px 14px;text-transform:uppercase">
+          <div style="border-top:1px solid #311d03;display:grid;font-family:'Ysabeau',sans-serif;font-size:8px;gap:8px;letter-spacing:.13em;padding:13px 14px;text-transform:uppercase">
             <span style="color:#0f3d33">Sections</span>
             <a href="#overview" style="align-items:baseline;border-bottom:1px dotted rgba(49,29,3,.45);display:flex;gap:10px;justify-content:space-between;padding-bottom:6px"><span>01</span><span>Overview</span></a>
             <a href="#scope" style="align-items:baseline;border-bottom:1px dotted rgba(49,29,3,.45);display:flex;gap:10px;justify-content:space-between;padding-bottom:6px"><span>02</span><span>The Build</span></a>
             <a href="#work" style="align-items:baseline;border-bottom:1px dotted rgba(49,29,3,.45);display:flex;gap:10px;justify-content:space-between;padding-bottom:6px"><span>03</span><span>The Work</span></a>
           </div>
         </div>
-        <a href="/contact" style="align-items:center;background:#0f3d33;border:1px solid #0f3d33;color:#f5efe6;cursor:pointer;display:flex;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;gap:10px;justify-content:center;letter-spacing:.18em;margin-top:12px;min-height:42px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;width:100%" style-hover="background:transparent;color:#0f3d33">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+        <a href="/contact" style="align-items:center;background:#0f3d33;border:1px solid #0f3d33;color:#f5efe6;cursor:pointer;display:flex;text-decoration:none;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;gap:10px;justify-content:center;letter-spacing:.18em;margin-top:12px;min-height:42px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;width:100%" style-hover="background:transparent;color:#0f3d33">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
       </div>
     </aside>
 
     <div style="display:grid;gap:clamp(48px,6vw,88px);min-width:0">
 
       <section data-reveal="true" aria-label="Brand palette" style="border:1px solid rgba(49,29,3,.4)">
-        <div style="align-items:center;border-bottom:1px solid rgba(49,29,3,.28);display:flex;font-family:'IBM Plex Mono',monospace;font-size:7px;justify-content:space-between;letter-spacing:.16em;padding:8px 14px;text-transform:uppercase"><span>The Palette</span><span style="color:#0f3d33">{{ swMsg }}</span></div>
+        <div style="align-items:center;border-bottom:1px solid rgba(49,29,3,.28);display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.16em;padding:8px 14px;text-transform:uppercase"><span>The Palette</span><span style="color:#0f3d33">{{ swMsg }}</span></div>
         <div style="display:flex;height:{{ swH }}">
             <button type="button" onClick="{{ sw0 }}" aria-label="Copy 103020" style="background:#103020;border:0;cursor:copy;flex:1;transition:flex 400ms cubic-bezier(.22,.75,.18,1)" style-hover="flex:1.6"></button>
             <button type="button" onClick="{{ sw1 }}" aria-label="Copy F0C040" style="background:#f0c040;border:0;cursor:copy;flex:1;transition:flex 400ms cubic-bezier(.22,.75,.18,1)" style-hover="flex:1.6"></button>
             <button type="button" onClick="{{ sw2 }}" aria-label="Copy A07060" style="background:#a07060;border:0;cursor:copy;flex:1;transition:flex 400ms cubic-bezier(.22,.75,.18,1)" style-hover="flex:1.6"></button>
             <button type="button" onClick="{{ sw3 }}" aria-label="Copy F8F1E7" style="background:#f8f1e7;border:0;cursor:copy;flex:1;transition:flex 400ms cubic-bezier(.22,.75,.18,1);border-left:1px solid rgba(49,29,3,.2)" style-hover="flex:1.6"></button>
         </div>
-        <div style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:7.5px;gap:4px 14px;justify-content:space-between;letter-spacing:.03em;padding:7px 14px"><span>103020</span><span>F0C040</span><span>A07060</span><span>F8F1E7</span></div>
-        <p style="border-top:1px dashed rgba(49,29,3,.38);font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.13em;opacity:.72;padding:8px 14px;text-transform:uppercase">Green · Gold · Clay · Cream</p>
+        <div style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;flex-wrap:wrap;font-family:'Ysabeau',sans-serif;font-size:7.5px;gap:4px 14px;justify-content:space-between;letter-spacing:.03em;padding:7px 14px"><span>103020</span><span>F0C040</span><span>A07060</span><span>F8F1E7</span></div>
+        <p style="border-top:1px dashed rgba(49,29,3,.38);font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.13em;opacity:.72;padding:8px 14px;text-transform:uppercase">Green · Gold · Clay · Cream</p>
       </section>
 
       <section id="overview" data-reveal="true" aria-labelledby="overview-title" style="scroll-margin-top:92px">
-        <p style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;gap:11px;letter-spacing:.22em;margin:0 0 16px;text-transform:uppercase"><span style="color:#0f3d33">01</span>The Project</p>
+        <p style="align-items:center;display:flex;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;gap:11px;letter-spacing:.22em;margin:0 0 16px;text-transform:uppercase"><span style="color:#0f3d33">01</span>The Project</p>
         <h2 id="overview-title" style="font-size:clamp(42px,4.8vw,72px);font-weight:400;letter-spacing:-.06em;line-height:.9;margin:0;max-width:820px">Matcha, Coffee And <em style="color:#0f3d33;font-style:italic">Culture In Motion.</em></h2>
         <div style="display:grid;gap:clamp(26px,3.5vw,56px);grid-template-columns:{{ hg1 }};margin-top:clamp(26px,3vw,40px)">
           <p style="font-size:15px;line-height:1.72;margin:0;text-wrap:pretty">A culture-forward website for a Nigerian-inspired mobile coffee and matcha cart, bringing story, menu, booking and community into one responsive experience.</p>
@@ -245,76 +258,76 @@
       <section id="scope" data-reveal="true" aria-labelledby="scope-title" style="scroll-margin-top:92px;background:#0f3d33;color:#f5efe6;padding:clamp(26px,3vw,40px) clamp(22px,2.6vw,36px) clamp(28px,3vw,42px)">
         <div style="align-items:baseline;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;margin-bottom:clamp(22px,2.6vw,32px)">
           <div>
-            <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;margin:0 0 9px;text-transform:uppercase">02 · What Was Built</p>
+            <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;margin:0 0 9px;text-transform:uppercase">02 · What Was Built</p>
             <h2 id="scope-title" style="font-size:clamp(28px,2.8vw,40px);font-weight:400;letter-spacing:-.045em;line-height:1;margin:0">The Build</h2>
           </div>
-          <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase">Client Project · Completed</p>
+          <p style="font-family:'Ysabeau',sans-serif;font-size:9px;letter-spacing:.14em;text-transform:uppercase">Client Project · Completed</p>
         </div>
         <div style="border-top:1px solid rgba(245,239,230,.4);display:grid;grid-template-columns:{{ hg2 }}">
-          <article style="display:grid;gap:9px;border-bottom:{{ sB0 }};border-left:{{ sL0 }};padding:{{ sP0 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">07</strong><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Pages Designed &amp; Built</span></article>
-          <article style="display:grid;gap:9px;border-bottom:{{ sB1 }};border-left:{{ sL1 }};padding:{{ sP1 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">03</strong><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Booking Paths</span></article>
-          <article style="display:grid;gap:9px;border-bottom:{{ sB2 }};border-left:{{ sL2 }};padding:{{ sP2 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">100%</strong><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Responsive Coverage</span></article>
-          <article style="display:grid;gap:9px;border-bottom:{{ sB3 }};border-left:{{ sL3 }};padding:{{ sP3 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">AA</strong><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Contrast Standard</span></article>
-          <article style="display:grid;gap:9px;border-bottom:{{ sB4 }};border-left:{{ sL4 }};padding:{{ sP4 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">03</strong><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase">DMV Markets</span></article>
-          <article style="display:grid;gap:9px;border-bottom:{{ sB5 }};border-left:{{ sL5 }};padding:{{ sP5 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">01</strong><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Completed Client Build</span></article>
+          <article style="display:grid;gap:9px;border-bottom:{{ sB0 }};border-left:{{ sL0 }};padding:{{ sP0 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">07</strong><span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Pages Designed &amp; Built</span></article>
+          <article style="display:grid;gap:9px;border-bottom:{{ sB1 }};border-left:{{ sL1 }};padding:{{ sP1 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">03</strong><span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Booking Paths</span></article>
+          <article style="display:grid;gap:9px;border-bottom:{{ sB2 }};border-left:{{ sL2 }};padding:{{ sP2 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">100%</strong><span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Responsive Coverage</span></article>
+          <article style="display:grid;gap:9px;border-bottom:{{ sB3 }};border-left:{{ sL3 }};padding:{{ sP3 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">AA</strong><span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Contrast Standard</span></article>
+          <article style="display:grid;gap:9px;border-bottom:{{ sB4 }};border-left:{{ sL4 }};padding:{{ sP4 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">03</strong><span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">DMV Markets</span></article>
+          <article style="display:grid;gap:9px;border-bottom:{{ sB5 }};border-left:{{ sL5 }};padding:{{ sP5 }}"><strong style="font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.05em;line-height:1">01</strong><span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Completed Client Build</span></article>
         </div>
       </section>
 
       <section id="work" aria-labelledby="work-title-cs" style="scroll-margin-top:92px;display:grid;gap:clamp(20px,2.4vw,32px)">
         <div data-reveal="true">
-          <p style="align-items:center;display:flex;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;gap:11px;letter-spacing:.22em;margin:0 0 16px;text-transform:uppercase"><span style="color:#0f3d33">03</span>The Work</p>
+          <p style="align-items:center;display:flex;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;gap:11px;letter-spacing:.22em;margin:0 0 16px;text-transform:uppercase"><span style="color:#0f3d33">03</span>The Work</p>
           <h2 id="work-title-cs" style="font-size:clamp(42px,4.8vw,72px);font-weight:400;letter-spacing:-.06em;line-height:.9;margin:0">A Bold Digital Home <em style="color:#0f3d33;font-style:italic">Rooted In Culture.</em></h2>
         </div>
 
         <figure data-reveal="true" style="margin:0">
           <div style="overflow:hidden"><img src="/assets/folake-site-mockup.jpg" alt="Foláké and Company website homepage displayed on a laptop" loading="lazy" style="height:auto;width:100%" /></div>
-          <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">01</span>The Completed Website</figcaption>
+          <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">01</span>The Completed Website</figcaption>
         </figure>
 
         <div style="display:grid;gap:clamp(20px,2.4vw,32px);grid-template-columns:{{ hg3 }}">
           <figure data-reveal="true" style="margin:0">
             <div style="aspect-ratio:4 / 5;overflow:hidden"><img src="/assets/folake-hand.jpg" alt="Hand holding an iced matcha drink against a warm paneled wall" loading="lazy" style="height:100%;object-fit:cover;transition:transform 900ms cubic-bezier(.2,.75,.25,1);width:100%" style-hover="transform:scale(1.04)" /></div>
-            <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">02</span>The Cart In Service</figcaption>
+            <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">02</span>The Cart In Service</figcaption>
           </figure>
           <figure data-reveal="true" style="margin:0">
             <div style="aspect-ratio:4 / 5;overflow:hidden"><img src="/assets/folake-market.jpg" alt="Plantains and produce displayed at a market" loading="lazy" style="height:100%;object-fit:cover;transition:transform 900ms cubic-bezier(.2,.75,.25,1);width:100%" style-hover="transform:scale(1.04)" /></div>
-            <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">03</span>Rooted In Culture</figcaption>
+            <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">03</span>Rooted In Culture</figcaption>
           </figure>
         </div>
 
         <figure data-reveal="true" style="margin:0">
           <div style="max-height:820px;overflow-y:auto"><img src="/assets/folake-stack.jpeg" alt="Foláké visual direction: market plantains, whisked matcha and an iced matcha at a work table" loading="lazy" style="display:block;height:auto;width:100%" /></div>
-          <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">04</span>Visual Direction</figcaption>
+          <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">04</span>Visual Direction</figcaption>
         </figure>
 
         <figure data-reveal="true" style="margin:0">
           <div style="aspect-ratio:16 / 8;overflow:hidden"><img src="/assets/folake-matcha-close.jpg" alt="Close-up texture of freshly whisked matcha" loading="lazy" style="height:100%;object-fit:cover;transition:transform 1100ms cubic-bezier(.2,.75,.25,1);width:100%" style-hover="transform:scale(1.04)" /></div>
-          <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">04</span>Whisked To Order</figcaption>
+          <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">04</span>Whisked To Order</figcaption>
         </figure>
 
         <div style="display:flex;gap:clamp(16px,2vw,28px);overflow-x:auto;padding-bottom:14px;scroll-snap-type:x mandatory">
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
             <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-folake-home.png" alt="Foláké and Company homepage" loading="lazy" style="display:block;height:auto;width:100%" /></div>
-            <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">05</span>Homepage</figcaption>
+            <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">05</span>Homepage</figcaption>
           </figure>
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
             <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-folake-about.png" alt="Foláké and Company About page" loading="lazy" style="display:block;height:auto;width:100%" /></div>
-            <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">06</span>About</figcaption>
+            <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">06</span>About</figcaption>
           </figure>
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
             <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-folake-menu.png" alt="Foláké and Company Menu page" loading="lazy" style="display:block;height:auto;width:100%" /></div>
-            <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">07</span>Menu</figcaption>
+            <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">07</span>Menu</figcaption>
           </figure>
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
             <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-folake-book.png" alt="Foláké and Company booking page" loading="lazy" style="display:block;height:auto;width:100%" /></div>
-            <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">08</span>Book Us</figcaption>
+            <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">08</span>Book Us</figcaption>
           </figure>
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
             <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-folake-events.png" alt="Foláké and Company Events page" loading="lazy" style="display:block;height:auto;width:100%" /></div>
-            <figcaption style="align-items:baseline;display:flex;font-family:'IBM Plex Mono',monospace;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">09</span>Events</figcaption>
+            <figcaption style="align-items:baseline;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#0f3d33">09</span>Events</figcaption>
           </figure>
         </div>
-        <p style="border-top:1px solid rgba(245,239,230,.4);font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.13em;line-height:1.7;margin-top:16px;opacity:.8;padding-top:11px;text-transform:uppercase">Figures reflect actual results for this engagement over the period shown. They are not a guarantee or prediction of similar outcomes for other businesses.</p>
+        <p style="border-top:1px solid rgba(245,239,230,.4);font-family:'Ysabeau',sans-serif;font-size:7.5px;letter-spacing:.13em;line-height:1.7;margin-top:16px;opacity:.8;padding-top:11px;text-transform:uppercase">Figures reflect actual results for this engagement over the period shown. They are not a guarantee or prediction of similar outcomes for other businesses.</p>
       </section>
     </div>
   </div>
@@ -322,10 +335,10 @@
   <section style="background:#fffdf8;border-top:1px solid rgba(49,29,3,.34)">
     <div style="align-items:end;display:flex;gap:40px;justify-content:space-between;margin:0 auto;max-width:1320px;padding:clamp(44px,5vw,72px) clamp(24px,5vw,72px) clamp(52px,6vw,84px)">
       <div>
-        <p style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.22em;margin:0;text-transform:uppercase">Next</p>
+        <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;margin:0;text-transform:uppercase">Next</p>
         <h2 style="font-size:clamp(34px,3.6vw,52px);font-weight:400;letter-spacing:-.055em;line-height:.98;margin:14px 0 0">Pizzeria <em style="color:#4257c9;font-style:italic">Coco</em></h2>
       </div>
-      <a href="/our-work/pizzeria-coco" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:9px;gap:14px;letter-spacing:.18em;padding-bottom:6px;text-transform:uppercase;white-space:nowrap">Next Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+      <a href="/our-work/pizzeria-coco" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;flex:0 0 auto;font-family:'Ysabeau',sans-serif;font-size:9px;gap:14px;letter-spacing:.18em;padding-bottom:6px;text-transform:uppercase;white-space:nowrap">Next Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>
   </section>
 

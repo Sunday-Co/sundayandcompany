@@ -32,9 +32,24 @@
 <meta name="theme-color" content="#f5efe6" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Ysabeau:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
+  [style*="font-family:'Ysabeau'"] { font-weight: 300 !important; }
+  [style*="font-family:'Ysabeau'"] strong { font-weight: 400 !important; }
+  button[style*="font-family:'Ysabeau'"], a[style*="font-family:'Ysabeau'"] { font-weight: 400 !important; }
+  @media (min-width: 701px) {
+    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 8.5px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 9.5px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 10.5px !important; }
+  }
+  @media (max-width: 700px) {
+    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8.5px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 9px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 10px !important; }
+    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 11px !important; }
+  }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -111,20 +126,20 @@
 
   @media (max-width: 700px) {
     /* masthead logo — same size on every page */
-    header > a[aria-label] { width: 108px !important; }
-    header > a[aria-label] > span { height: 40px !important; width: 104px !important; }
+    header > a[aria-label] { width: 120px !important; }
+    header > a[aria-label] > span { height: 44px !important; width: 116px !important; }
     header > a[aria-label] > span > img {
-      height: 148px !important; width: 148px !important;
-      left: -21px !important; top: -51px !important;
+      height: 164px !important; width: 164px !important;
+      left: -24px !important; top: -57px !important;
     }
     /* newsletter popup — was filling the whole screen */
     [aria-label="The Sunday Reservation"] { max-width: calc(100vw - 32px) !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
     [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 116px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child { padding: 22px 20px 20px !important; }
-    [aria-label="The Sunday Reservation"] h2 { font-size: 21px !important; }
+    [aria-label="The Sunday Reservation"] h2 { font-size: 23px !important; }
     [aria-label="The Sunday Reservation"] p { font-size: 9px !important; line-height: 1.45 !important; }
-    [aria-label="The Sunday Reservation"] label { font-size: 8px !important; }
+    [aria-label="The Sunday Reservation"] label { font-size: 10px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden] { margin: 14px 0 13px !important; padding: 10px 0 !important; }
   }
 
@@ -134,7 +149,7 @@
     form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 7.5px !important; }
+    form[data-inq] legend { font-size: 10px !important; }
     form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
     form[data-inq] textarea { min-height: 74px !important; }
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
@@ -166,21 +181,21 @@
 
   <main style="align-items:center;display:flex;flex:1;justify-content:center;padding:clamp(44px,7vw,96px) clamp(20px,6vw,72px)">
     <div style="background:#fffdf8;border:1px solid #311d03;max-width:620px;width:100%">
-      <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'IBM Plex Mono',monospace;font-size:7.5px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase">
+      <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Ysabeau',sans-serif;font-size:7.5px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase">
         <span>Sunday &amp; Company</span><span style="opacity:.7">Card Not On File</span>
       </div>
       <div style="padding:clamp(26px,4vw,44px) clamp(22px,3.4vw,38px)">
-        <p style="align-items:baseline;color:#ac746c;display:flex;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">Error</span><span style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(34px,4.4vw,50px);font-weight:400;letter-spacing:-.04em;line-height:1">404</span></p>
+        <p style="align-items:baseline;color:#ac746c;display:flex;gap:12px"><span style="font-family:'Ysabeau',sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">Error</span><span style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(34px,4.4vw,50px);font-weight:400;letter-spacing:-.04em;line-height:1">404</span></p>
         <h1 style="font-size:clamp(42px,6vw,74px);font-weight:400;letter-spacing:-.06em;line-height:.86;margin-top:14px">This Page Isn’t <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.1em;font-style:normal;margin-left:.3em">In The Catalog</em></h1>
         <p style="font-size:13.5px;line-height:1.7;margin-top:20px;max-width:440px">The page you were looking for has been moved, renamed or never existed. Nothing is broken · the shelf is just empty here.</p>
-        <div style="border-top:1px solid rgba(49,29,3,.35);display:grid;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;margin-top:26px;text-transform:uppercase">
+        <div style="border-top:1px solid rgba(49,29,3,.35);display:grid;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.14em;margin-top:26px;text-transform:uppercase">
           <a href="/" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">01</span><span>Home</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Start Again</span></a>
           <a href="/our-work" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">02</span><span>Our Work</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Selected Projects</span></a>
           <a href="/services" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">03</span><span>Services</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Ways To Work</span></a>
           <a href="/contact" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">04</span><span>Contact</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Send A Note</span></a>
         </div>
       </div>
-      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);display:flex;font-family:'IBM Plex Mono',monospace;font-size:7px;justify-content:space-between;letter-spacing:.15em;opacity:.72;padding:9px 18px;text-transform:uppercase">
+      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.15em;opacity:.72;padding:9px 18px;text-transform:uppercase">
         <span>Nothing Filed Under This Address</span><span>Keep Browsing</span>
       </div>
     </div>
