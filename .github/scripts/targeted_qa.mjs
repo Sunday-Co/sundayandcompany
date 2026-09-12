@@ -20,7 +20,6 @@ async function closeVisibleOverlays(page) {
 
 const browser = await webkit.launch();
 try {
-  // Mobile Join Our Team: preserve the real flip-card interaction.
   {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
     await page.goto(base + '/join-our-team/', { waitUntil: 'networkidle' });
@@ -46,7 +45,6 @@ try {
     await page.close();
   }
 
-  // Mobile Services: restore the earlier Inquiry relationship.
   {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
     await page.goto(base + '/services/', { waitUntil: 'networkidle' });
@@ -71,7 +69,6 @@ try {
     await page.close();
   }
 
-  // Desktop Our Work: bill/receipt gets more presence.
   {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
     await page.goto(base + '/our-work/', { waitUntil: 'networkidle' });
@@ -87,14 +84,15 @@ try {
     await page.close();
   }
 
-  // Home: slow, continuous Open-sign glow.
   {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
     await page.goto(base + '/', { waitUntil: 'networkidle' });
     await page.waitForTimeout(900);
     await closeVisibleOverlays(page);
-    const neon = page.getByText('Open', { exact: true }).filter({ visible: true }).first();
+    const neon = page.getByText('Open', { exact: true }).first();
     if (await neon.count()) {
+      await neon.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(650);
       const anim = await neon.evaluate(el => { const s=getComputedStyle(el); return {name:s.animationName,duration:s.animationDuration,iteration:s.animationIterationCount}; });
       check(anim.name.includes('sc-neon-sunday-final'), `Open sign missing final slow neon animation: ${anim.name}`);
       check(anim.duration.includes('8.4s'), `Open sign neon cadence is not 8.4s: ${anim.duration}`);
