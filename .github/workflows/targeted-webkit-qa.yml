@@ -18,12 +18,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Restore approved Inquiry lockup
-        run: python .github/scripts/revert_inquiry_lockup.py
+      - name: Apply final source fixes
+        run: |
+          python .github/scripts/revert_inquiry_lockup.py
+          python .github/scripts/fix_open_sign.py
       - name: Validate source before browser QA
         run: |
           node --check assets/site.js
           git diff --check
+          grep -q "sc-neon-sunday-final 8.4s" index.html
+          grep -q "sc-sway 12s" index.html
       - name: Install WebKit
         run: |
           npm install --no-save playwright@1.55.0
@@ -39,7 +43,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sunday-targeted-qa-restored
+          name: sunday-targeted-qa-final
           path: /tmp/sunday-qa
           if-no-files-found: ignore
       - name: Commit verified source and remove temporary QA tooling
@@ -47,7 +51,7 @@ jobs:
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs .github/scripts/revert_inquiry_lockup.py
+          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs .github/scripts/revert_inquiry_lockup.py .github/scripts/fix_open_sign.py
           git add -A
           git diff --cached --check
           git commit -m "[skip ci] [skip netlify] Verify final Sunday visual batch"
