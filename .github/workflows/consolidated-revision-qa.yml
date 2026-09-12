@@ -26,25 +26,29 @@ jobs:
       - name: Validate bounded source
         run: |
           node --check assets/site.js
+          node --check .github/scripts/source_truth_regression_qa.mjs
           git diff --check
-          grep -q 'v=20260912-9' index.html
-          grep -q 'v=20260912-9' assets/site.js
+          grep -q 'v=20260912-10' index.html
+          grep -q 'v=20260912-10' assets/site.js
           grep -q 'data-sunday-static-hero="true"' index.html
           ! grep -R -q 'loading="lazy"' --include='*.html' .
+          ! grep -R -q '/ data-sunday-static-hero=' --include='*.html' .
+          grep -q 'position:relative' index.html
           grep -q 'IntersectionObserver' index.html
-          grep -q 'this.nudgeSign()' index.html
           grep -q 'sundaySignFallback' assets/site.js
           grep -q 'sc-rock 5.4s' index.html
           grep -q 'sc-sway 7s' index.html
           grep -q 'sc-warm 2.6s' index.html
           grep -q 'sc-neon 3.8s' index.html
           grep -q 'data-sunday-sign-fallback="1"' assets/rendered-corrections.css
-          ! grep -q 'sc-sway-sunday-continuous' assets/rendered-corrections.css
-          ! grep -q 'sc-neon-sunday-final' assets/rendered-corrections.css
           grep -q 'SUNDAY ARCHIVE LIBRARY CARD MODALS' assets/rendered-corrections.css
-          grep -q 'REFERENCE COPY · FILED 2026' assets/rendered-corrections.css
-          grep -q 'FINAL CONSOLIDATED REVISION' assets/rendered-corrections.css
-          grep -q 'font-size:clamp(58px,7vw,108px)' assets/rendered-corrections.css
+          grep -q 'FINAL SOURCE-ALIGNED REVISION' assets/rendered-corrections.css
+          grep -q 'FINAL SOURCE ALIGNMENT' assets/site.css
+          grep -q 'white-space:nowrap !important' assets/rendered-corrections.css
+          grep -q "data-inquiry-kicker style=\"color:#ac746c;font-family:'Inter Tight'" 'Site Header.dc.html'
+          grep -q "font-size:9px" 'Site Header.dc.html'
+          grep -q "font-weight:400" 'Site Footer.dc.html'
+          ! grep -q "querySelectorAll('\[data-reveal\]')" our-work/index.html
           grep -q '@keyframes sunday-modal-in' assets/site.css
 
       - name: Install WebKit
@@ -68,13 +72,16 @@ jobs:
           sed -i "s/desktopReservation.locator('\[data-res-fineprint\]').evaluate/desktopReservation.locator('[data-res-fineprint]:visible').first().evaluate/" .github/scripts/consolidated_revision_qa.mjs
           node --check .github/scripts/consolidated_revision_qa.mjs
           node .github/scripts/consolidated_revision_qa.mjs
+          node .github/scripts/source_truth_regression_qa.mjs
 
       - name: Upload QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sunday-consolidated-revision-qa
-          path: /tmp/sunday-consolidated-qa
+          name: sunday-source-truth-qa
+          path: |
+            /tmp/sunday-consolidated-qa
+            /tmp/sunday-source-truth-qa
           if-no-files-found: ignore
 
       - name: Persist verified production files only
@@ -82,12 +89,12 @@ jobs:
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git add assets/site.js assets/rendered-corrections.css
+          git add assets/site.js assets/site.css assets/rendered-corrections.css
           find . -name '*.html' -not -path './node_modules/*' -not -path './.github/*' -print0 | xargs -0 git add --
           git diff --cached --check
           if git diff --cached --quiet; then
             echo "No production changes to persist"
           else
-            git commit -m "[skip ci] [skip netlify] Verify consolidated revision batch"
+            git commit -m "[skip ci] [skip netlify] Verify source-aligned revision batch"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
