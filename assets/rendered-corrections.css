@@ -1,0 +1,330 @@
+/* Sunday & Company rendered correction pass
+   This stylesheet is loaded by assets/site.js on every route.
+   It exists to enforce the approved visual hierarchy consistently after
+   DC components render, without Netlify injection or page-by-page patches. */
+
+:root {
+  --sc-cream:#f5efe6;
+  --sc-paper:#fffdf8;
+  --sc-espresso:#311d03;
+  --sc-rose:#ac746c;
+  --sc-sans:'Inter Tight',Arial,sans-serif;
+  --sc-serif:'Playfair Display',Georgia,serif;
+  --sc-script:'Pinyon Script',cursive;
+}
+
+/* ----------------------------------------------------------
+   HEADING WEIGHT CONSISTENCY
+   Brown regular Playfair and rose italic/script treatments keep the same
+   numeric weight. Styling comes from colour/style, not heaviness.
+   ---------------------------------------------------------- */
+h1,h2,h3,h4,h5,h6,
+h1 *,h2 *,h3 *,h4 *,h5 *,h6 * {
+  font-weight:400 !important;
+}
+
+/* ----------------------------------------------------------
+   OUR VISION: preserve the approved Title Case editorial pull quote.
+   ---------------------------------------------------------- */
+#vision [data-vision-quote] {
+  font-family:var(--sc-serif) !important;
+  font-size:clamp(17px,1.35vw,20px) !important;
+  font-style:italic !important;
+  font-weight:400 !important;
+  letter-spacing:-.012em !important;
+  line-height:1.55 !important;
+  text-transform:none !important;
+}
+#vision [data-vision-body] {
+  font-family:var(--sc-serif) !important;
+  font-size:15px !important;
+  font-weight:400 !important;
+  line-height:1.68 !important;
+}
+
+/* ----------------------------------------------------------
+   ALL FORMS: functional text is readable; receipt/decorative text can remain
+   smaller. Inter Tight Light is reserved for larger supporting/entered text.
+   ---------------------------------------------------------- */
+form[data-inq] label > span:first-child,
+form[data-inq] fieldset > legend,
+form[data-editorial-labels] label > span:first-child,
+form[data-editorial-labels] > label[for],
+form[data-editorial-labels] > div > span:first-child {
+  font-family:var(--sc-sans) !important;
+  font-size:11px !important;
+  font-weight:400 !important;
+  letter-spacing:.07em !important;
+  line-height:1.35 !important;
+  text-transform:uppercase !important;
+}
+
+form[data-inq] input,
+form[data-inq] textarea,
+form[data-inq] select,
+form[data-editorial-labels] input,
+form[data-editorial-labels] textarea,
+form[data-editorial-labels] select,
+[aria-label="Newsletter"] input,
+[aria-label="The Sunday Reservation"] input {
+  font-family:var(--sc-sans) !important;
+  font-weight:300 !important;
+  letter-spacing:0 !important;
+}
+
+form[data-inq] [data-stepbtns] button,
+form[data-inq] > button,
+form[data-editorial-labels] button,
+[aria-label="Newsletter"] form button,
+[aria-label="The Sunday Reservation"] form button {
+  font-family:var(--sc-sans) !important;
+  font-weight:400 !important;
+  letter-spacing:.10em !important;
+}
+
+[data-receipt-meta],
+[data-form-meta],
+[aria-label="Project inquiry"] [data-inquiry-receipt-meta],
+#inquiry [data-inquiry-receipt-meta] {
+  font-family:var(--sc-sans) !important;
+  font-size:10px !important;
+  font-weight:400 !important;
+  letter-spacing:.085em !important;
+  line-height:1.35 !important;
+  text-transform:uppercase !important;
+}
+
+form[data-inq] [role="alert"],
+form[data-editorial-labels] [role="alert"],
+[aria-label="Newsletter"] [role="alert"],
+[aria-label="The Sunday Reservation"] [role="alert"] {
+  font-family:var(--sc-sans) !important;
+  font-size:11px !important;
+  font-weight:400 !important;
+  line-height:1.4 !important;
+}
+
+@media (max-width:820px) {
+  input,textarea,select { font-size:16px !important; }
+  form[data-inq] label > span:first-child,
+  form[data-inq] fieldset > legend,
+  form[data-editorial-labels] label > span:first-child,
+  form[data-editorial-labels] > label[for],
+  form[data-editorial-labels] > div > span:first-child {
+    font-size:10.75px !important;
+    letter-spacing:.065em !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   PROJECT INQUIRY RECEIPT: hierarchy first, not uniformly scaled type.
+   ---------------------------------------------------------- */
+[aria-label="Project inquiry"] [data-inquiry-kicker] {
+  font-family:var(--sc-script) !important;
+  font-size:38px !important;
+  font-weight:400 !important;
+  line-height:.95 !important;
+  margin-bottom:13px !important;
+}
+[aria-label="Project inquiry"] h2 {
+  font-family:var(--sc-serif) !important;
+  font-weight:400 !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-support],
+#inquiry header h2 + p {
+  font-family:var(--sc-sans) !important;
+  font-size:13px !important;
+  font-weight:300 !important;
+  letter-spacing:.005em !important;
+  line-height:1.5 !important;
+}
+[aria-label="Project inquiry"] [data-stepnav] button,
+#inquiry [data-stepnav] button {
+  font-family:var(--sc-sans) !important;
+  font-size:9.5px !important;
+  font-weight:400 !important;
+  letter-spacing:.045em !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-ledger] {
+  font-family:var(--sc-sans) !important;
+  font-size:10px !important;
+  font-weight:400 !important;
+  letter-spacing:.085em !important;
+}
+
+@media (max-width:700px) {
+  [aria-label="Project inquiry"] [data-inquiry-kicker] {
+    font-size:42px !important;
+    margin-bottom:14px !important;
+  }
+  [aria-label="Project inquiry"] h2 { font-size:26px !important; }
+  [aria-label="Project inquiry"] [data-inquiry-support] { font-size:13px !important; }
+  [aria-label="Project inquiry"] [data-inquiry-receipt-meta] { font-size:10px !important; }
+  [aria-label="Project inquiry"] form[data-inq] input,
+  [aria-label="Project inquiry"] form[data-inq] select,
+  [aria-label="Project inquiry"] form[data-inq] textarea,
+  #inquiry form[data-inq] input,
+  #inquiry form[data-inq] select,
+  #inquiry form[data-inq] textarea { font-size:16px !important; }
+}
+
+/* ----------------------------------------------------------
+   NEWSLETTER + FOOTER: optical consistency.
+   ---------------------------------------------------------- */
+[aria-label="Newsletter"] [data-news-fineprint] {
+  font-family:var(--sc-sans) !important;
+  font-weight:300 !important;
+  letter-spacing:.055em !important;
+  line-height:1.45 !important;
+}
+
+footer [data-footer-ui],
+footer [data-footer-location],
+footer a[href^="mailto:"],
+footer a[href*="instagram.com/sundayand_co"] {
+  font-family:var(--sc-sans) !important;
+  font-size:12px !important;
+  font-weight:300 !important;
+  letter-spacing:.01em !important;
+  line-height:1.45 !important;
+}
+footer [data-footer-label] {
+  font-family:var(--sc-sans) !important;
+  font-weight:400 !important;
+}
+footer [data-footer-legal] {
+  font-family:var(--sc-sans) !important;
+  font-size:9px !important;
+  font-weight:400 !important;
+  letter-spacing:.10em !important;
+}
+
+@media (max-width:700px) {
+  [aria-label="Newsletter"] [data-news-fineprint] {
+    font-size:7.5px !important;
+    letter-spacing:.045em !important;
+    line-height:1.45 !important;
+  }
+  footer [data-footer-ui],
+  footer [data-footer-location],
+  footer a[href^="mailto:"],
+  footer a[href*="instagram.com/sundayand_co"] {
+    font-size:12px !important;
+    line-height:1.45 !important;
+  }
+}
+
+/* ----------------------------------------------------------
+   SERVICES / SMALL FUNCTIONAL UI
+   ---------------------------------------------------------- */
+[data-screen-label="Services"] [data-service-number],
+[data-screen-label="Services"] [data-service-meta],
+[data-screen-label="Services"] [data-service-included] {
+  font-family:var(--sc-sans) !important;
+  font-size:10px !important;
+  font-weight:400 !important;
+  letter-spacing:.085em !important;
+}
+[data-screen-label="Services"] [data-service-price] {
+  font-family:var(--sc-sans) !important;
+  font-size:11px !important;
+  font-weight:400 !important;
+  letter-spacing:.09em !important;
+}
+aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
+[data-about-team-cta] {
+  font-family:var(--sc-sans) !important;
+  font-size:10px !important;
+  font-weight:400 !important;
+  letter-spacing:.10em !important;
+  min-height:44px !important;
+}
+
+@media (max-width:700px) {
+  [data-screen-label="Services"] [data-service-number],
+  [data-screen-label="Services"] [data-service-meta],
+  [data-screen-label="Services"] [data-service-included] { font-size:10.5px !important; }
+  [data-screen-label="Services"] [data-service-price] { font-size:11.5px !important; }
+}
+
+/* ----------------------------------------------------------
+   MOTION: visible enough to feel intentional, still restrained.
+   JS triggers section/media/title entrance so nothing remains hidden before
+   Safari full-page capture. These styles cover component/state interactions.
+   ---------------------------------------------------------- */
+@keyframes sc-paper-lift {
+  from { opacity:0; transform:translateY(14px) scale(.992); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes sc-step-turn {
+  from { opacity:.15; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes sc-accordion-open {
+  from { opacity:.15; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes sc-menu-row {
+  from { opacity:0; transform:translateX(10px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+[aria-label="Project inquiry"],
+[aria-label="The Sunday Reservation"] {
+  animation:sc-paper-lift 430ms cubic-bezier(.22,.75,.18,1) both !important;
+}
+form[data-inq] [data-step-panel] {
+  animation:sc-step-turn 320ms cubic-bezier(.22,.75,.18,1) both !important;
+}
+[data-service-body],
+[data-process-body] {
+  animation:sc-accordion-open 360ms cubic-bezier(.22,.75,.18,1) both !important;
+}
+
+@media (max-width:1240px) {
+  aside[data-sheet-state="open"] nav > a,
+  aside[data-sheet-state="open"] [data-sheet-cta] {
+    animation:sc-menu-row 340ms cubic-bezier(.22,.75,.18,1) both !important;
+  }
+  aside[data-sheet-state="open"] nav > a:nth-child(1) { animation-delay:40ms !important; }
+  aside[data-sheet-state="open"] nav > a:nth-child(2) { animation-delay:80ms !important; }
+  aside[data-sheet-state="open"] nav > a:nth-child(3) { animation-delay:120ms !important; }
+  aside[data-sheet-state="open"] nav > a:nth-child(4) { animation-delay:160ms !important; }
+  aside[data-sheet-state="open"] nav > a:nth-child(5) { animation-delay:200ms !important; }
+  aside[data-sheet-state="open"] [data-sheet-cta]:first-child { animation-delay:220ms !important; }
+  aside[data-sheet-state="open"] [data-sheet-cta]:last-child { animation-delay:250ms !important; }
+}
+
+[data-sheet-cta] svg,
+[data-about-team-cta] svg,
+button[onClick*="openInquiry"] svg,
+a[href="/contact"] svg,
+a[href="#inquiry"] svg {
+  transition:transform 220ms cubic-bezier(.22,.75,.18,1) !important;
+}
+[data-sheet-cta]:hover svg,
+[data-about-team-cta]:hover svg,
+button[onClick*="openInquiry"]:hover svg,
+a[href="/contact"]:hover svg,
+a[href="#inquiry"]:hover svg {
+  transform:translate(3px,-1px) !important;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  [aria-label="Project inquiry"],
+  [aria-label="The Sunday Reservation"],
+  form[data-inq] [data-step-panel],
+  [data-service-body],
+  [data-process-body],
+  aside[data-sheet-state="open"] nav > a,
+  aside[data-sheet-state="open"] [data-sheet-cta] {
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+  [data-sheet-cta] svg,
+  [data-about-team-cta] svg,
+  button[onClick*="openInquiry"] svg,
+  a[href="/contact"] svg,
+  a[href="#inquiry"] svg { transition:none !important; }
+}
