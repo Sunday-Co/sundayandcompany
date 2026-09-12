@@ -1,6 +1,6 @@
 name: Rendered Corrections QA
 
-# Final verification runs after the production asset URLs and hero motion are in place.
+# Final verification after the deterministic mobile program-card correction.
 on:
   push:
     branches:
