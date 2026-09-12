@@ -7,8 +7,7 @@ css = CSS_PATH.read_text(encoding='utf-8')
 
 # Remove the correction-layer OPEN-sign override. The homepage component already
 # owns the approved IntersectionObserver-triggered sc-rock -> sc-sway and
-# sc-warm -> sc-neon sequence. The !important override was bypassing that state
-# and is why the original first-entry swing disappeared.
+# sc-warm -> sc-neon sequence. That original sequence must remain in control.
 start_marker = '/* The OPEN sign keeps its original character, but now loops without a one-shot handoff. */'
 end_marker = '/* SUNDAY ARCHIVE LIBRARY CARD MODALS */'
 if start_marker in css:
@@ -16,21 +15,17 @@ if start_marker in css:
     end = css.index(end_marker, start)
     css = css[:start] + '/* OPEN sign motion is intentionally owned by the original homepage component. */\n\n' + css[end:]
 
-fix_marker = '/* FINAL BOUNDED FIXES · SAFARI CAPTURE + ORIGINAL MOTION */'
-if fix_marker in css:
-    css = css[:css.index(fix_marker)].rstrip() + '\n'
+fix_marker = '/* FINAL CONSOLIDATED REVISION · 2026-09-12 */'
+old_fix_marker = '/* FINAL BOUNDED FIXES · SAFARI CAPTURE + ORIGINAL MOTION */'
+for marker in (fix_marker, old_fix_marker):
+    if marker in css:
+        css = css[:css.index(marker)].rstrip() + '\n'
 
 css += r'''
 
-/* FINAL BOUNDED FIXES · SAFARI CAPTURE + ORIGINAL MOTION */
+/* FINAL CONSOLIDATED REVISION · 2026-09-12 */
 
-/*
-  Remove only motion introduced by the recent correction layers. The original
-  component-owned interactions, sliders, flips, menu behavior, OPEN-sign swing,
-  marquee, and page-specific approved interactions remain untouched.
-*/
-[aria-label="Project inquiry"],
-[aria-label="The Sunday Reservation"],
+/* Remove only the recent correction-layer motion. Original component motion stays. */
 form[data-inq] [data-step-panel],
 [data-service-body],
 [data-process-body],
@@ -62,25 +57,54 @@ a[href="#inquiry"] svg {
   transition:none !important;
 }
 
-/* Project Inquiry receipt: preserve the top hierarchy and restore bottom air. */
+/* Project Inquiry: rose Inter Tight eyebrow, Playfair headline, more bottom air. */
+[aria-label="Project inquiry"] [data-inquiry-kicker],
+#inquiry [data-inquiry-kicker] {
+  color:var(--sc-rose) !important;
+  font-family:var(--sc-sans) !important;
+  font-size:11.5px !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:.12em !important;
+  line-height:1.25 !important;
+  margin:0 0 3px 0 !important;
+  text-transform:uppercase !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+#inquiry [data-inquiry-kicker] + h2 {
+  color:var(--sc-espresso) !important;
+  font-family:var(--sc-serif) !important;
+  font-weight:400 !important;
+  margin-top:0 !important;
+}
 @media (min-width:701px) {
-  [aria-label="Project inquiry"] > div {
-    padding-bottom:42px !important;
+  [aria-label="Project inquiry"] > div { padding-bottom:42px !important; }
+}
+@media (max-width:700px) {
+  [aria-label="Project inquiry"] [data-inquiry-kicker],
+  #inquiry [data-inquiry-kicker] {
+    font-size:11px !important;
+    letter-spacing:.115em !important;
+    margin-bottom:3px !important;
+  }
+  [aria-label="Project inquiry"] > div { padding-bottom:44px !important; }
+}
+
+/* Sunday Reservation: receipt-like hierarchy with readable fine print by viewport. */
+@media (min-width:701px) {
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] {
+    font-size:9px !important;
+    font-weight:300 !important;
+    letter-spacing:.04em !important;
+    line-height:1.45 !important;
   }
 }
 @media (max-width:700px) {
-  [aria-label="Project inquiry"] > div {
-    padding-bottom:44px !important;
-  }
-}
-
-/* Sunday Reservation: desktop fine print stays secondary but must be readable. */
-@media (min-width:701px) {
   [aria-label="The Sunday Reservation"] [data-res-fineprint] {
-    font-size:8.5px !important;
+    font-size:7px !important;
     font-weight:300 !important;
     letter-spacing:.045em !important;
-    line-height:1.45 !important;
+    line-height:1.4 !important;
   }
 }
 
@@ -95,16 +119,13 @@ footer a[href^="mailto:"] {
 }
 
 /*
-  iPhone Safari Full Page/PDF capture can discard absolutely positioned hero
-  imagery and defer lazy images. Keep actual image elements visible in the print
-  and long-capture pipeline rather than relying on a brown background fallback.
+  Safari Full Page/PDF capture must see the actual image element without waiting
+  for a JS-added attribute. Static hero markers are written into rendered HTML.
 */
-img {
-  content-visibility:visible !important;
-}
+img { content-visibility:visible !important; }
+img[data-sunday-static-hero="true"],
 section#top > img[style*="position:absolute"],
-section[data-screen-hero] > img[style*="position:absolute"],
-[data-sunday-grid-hero="true"] > img[data-sunday-hero-img="true"] {
+section[data-screen-hero] > img[style*="position:absolute"] {
   content-visibility:visible !important;
   display:block !important;
   height:100% !important;
@@ -132,9 +153,9 @@ section[data-screen-hero] > img[style*="position:absolute"],
     -webkit-print-color-adjust:exact !important;
     print-color-adjust:exact !important;
   }
+  img[data-sunday-static-hero="true"],
   section#top > img[style*="position:absolute"],
-  section[data-screen-hero] > img[style*="position:absolute"],
-  [data-sunday-grid-hero="true"] > img[data-sunday-hero-img="true"] {
+  section[data-screen-hero] > img[style*="position:absolute"] {
     display:block !important;
     height:100% !important;
     inset:auto !important;
@@ -147,20 +168,21 @@ section[data-screen-hero] > img[style*="position:absolute"],
   }
 }
 
-/* Our Work: retain the larger Bill of Work without allowing it over the title. */
+/* Our Work: keep the large Bill of Work, but give the headline its own column. */
 @media (min-width:1100px) {
   [data-screen-label^="Our Work"] #top > div {
     align-items:end !important;
-    gap:clamp(32px,3vw,52px) !important;
+    gap:clamp(40px,4vw,64px) !important;
     grid-template-columns:minmax(0,1fr) minmax(440px,500px) !important;
   }
   [data-screen-label^="Our Work"] #work-title {
-    font-size:clamp(58px,5.8vw,94px) !important;
+    font-size:clamp(58px,7vw,108px) !important;
     max-width:100% !important;
+    min-width:0 !important;
   }
   [data-screen-label^="Our Work"] #work-title > span {
-    font-size:.98em !important;
-    margin-left:clamp(20px,3vw,48px) !important;
+    font-size:1.02em !important;
+    margin-left:clamp(16px,2vw,34px) !important;
     max-width:100% !important;
     white-space:normal !important;
   }
@@ -175,11 +197,38 @@ section[data-screen-hero] > img[style*="position:absolute"],
 
 CSS_PATH.write_text(css, encoding='utf-8')
 
-# Static capture safety across the whole site. Do not rely only on runtime JS to
-# turn lazy images eager because Safari Full Page/PDF capture can snapshot before
-# that mutation is honored.
+
+def mark_static_hero_images(text: str) -> tuple[str, int]:
+    """Mark the first absolute-positioned image inside each hero section in source."""
+    total = 0
+    section_pattern = re.compile(
+        r'(<section\b[^>]*(?:data-screen-hero|id="top")[^>]*>)(.*?)(</section>)',
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    def section_repl(match):
+        nonlocal total
+        opening, body, closing = match.groups()
+        img_pattern = re.compile(r'<img\b([^>]*style="[^"]*position:absolute[^"]*"[^>]*)>', re.IGNORECASE)
+        img_match = img_pattern.search(body)
+        if not img_match:
+            return match.group(0)
+        tag = img_match.group(0)
+        if 'data-sunday-static-hero=' in tag:
+            return match.group(0)
+        marked = tag[:-1] + ' data-sunday-static-hero="true">'
+        body = body[:img_match.start()] + marked + body[img_match.end():]
+        total += 1
+        return opening + body + closing
+
+    return section_pattern.sub(section_repl, text), total
+
+
+# Static capture safety across the whole rendered site. Remove lazy image loading,
+# add source-level hero markers, and bump the correction assets to v9.
 changed = 0
 lazy_removed = 0
+hero_marked = 0
 for path in sorted(ROOT.rglob('*.html')):
     if '.github' in path.parts or 'node_modules' in path.parts:
         continue
@@ -189,6 +238,8 @@ for path in sorted(ROOT.rglob('*.html')):
     if count:
         updated = updated.replace(' loading="lazy"', '')
         lazy_removed += count
+    updated, marks = mark_static_hero_images(updated)
+    hero_marked += marks
     if updated != text:
         path.write_text(updated, encoding='utf-8')
         changed += 1
@@ -197,34 +248,46 @@ for path in sorted(ROOT.rglob('*.html')):
 final_css = CSS_PATH.read_text(encoding='utf-8')
 required = [
     fix_marker,
+    'font-family:var(--sc-sans) !important;',
     'padding-bottom:44px !important;',
-    'font-size:8.5px !important;',
+    'font-size:9px !important;',
     'footer a[href^="mailto:"]',
     'font-size:12.5px !important;',
-    'section#top > img[style*="position:absolute"]',
+    'img[data-sunday-static-hero="true"]',
     'position:relative !important;',
     'grid-template-columns:minmax(0,1fr) minmax(440px,500px) !important;',
-    '[aria-label="Project inquiry"],',
-    'animation:none !important;',
+    'font-size:clamp(58px,7vw,108px) !important;',
 ]
 for marker in required:
     if marker not in final_css:
         raise SystemExit(f'Missing final CSS marker: {marker}')
 
-for forbidden in ['sc-sway-sunday-continuous', 'The OPEN sign keeps its original character, but now loops']:
+# The original modal opening animation is intentionally preserved. Do not add a
+# broad correction override that disables it.
+if re.search(r'\[aria-label="Project inquiry"\]\s*,\s*\n\[aria-label="The Sunday Reservation"\]\s*\{\s*animation:none', final_css):
+    raise SystemExit('Original modal opening animation was accidentally disabled')
+
+for forbidden in ['sc-sway-sunday-continuous', 'sc-neon-sunday-final', 'The OPEN sign keeps its original character, but now loops']:
     if forbidden in final_css:
-        raise SystemExit(f'OPEN sign override still present: {forbidden}')
+        raise SystemExit(f'OPEN sign correction override still present: {forbidden}')
 
 home = Path('index.html').read_text(encoding='utf-8')
 for marker in ['sc-rock 5.4s', 'sc-sway 7s', 'sc-warm 2.6s', 'sc-neon 3.8s', 'IntersectionObserver']:
     if marker not in home:
         raise SystemExit(f'Original OPEN sign behavior missing from homepage: {marker}')
+if 'data-sunday-static-hero="true"' not in home:
+    raise SystemExit('Homepage hero was not statically marked for capture')
 
-# No rendered HTML file may retain lazy image loading after this pass.
 for path in sorted(ROOT.rglob('*.html')):
     if '.github' in path.parts or 'node_modules' in path.parts:
         continue
     if 'loading="lazy"' in path.read_text(encoding='utf-8'):
         raise SystemExit(f'Lazy image remained in {path}')
 
-print(f'Applied bounded Safari/motion fixes, removed {lazy_removed} lazy image attributes, and bumped {changed} rendered HTML files to v9')
+if hero_marked < 1:
+    raise SystemExit('No static hero image markers were written')
+
+print(
+    f'Applied consolidated revision, removed {lazy_removed} lazy image attributes, '
+    f'marked {hero_marked} static hero images, and updated {changed} rendered HTML files to v9'
+)
