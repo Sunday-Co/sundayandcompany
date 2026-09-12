@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260912-8';
+    link.href = '/assets/rendered-corrections.css?v=20260912-9';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -71,11 +71,62 @@
     });
   }
 
+  var signFallbackObserver = null;
+
+  function ensureOpenSignFallback() {
+    var sign = document.querySelector('[data-sign]');
+    if (!sign || sign.dataset.sundaySignFallbackBound === '1') return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    sign.dataset.sundaySignFallbackBound = '1';
+
+    function fallbackRestart() {
+      sign.dataset.sundaySignFallback = '0';
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          sign.dataset.sundaySignFallback = '1';
+        });
+      });
+    }
+
+    function verifyOriginalOrFallback() {
+      if (sign.dataset.sundaySignFallback === '1') {
+        fallbackRestart();
+        return;
+      }
+
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          var neon = sign.querySelector('p[aria-hidden][style*="Pinyon Script"]');
+          var hanger = sign.querySelector(':scope > div[style*="transform-origin"]');
+          if (!neon || !hanger) return;
+          var neonName = window.getComputedStyle(neon).animationName || 'none';
+          var hangerName = window.getComputedStyle(hanger).animationName || 'none';
+          if (neonName === 'none' || hangerName === 'none') fallbackRestart();
+        });
+      });
+    }
+
+    sign.addEventListener('click', verifyOriginalOrFallback);
+
+    if ('IntersectionObserver' in window) {
+      signFallbackObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) verifyOriginalOrFallback();
+        });
+      }, { threshold: 0.35 });
+      signFallbackObserver.observe(sign);
+    } else {
+      verifyOriginalOrFallback();
+    }
+  }
+
   function sync() {
     ensureCorrectionStyles();
     normalizeRuntimeRoots();
     prepareImagesForCapture(document);
     markHeroFallbacks();
+    ensureOpenSignFallback();
   }
 
   function boot() {
