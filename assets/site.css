@@ -18,8 +18,6 @@
    GLOBAL TYPE SYSTEM
    ========================================================== */
 
-/* Every editorial heading uses one numeric weight, even when a
-   heading is split between brown regular and rose italic Playfair. */
 h1,
 h2,
 h3,
@@ -41,8 +39,6 @@ h6 strong {
   font-weight: 400 !important;
 }
 
-/* Inter Tight stays light for larger supporting copy. Tiny functional
-   UI and uppercase receipt metadata use Regular for legibility. */
 [style*="font-family:'Inter Tight'"] {
   font-weight: 300 !important;
 }
@@ -55,7 +51,6 @@ a[style*="font-family:'Inter Tight'"],
   font-weight: 400 !important;
 }
 
-/* iOS: readable form controls and no automatic focus zoom. */
 @media (max-width: 820px) {
   input,
   textarea,
@@ -112,12 +107,8 @@ a[style*="font-family:'Inter Tight'"],
 
 /* ==========================================================
    FORM TYPOGRAPHY SYSTEM
-   Functional text and decorative receipt text are intentionally
-   separate. This applies across Project Inquiry, Contact, Sunday
-   School, footer newsletter and reservation receipt.
    ========================================================== */
 
-/* Functional labels */
 form[data-inq] label > span:first-child,
 form[data-inq] fieldset > legend,
 form[data-editorial-labels] label > span:first-child,
@@ -131,7 +122,6 @@ form[data-editorial-labels] > div > span:first-child {
   text-transform: uppercase;
 }
 
-/* Functional typed/selected text */
 form[data-inq] input,
 form[data-inq] textarea,
 form[data-inq] select,
@@ -144,7 +134,6 @@ form[data-editorial-labels] select,
   font-weight: 300 !important;
 }
 
-/* Functional form actions */
 form[data-inq] [data-stepbtns] button,
 form[data-inq] > button[type="submit"],
 form[data-editorial-labels] > button[type="submit"],
@@ -156,7 +145,6 @@ form[data-editorial-labels] > button[type="submit"],
   letter-spacing: .11em !important;
 }
 
-/* Custom select/date controls are functional reading text, not tiny CTA labels. */
 form[data-editorial-labels] [aria-haspopup="listbox"],
 form[data-editorial-labels] [role="option"] {
   font-family: var(--sunday-sans) !important;
@@ -181,7 +169,6 @@ form[data-inq] [aria-haspopup="dialog"] {
   text-transform: uppercase;
 }
 
-/* Form errors must be readable and are not decorative receipt text. */
 form[data-inq] [role="alert"],
 form[data-editorial-labels] [role="alert"],
 [aria-label="Newsletter"] [role="alert"],
@@ -190,7 +177,6 @@ form[data-editorial-labels] [role="alert"],
   line-height: 1.4 !important;
 }
 
-/* Contact receipt: decorative metadata around the functional form. */
 [data-screen-label="Contact"] div:has(> form[data-editorial-labels]) > div[aria-hidden] {
   font-family: var(--sunday-sans) !important;
   font-size: 9.5px !important;
@@ -199,13 +185,11 @@ form[data-editorial-labels] [role="alert"],
   line-height: 1.4 !important;
 }
 
-/* Contact form field text remains quieter than the large editorial title. */
 [data-screen-label="Contact"] form[data-editorial-labels] input,
 [data-screen-label="Contact"] form[data-editorial-labels] textarea {
   font-size: 14px !important;
 }
 
-/* Sunday School waitlist is a form, not display typography. */
 [data-screen-label="Sunday School"] form[data-editorial-labels] > label[for] {
   font-size: 11px !important;
   font-weight: 400 !important;
@@ -221,7 +205,6 @@ form[data-editorial-labels] [role="alert"],
   min-height: 44px !important;
 }
 
-/* Footer newsletter */
 [aria-label="Newsletter"] form input {
   font-size: 15px !important;
 }
@@ -634,7 +617,6 @@ section#top[data-hero-fallback="ready"] {
   animation: sunday-modal-in 300ms cubic-bezier(.22,.75,.18,1) both;
 }
 
-/* Only directional CTA arrows move. */
 [data-sheet-cta] svg,
 [data-about-team-cta] svg,
 button[onClick*="openInquiry"] svg,
@@ -678,9 +660,6 @@ body {
   overflow-x: clip;
 }
 
-/* Full-page capture safety: the homepage keeps a real background image under
-   the absolutely positioned photo, and its height is based on width rather
-   than a changing browser-chrome viewport. */
 section#top[data-screen-hero="home"] {
   height: clamp(680px, 66.5vw, 900px) !important;
   min-height: 680px !important;
@@ -716,19 +695,15 @@ section#top[data-hero-fallback="ready"] {
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* Inquiry stages feel like turning to the next part of the same receipt. */
 form[data-inq] [data-step-panel] {
   animation: sunday-step-in 190ms cubic-bezier(.22,.75,.18,1) both;
 }
 
-/* Service/process accordions already rotate their arrows; the opened copy now
-   arrives with a restrained fade rather than snapping into place. */
 [data-service-body],
 [data-process-body] {
   animation: sunday-accordion-in 220ms cubic-bezier(.22,.75,.18,1) both;
 }
 
-/* Pinyon heading accents follow the Playfair line by a fraction of a beat. */
 .sc-reveal h1 [style*="Pinyon Script"],
 .sc-reveal h2 [style*="Pinyon Script"],
 .sc-reveal h3 [style*="Pinyon Script"] {
@@ -744,7 +719,6 @@ form[data-inq] [data-step-panel] {
   transform: translateY(0);
 }
 
-/* Mobile navigation: a very small row stagger, no bounce. */
 @media (max-width: 1240px) {
   aside[data-sheet-state="open"] nav > a,
   aside[data-sheet-state="open"] [data-sheet-cta] {
@@ -759,9 +733,6 @@ form[data-inq] [data-step-panel] {
   aside[data-sheet-state="open"] [data-sheet-cta]:last-child { animation-delay: 175ms; }
 }
 
-/* Client Love Letters behave like a physical paper stack. The active card
-   transition is already driven by the component's translate/opacity state; the
-   shared rule adds a tiny lift when a letter is directly interacted with. */
 [data-love-letter] {
   will-change: transform, opacity;
 }
@@ -793,9 +764,7 @@ form[data-inq] [data-step-panel] {
   }
 }
 
-/* BATCH 1 FINAL: FUNCTIONAL MICROTYPE AUDIT
-   Functional navigation/actions are brought into a readable 9–10px range.
-   Tiny receipt/catalog metadata and real fine print stay intentionally smaller. */
+/* BATCH 1 FINAL: FUNCTIONAL MICROTYPE AUDIT */
 
 header nav[aria-label="Primary navigation"] {
   font-size: 10px !important;
@@ -846,7 +815,6 @@ footer [data-footer-legal] {
   letter-spacing: .12em !important;
 }
 
-/* Services content labels are information, not decorative receipt metadata. */
 [data-screen-label="Services"] [data-service-number],
 [data-screen-label="Services"] [data-service-meta],
 [data-screen-label="Services"] [data-service-included] {
@@ -859,7 +827,6 @@ footer [data-footer-legal] {
   letter-spacing: .11em !important;
 }
 
-/* Program-card catalog text remains small; only the actions are promoted. */
 [data-program-cards] [data-program-action] {
   font-family: var(--sunday-sans) !important;
   font-size: 9.5px !important;
@@ -888,9 +855,7 @@ footer [data-footer-legal] {
   }
 }
 
-/* BATCH 7 WEBKIT: PROGRAM CARD FLIP COMPATIBILITY
-   Safari/WebKit needs the prefixed 3D context on the card wrapper itself,
-   not only backface-visibility on each face. */
+/* BATCH 7 WEBKIT: PROGRAM CARD FLIP COMPATIBILITY */
 [data-program-cards] > article {
   -webkit-perspective: 1400px !important;
   perspective: 1400px !important;
