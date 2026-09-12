@@ -1,0 +1,72 @@
+name: Final Corrections WebKit QA
+
+on:
+  push:
+    branches:
+      - final-corrections-no-deploy-2026-09-12
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Apply bounded corrections
+        run: python .github/scripts/apply_final_corrections.py
+
+      - name: Validate source
+        run: |
+          node --check assets/site.js
+          git diff --check
+          ! grep -q 'animateSection(' assets/site.js
+          ! grep -q 'animatePinyon(' assets/site.js
+          ! grep -q 'sc-paper-lift-final' assets/rendered-corrections.css
+          ! grep -q 'sc-step-turn-final' assets/rendered-corrections.css
+          ! grep -q 'sc-accordion-final' assets/rendered-corrections.css
+          grep -q "dialogPosition: 'fixed'" 'Program Cards.dc.html'
+          grep -q "dialogAria: 'true'" 'Program Cards.dc.html'
+          grep -q 'sc-neon-sunday-final 8.4s ease-in-out infinite' assets/rendered-corrections.css
+          grep -q 'sc-sway-sunday-continuous 12s ease-in-out infinite' assets/rendered-corrections.css
+          grep -q 'v=20260912-8' index.html
+
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+
+      - name: Serve site
+        run: |
+          python3 -m http.server 4173 > /tmp/sunday-final-http.log 2>&1 &
+          echo $! > /tmp/sunday-final-http.pid
+          sleep 2
+
+      - name: Run final corrections QA
+        run: node .github/scripts/final_corrections_qa.mjs
+
+      - name: Upload QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-final-corrections-qa
+          path: /tmp/sunday-final-qa
+          if-no-files-found: ignore
+
+      - name: Persist verified production files only
+        if: success()
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add assets/site.js assets/rendered-corrections.css
+          find . -name '*.html' -not -path './node_modules/*' -print0 | xargs -0 git add --
+          git diff --cached --check
+          git commit -m "[skip ci] [skip netlify] Verify final correction batch"
+          git push origin HEAD:${GITHUB_REF_NAME}
