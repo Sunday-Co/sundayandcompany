@@ -57,6 +57,22 @@ a[href="#inquiry"] svg {
   transition:none !important;
 }
 
+/*
+  Preserve the homepage component's original OPEN sign sequence. If that
+  component fails to reapply its inline animation, site.js sets this fallback
+  state and reuses the exact same original animation names/timing.
+*/
+[data-sign][data-sunday-sign-fallback="0"] p[aria-hidden][style*="Pinyon Script"],
+[data-sign][data-sunday-sign-fallback="0"] > div[style*="transform-origin"] {
+  animation:none !important;
+}
+[data-sign][data-sunday-sign-fallback="1"] p[aria-hidden][style*="Pinyon Script"] {
+  animation:sc-warm 2.6s ease-out 1 both, sc-neon 3.8s ease-in-out 2.6s infinite !important;
+}
+[data-sign][data-sunday-sign-fallback="1"] > div[style*="transform-origin"] {
+  animation:sc-rock 5.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 7s ease-in-out 5.4s infinite !important;
+}
+
 /* Project Inquiry: rose Inter Tight eyebrow, Playfair headline, more bottom air. */
 [aria-label="Project inquiry"] [data-inquiry-kicker],
 #inquiry [data-inquiry-kicker] {
@@ -248,6 +264,8 @@ for path in sorted(ROOT.rglob('*.html')):
 final_css = CSS_PATH.read_text(encoding='utf-8')
 required = [
     fix_marker,
+    'data-sunday-sign-fallback="1"',
+    'sc-rock 5.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 7s ease-in-out 5.4s infinite',
     'font-family:var(--sc-sans) !important;',
     'padding-bottom:44px !important;',
     'font-size:9px !important;',
