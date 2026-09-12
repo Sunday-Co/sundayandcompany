@@ -32,24 +32,9 @@
 <meta name="theme-color" content="#f5efe6" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Ysabeau:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
-  [style*="font-family:'Ysabeau'"] { font-weight: 300 !important; }
-  [style*="font-family:'Ysabeau'"] strong { font-weight: 400 !important; }
-  button[style*="font-family:'Ysabeau'"], a[style*="font-family:'Ysabeau'"] { font-weight: 400 !important; }
-  @media (min-width: 701px) {
-    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 8.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 9.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 10.5px !important; }
-  }
-  @media (max-width: 700px) {
-    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 9px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 10px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 11px !important; }
-  }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -137,7 +122,7 @@
       left: -24px !important; top: -57px !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
-    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
+    [aria-label="The Sunday Reservation"] { max-height: calc(100svh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100svh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
     [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 230px !important; min-height: 210px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child { min-height: 500px !important; padding: 30px 24px 28px !important; }
@@ -160,7 +145,7 @@
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
     [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { min-height: calc(100dvh - 20px) !important; padding: 24px 18px 30px !important; }
+    [aria-label="Project inquiry"] > div { min-height: calc(100svh - 20px) !important; padding: 24px 18px 30px !important; }
     #inquiry > div { padding: 20px 18px 24px !important; }
     #inquiry header h2 { font-size: 26px !important; }
     #inquiry header h2 + p { font-size: 11px !important; }
@@ -177,6 +162,8 @@
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
 </style>
+<link rel="stylesheet" href="/assets/site.css" />
+<script defer src="/assets/site.js"></script>
 </helmet>
 
 <div data-screen-label="Cookie Policy" id="top" style="background:#f5efe6;color:#311d03;overflow:hidden">
@@ -184,10 +171,10 @@
   <dc-import name="/Site Header" tone="dark" hint-size="100%,0px"></dc-import>
 
   <header style="background:#fffdf8;border-bottom:1px solid rgba(49,29,3,.34);padding:clamp(132px,14vw,174px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(42px,5vw,60px)">
-    <p style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:17px;text-transform:uppercase">Site Preferences</p>
+    <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:17px;text-transform:uppercase">Site Preferences</p>
     <h1 style="font-size:clamp(48px,6.2vw,84px);font-weight:400;letter-spacing:-.06em;line-height:.9;margin:0">Cookie Policy</h1>
     <p style="font-size:13.5px;line-height:1.7;margin-top:22px;max-width:650px">This policy explains the limited cookies and storage technologies used to operate the Sunday &amp; Company website.</p>
-    <div style="border-top:1px solid rgba(49,29,3,.3);display:flex;flex-wrap:wrap;font-family:'Ysabeau',sans-serif;font-size:7px;gap:12px 34px;justify-content:space-between;letter-spacing:.13em;margin-top:27px;padding-top:12px;text-transform:uppercase">
+    <div style="border-top:1px solid rgba(49,29,3,.3);display:flex;flex-wrap:wrap;font-family:'Inter Tight',sans-serif;font-size:7px;gap:12px 34px;justify-content:space-between;letter-spacing:.13em;margin-top:27px;padding-top:12px;text-transform:uppercase">
       <span>Effective August 30, 2026</span>
       <span>Last Updated August 30, 2026</span>
     </div>
@@ -196,36 +183,36 @@
   <section style="display:grid;gap:clamp(46px,6vw,82px);margin:0 auto;max-width:1240px;padding:clamp(42px,5vw,64px) clamp(22px,4vw,52px) clamp(68px,7vw,96px);grid-template-columns:{{ layoutCols }}">
     <aside style="min-width:0">
       <nav aria-label="Cookie Policy sections" style="position:sticky;top:116px;display:{{ sideDesktop }}">
-        <p style="color:#ac746c;display:block;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">On This Page</p>
+        <p style="color:#ac746c;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">On This Page</p>
         <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#what-they-are" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">01</span>What Cookies Are</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#current-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">02</span>How This Site Uses Storage</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#essential" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">03</span>Essential Technologies</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#analytics" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">04</span>Analytics And Advertising</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#forms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">05</span>Form Processing</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">06</span>Third-Party Websites</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#controls" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">07</span>Your Browser Controls</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#retention" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">08</span>How Long Information Remains</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#updates" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">09</span>Updates And Contact</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#what-they-are" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">01</span>What Cookies Are</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#current-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">02</span>How This Site Uses Storage</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#essential" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">03</span>Essential Technologies</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#analytics" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">04</span>Analytics And Advertising</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#forms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">05</span>Form Processing</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">06</span>Third-Party Websites</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#controls" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">07</span>Your Browser Controls</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#retention" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">08</span>How Long Information Remains</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#updates" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">09</span>Updates And Contact</a></li>
         </ol>
         <div style="border-top:1px solid #311d03;margin-top:28px;padding-top:16px">
-          <span style="color:#ac746c;display:block;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">Questions</span>
+          <span style="color:#ac746c;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">Questions</span>
           <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor;font-size:13px">hello@sundayandcompany.co</a>
         </div>
       </nav>
       <details style="border-bottom:1px solid rgba(49,29,3,.38);border-top:1px solid rgba(49,29,3,.38);display:{{ sideMobile }}">
-        <summary style="align-items:center;display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.15em;padding:14px 0;text-transform:uppercase">Jump To A Section <span aria-hidden="true" style="color:#ac746c">+</span></summary>
+        <summary style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.15em;padding:14px 0;text-transform:uppercase">Jump To A Section <span aria-hidden="true" style="color:#ac746c">+</span></summary>
         <nav aria-label="Cookie Policy mobile sections" style="padding-bottom:12px">
           <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#what-they-are" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">01</span>What Cookies Are</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#current-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">02</span>How This Site Uses Storage</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#essential" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">03</span>Essential Technologies</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#analytics" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">04</span>Analytics And Advertising</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#forms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">05</span>Form Processing</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">06</span>Third-Party Websites</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#controls" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">07</span>Your Browser Controls</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#retention" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">08</span>How Long Information Remains</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#updates" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:7px;letter-spacing:.1em">09</span>Updates And Contact</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#what-they-are" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">01</span>What Cookies Are</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#current-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">02</span>How This Site Uses Storage</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#essential" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">03</span>Essential Technologies</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#analytics" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">04</span>Analytics And Advertising</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#forms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">05</span>Form Processing</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">06</span>Third-Party Websites</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#controls" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">07</span>Your Browser Controls</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#retention" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">08</span>How Long Information Remains</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#updates" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">09</span>Updates And Contact</a></li>
           </ol>
         </nav>
       </details>
@@ -235,7 +222,7 @@
 
       <section id="what-they-are" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">01</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">01</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">What Cookies Are</h2>
         </div>
         <div style="min-width:0">
@@ -245,7 +232,7 @@
 
       <section id="current-use" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">02</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">02</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">How This Site Uses Storage</h2>
         </div>
         <div style="min-width:0">
@@ -256,7 +243,7 @@
 
       <section id="essential" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">03</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">03</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Essential Technologies</h2>
         </div>
         <div style="min-width:0">
@@ -266,7 +253,7 @@
 
       <section id="analytics" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">04</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">04</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Analytics And Advertising</h2>
         </div>
         <div style="min-width:0">
@@ -276,7 +263,7 @@
 
       <section id="forms" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">05</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">05</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Form Processing</h2>
         </div>
         <div style="min-width:0">
@@ -286,7 +273,7 @@
 
       <section id="third-parties" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">06</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">06</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Third-Party Websites</h2>
         </div>
         <div style="min-width:0">
@@ -296,7 +283,7 @@
 
       <section id="controls" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">07</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">07</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Your Browser Controls</h2>
         </div>
         <div style="min-width:0">
@@ -307,7 +294,7 @@
 
       <section id="retention" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">08</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">08</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">How Long Information Remains</h2>
         </div>
         <div style="min-width:0">
@@ -317,7 +304,7 @@
 
       <section id="updates" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
         <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">09</span>
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">09</span>
           <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Updates And Contact</h2>
         </div>
         <div style="min-width:0">
@@ -327,10 +314,10 @@
       </section>
 
       <div style="align-items:center;background:#311d03;color:#f5efe6;display:grid;gap:12px clamp(16px,2.5vw,34px);margin:24px 0 0;padding:14px 18px;width:100%;grid-template-columns:{{ cardCols }}">
-        <p style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">Questions</p>
+        <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">Questions</p>
         <h2 style="font-size:clamp(17px,1.7vw,22px);font-weight:400;margin:0;white-space:{{ cardNowrap }}">Contact Sunday &amp; Company</h2>
         <p style="font-size:13px;line-height:1.6;margin:0">Questions about this page can be sent to <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor">hello@sundayandcompany.co</a>. We aim to respond to privacy and data requests within 30 days.</p>
-        <p style="border-top:1px solid rgba(245,239,230,.35);font-family:'Ysabeau',sans-serif;font-size:8px;grid-column:1 / -1;letter-spacing:.13em;line-height:1.7;margin:4px 0 0;opacity:.82;padding-top:12px;text-transform:uppercase">Sunday &amp; Company Marketing LLC is registered in the Commonwealth of Virginia.</p>
+        <p style="border-top:1px solid rgba(245,239,230,.35);font-family:'Inter Tight',sans-serif;font-size:8px;grid-column:1 / -1;letter-spacing:.13em;line-height:1.7;margin:4px 0 0;opacity:.82;padding-top:12px;text-transform:uppercase">Sunday &amp; Company Marketing LLC is registered in the Commonwealth of Virginia.</p>
       </div>
     </article>
   </section>

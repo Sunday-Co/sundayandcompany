@@ -33,24 +33,9 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","name":"About Sunday & Company","description":"A branding, website design and digital marketing studio serving lifestyle businesses across the DMV, North Carolina and beyond.","mainEntity":{"@type":"Organization","name":"Sunday & Company","@id":"https://sundayandcompany.co/#studio"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Ysabeau:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
-  [style*="font-family:'Ysabeau'"] { font-weight: 300 !important; }
-  [style*="font-family:'Ysabeau'"] strong { font-weight: 400 !important; }
-  button[style*="font-family:'Ysabeau'"], a[style*="font-family:'Ysabeau'"] { font-weight: 400 !important; }
-  @media (min-width: 701px) {
-    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 8.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 9.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 10.5px !important; }
-  }
-  @media (max-width: 700px) {
-    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 9px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 10px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 11px !important; }
-  }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -148,7 +133,7 @@
       left: -24px !important; top: -57px !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
-    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
+    [aria-label="The Sunday Reservation"] { max-height: calc(100svh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100svh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
     [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 230px !important; min-height: 210px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child { min-height: 500px !important; padding: 30px 24px 28px !important; }
@@ -171,7 +156,7 @@
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
     [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { min-height: calc(100dvh - 20px) !important; padding: 24px 18px 30px !important; }
+    [aria-label="Project inquiry"] > div { min-height: calc(100svh - 20px) !important; padding: 24px 18px 30px !important; }
     #inquiry > div { padding: 20px 18px 24px !important; }
     #inquiry header h2 { font-size: 26px !important; }
     #inquiry header h2 + p { font-size: 11px !important; }
@@ -188,6 +173,8 @@
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
 </style>
+<link rel="stylesheet" href="/assets/site.css" />
+<script defer src="/assets/site.js"></script>
 </helmet>
 
 <div data-screen-label="About Us" style="background:#f5efe6;color:#311d03;overflow:hidden">
@@ -208,7 +195,7 @@
   <section aria-labelledby="about-story-title" style="background:#f5efe6;border-bottom:1px solid rgba(49,29,3,.35);color:#311d03;display:grid;gap:32px clamp(45px,7vw,110px);grid-template-columns:{{ gc0 }};overflow:hidden;padding:clamp(46px,5.2vw,70px) clamp(22px,8vw,124px);position:relative">
     <span aria-hidden="true" style="color:rgba(172,116,108,.12);font-size:clamp(350px,46vw,720px);left:-4vw;line-height:.7;pointer-events:none;position:absolute;top:2%;display:{{ ampDisplay }}">&amp;</span>
     <div style="align-self:start;position:{{ stickyPos }};top:115px;z-index:1">
-      <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:18px;text-transform:uppercase">About Us</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:18px;text-transform:uppercase">About Us</p>
       <h2 id="about-story-title" style="font-size:clamp(38px,4vw,60px);font-weight:400;letter-spacing:-.055em;line-height:.9;margin:0">About <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.15em;font-style:normal;font-weight:400;margin-left:.48em">Sunday</em></h2>
     </div>
     <div style="display:grid;gap:22px;position:relative;z-index:1">
@@ -220,9 +207,9 @@
 
   <section id="map-section" aria-labelledby="about-map-title" style="aspect-ratio:1100 / 390;background:#f5efe6;color:#311d03;min-height:0;overflow:hidden;padding:0;position:relative">
     <div id="map-copy" style="align-items:flex-end;display:flex;flex-direction:column;height:100%;justify-content:center;left:2.5%;padding:0 clamp(22px,3vw,46px);position:absolute;text-align:right;top:0;width:30%;z-index:3">
-      <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:18px;text-transform:uppercase">Where We Work</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:18px;text-transform:uppercase">Where We Work</p>
       <h2 id="about-map-title" style="font-size:clamp(34px,3.5vw,54px);font-weight:400;letter-spacing:-.055em;line-height:.95;margin:0">Based Here. Working <em style="display:block;font-style:italic;font-weight:400">Everywhere.</em></h2>
-      <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.14em;line-height:1.65;margin-left:auto;margin-top:18px;max-width:350px;text-transform:uppercase" id="map-note">Between The DMV And North Carolina (D.C., Maryland, Virginia), Serving Lifestyle Brands Wherever The Work Takes Us.</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.14em;line-height:1.65;margin-left:auto;margin-top:18px;max-width:350px;text-transform:uppercase" id="map-note">Between The DMV And North Carolina (D.C., Maryland, Virginia), Serving Lifestyle Brands Wherever The Work Takes Us.</p>
     </div>
     <div id="map-art" style="height:100%;inset:0;margin-top:0;overflow:hidden;position:absolute">
       <img src="/assets/about-location-map.svg" alt="Vector map showing Sunday and Company locations in the DMV and North Carolina" style="height:100%;object-fit:cover;object-position:right center;transform-origin:right center;width:100%" id="map-desk" />
@@ -232,16 +219,16 @@
 
   <section aria-labelledby="programs-title" style="background:#311d03;color:#f5efe6;padding:clamp(46px,5.2vw,68px) clamp(22px,8vw,124px)">
     <div style="align-items:center;display:flex;flex-direction:column;gap:14px;margin:0 auto 34px;max-width:880px;text-align:center">
-      <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Pull Up A Chair</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Pull Up A Chair</p>
       <h2 id="programs-title" style="font-size:clamp(36px,4vw,60px);font-weight:400;letter-spacing:-.055em;line-height:.9;margin:0">More Ways To Join <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">The Table</em></h2>
-      <p style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.16em;text-transform:uppercase">Flip A Card To Meet The Program.</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;text-transform:uppercase">Flip A Card To Meet The Program.</p>
     </div>
 
     <dc-import name="/Program Cards" hint-size="100%,420px"></dc-import>
 
     <div style="align-items:center;border-top:1px solid rgba(245,239,230,.35);display:flex;gap:28px;justify-content:center;margin:36px auto 0;max-width:1180px;padding-top:24px">
       <p style="font-size:clamp(18px,1.8vw,25px)">Interested In Joining Sunday?</p>
-      <a href="/join-our-team" style="align-items:center;background:#f5efe6;border:1px solid #f5efe6;color:#311d03;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:500;gap:22px;letter-spacing:.13em;min-height:44px;padding:12px 18px;text-transform:uppercase;transition:background-color .25s ease, color .25s ease" style-hover="background:transparent;color:#f5efe6">Apply To Join Our Team <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+      <a data-about-team-cta href="/join-our-team" style="align-items:center;background:#f5efe6;border:1px solid #f5efe6;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:22px;letter-spacing:.13em;min-height:44px;padding:12px 18px;text-transform:uppercase;transition:background-color .25s ease, color .25s ease" style-hover="background:transparent;color:#f5efe6">Apply To Join Our Team <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
     </div>
   </section>
 

@@ -36,24 +36,9 @@
 <meta name="geo.placename" content="Virginia" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css2?family=Ysabeau:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 <style>
   :root { accent-color: #ac746c; }
-  [style*="font-family:'Ysabeau'"] { font-weight: 300 !important; }
-  [style*="font-family:'Ysabeau'"] strong { font-weight: 400 !important; }
-  button[style*="font-family:'Ysabeau'"], a[style*="font-family:'Ysabeau'"] { font-weight: 400 !important; }
-  @media (min-width: 701px) {
-    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 8.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 9.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 10.5px !important; }
-  }
-  @media (max-width: 700px) {
-    [style*="font-family:'Ysabeau'"][style*="font-size:6.5px"] { font-size: 8.5px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:7px"] { font-size: 9px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:8px"] { font-size: 10px !important; }
-    [style*="font-family:'Ysabeau'"][style*="font-size:9px"] { font-size: 11px !important; }
-  }
   *:focus { outline-color: #ac746c; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -169,7 +154,7 @@
       left: -24px !important; top: -57px !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
-    [aria-label="The Sunday Reservation"] { max-height: calc(100dvh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100dvh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
+    [aria-label="The Sunday Reservation"] { max-height: calc(100svh - 28px) !important; max-width: calc(100vw - 24px) !important; min-height: min(740px, calc(100svh - 28px)) !important; overflow-x: hidden !important; overflow-y: auto !important; }
     [aria-label="The Sunday Reservation"] { grid-template-columns: 1fr !important; }
     [aria-label="The Sunday Reservation"] > div[aria-hidden] { max-height: 230px !important; min-height: 210px !important; }
     [aria-label="The Sunday Reservation"] > div:last-child { min-height: 500px !important; padding: 30px 24px 28px !important; }
@@ -192,7 +177,7 @@
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
     [aria-label="Project inquiry"] h2 { font-size: 24px !important; }
-    [aria-label="Project inquiry"] > div { min-height: calc(100dvh - 20px) !important; padding: 24px 18px 30px !important; }
+    [aria-label="Project inquiry"] > div { min-height: calc(100svh - 20px) !important; padding: 24px 18px 30px !important; }
     #inquiry > div { padding: 20px 18px 24px !important; }
     #inquiry header h2 { font-size: 26px !important; }
     #inquiry header h2 + p { font-size: 11px !important; }
@@ -209,22 +194,24 @@
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
 </style>
+<link rel="stylesheet" href="/assets/site.css" />
+<script defer src="/assets/site.js"></script>
 </helmet>
 
 <div data-screen-label="Home" style="background:#f5efe6;color:#311d03;overflow:clip">
 
   <dc-import name="/Site Header" hint-size="100%,0px"></dc-import>
 
-  <section id="top" aria-labelledby="hero-title" style="background:#311d03 url('/assets/hero-landscape.jpg') 50% 48% / cover no-repeat;scroll-margin-top:92px;color:#f5efe6;height:min(930px,100svh);min-height:620px;overflow:hidden;position:relative">
-    <img src="/assets/hero-landscape.jpg" alt="Open laptop, glasses and coffee on a Sunday &amp; Company workspace" fetchpriority="high" style="height:100%;inset:0;object-fit:cover;object-position:50% 48%;position:absolute;width:100%;z-index:0" />
+  <section id="top" data-screen-hero="home" aria-labelledby="hero-title" style="background:#311d03 url('/assets/hero-landscape.jpg') 50% 48% / cover no-repeat;scroll-margin-top:92px;color:#f5efe6;height:min(930px,100svh);min-height:620px;overflow:hidden;position:relative">
+    <img src="/assets/hero-landscape.jpg" alt="Open laptop, glasses and coffee on a Sunday &amp; Company workspace" fetchpriority="high" style="height:100%;object-fit:cover;object-position:50% 48%;position:relative;width:100%;z-index:0" />
     <div aria-hidden="true" style="background:linear-gradient(90deg, rgba(33,18,4,.58) 0%, rgba(33,18,4,.13) 52%, transparent 78%), linear-gradient(0deg, rgba(33,18,4,.66) 0%, transparent 55%);inset:0;position:absolute;z-index:1"></div>
     <div style="bottom:clamp(42px,6vw,86px);left:clamp(22px,5vw,76px);max-width:780px;position:absolute;right:24px;z-index:2">
-      <p style="font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:500;letter-spacing:.18em;margin:0 0 18px;text-transform:uppercase">Sunday &amp; Company Marketing · DMV (D.C., Maryland, Virginia)</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.18em;margin:0 0 18px;text-transform:uppercase">Sunday &amp; Company Marketing · DMV (D.C., Maryland, Virginia)</p>
       <h1 id="hero-title" style="font-size:clamp(53px,7.2vw,112px);font-weight:400;letter-spacing:-.055em;line-height:.76;margin:0">A Seat At<span style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.14em;font-weight:400;letter-spacing:-.02em;margin-left:clamp(28px,6vw,92px);margin-top:.06em;white-space:nowrap">Our Table</span></h1>
-      <p style="font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:500;letter-spacing:.24em;margin:24px 0 0;text-transform:uppercase">Branding · Website Design · Digital Marketing</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.24em;margin:24px 0 0;text-transform:uppercase">Branding · Website Design · Digital Marketing</p>
       <div style="align-items:center;display:flex;flex-wrap:wrap;gap:28px;margin-top:31px">
-        <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#f5efe6;border:1px solid #f5efe6;border-bottom:1px solid #f5efe6;color:#311d03;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:center;letter-spacing:.18em;min-height:39px;padding:0 17px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#f5efe6">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
-        <a href="/contact" style="align-items:center;background:transparent;border-bottom:1px solid currentColor;color:#f5efe6;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:500;gap:11px;letter-spacing:.18em;padding-bottom:4px;text-transform:uppercase;transition:color 180ms ease" style-hover="color:#ac746c">Contact<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#f5efe6;border:1px solid #f5efe6;border-bottom:1px solid #f5efe6;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:center;letter-spacing:.18em;min-height:39px;padding:0 17px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#f5efe6">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+        <a href="/contact" style="align-items:center;background:transparent;border-bottom:1px solid currentColor;color:#f5efe6;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:11px;letter-spacing:.18em;padding-bottom:4px;text-transform:uppercase;transition:color 180ms ease" style-hover="color:#ac746c">Contact<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
       </div>
     </div>
   </section>
@@ -235,19 +222,19 @@
       <div style="height:clamp(430px,47vw,650px);overflow:hidden"><img src="/assets/intro-cafe.jpg" alt="A Sunday &amp; Company creative workspace" loading="lazy" style="height:100%;object-fit:cover;object-position:center 54%;width:100%" /></div>
       <div style="display:grid;gap:14px;padding-top:6px">
         <img src="/assets/intro-book.jpg" alt="An open design book and studio details" loading="lazy" id="intro-book" style="height:clamp(138px,16vw,205px);justify-self:end;object-fit:cover;width:clamp(154px,18.5vw,236px)" />
-        <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-top:3px;text-transform:uppercase">Our Point Of View</p>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-top:3px;text-transform:uppercase">Our Point Of View</p>
         <h2 id="vision-title" style="font-size:clamp(38px,4.5vw,66px);font-weight:400;letter-spacing:-.055em;line-height:.84;margin:2px 0 8px">Our <span style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.24em;font-weight:400;letter-spacing:-.02em;margin-left:.25em;margin-top:.03em">Vision</span></h2>
-        <p style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(13px,1vw,15px);font-weight:500;letter-spacing:.055em;line-height:1.62;max-width:660px;text-transform:uppercase">Marketing should feel less like noise and more like an invitation. We believe the strongest brands give people something meaningful to recognize, return to and gather around.</p>
-        <p style="font-size:14px;line-height:1.68;max-width:660px">Sunday &amp; Company is a marketing, creative and design studio for lifestyle brands built with intention. We bring branding, website design and digital marketing together so every place your audience meets you feels clear, connected and unmistakably yours.</p>
-        <p style="font-size:14px;line-height:1.68;max-width:660px">Our work is grounded in strategy but never stripped of personality. We care about the details people remember: the language that earns trust, the visual rhythm that feels familiar and the digital experience that makes someone want to stay awhile.</p>
+        <p data-vision-quote style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(17px,1.35vw,20px);font-style:italic;font-weight:400;letter-spacing:-.012em;line-height:1.55;max-width:660px">Marketing Should Feel Less Like Noise And More Like An Invitation. We Believe The Strongest Brands Give People Something Meaningful To Recognize, Return To And Gather Around.</p>
+        <p data-vision-body style="font-size:15px;font-weight:400;line-height:1.68;max-width:660px">Sunday &amp; Company is a marketing, creative and design studio for lifestyle brands built with intention. We bring branding, website design and digital marketing together so every place your audience meets you feels clear, connected and unmistakably yours.</p>
+        <p data-vision-body style="font-size:15px;font-weight:400;line-height:1.68;max-width:660px">Our work is grounded in strategy but never stripped of personality. We care about the details people remember: the language that earns trust, the visual rhythm that feels familiar and the digital experience that makes someone want to stay awhile.</p>
       </div>
     </div>
   </section>
 
   <div aria-label="Sunday and Company services" style="background:#311d03;color:#f5efe6;overflow:hidden;padding:9px 0">
     <div style="animation:sc-marquee 44s linear infinite;display:flex;white-space:nowrap;width:max-content;will-change:transform">
-      <span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.2em;padding-right:40px;text-transform:uppercase">Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • </span>
-      <span style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.2em;padding-right:40px;text-transform:uppercase">Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • </span>
+      <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.2em;padding-right:40px;text-transform:uppercase">Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • </span>
+      <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.2em;padding-right:40px;text-transform:uppercase">Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • Branding • Website Design • Digital Marketing • </span>
     </div>
   </div>
 
@@ -262,14 +249,14 @@
 
   <section id="services" aria-labelledby="services-title" style="scroll-margin-top:92px;overflow:hidden;padding:{{ padA }}">
     <div style="align-items:end;display:grid;gap:20px;grid-template-columns:{{ gc1 }};margin-bottom:30px">
-      <p style="align-self:start;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-top:9px;text-transform:uppercase">Ways We Can Work Together</p>
+      <p style="align-self:start;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-top:9px;text-transform:uppercase">Ways We Can Work Together</p>
       <h2 id="services-title" style="font-size:clamp(38px,4.5vw,66px);font-weight:400;letter-spacing:-.055em;line-height:.84;margin:0;text-align:center">Made To Be<span style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.24em;font-weight:400;letter-spacing:-.02em;margin-left:.25em;margin-top:.03em">Remembered</span></h2>
-      <p style="align-self:start;font-family:'Ysabeau',sans-serif;font-size:10px;letter-spacing:.12em;margin-top:11px;text-align:right;text-transform:uppercase">Select A Service To Unfold The Details.</p>
+      <p style="align-self:start;font-family:'Inter Tight',sans-serif;font-size:10px;letter-spacing:.12em;margin-top:11px;text-align:right;text-transform:uppercase">Select A Service To Unfold The Details.</p>
     </div>
     <div style="margin:0 auto;max-width:1180px;padding-top:{{ stackTop }}">
       <div style="position:relative;z-index:1;margin-top:0">
         <button type="button" onMouseEnter="{{ pickSvc0 }}" onFocus="{{ pickSvc0 }}" onClick="{{ pickSvc0 }}" style="border:1px solid #311d03;box-shadow:0 -9px 22px rgba(49,29,3,.08);cursor:pointer;display:block;overflow:hidden;padding:{{ cardPad }};position:relative;text-align:left;transition:background 260ms ease,color 260ms ease,min-height 360ms cubic-bezier(.22,.75,.18,1);width:100%;background:{{ svcBg0 }};color:{{ svcFg0 }};min-height:{{ svcH0 }}">
-          <span style="align-items:center;display:grid;font-family:'Ysabeau',sans-serif;font-size:8px;gap:12px;grid-template-columns:auto 1fr auto 1fr;letter-spacing:.2em;text-transform:uppercase">
+          <span style="align-items:center;display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;gap:12px;grid-template-columns:auto 1fr auto 1fr;letter-spacing:.2em;text-transform:uppercase">
             <span aria-hidden="true" style="border:1px solid currentColor;border-radius:50%;display:inline-block;height:9px;opacity:.45;width:9px"></span>
             <span>No. 01 · SC-BR</span><span style="opacity:.6">Our Services</span>
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:12px;justify-self:end;width:12px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
@@ -279,22 +266,22 @@
             <span style="font-size:14px;line-height:1.55;display:{{ svcDetail0 }}">
               <span style="display:block;font-family:'Playfair Display',Georgia,serif;font-size:12.5px;letter-spacing:.07em;line-height:1.7;text-transform:uppercase">Brand strategy and visual identity built together, giving your business a clear point of view and a recognizable system for how it shows up.</span>
               <span style="display:flex;flex-wrap:wrap;gap:7px 15px;margin-top:14px">
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Brand strategy</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Logo design</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Supporting marks</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Color &amp; typography</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Graphic design direction</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Brand guidelines</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Messaging direction</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Brand strategy</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Logo design</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Supporting marks</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Color &amp; typography</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Graphic design direction</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Brand guidelines</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Messaging direction</em>
               </span>
             </span>
           </span>
-          <span aria-hidden="true" style="align-items:baseline;border-top:1px dashed {{ svcRule0 }};font-family:'Ysabeau',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;margin-top:20px;padding-top:10px;text-transform:uppercase;display:{{ svcStamp0 }}"><span style="opacity:.72">Filed · Sunday &amp; Co.</span><span style="opacity:.72">Card No. 01 Of 03</span></span>
+          <span aria-hidden="true" style="align-items:baseline;border-top:1px dashed {{ svcRule0 }};font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;margin-top:20px;padding-top:10px;text-transform:uppercase;display:{{ svcStamp0 }}"><span style="opacity:.72">Filed · Sunday &amp; Co.</span><span style="opacity:.72">Card No. 01 Of 03</span></span>
         </button>
       </div>
       <div style="position:relative;z-index:2;margin-top:{{ cardLap }}">
         <button type="button" onMouseEnter="{{ pickSvc1 }}" onFocus="{{ pickSvc1 }}" onClick="{{ pickSvc1 }}" style="border:1px solid #311d03;box-shadow:0 -9px 22px rgba(49,29,3,.08);cursor:pointer;display:block;overflow:hidden;padding:{{ cardPad }};position:relative;text-align:left;transition:background 260ms ease,color 260ms ease,min-height 360ms cubic-bezier(.22,.75,.18,1);width:100%;background:{{ svcBg1 }};color:{{ svcFg1 }};min-height:{{ svcH1 }}">
-          <span style="align-items:center;display:grid;font-family:'Ysabeau',sans-serif;font-size:8px;gap:12px;grid-template-columns:auto 1fr auto 1fr;letter-spacing:.2em;text-transform:uppercase">
+          <span style="align-items:center;display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;gap:12px;grid-template-columns:auto 1fr auto 1fr;letter-spacing:.2em;text-transform:uppercase">
             <span aria-hidden="true" style="border:1px solid currentColor;border-radius:50%;display:inline-block;height:9px;opacity:.45;width:9px"></span>
             <span>No. 02 · SC-WD</span><span style="opacity:.6">Our Services</span>
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:12px;justify-self:end;width:12px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
@@ -304,22 +291,22 @@
             <span style="font-size:14px;line-height:1.55;display:{{ svcDetail1 }}">
               <span style="display:block;font-family:'Playfair Display',Georgia,serif;font-size:12.5px;letter-spacing:.07em;line-height:1.7;text-transform:uppercase">Editorial digital experiences that pair strategy, design and development so your brand feels just as thoughtful online.</span>
               <span style="display:flex;flex-wrap:wrap;gap:7px 15px;margin-top:14px">
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Website strategy</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Sitemap planning</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Content planning</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Custom design</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Responsive development</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Branded interactions</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Launch support</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Website strategy</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Sitemap planning</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Content planning</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Custom design</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Responsive development</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Branded interactions</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Launch support</em>
               </span>
             </span>
           </span>
-          <span aria-hidden="true" style="align-items:baseline;border-top:1px dashed {{ svcRule1 }};font-family:'Ysabeau',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;margin-top:20px;padding-top:10px;text-transform:uppercase;display:{{ svcStamp1 }}"><span style="opacity:.72">Filed · Sunday &amp; Co.</span><span style="opacity:.72">Card No. 02 Of 03</span></span>
+          <span aria-hidden="true" style="align-items:baseline;border-top:1px dashed {{ svcRule1 }};font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;margin-top:20px;padding-top:10px;text-transform:uppercase;display:{{ svcStamp1 }}"><span style="opacity:.72">Filed · Sunday &amp; Co.</span><span style="opacity:.72">Card No. 02 Of 03</span></span>
         </button>
       </div>
       <div style="position:relative;z-index:3;margin-top:{{ cardLap }}">
         <button type="button" onMouseEnter="{{ pickSvc2 }}" onFocus="{{ pickSvc2 }}" onClick="{{ pickSvc2 }}" style="border:1px solid #311d03;box-shadow:0 -9px 22px rgba(49,29,3,.08);cursor:pointer;display:block;overflow:hidden;padding:{{ cardPad }};position:relative;text-align:left;transition:background 260ms ease,color 260ms ease,min-height 360ms cubic-bezier(.22,.75,.18,1);width:100%;background:{{ svcBg2 }};color:{{ svcFg2 }};min-height:{{ svcH2 }}">
-          <span style="align-items:center;display:grid;font-family:'Ysabeau',sans-serif;font-size:8px;gap:12px;grid-template-columns:auto 1fr auto 1fr;letter-spacing:.2em;text-transform:uppercase">
+          <span style="align-items:center;display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;gap:12px;grid-template-columns:auto 1fr auto 1fr;letter-spacing:.2em;text-transform:uppercase">
             <span aria-hidden="true" style="border:1px solid currentColor;border-radius:50%;display:inline-block;height:9px;opacity:.45;width:9px"></span>
             <span>No. 03 · SC-DM</span><span style="opacity:.6">Our Services</span>
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:12px;justify-self:end;width:12px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
@@ -329,34 +316,34 @@
             <span style="font-size:14px;line-height:1.55;display:{{ svcDetail2 }}">
               <span style="display:block;font-family:'Playfair Display',Georgia,serif;font-size:12.5px;letter-spacing:.07em;line-height:1.7;text-transform:uppercase">Ongoing digital strategy shaped around a distinct voice and clear content planning. From copywriting to campaign development, the work keeps your marketing consistent and useful.</span>
               <span style="display:flex;flex-wrap:wrap;gap:7px 15px;margin-top:14px">
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Digital strategy</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Social management</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Content planning</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Copywriting</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Campaign development</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Email support</em>
-              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Performance reporting</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Digital strategy</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Social management</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Content planning</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Copywriting</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Campaign development</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Email support</em>
+              <em style="align-items:baseline;border-bottom:1px dotted currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-style:normal;gap:7px;letter-spacing:.17em;opacity:.9;padding-bottom:4px;text-transform:uppercase">Performance reporting</em>
               </span>
             </span>
           </span>
-          <span aria-hidden="true" style="align-items:baseline;border-top:1px dashed {{ svcRule2 }};font-family:'Ysabeau',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;margin-top:20px;padding-top:10px;text-transform:uppercase;display:{{ svcStamp2 }}"><span style="opacity:.72">Filed · Sunday &amp; Co.</span><span style="opacity:.72">Card No. 03 Of 03</span></span>
+          <span aria-hidden="true" style="align-items:baseline;border-top:1px dashed {{ svcRule2 }};font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;margin-top:20px;padding-top:10px;text-transform:uppercase;display:{{ svcStamp2 }}"><span style="opacity:.72">Filed · Sunday &amp; Co.</span><span style="opacity:.72">Card No. 03 Of 03</span></span>
         </button>
       </div>
     </div>
 
     <div style="align-items:center;display:flex;gap:24px;justify-content:space-between;margin:27px auto 0;max-width:1180px">
       <p style="font-size:15px;font-style:italic;max-width:620px">Need something outside the usual scope? Let’s tailor a service around your business.</p>
-      <a href="/services" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;display:inline-flex;flex:0 0 auto;font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;gap:12px;letter-spacing:.18em;min-height:42px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#311d03">Tell Us What You Need<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+      <a href="/services" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;display:inline-flex;flex:0 0 auto;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;gap:12px;letter-spacing:.18em;min-height:42px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#311d03">Tell Us What You Need<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
     </div>
   </section>
 
   <section id="work" aria-labelledby="work-title" style="scroll-margin-top:92px;background:#f5efe6;color:#311d03;padding:clamp(42px,4.2vw,58px) 0 clamp(36px,4.2vw,58px)">
     <div style="align-items:end;display:grid;gap:32px;grid-template-columns:{{ gc2 }};padding:0 clamp(22px,6vw,90px) 32px">
-      <p style="align-self:start;font-family:'Ysabeau',sans-serif;font-size:8px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-top:8px;text-transform:uppercase">A Few Things We’ve Made</p>
+      <p style="align-self:start;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-top:8px;text-transform:uppercase">A Few Things We’ve Made</p>
       <h2 id="work-title" style="font-size:clamp(38px,4.5vw,66px);font-weight:400;letter-spacing:-.055em;line-height:.84;margin:0">Our Featured <span style="font-family:'Playfair Display',Georgia,serif;font-size:.97em;font-style:italic;font-weight:400;letter-spacing:-.045em">Work</span></h2>
       <div style="align-self:end;display:grid;gap:14px;justify-items:start">
-        <p style="font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.2em;line-height:1.4;max-width:210px;text-transform:uppercase">Selected Projects</p>
-        <a href="/our-work" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:8px;gap:18px;letter-spacing:.13em;padding-bottom:6px;text-transform:uppercase">View All Work<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.2em;line-height:1.4;max-width:210px;text-transform:uppercase">Selected Projects</p>
+        <a href="/our-work" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:18px;letter-spacing:.13em;padding-bottom:6px;text-transform:uppercase">View All Work<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
       </div>
     </div>
     <div aria-label="Selected Sunday and Company projects" style="display:grid;gap:8px;grid-template-columns:{{ gc4 }};padding:0 8px 8px">
@@ -380,44 +367,44 @@
 
   <section aria-labelledby="results-title" style="background:#311d03;color:#f5efe6;padding:clamp(44px,5vw,72px) clamp(22px,6vw,90px)">
     <div style="align-items:end;display:grid;gap:18px 42px;grid-template-columns:{{ gc9 }};margin-bottom:28px">
-      <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Selected Results</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Selected Results</p>
       <h2 id="results-title" style="font-size:{{ resultsTitleSize }};font-weight:400;justify-self:center;letter-spacing:-.05em;line-height:.95;margin:0;text-align:center;white-space:nowrap">Results Across Our Work</h2>
       <p style="font-size:11px;justify-self:end;line-height:1.55;max-width:390px;opacity:.82">Selected results across past engagements. Outcomes vary by project scope and timeline, and are not a guarantee of similar results.</p>
     </div>
       <div style="margin:0 auto;max-width:1180px;position:relative">
-      <div style="border-bottom:1px dashed rgba(245,239,230,.5);border-top:1px dashed rgba(245,239,230,.5);display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:10px 0;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Record Of Results</span></div>
+      <div style="border-bottom:1px dashed rgba(245,239,230,.5);border-top:1px dashed rgba(245,239,230,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:10px 0;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Record Of Results</span></div>
         <div data-ledger="true" style="align-items:baseline;display:flex;gap:12px;padding:9px 0;position:relative">
           <span aria-hidden="true" style="background:rgba(245,239,230,.45);bottom:0;height:1px;left:0;position:absolute;transform-origin:left center;transition:transform 620ms cubic-bezier(.22,.75,.18,1);width:100%;transform:scaleX({{ hr0 }})"></span>
-          <span style="font-family:'Ysabeau',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Impressions Delivered</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Impressions Delivered</span>
           <span aria-hidden="true" style="border-bottom:1px dotted rgba(245,239,230,.5);flex:1;transform:translateY(-4px)"></span>
           <strong style="font-size:clamp(20px,1.9vw,27px);font-weight:400;letter-spacing:-.04em;line-height:1">{{ hv0 }}</strong>
         </div>
         <div data-ledger="true" style="align-items:baseline;display:flex;gap:12px;padding:9px 0;position:relative">
           <span aria-hidden="true" style="background:rgba(245,239,230,.45);bottom:0;height:1px;left:0;position:absolute;transform-origin:left center;transition:transform 620ms cubic-bezier(.22,.75,.18,1);width:100%;transform:scaleX({{ hr1 }})"></span>
-          <span style="font-family:'Ysabeau',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Key Actions Driven</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Key Actions Driven</span>
           <span aria-hidden="true" style="border-bottom:1px dotted rgba(245,239,230,.5);flex:1;transform:translateY(-4px)"></span>
           <strong style="font-size:clamp(20px,1.9vw,27px);font-weight:400;letter-spacing:-.04em;line-height:1">{{ hv1 }}</strong>
         </div>
         <div data-ledger="true" style="align-items:baseline;display:flex;gap:12px;padding:9px 0;position:relative">
           <span aria-hidden="true" style="background:rgba(245,239,230,.45);bottom:0;height:1px;left:0;position:absolute;transform-origin:left center;transition:transform 620ms cubic-bezier(.22,.75,.18,1);width:100%;transform:scaleX({{ hr2 }})"></span>
-          <span style="font-family:'Ysabeau',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Modeled ROAS</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Modeled ROAS</span>
           <span aria-hidden="true" style="border-bottom:1px dotted rgba(245,239,230,.5);flex:1;transform:translateY(-4px)"></span>
           <strong style="font-size:clamp(20px,1.9vw,27px);font-weight:400;letter-spacing:-.04em;line-height:1">{{ hv2 }}</strong>
         </div>
         <div data-ledger="true" style="align-items:baseline;display:flex;gap:12px;padding:9px 0;position:relative">
           <span aria-hidden="true" style="background:rgba(245,239,230,.45);bottom:0;height:1px;left:0;position:absolute;transform-origin:left center;transition:transform 620ms cubic-bezier(.22,.75,.18,1);width:100%;transform:scaleX({{ hr3 }})"></span>
-          <span style="font-family:'Ysabeau',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Email Open Rate</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Email Open Rate</span>
           <span aria-hidden="true" style="border-bottom:1px dotted rgba(245,239,230,.5);flex:1;transform:translateY(-4px)"></span>
           <strong style="font-size:clamp(20px,1.9vw,27px);font-weight:400;letter-spacing:-.04em;line-height:1">{{ hv3 }}</strong>
         </div>
         <div data-ledger="true" style="align-items:baseline;display:flex;gap:12px;padding:9px 0;position:relative">
           <span aria-hidden="true" style="background:rgba(245,239,230,.45);bottom:0;height:1px;left:0;position:absolute;transform-origin:left center;transition:transform 620ms cubic-bezier(.22,.75,.18,1);width:100%;transform:scaleX({{ hr4 }})"></span>
-          <span style="font-family:'Ysabeau',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Audience Growth</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase">Audience Growth</span>
           <span aria-hidden="true" style="border-bottom:1px dotted rgba(245,239,230,.5);flex:1;transform:translateY(-4px)"></span>
           <strong style="font-size:clamp(20px,1.9vw,27px);font-weight:400;letter-spacing:-.04em;line-height:1">{{ hv4 }}</strong>
         </div>
-      <div style="align-items:baseline;border-bottom:1px solid rgba(245,239,230,.85);border-top:1px solid rgba(245,239,230,.85);display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;margin-top:8px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:600">Across All Work</strong></div>
-      <span aria-hidden="true" style="align-items:center;border:2px solid rgba(172,116,108,.75);border-radius:50%;color:#ac746c;display:flex;flex-direction:column;font-family:'Ysabeau',sans-serif;font-size:{{ resultStampText }};height:{{ resultStampSize }};justify-content:center;letter-spacing:.16em;line-height:1.5;left:{{ resultStampLeft }};opacity:.88;pointer-events:none;position:absolute;text-align:center;text-transform:uppercase;top:{{ resultStampTop }};transform:translateX(-50%) rotate(-9deg);width:{{ resultStampSize }};z-index:3">
+      <div style="align-items:baseline;border-bottom:1px solid rgba(245,239,230,.85);border-top:1px solid rgba(245,239,230,.85);display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;margin-top:8px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:600">Across All Work</strong></div>
+      <span aria-hidden="true" style="align-items:center;border:2px solid rgba(172,116,108,.75);border-radius:50%;color:#ac746c;display:flex;flex-direction:column;font-family:'Inter Tight',sans-serif;font-size:{{ resultStampText }};height:{{ resultStampSize }};justify-content:center;letter-spacing:.16em;line-height:1.5;left:{{ resultStampLeft }};opacity:.88;pointer-events:none;position:absolute;text-align:center;text-transform:uppercase;top:{{ resultStampTop }};transform:translateX(-50%) rotate(-9deg);width:{{ resultStampSize }};z-index:3">
         <span style="border-bottom:1px solid rgba(172,116,108,.6);border-top:1px solid rgba(172,116,108,.6);display:block;padding:3px 0;width:{{ resultStampRule }}">Filed</span>
         <span style="display:block;font-size:{{ resultStampYear }};letter-spacing:.1em;padding-top:4px">2026</span>
       </span>
@@ -427,45 +414,45 @@
 
   <section aria-labelledby="letters-title" style="align-items:center;background:#f5efe6;border-bottom:1px solid rgba(49,29,3,.35);display:grid;gap:clamp(42px,7vw,110px);grid-template-columns:{{ gc6 }};padding:clamp(38px,4vw,56px) clamp(22px,6vw,90px)">
     <div>
-      <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Kind Words From Our Clients</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Kind Words From Our Clients</p>
       <h2 id="letters-title" style="font-size:clamp(34px,4vw,56px);font-weight:400;letter-spacing:-.05em;line-height:.94;margin:18px 0 17px">Client Love Letters</h2>
       <p style="font-size:14px;font-style:italic;line-height:1.55;max-width:330px">A few notes from the people who have taken a seat at our table.</p>
     </div>
     <div style="margin:0 auto;max-width:760px;width:100%">
       <div style="display:grid;grid-template-areas:'stack';padding:0 18px 18px 0">
         <article style="background:#fffdf8;min-height:{{ gbH }};padding:clamp(25px,3.2vw,40px);padding-right:{{ gbPadR }};grid-area:1 / 1;position:relative;width:100%;transition:transform 460ms cubic-bezier(.32,.72,.18,1), opacity 460ms ease, border-color 460ms ease;border:1px solid {{ gbB0 }};transform:{{ gbT0 }};opacity:{{ gbO0 }};z-index:{{ gbZ0 }}">
-          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN0 }} / 04</span></div>
+          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN0 }} / 04</span></div>
           <blockquote style="font-size:clamp(16px,1.5vw,22px);font-style:italic;line-height:1.48;margin:clamp(20px,2.6vw,28px) 0 0">&ldquo;{{ gbQ0 }}&rdquo;</blockquote>
           <div style="border-top:1px solid rgba(49,29,3,.3);margin-top:clamp(18px,2.4vw,26px);padding-top:12px">
             <p style="font-family:'Pinyon Script',cursive;font-size:clamp(26px,3vw,36px);line-height:1">{{ gbS0 }}</p>
-            <p style="font-family:'Ysabeau',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
+            <p style="font-family:'Inter Tight',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
           </div>
           <span aria-hidden="true" style="border-left:1px solid rgba(49,29,3,.25);bottom:0;position:absolute;right:26px;top:0;display:{{ gbRule }}"></span>
         </article>
         <article style="background:#fffdf8;min-height:{{ gbH }};padding:clamp(25px,3.2vw,40px);padding-right:{{ gbPadR }};grid-area:1 / 1;position:relative;width:100%;transition:transform 460ms cubic-bezier(.32,.72,.18,1), opacity 460ms ease, border-color 460ms ease;border:1px solid {{ gbB1 }};transform:{{ gbT1 }};opacity:{{ gbO1 }};z-index:{{ gbZ1 }}">
-          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN1 }} / 04</span></div>
+          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN1 }} / 04</span></div>
           <blockquote style="font-size:clamp(16px,1.5vw,22px);font-style:italic;line-height:1.48;margin:clamp(20px,2.6vw,28px) 0 0">&ldquo;{{ gbQ1 }}&rdquo;</blockquote>
           <div style="border-top:1px solid rgba(49,29,3,.3);margin-top:clamp(18px,2.4vw,26px);padding-top:12px">
             <p style="font-family:'Pinyon Script',cursive;font-size:clamp(26px,3vw,36px);line-height:1">{{ gbS1 }}</p>
-            <p style="font-family:'Ysabeau',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
+            <p style="font-family:'Inter Tight',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
           </div>
           <span aria-hidden="true" style="border-left:1px solid rgba(49,29,3,.25);bottom:0;position:absolute;right:26px;top:0;display:{{ gbRule }}"></span>
         </article>
         <article style="background:#fffdf8;min-height:{{ gbH }};padding:clamp(25px,3.2vw,40px);padding-right:{{ gbPadR }};grid-area:1 / 1;position:relative;width:100%;transition:transform 460ms cubic-bezier(.32,.72,.18,1), opacity 460ms ease, border-color 460ms ease;border:1px solid {{ gbB2 }};transform:{{ gbT2 }};opacity:{{ gbO2 }};z-index:{{ gbZ2 }}">
-          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN2 }} / 04</span></div>
+          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN2 }} / 04</span></div>
           <blockquote style="font-size:clamp(16px,1.5vw,22px);font-style:italic;line-height:1.48;margin:clamp(20px,2.6vw,28px) 0 0">&ldquo;{{ gbQ2 }}&rdquo;</blockquote>
           <div style="border-top:1px solid rgba(49,29,3,.3);margin-top:clamp(18px,2.4vw,26px);padding-top:12px">
             <p style="font-family:'Pinyon Script',cursive;font-size:clamp(26px,3vw,36px);line-height:1">{{ gbS2 }}</p>
-            <p style="font-family:'Ysabeau',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
+            <p style="font-family:'Inter Tight',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
           </div>
           <span aria-hidden="true" style="border-left:1px solid rgba(49,29,3,.25);bottom:0;position:absolute;right:26px;top:0;display:{{ gbRule }}"></span>
         </article>
         <article style="background:#fffdf8;min-height:{{ gbH }};padding:clamp(25px,3.2vw,40px);padding-right:{{ gbPadR }};grid-area:1 / 1;position:relative;width:100%;transition:transform 460ms cubic-bezier(.32,.72,.18,1), opacity 460ms ease, border-color 460ms ease;border:1px solid {{ gbB3 }};transform:{{ gbT3 }};opacity:{{ gbO3 }};z-index:{{ gbZ3 }}">
-          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Ysabeau',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN3 }} / 04</span></div>
+          <div style="border-bottom:1px dashed rgba(49,29,3,.45);display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.75">{{ gbN3 }} / 04</span></div>
           <blockquote style="font-size:clamp(16px,1.5vw,22px);font-style:italic;line-height:1.48;margin:clamp(20px,2.6vw,28px) 0 0">&ldquo;{{ gbQ3 }}&rdquo;</blockquote>
           <div style="border-top:1px solid rgba(49,29,3,.3);margin-top:clamp(18px,2.4vw,26px);padding-top:12px">
             <p style="font-family:'Pinyon Script',cursive;font-size:clamp(26px,3vw,36px);line-height:1">{{ gbS3 }}</p>
-            <p style="font-family:'Ysabeau',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
+            <p style="font-family:'Inter Tight',sans-serif;font-size:7.5px;letter-spacing:.15em;margin-top:5px;opacity:.75;text-transform:uppercase">With Love</p>
           </div>
           <span aria-hidden="true" style="border-left:1px solid rgba(49,29,3,.25);bottom:0;position:absolute;right:26px;top:0;display:{{ gbRule }}"></span>
         </article>
@@ -500,12 +487,12 @@
         <div style="border:1px solid rgba(172,116,108,.5);box-shadow:0 0 34px rgba(172,116,108,.16), inset 0 0 34px rgba(172,116,108,.07);padding:clamp(18px,2.2vw,28px) clamp(20px,3vw,44px) clamp(14px,1.8vw,22px);position:relative">
         <span aria-hidden="true" style="border:1px solid rgba(172,116,108,.2);inset:6px;pointer-events:none;position:absolute"></span>
         <div style="position:relative;text-align:center">
-          <p style="color:#ac746c;font-family:'Ysabeau',sans-serif;font-size:8px;letter-spacing:.36em;text-transform:uppercase">Sunday &amp; Co.</p>
+          <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.36em;text-transform:uppercase">Sunday &amp; Co.</p>
           <p aria-hidden="true" style="animation:{{ signAnim }};color:#ac746c;font-family:'Pinyon Script',cursive;font-size:clamp(58px,8vw,116px);line-height:.86;margin:clamp(2px,.5vw,6px) 0 0">Open</p>
-          <h2 id="reserve-title" style="display:flex;flex-wrap:wrap;font-family:'Ysabeau',sans-serif;font-size:8.5px;font-weight:500;gap:6px 14px;justify-content:center;letter-spacing:.2em;line-height:1.6;margin-top:clamp(10px,1.4vw,16px);position:relative;text-transform:uppercase;z-index:1"><span>Taking Enquiries</span><span aria-hidden="true" style="opacity:.45">·</span><span>The Reservation Book</span></h2>
+          <h2 id="reserve-title" style="display:flex;flex-wrap:wrap;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:500;gap:6px 14px;justify-content:center;letter-spacing:.2em;line-height:1.6;margin-top:clamp(10px,1.4vw,16px);position:relative;text-transform:uppercase;z-index:1"><span>Taking Enquiries</span><span aria-hidden="true" style="opacity:.45">·</span><span>The Reservation Book</span></h2>
         </div>
         <div style="border-top:1px dashed rgba(172,116,108,.35);display:grid;gap:clamp(18px,3vw,52px);grid-template-columns:{{ rbCols }};margin-top:clamp(14px,1.8vw,22px);padding-top:clamp(14px,1.8vw,20px)">
-          <div style="font-family:'Ysabeau',sans-serif;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase">
+          <div style="font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase">
             <div style="align-items:baseline;display:flex;justify-content:space-between;padding-bottom:10px"><span style="color:#ac746c">Now Booking</span><span style="opacity:.7">{{ rbYear }}</span></div>
             <div style="align-items:baseline;border-top:1px solid rgba(172,116,108,.22);display:flex;justify-content:space-between;padding:10px 0"><span>{{ rb0 }}</span><span style="color:#ac746c">Open</span></div>
             <div style="align-items:baseline;border-top:1px solid rgba(172,116,108,.22);display:flex;justify-content:space-between;padding:10px 0"><span>{{ rb1 }}</span><span style="color:#ac746c">Open</span></div>
@@ -513,7 +500,7 @@
             <div style="align-items:baseline;border-top:1px solid rgba(172,116,108,.22);display:flex;justify-content:space-between;padding:10px 0"><span>{{ rb3 }}</span><span style="color:#ac746c">Open</span></div>
           </div>
           <div style="align-items:center;display:flex">
-            <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:transparent;border:1px solid #ac746c;color:#f5efe6;cursor:pointer;display:flex;font-family:'Ysabeau',sans-serif;font-size:8.5px;gap:12px;justify-content:center;letter-spacing:.2em;min-height:52px;text-transform:uppercase;transition:background 220ms ease,color 220ms ease,box-shadow 220ms ease;width:100%" style-hover="background:#ac746c;box-shadow:0 0 22px rgba(172,116,108,.45);color:#fffdf8">Write Your Name In<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+            <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:transparent;border:1px solid #ac746c;color:#f5efe6;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:8.5px;gap:12px;justify-content:center;letter-spacing:.2em;min-height:52px;text-transform:uppercase;transition:background 220ms ease,color 220ms ease,box-shadow 220ms ease;width:100%" style-hover="background:#ac746c;box-shadow:0 0 22px rgba(172,116,108,.45);color:#fffdf8">Write Your Name In<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
           </div>
         </div>
         </div>
@@ -524,18 +511,18 @@
   <section id="instagram" aria-labelledby="instagram-title" style="padding:26px clamp(22px,6vw,90px) 30px">
     <div style="align-items:center;display:flex;justify-content:space-between;margin-bottom:17px">
       <div style="align-items:baseline;display:flex;gap:18px">
-        <p style="font-family:'Ysabeau',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Live From The Studio</p>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Live From The Studio</p>
         <h2 id="instagram-title" style="font-size:clamp(24px,2.4vw,36px);font-weight:400;letter-spacing:-.055em;line-height:.84;margin:0">Follow <em style="font-family:'Playfair Display',Georgia,serif;font-size:.97em;font-style:italic;font-weight:400;letter-spacing:-.045em">Along</em></h2>
       </div>
-      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Ysabeau',sans-serif;font-size:9px;gap:10px;letter-spacing:.15em;padding-bottom:5px;text-transform:uppercase">@sundayand_co<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:18px;width:18px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;gap:10px;letter-spacing:.15em;padding-bottom:5px;text-transform:uppercase">@sundayand_co<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:18px;width:18px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
     </div>
     <div style="display:grid;gap:5px;grid-template-columns:{{ gc7 }}">
-      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-studio.jpg" alt="Sunday &amp; Co. photo studio" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
-      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-car.jpg" alt="Vintage white Mercedes in a warm studio" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
-      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-latte.jpg" alt="Latte beside a laptop" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
-      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-planner.jpg" alt="The Capitol rotunda dome in Washington, D.C." loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
-      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-flatlay.jpg" alt="Editorial workspace flat lay" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
-      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-sunlit.jpg" alt="Weekly planner and coffee" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Ysabeau',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
+      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-studio.jpg" alt="Sunday &amp; Co. photo studio" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
+      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-car.jpg" alt="Vintage white Mercedes in a warm studio" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
+      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-latte.jpg" alt="Latte beside a laptop" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
+      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-planner.jpg" alt="The Capitol rotunda dome in Washington, D.C." loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
+      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-flatlay.jpg" alt="Editorial workspace flat lay" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
+      <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="aspect-ratio:1.42 / 1;overflow:hidden;position:relative"><img src="/assets/gallery-sunlit.jpg" alt="Weekly planner and coffee" loading="lazy" style="height:100%;object-fit:cover;transition:transform 450ms ease;width:100%" /><span style="align-items:center;background:rgba(49,29,3,.78);bottom:0;color:#f5efe6;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;gap:6px;left:0;letter-spacing:.14em;opacity:0;padding:7px 8px;position:absolute;right:0;text-transform:uppercase;transition:opacity 220ms ease" style-hover="opacity:1">View On Instagram<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span></a>
     </div>
   </section>
 
