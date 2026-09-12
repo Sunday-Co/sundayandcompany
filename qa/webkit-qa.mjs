@@ -39,14 +39,10 @@ function assert(condition, message) {
 }
 
 async function navigate(page, route) {
-  // Some case-study pages contain large media. WebKit can keep the document's
-  // load lifecycle open while those files stream even though the rendered page
-  // is already ready. Commit + rendered-text readiness tests the site without
-  // treating a slow below-the-fold asset as a page failure.
   const response = await page.goto(base + route, { waitUntil: 'commit', timeout: 30000 });
   await page.waitForFunction(() => document.body && document.body.innerText.trim().length > 20, null, { timeout: 15000 });
   await page.waitForFunction(() => !!document.querySelector('h1'), null, { timeout: 15000 }).catch(() => {});
-  await page.waitForTimeout(900);
+  await page.waitForTimeout(850);
   return response;
 }
 
@@ -100,19 +96,25 @@ async function checkInquiry(page, profile, report) {
   await page.evaluate(() => window.dispatchEvent(new CustomEvent('sunday:open-inquiry')));
   const dialog = page.locator('[aria-label="Project inquiry"]');
   await dialog.waitFor({ state: 'visible', timeout: 5000 });
+  await page.waitForTimeout(450);
   const data = await dialog.evaluate((el) => {
     const r = el.getBoundingClientRect();
     const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    const receipt = el.firstElementChild;
     return {
       left: r.left, top: r.top, width: r.width, height: r.height,
       vw: window.innerWidth, vh: window.innerHeight,
       text,
       overflowY: getComputedStyle(el).overflowY,
+      opacity: getComputedStyle(el).opacity,
+      receiptBackground: receipt ? getComputedStyle(receipt).backgroundColor : '',
     };
   });
   assert(data.text.includes('01 Project Basics'), `${profile.name}: inquiry step 1 label missing`);
   assert(data.text.includes('02 Timing & Budget'), `${profile.name}: inquiry step 2 label missing`);
   assert(data.text.includes('03 Project Scope'), `${profile.name}: inquiry step 3 label missing`);
+  assert(Number(data.opacity) > 0.99, `${profile.name}: inquiry entrance did not settle to full opacity`);
+  assert(data.receiptBackground === 'rgb(255, 253, 248)', `${profile.name}: inquiry receipt is not opaque paper`);
   const cx = data.left + data.width / 2;
   const cy = data.top + Math.min(data.height, data.vh) / 2;
   assert(Math.abs(cx - data.vw / 2) <= 20, `${profile.name}: inquiry not horizontally centered`);
@@ -128,6 +130,7 @@ async function checkMenu(page, profile, report) {
   const aside = page.locator('aside[aria-label="Sunday & Company navigation"]');
   await aside.waitFor({ state: 'visible' });
   await page.waitForFunction(() => document.querySelector('aside[aria-label="Sunday & Company navigation"]')?.getAttribute('data-sheet-state') === 'open');
+  await page.waitForTimeout(350);
   const data = await aside.evaluate(el => ({
     state: el.getAttribute('data-sheet-state'),
     transform: getComputedStyle(el).transform,
@@ -185,19 +188,24 @@ for (const profile of profiles) {
   await context.addInitScript(() => {
     try { sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (_) {}
   });
-  const page = await context.newPage();
+  // Videos are not needed to validate layout and were keeping old page loads
+  // alive long after the rendered document was ready.
+  await context.route('**/*.mp4', route => route.abort());
 
   for (const route of routes) {
+    const page = await context.newPage();
     try {
       await basicRouteCheck(page, profile, route, report);
       console.log(`PASS ${profile.name} ${route}`);
     } catch (err) {
       failures.push(String(err?.message || err));
       console.error(`FAIL ${profile.name} ${route}:`, err?.message || err);
-      await page.goto('about:blank', { waitUntil: 'commit' }).catch(() => {});
+    } finally {
+      await page.close().catch(() => {});
     }
   }
 
+  const page = await context.newPage();
   for (const fn of [checkHomeHero, checkInquiry, checkMenu, checkServices, checkJoinProgram]) {
     try {
       await fn(page, profile, report);
@@ -207,7 +215,7 @@ for (const profile of profiles) {
       console.error(`FAIL ${profile.name} ${fn.name}:`, err?.message || err);
     }
   }
-
+  await page.close();
   await context.close();
 }
 
