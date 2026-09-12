@@ -11,7 +11,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260912-6';
+    link.href = '/assets/rendered-corrections.css?v=20260912-7';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -93,7 +93,7 @@
       window.requestAnimationFrame(function () {
         window.requestAnimationFrame(function () {
           if (sheet.getAttribute('data-sheet-state') !== 'open') return;
-          sheet.style.transition = 'transform 620ms cubic-bezier(.22,.68,.18,1), visibility 620ms';
+          sheet.style.transition = 'transform 760ms cubic-bezier(.22,.68,.18,1), visibility 760ms';
           sheet.style.transform = 'translateX(0)';
         });
       });
@@ -118,12 +118,12 @@
     sheet.style.display = 'flex';
     sheet.style.visibility = 'visible';
     sheet.style.pointerEvents = 'none';
-    sheet.style.transition = 'transform 560ms cubic-bezier(.22,.68,.18,1), visibility 560ms';
+    sheet.style.transition = 'transform 700ms cubic-bezier(.22,.68,.18,1), visibility 700ms';
     sheet.style.transform = 'translateX(102%)';
 
     var timer = window.setTimeout(function () {
       if (sheet.getAttribute('data-sheet-state') === 'closed') hideSheetNow(sheet);
-    }, 600);
+    }, 740);
     menuTimers.set(sheet, timer);
   }
 
@@ -154,8 +154,8 @@
         { opacity: 0.42, transform: 'translateY(6px)' },
         { opacity: 1, transform: 'translateY(0)' }
       ], {
-        duration: 1250,
-        delay: 180 + (index * 60),
+        duration: 1450,
+        delay: 220 + (index * 70),
         easing: 'cubic-bezier(.22,.68,.18,1)',
         fill: 'both'
       });
@@ -165,10 +165,10 @@
   function animateSection(node) {
     if (reduce || !Element.prototype.animate) return;
     node.animate([
-      { opacity: 0.46, transform: 'translateY(10px)' },
+      { opacity: 0.5, transform: 'translateY(9px)' },
       { opacity: 1, transform: 'translateY(0)' }
     ], {
-      duration: 1150,
+      duration: 1300,
       easing: 'cubic-bezier(.22,.68,.18,1)',
       fill: 'both'
     });

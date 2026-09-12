@@ -5,23 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="/support.js"></script>
 <style>
-  /* MOBILE INLINE PROGRAM DETAILS: no WebKit 3D card flip on phones. */
+  /* MOBILE FLIP CARDS: preserve the original editorial card interaction. */
   @media (max-width: 720px) {
-    [data-program-cards] > article { perspective:none !important; }
-    [data-program-cards] > article > div {
-      transform:none !important;
-      transform-style:flat !important;
-      -webkit-transform-style:flat !important;
+    [data-program-cards] > article {
+      height:340px !important;
+      perspective:1200px !important;
+      -webkit-perspective:1200px !important;
     }
-    [data-program-cards] > article > div > button:first-child {
-      backface-visibility:visible !important;
-      -webkit-backface-visibility:visible !important;
-      transform:none !important;
-      z-index:1 !important;
+    [data-program-cards] > article > div {
+      transform-style:preserve-3d !important;
+      -webkit-transform-style:preserve-3d !important;
+      transition:transform 920ms cubic-bezier(.22,.68,.18,1) !important;
+    }
+    [data-program-cards] > article > div > button:first-child,
+    [data-program-cards] > article > div > div:nth-child(2) {
+      backface-visibility:hidden !important;
+      -webkit-backface-visibility:hidden !important;
     }
     [data-program-cards] > article > div > div:nth-child(2) {
-      display:none !important;
-      transform:none !important;
+      display:grid !important;
     }
   }
 </style>
@@ -260,18 +262,18 @@ class Component extends DCLogic {
   renderVals() {
     const t = this.state.tight;
     const out = {
-      backFaceDisplay: t ? 'none' : 'grid',
-      frontAction: t ? 'View Full Details' : 'Flip',
-      frontLabel0: t ? 'View full details for The Fellows Table' : 'Flip The Fellows Table card',
-      frontLabel1: t ? 'View full details for The Espresso Club' : 'Flip The Espresso Club card',
-      frontLabel2: t ? 'View full details for The Founders Club' : 'Flip The Founders Club card',
+      backFaceDisplay: 'grid',
+      frontAction: 'Flip',
+      frontLabel0: 'Flip The Fellows Table card',
+      frontLabel1: 'Flip The Espresso Club card',
+      frontLabel2: 'Flip The Founders Club card',
       cols: t ? '1fr' : this.state.narrow ? 'repeat(2, minmax(0,1fr))' : 'repeat(3, minmax(0,1fr))',
       cardsDisplay: 'grid',
       cardTitle: t ? '30px' : 'clamp(25px,2.4vw,34px)',
       backTitle: t ? '25px' : 'clamp(22px,2vw,28px)',
       cardActionsCols: '1fr 1.3fr',
       flipBackBorder: '1px solid #311d03',
-      detailButtonDisplay: t ? 'none' : 'block',
+      detailButtonDisplay: 'block',
       unflip: () => this.setState({ flipped: null }),
       dialogCols: t ? 1 : 2,
       dialogGrid: t ? '1fr' : '1fr 1fr',
@@ -301,8 +303,8 @@ class Component extends DCLogic {
       stop: (e) => e.stopPropagation(),
     };
     for (let i = 0; i < 3; i++) {
-      out['flip' + i] = t ? 'rotateY(0deg)' : (this.state.flipped === i ? 'rotateY(180deg)' : 'rotateY(0deg)');
-      out['doFlip' + i] = () => t ? this.setState({ dialog: i, flipped: null }) : this.setState({ flipped: i });
+      out['flip' + i] = this.state.flipped === i ? 'rotateY(180deg)' : 'rotateY(0deg)';
+      out['doFlip' + i] = () => this.setState({ flipped: i });
       out['d' + i] = this.state.dialog === i ? 'flex' : 'none';
       out['openD' + i] = () => this.setState({ dialog: i });
     }
