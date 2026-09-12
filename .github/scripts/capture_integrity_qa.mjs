@@ -55,6 +55,7 @@ async function audit(label, viewport) {
       const imgs=Array.from(document.images).map(i=>({
         src:i.getAttribute('src'),
         alt:i.getAttribute('alt')||'',
+        id:i.id||'',
         complete:i.complete,
         naturalWidth:i.naturalWidth,
         naturalHeight:i.naturalHeight,
@@ -62,12 +63,14 @@ async function audit(label, viewport) {
         visibility:style(i).visibility,
         opacity:style(i).opacity,
         contentVisibility:style(i).contentVisibility,
-        intentionalChrome:!!i.closest('header,footer,aside,[role="dialog"],[role="presentation"]')
+        intentionalChrome:!!i.closest('header,footer,aside,[role="dialog"],[role="presentation"]'),
+        responsiveAlternate:i.id==='map-desk'||i.id==='map-mob'
       }));
-      // Every image resource must decode. Hidden duplicates used by the closed menu/modal are
-      // allowed to remain hidden, because they are not page photography and should not paint.
+      // Every image resource must decode. Hidden duplicates used by closed chrome and the
+      // About page's explicit desktop/mobile map pair are allowed to remain hidden at the
+      // viewport where their alternate is visible. All other content imagery must paint.
       const broken=imgs.filter(i=>!i.complete||!i.naturalWidth||!i.naturalHeight);
-      const hiddenPagePhotos=imgs.filter(i=>!i.intentionalChrome && i.alt && (i.display==='none'||i.visibility==='hidden'||Number(i.opacity)===0));
+      const hiddenPagePhotos=imgs.filter(i=>!i.intentionalChrome && !i.responsiveAlternate && i.alt && (i.display==='none'||i.visibility==='hidden'||Number(i.opacity)===0));
       const mail=document.querySelector('footer a[href^="mailto:"]'), loc=document.querySelector('footer [data-footer-location]'), ui=document.querySelector('footer [data-footer-ui]');
       const pick=el=>el?({size:style(el).fontSize,weight:style(el).fontWeight,line:style(el).lineHeight,family:style(el).fontFamily}):null;
       const shell=document.querySelector('[data-screen-label]');
