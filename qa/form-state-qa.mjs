@@ -66,7 +66,7 @@ async function testInquiry(browser, profile, report) {
   await form.locator('[role="checkbox"]').first().click();
   await form.locator('textarea[name="notes"]').fill('QA form-state verification only.');
   await form.locator('button[type="submit"]').click();
-  await dialog.getByText('Your Inquiry Is In.').waitFor({ state: 'visible', timeout: 5000 });
+  await dialog.getByText('Your Inquiry Is In.', { exact: true }).last().waitFor({ state: 'visible', timeout: 5000 });
   await page.waitForTimeout(250);
   await screenshot(page, profile, 'inquiry-confirmation');
 
@@ -182,8 +182,8 @@ async function testServicesEmbedded(browser, profile, report) {
   const section = page.locator('#inquiry');
   const form = section.locator('form[data-inq]');
   await form.waitFor({ state: 'visible' });
-  const text = (await form.locator('[aria-label="Project inquiry steps"]').innerText()).replace(/\s+/g, ' ');
-  assert(text.includes('01 Project Basics') && text.includes('02 Timing & Budget') && text.includes('03 Project Scope'), `${profile.name}: Services inquiry does not use shared named steps`);
+  const text = (await form.locator('[aria-label="Project inquiry steps"]').innerText()).replace(/\s+/g, ' ').toUpperCase();
+  assert(text.includes('01 PROJECT BASICS') && text.includes('02 TIMING & BUDGET') && text.includes('03 PROJECT SCOPE'), `${profile.name}: Services inquiry does not use shared named steps`);
   await section.scrollIntoViewIfNeeded();
   await screenshot(page, profile, 'services-embedded-inquiry', section);
   report.push({ profile: profile.name, form: 'services-embedded-inquiry', states: ['step-1-shared-source'], pass: true });
