@@ -881,3 +881,23 @@ footer [data-footer-legal] {
     min-height: 44px !important;
   }
 }
+
+
+/* BATCH 7 WEBKIT: PROGRAM CARD FLIP COMPATIBILITY
+   Safari/WebKit needs the prefixed 3D context on the card wrapper itself,
+   not only backface-visibility on each face. */
+[data-program-cards] > article {
+  -webkit-perspective: 1400px !important;
+  perspective: 1400px !important;
+}
+
+[data-program-cards] > article > div {
+  -webkit-transform-style: preserve-3d !important;
+  transform-style: preserve-3d !important;
+}
+
+[data-program-cards] > article > div > button,
+[data-program-cards] > article > div > div {
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+}
