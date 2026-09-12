@@ -6,6 +6,7 @@ on:
       - rendered-corrections-2026-09-12
     paths:
       - 'scripts/version-production-assets.py'
+      - 'scripts/fix-mobile-program-cards.py'
       - '.github/workflows/version-production-assets.yml'
 
 permissions:
@@ -21,7 +22,9 @@ jobs:
           fetch-depth: 0
 
       - name: Apply rendered source fixes and version production assets
-        run: python3 scripts/version-production-assets.py
+        run: |
+          python3 scripts/version-production-assets.py
+          python3 scripts/fix-mobile-program-cards.py
 
       - name: Commit rendered production corrections
         run: |
