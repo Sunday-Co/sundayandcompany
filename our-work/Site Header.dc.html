@@ -51,8 +51,8 @@
     <a href="/sunday-school" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">05</span>Sunday School</a>
   </nav>
   <div style="display:grid;gap:10px;margin-top:{{ sheetActionsTop }}">
-    <button type="button" onClick="{{ openInquiryFromSheet }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:space-between;letter-spacing:.18em;min-height:42px;padding:0 15px;text-transform:uppercase;width:100%">Reserve Your Seat<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
-    <a href="/contact" onClick="{{ closeSheet }}" style="align-items:center;background:transparent;border:1px solid #311d03;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:space-between;letter-spacing:.18em;min-height:42px;padding:0 15px;text-transform:uppercase;width:100%">Contact<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+    <button data-sheet-cta type="button" onClick="{{ openInquiryFromSheet }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:space-between;letter-spacing:.18em;min-height:42px;padding:0 15px;text-transform:uppercase;width:100%">Reserve Your Seat<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+    <a data-sheet-cta href="/contact" onClick="{{ closeSheet }}" style="align-items:center;background:transparent;border:1px solid #311d03;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:space-between;letter-spacing:.18em;min-height:42px;padding:0 15px;text-transform:uppercase;width:100%">Contact<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
   </div>
   <div style="display:grid;margin-top:auto;gap:{{ sheetFooterGap }};padding:{{ sheetFooterPad }}">
     <div style="align-items:center;display:flex;gap:{{ sheetSocialGap }}">
@@ -73,9 +73,9 @@
       <div data-inquiry-receipt-meta="identity" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin-bottom:17px;padding-bottom:11px;text-transform:uppercase"><span style="min-width:0">Sunday &amp; Company</span><span style="text-align:right;white-space:nowrap">Receipt No. 001</span></div>
       <div style="display:{{ inqFormDisplay }};text-align:left">
         <div data-inquiry-receipt-meta="status" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:-6px 0 18px;padding-bottom:10px;text-transform:uppercase"><span style="min-width:0">Project Inquiry</span><span style="text-align:right;white-space:nowrap">Status: In Progress</span></div>
-        <p style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:24px;font-style:normal;font-weight:400;letter-spacing:0;line-height:1;margin:0 0 9px">A Seat At Our Table</p>
+        <p data-inquiry-kicker style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:28px;font-style:normal;font-weight:400;letter-spacing:0;line-height:1;margin:0 0 9px">A Seat At Our Table</p>
         <h2 style="font-size:clamp(27px,3vw,37px);font-weight:400;letter-spacing:-.045em;line-height:.96;margin:0">Tell Us What You Are Building</h2>
-        <p style="font-size:12px;line-height:1.5;margin:10px 0 0;max-width:520px">Share the essentials. We’ll take it from there.</p>
+        <p data-inquiry-support style="font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:300;line-height:1.5;margin:10px 0 0;max-width:520px">Share the essentials. We’ll take it from there.</p>
       </div>
       <div aria-hidden="true" style="border-bottom:1px dashed rgba(49,29,3,.55);border-top:1px dashed rgba(49,29,3,.55);font-family:'Inter Tight',sans-serif;font-size:7px;gap:7px 10px;grid-template-columns:auto 1fr auto;letter-spacing:.12em;margin-top:16px;padding:11px 0;text-transform:uppercase;display:none">
         <span>01</span><span>Project Details</span><span style="text-align:right">Required</span>
@@ -90,7 +90,7 @@
         <h2 style="font-size:clamp(28px,3vw,38px);font-weight:400;letter-spacing:-.045em;line-height:.94;margin:0">Your Inquiry Is In.</h2>
         <p style="font-size:12px;line-height:1.5;margin:12px auto 0;max-width:520px">Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>
       </div>
-      <div aria-hidden="true" style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.15em;margin-top:17px;padding:10px 0;text-transform:uppercase"><span>Next Step</span><strong style="font-weight:400">Review And Reply</strong></div>
+      <div data-inquiry-ledger aria-hidden="true" style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:9.5px;justify-content:space-between;letter-spacing:.15em;margin-top:17px;padding:10px 0;text-transform:uppercase"><span>Next Step</span><strong style="font-weight:400">Review And Reply</strong></div>
     </div>
   </div>
 </div>
@@ -360,7 +360,7 @@ class Component extends DCLogic {
       inqDialogMax: t ? 'calc(100vw - 8px)' : 'min(1180px, calc(100vw - 48px))',
       inqDialogPad: t ? '0' : '12px 10px',
       inqReceiptMargin: t ? '0' : '0 8px',
-      inqReceiptMinH: t ? 'calc(100svh - 20px)' : 'min(700px, calc(100svh - 72px))',
+      inqReceiptMinH: t ? 'min(700px, calc(100svh - 36px))' : 'min(700px, calc(100svh - 72px))',
       inqReceiptPad: t ? '24px 18px 30px' : 'clamp(30px,3.5vh,46px) clamp(38px,4.5vw,62px) clamp(36px,4vh,54px)',
       inqFormDisplay: this.state.inquiryDone ? 'none' : (t ? 'block' : 'grid'),
       inqLedgerDisplay: this.state.inquiryDone ? 'none' : 'grid',
@@ -387,9 +387,9 @@ class Component extends DCLogic {
       resPhotoDisplay: 'block',
       resPhotoMax: t ? '230px' : 'none',
       resPhotoMin: t ? '210px' : '100%',
-      resDialogMinH: t ? 'min(740px, calc(100svh - 28px))' : 'min(600px, calc(100svh - 56px))',
+      resDialogMinH: t ? 'auto' : 'min(560px, calc(100svh - 56px))',
       resDialogMaxH: 'calc(100svh - 28px)',
-      resContentMinH: t ? '500px' : '600px',
+      resContentMinH: t ? 'auto' : '560px',
       resContentPad: t ? '30px 24px 28px' : '40px 34px 32px',
       resFormDisplay: this.state.resDone ? 'none' : 'block',
       resDoneDisplay: this.state.resDone ? 'block' : 'none',

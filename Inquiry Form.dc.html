@@ -39,20 +39,15 @@
   <div style="padding:35px 0;text-align:center;display:{{ doneDisplay }}">
     <h3 style="font-size:clamp(28px,3vw,38px);font-weight:400;letter-spacing:-.045em;line-height:.94;margin:0">Your Inquiry Is In.</h3>
     <p style="font-size:12px;line-height:1.5;margin:12px auto 0;max-width:520px">Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>
-    <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:18px 0 0;text-transform:uppercase">Status: Inquiry Delivered</p>
+    <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:18px 0 0;text-transform:uppercase">Status: Inquiry Delivered</p>
   </div>
   <div style="display:{{ formDisplay }}">
   <form data-inq data-cur="{{ curStep }}" noValidate="{{ true }}" onSubmit="{{ submitInquiry }}" style="display:grid;gap:9px 12px;margin-top:14px;max-width:100%;min-width:0;grid-template-columns:{{ formCols }}">
     <div data-stepnav style="border-bottom:1px dashed rgba(49,29,3,.5);border-top:1px dashed rgba(49,29,3,.5);display:block;grid-column:1 / -1;margin:0 0 13px;padding:9px 0">
-      <div style="align-items:center;display:flex;gap:12px;justify-content:space-between">
-        <span style="font-family:'Inter Tight',sans-serif;font-size:10px;letter-spacing:.11em;text-transform:uppercase">{{ stepLabel }}</span>
-        <span aria-hidden="true" style="align-items:center;display:flex;flex:0 0 auto;gap:6px">
-          <span style="align-items:center;border-radius:50%;display:flex;flex:0 0 18px;font-family:'Inter Tight',sans-serif;font-size:9px;height:18px;justify-content:center;background:{{ d1bg }};border:1px solid {{ d1bd }};color:{{ d1fg }}">1</span>
-          <span style="height:1px;width:14px;background:{{ r1 }}"></span>
-          <span style="align-items:center;border-radius:50%;display:flex;flex:0 0 18px;font-family:'Inter Tight',sans-serif;font-size:9px;height:18px;justify-content:center;background:{{ d2bg }};border:1px solid {{ d2bd }};color:{{ d2fg }}">2</span>
-          <span style="height:1px;width:14px;background:{{ r2 }}"></span>
-          <span style="align-items:center;border-radius:50%;display:flex;flex:0 0 18px;font-family:'Inter Tight',sans-serif;font-size:9px;height:18px;justify-content:center;background:{{ d3bg }};border:1px solid {{ d3bd }};color:{{ d3fg }}">3</span>
-        </span>
+      <div aria-label="Project inquiry steps" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;width:100%">
+        <span style="background:{{ step1TabBg }};border-right:1px solid rgba(49,29,3,.22);color:{{ step1TabFg }};font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:400;letter-spacing:.055em;line-height:1.2;padding:9px 6px;text-align:center;text-transform:uppercase">01&nbsp; Project Basics</span>
+        <span style="background:{{ step2TabBg }};border-right:1px solid rgba(49,29,3,.22);color:{{ step2TabFg }};font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:400;letter-spacing:.055em;line-height:1.2;padding:9px 6px;text-align:center;text-transform:uppercase">02&nbsp; Timing &amp; Budget</span>
+        <span style="background:{{ step3TabBg }};color:{{ step3TabFg }};font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:400;letter-spacing:.055em;line-height:1.2;padding:9px 6px;text-align:center;text-transform:uppercase">03&nbsp; Project Scope</span>
       </div>
       <button type="button" onClick="{{ goBack }}" style="align-items:center;background:none;border:0;border-bottom:1px solid currentColor;color:#311d03;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:10px;gap:8px;letter-spacing:.11em;margin-top:10px;min-height:30px;padding:5px 0 4px;text-transform:uppercase;display:{{ backShow }}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back</button>
     </div>
@@ -242,6 +237,12 @@ class Component extends DCLogic {
     out.sendDisplay = st === 3 ? 'inline-flex' : 'none';
     out.backShow = st === 1 ? 'none' : 'inline-flex';
     out.stepLabel = st === 1 ? '01 · Project Basics' : st === 2 ? '02 · Timing & Budget' : '03 · Project Scope';
+    out.step1TabBg = st === 1 ? '#ac746c' : 'transparent';
+    out.step1TabFg = st === 1 ? '#fffdf8' : '#311d03';
+    out.step2TabBg = st === 2 ? '#ac746c' : 'transparent';
+    out.step2TabFg = st === 2 ? '#fffdf8' : '#311d03';
+    out.step3TabBg = st === 3 ? '#ac746c' : 'transparent';
+    out.step3TabFg = st === 3 ? '#fffdf8' : '#311d03';
     out.nextShow = st === 3 ? 'none' : 'flex';
     for (let i = 1; i <= 3; i++) {
       const done = st > i;

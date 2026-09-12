@@ -121,7 +121,8 @@ a[style*="font-family:'Inter Tight'"],
 form[data-inq] label > span:first-child,
 form[data-inq] fieldset > legend,
 form[data-editorial-labels] label > span:first-child,
-form[data-editorial-labels] > label[for] {
+form[data-editorial-labels] > label[for],
+form[data-editorial-labels] > div > span:first-child {
   font-family: var(--sunday-sans) !important;
   font-size: 11.5px !important;
   font-weight: 300 !important;
@@ -144,14 +145,40 @@ form[data-editorial-labels] select,
 }
 
 /* Functional form actions */
-form[data-inq] button,
-form[data-editorial-labels] button,
-[aria-label="Newsletter"] button,
-[aria-label="The Sunday Reservation"] form button {
+form[data-inq] [data-stepbtns] button,
+form[data-inq] > button[type="submit"],
+form[data-editorial-labels] > button[type="submit"],
+[aria-label="Newsletter"] form button[type="submit"],
+[aria-label="The Sunday Reservation"] form button[type="submit"] {
   font-family: var(--sunday-sans) !important;
   font-size: 10px !important;
   font-weight: 400 !important;
   letter-spacing: .11em !important;
+}
+
+/* Custom select/date controls are functional reading text, not tiny CTA labels. */
+form[data-editorial-labels] [aria-haspopup="listbox"],
+form[data-editorial-labels] [role="option"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 14px !important;
+  font-weight: 300 !important;
+  letter-spacing: 0 !important;
+}
+
+form[data-inq] [aria-haspopup="dialog"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 13px !important;
+  font-weight: 300 !important;
+  letter-spacing: 0 !important;
+}
+
+[data-receipt-meta] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .10em !important;
+  line-height: 1.4 !important;
+  text-transform: uppercase;
 }
 
 /* Form errors must be readable and are not decorative receipt text. */
@@ -209,6 +236,14 @@ form[data-editorial-labels] [role="alert"],
   font-weight: 400 !important;
   letter-spacing: .10em !important;
   line-height: 1.45 !important;
+}
+
+[aria-label="Newsletter"] [data-news-fineprint] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9px !important;
+  font-weight: 300 !important;
+  letter-spacing: .07em !important;
+  line-height: 1.5 !important;
 }
 
 /* ==========================================================
@@ -472,7 +507,8 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
 
 @media (max-width: 700px) {
   form[data-editorial-labels] label > span:first-child,
-  form[data-editorial-labels] > label[for] {
+  form[data-editorial-labels] > label[for],
+  form[data-editorial-labels] > div > span:first-child {
     font-size: 11.25px !important;
     letter-spacing: .075em !important;
   }
@@ -507,6 +543,10 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   [aria-label="Newsletter"] form button {
     min-height: 44px !important;
     font-size: 10px !important;
+  }
+
+  [aria-label="Newsletter"] [data-news-fineprint] {
+    font-size: 9.5px !important;
   }
 }
 
