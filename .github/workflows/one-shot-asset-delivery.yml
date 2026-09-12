@@ -1,0 +1,136 @@
+name: One-shot asset delivery prep
+
+on:
+  push:
+    branches:
+      - delivery-fix-no-deploy-2026-09-12
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    if: contains(github.event.head_commit.message, 'Install one-shot delivery prep')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Normalize production asset delivery
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          version = '20260912-6'
+          css_line = f'<link rel="stylesheet" href="/assets/site.css?v={version}" />'
+          correction_line = f'<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v={version}" />'
+          js_line = f'<script defer data-sunday-site-js src="/assets/site.js?v={version}"></script>'
+
+          css_pat = re.compile(r'<link\b[^>]*href=["\']/assets/site\.css\?v=[^"\']+["\'][^>]*>')
+          correction_pat = re.compile(r'<link\b[^>]*href=["\']/assets/rendered-corrections\.css\?v=[^"\']+["\'][^>]*>')
+          js_pat = re.compile(r'<script\b[^>]*src=["\']/assets/site\.js\?v=[^"\']+["\'][^>]*></script>')
+
+          pages = []
+          for path in sorted(Path('.').rglob('*.html')):
+              if path.name.endswith('.dc.html'):
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if '/assets/site.js?v=' not in text:
+                  continue
+              pages.append(path)
+
+              css_matches = css_pat.findall(text)
+              js_matches = js_pat.findall(text)
+              correction_matches = correction_pat.findall(text)
+              if len(css_matches) != 1:
+                  raise SystemExit(f'{path}: expected exactly one site.css tag, found {len(css_matches)}')
+              if len(js_matches) != 1:
+                  raise SystemExit(f'{path}: expected exactly one site.js tag, found {len(js_matches)}')
+              if len(correction_matches) > 1:
+                  raise SystemExit(f'{path}: multiple correction stylesheet tags')
+
+              text = css_pat.sub(css_line, text, count=1)
+              if correction_matches:
+                  text = correction_pat.sub(correction_line, text, count=1)
+              else:
+                  text = text.replace(css_line, css_line + '\n' + correction_line, 1)
+              text = js_pat.sub(js_line, text, count=1)
+              path.write_text(text, encoding='utf-8')
+
+          if len(pages) != 16:
+              raise SystemExit('Expected 16 production HTML pages with site.js, found %d: %s' % (len(pages), ', '.join(map(str, pages))))
+
+          site_js_path = Path('assets/site.js')
+          site_js = site_js_path.read_text(encoding='utf-8')
+          old_fallback = "/assets/rendered-corrections.css?v=20260912-5"
+          if site_js.count(old_fallback) != 1:
+              raise SystemExit(f'assets/site.js: expected one old correction fallback, found {site_js.count(old_fallback)}')
+          site_js = site_js.replace(old_fallback, f'/assets/rendered-corrections.css?v={version}', 1)
+          site_js_path.write_text(site_js, encoding='utf-8')
+
+          header_path = Path('Site Header.dc.html')
+          header = header_path.read_text(encoding='utf-8')
+          loader = """    if (typeof document !== 'undefined') {
+              if (!document.querySelector('link[data-sunday-rendered-corrections]')) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = '/assets/rendered-corrections.css?v=20260912-5';
+                link.setAttribute('data-sunday-rendered-corrections', 'true');
+                document.head.appendChild(link);
+              }
+              if (!document.querySelector('script[data-sunday-site-js]')) {
+                const script = document.createElement('script');
+                script.src = '/assets/site.js?v=20260912-5';
+                script.async = true;
+                script.setAttribute('data-sunday-site-js', 'true');
+                document.head.appendChild(script);
+              }
+            }
+"""
+          if header.count(loader) != 1:
+              raise SystemExit(f'Site Header.dc.html: expected one temporary asset loader, found {header.count(loader)}')
+          header = header.replace(loader, '', 1)
+          header_path.write_text(header, encoding='utf-8')
+
+          # Final deterministic audit.
+          for path in pages:
+              text = path.read_text(encoding='utf-8')
+              checks = {
+                  'site.css v6': text.count(f'/assets/site.css?v={version}') == 1,
+                  'correction css v6': text.count(f'/assets/rendered-corrections.css?v={version}') == 1,
+                  'site.js v6': text.count(f'/assets/site.js?v={version}') == 1,
+                  'site js marker': text.count('data-sunday-site-js') == 1,
+                  'correction marker': text.count('data-sunday-rendered-corrections') == 1,
+                  'no old v4': '20260912-4' not in text,
+              }
+              failed = [name for name, ok in checks.items() if not ok]
+              if failed:
+                  raise SystemExit(f'{path}: failed checks: {failed}')
+
+          if '20260912-5' in header_path.read_text(encoding='utf-8'):
+              raise SystemExit('Site Header.dc.html still contains temporary v5 delivery references')
+          if f'/assets/rendered-corrections.css?v={version}' not in site_js_path.read_text(encoding='utf-8'):
+              raise SystemExit('assets/site.js fallback was not normalized to v6')
+
+          print('Validated production pages:', len(pages))
+          for path in pages:
+              print('  ', path)
+          PY
+
+          node --check assets/site.js
+          git diff --check
+
+      - name: Commit the verified tree and remove this workflow
+        shell: bash
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git rm .github/workflows/one-shot-asset-delivery.yml
+          git add -A
+          git diff --cached --check
+          git commit -m "[skip ci] Prepare verified static asset delivery"
+          git push origin HEAD:${GITHUB_REF_NAME}
