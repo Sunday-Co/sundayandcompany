@@ -1,6 +1,5 @@
 name: Rendered Corrections QA
 
-# Final verification after the deterministic mobile program-card correction.
 on:
   push:
     branches:
@@ -28,33 +27,20 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps webkit
 
-      - name: Make QA sessions deterministic
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('qa/rendered-corrections-qa.mjs')
-          s = p.read_text()
-          old = "async function ready(page, route) {\n  const r = await page.goto"
-          new = "async function ready(page, route) {\n  await page.addInitScript(() => { try { window.sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (e) {} });\n  const r = await page.goto"
-          if old not in s:
-              raise SystemExit('ready() patch target not found')
-          p.write_text(s.replace(old, new, 1))
-          PY
-
       - name: Start static server
         run: |
-          python3 -m http.server 4173 >/tmp/sunday-rendered-server.log 2>&1 &
-          echo $! > /tmp/sunday-rendered-server.pid
+          python3 -m http.server 4173 >/tmp/sunday-final-server.log 2>&1 &
+          echo $! > /tmp/sunday-final-server.pid
           sleep 3
           curl --fail http://127.0.0.1:4173/ >/dev/null
 
-      - name: Run rendered hierarchy and motion QA
-        run: node qa/rendered-corrections-qa.mjs
+      - name: Run final rendered hierarchy, motion and Safari QA
+        run: node qa/final-rendered-qa.mjs
 
-      - name: Upload rendered screenshots and report
+      - name: Upload final rendered screenshots and report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rendered-corrections-qa
-          path: qa-rendered-artifacts
+          name: final-rendered-qa
+          path: qa-final-artifacts
           retention-days: 5
