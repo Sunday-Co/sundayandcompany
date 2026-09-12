@@ -921,3 +921,38 @@ button[data-program-action] { min-height:44px !important; }
   form[data-inq] [aria-haspopup="dialog"] { font-size:16px !important; min-height:44px !important; }
   [data-program-action] { font-size:10.5px !important; }
 }
+
+
+/* FINAL SOURCE ALIGNMENT · 2026-09-12 */
+[data-reveal],
+.sc-reveal,
+.sc-reveal.sc-in,
+form[data-inq] [data-step-panel],
+[data-service-body],
+[data-process-body],
+aside[data-sheet-state="open"] nav > a,
+aside[data-sheet-state="open"] [data-sheet-cta] {
+  animation:none !important;
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-kicker],
+#inquiry [data-inquiry-kicker] {
+  color:var(--sunday-rose) !important;
+  font-family:var(--sunday-sans) !important;
+  font-size:11.5px !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:.12em !important;
+  line-height:1.25 !important;
+  margin:0 0 3px !important;
+  text-transform:uppercase !important;
+}
+footer a[href^="mailto:"] { font-weight:400 !important; opacity:1 !important; }
+@media (min-width:701px) {
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size:9px !important; }
+}
+@media (max-width:700px) {
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size:7px !important; }
+}

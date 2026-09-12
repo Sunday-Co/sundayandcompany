@@ -148,9 +148,9 @@
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260912-9" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260912-9" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260912-9"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260912-10" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260912-10" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260912-10"></script>
 </helmet>
 
 <div data-screen-label="Our Work · hover gallery + full index" style="background:#f5efe6;color:#311d03;overflow:clip">
@@ -271,41 +271,8 @@ class Component extends DCLogic {
       this._syncIdx();
       if (this._mq.addEventListener) this._mq.addEventListener("change", this._syncIdx);
     }
-    const nodes = Array.from(document.querySelectorAll('[data-reveal]'));
-    if (!nodes.length || typeof IntersectionObserver === 'undefined') return;
-    nodes.forEach((n) => {
-      n.style.opacity = '0';
-      n.style.transform = 'translateY(22px)';
-      n.style.transition = 'opacity 760ms ease, transform 900ms cubic-bezier(.2,.75,.25,1)';
-    });
-    const show = (el) => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; };
-    const sweep = () => {
-      nodes.forEach((n) => {
-        if (n.style.opacity === '1') return;
-        if (n.getBoundingClientRect().top < window.innerHeight) show(n);
-      });
-    };
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting || e.boundingClientRect.top < window.innerHeight) {
-          show(e.target);
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0 });
-    nodes.forEach((n) => io.observe(n));
-    window.addEventListener('scroll', sweep, { passive: true });
-    window.addEventListener('hashchange', sweep);
-    this._sweep = sweep;
-    this._io = io;
   }
   componentWillUnmount() {
-    if (this._io) this._io.disconnect();
-    if (this._mq && this._mq.removeEventListener && this._syncIdx) this._mq.removeEventListener("change", this._syncIdx);
-    if (this._sweep) {
-      window.removeEventListener('scroll', this._sweep);
-      window.removeEventListener('hashchange', this._sweep);
-    }
   }
   renderVals() {
     const nw = this.state.narrow;
