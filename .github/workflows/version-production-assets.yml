@@ -20,17 +20,17 @@ jobs:
           ref: rendered-corrections-2026-09-12
           fetch-depth: 0
 
-      - name: Apply versioned production asset URLs and hero motion
+      - name: Apply rendered source fixes and version production assets
         run: python3 scripts/version-production-assets.py
 
-      - name: Commit versioned production references
+      - name: Commit rendered production corrections
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git add '*.html' '*/index.html' '*/*/index.html' assets/site.js || true
+          git add -A
           if git diff --cached --quiet; then
-            echo "No production references needed updating."
+            echo "No production corrections needed updating."
             exit 0
           fi
-          git commit -m "Version final shared assets and enable hero motion"
+          git commit -m "Apply rendered form and mobile program fixes"
           git push origin HEAD:rendered-corrections-2026-09-12
