@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <div>
-<div style="display:{{ cardsDisplay }};gap:14px;grid-template-columns:{{ cols }};margin:0 auto;max-width:1180px">
+<div data-program-cards style="display:{{ cardsDisplay }};gap:14px;grid-template-columns:{{ cols }};margin:0 auto;max-width:1180px">
 
   <article style="color:#311d03;height:360px;perspective:1400px">
     <div style="height:100%;position:relative;transform-style:preserve-3d;transition:transform 760ms cubic-bezier(.2,.78,.22,1);width:100%;transform:{{ flip0 }}">
@@ -17,7 +17,7 @@
         <span style="align-items:center;display:flex;padding:0 18px"><strong style="display:block;font-weight:400;letter-spacing:-.045em;line-height:1;font-size:{{ cardTitle }}">The Fellows Table</strong></span>
         <span style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;justify-content:space-between;padding:12px 18px 14px">
           <span style="font-family:'Inter Tight',sans-serif;font-size:7.5px;letter-spacing:.15em;text-transform:uppercase">10 Hours Per Week</span>
-          <span style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">Flip <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+          <span data-program-action style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">Flip <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
         </span>
       </button>
       <div style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:grid;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
@@ -37,8 +37,8 @@
           </span>
         </div>
         <div style="border-top:1px solid #311d03;display:grid;grid-template-columns:{{ cardActionsCols }}">
-          <button type="button" onClick="{{ unflip }}" style="background:transparent;border:0;border-right:{{ flipBackBorder }};color:#311d03;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">Flip Back</button>
-          <button type="button" onClick="{{ openD0 }}" style="background:#311d03;border:0;color:#f5efe6;cursor:pointer;display:{{ detailButtonDisplay }};font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">View Full Details</button>
+          <button data-program-action type="button" onClick="{{ unflip }}" style="background:transparent;border:0;border-right:{{ flipBackBorder }};color:#311d03;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">Flip Back</button>
+          <button data-program-action type="button" onClick="{{ openD0 }}" style="background:#311d03;border:0;color:#f5efe6;cursor:pointer;display:{{ detailButtonDisplay }};font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">View Full Details</button>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
         <span style="align-items:center;display:flex;padding:0 18px"><strong style="display:block;font-weight:400;letter-spacing:-.045em;line-height:1;font-size:{{ cardTitle }}">The Espresso Club</strong></span>
         <span style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;justify-content:space-between;padding:12px 18px 14px">
           <span style="font-family:'Inter Tight',sans-serif;font-size:7.5px;letter-spacing:.15em;text-transform:uppercase">Paid Per Project</span>
-          <span style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">Flip <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+          <span data-program-action style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">Flip <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
         </span>
       </button>
       <div style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:grid;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
@@ -71,8 +71,8 @@
           </span>
         </div>
         <div style="border-top:1px solid #311d03;display:grid;grid-template-columns:{{ cardActionsCols }}">
-          <button type="button" onClick="{{ unflip }}" style="background:transparent;border:0;border-right:{{ flipBackBorder }};color:#311d03;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">Flip Back</button>
-          <button type="button" onClick="{{ openD1 }}" style="background:#311d03;border:0;color:#f5efe6;cursor:pointer;display:{{ detailButtonDisplay }};font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">View Full Details</button>
+          <button data-program-action type="button" onClick="{{ unflip }}" style="background:transparent;border:0;border-right:{{ flipBackBorder }};color:#311d03;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">Flip Back</button>
+          <button data-program-action type="button" onClick="{{ openD1 }}" style="background:#311d03;border:0;color:#f5efe6;cursor:pointer;display:{{ detailButtonDisplay }};font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">View Full Details</button>
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@
         <span style="align-items:center;display:flex;padding:0 18px"><strong style="display:block;font-weight:400;letter-spacing:-.045em;line-height:1;font-size:{{ cardTitle }}">The Founders Club</strong></span>
         <span style="align-items:center;border-top:1px solid rgba(49,29,3,.28);display:flex;justify-content:space-between;padding:12px 18px 14px">
           <span style="font-family:'Inter Tight',sans-serif;font-size:7.5px;letter-spacing:.15em;text-transform:uppercase">From $35 Per Month</span>
-          <span style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">Flip <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
+          <span data-program-action style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;gap:8px;letter-spacing:.15em;padding-bottom:3px;text-transform:uppercase">Flip <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:10px;width:10px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></span>
         </span>
       </button>
       <div style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#f5efe6;border:1px solid #311d03;color:#311d03;display:grid;grid-template-rows:auto 1fr auto;inset:0;padding:0;position:absolute;transform:rotateY(180deg);width:100%">
@@ -105,8 +105,8 @@
           </span>
         </div>
         <div style="border-top:1px solid #311d03;display:grid;grid-template-columns:{{ cardActionsCols }}">
-          <button type="button" onClick="{{ unflip }}" style="background:transparent;border:0;border-right:{{ flipBackBorder }};color:#311d03;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">Flip Back</button>
-          <button type="button" onClick="{{ openD2 }}" style="background:#311d03;border:0;color:#f5efe6;cursor:pointer;display:{{ detailButtonDisplay }};font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">View Full Details</button>
+          <button data-program-action type="button" onClick="{{ unflip }}" style="background:transparent;border:0;border-right:{{ flipBackBorder }};color:#311d03;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">Flip Back</button>
+          <button data-program-action type="button" onClick="{{ openD2 }}" style="background:#311d03;border:0;color:#f5efe6;cursor:pointer;display:{{ detailButtonDisplay }};font-family:'Inter Tight',sans-serif;font-size:7.5px;font-weight:500;letter-spacing:.14em;min-height:42px;padding:10px;text-transform:uppercase">View Full Details</button>
         </div>
       </div>
     </div>

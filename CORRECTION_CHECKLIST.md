@@ -15,8 +15,8 @@ This file is temporary and will be removed before merging to `main`. It exists s
 - [x] Keep Inter Tight as the secondary font.
 - [x] Use Inter Tight 300 for larger supporting/editorial sans copy.
 - [x] Use Inter Tight 400 for small functional UI and receipt metadata where 300 is too faint.
-- [ ] Normalize excessive letter-spacing on all remaining small uppercase UI.
-- [ ] Audit all remaining functional text below roughly 11px and decide intentionally whether it is functional, decorative receipt metadata, or true fine print.
+- [x] Normalize excessive letter-spacing on remaining small functional uppercase UI while preserving decorative receipt/catalog spacing.
+- [x] Audit remaining sub-11px text and classify it as functional UI, decorative receipt/catalog metadata, or true fine print; decision recorded in `QA_SOURCE_REPORT.md`.
 - [x] Keep input/textarea/select text at 16px on mobile to prevent iOS focus zoom.
 - [x] Standardize Playfair editorial headings to the same numeric weight across split treatments.
 - [x] Brown regular Playfair + rose italic Playfair within the same heading use the same weight.

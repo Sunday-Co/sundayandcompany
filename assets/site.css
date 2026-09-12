@@ -785,3 +785,99 @@ form[data-inq] [data-step-panel] {
     transition: none !important;
   }
 }
+
+
+/* BATCH 1 FINAL: FUNCTIONAL MICROTYPE AUDIT
+   Functional navigation/actions are brought into a readable 9–10px range.
+   Tiny receipt/catalog metadata and real fine print stay intentionally smaller. */
+
+header nav[aria-label="Primary navigation"] {
+  font-size: 10px !important;
+  letter-spacing: .14em !important;
+}
+
+header > div button[onClick*="openInquiry"],
+header > div > a[href="/contact"] {
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .12em !important;
+}
+
+header > button[aria-label="Open menu"],
+a[href="#top"]:first-child {
+  font-size: 10px !important;
+  letter-spacing: .13em !important;
+}
+
+[data-screen-label="Home"] section#top button[onClick*="openInquiry"],
+[data-screen-label="Home"] section#top a[href="/contact"],
+[data-screen-label="Services"] a[href="#service-menu"],
+[data-screen-label="Services"] a[href="#inquiry"],
+[data-screen-label="Services"] a[href^="mailto:"],
+[data-screen-label="Contact"] button[onClick*="openInquiry"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .12em !important;
+}
+
+[data-screen-label="Contact"] a[href*="instagram.com"],
+[data-screen-label="Contact"] a[href*="tiktok.com"],
+[data-screen-label="Contact"] a[href*="linkedin.com"] {
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: .10em !important;
+}
+
+[aria-label="Newsletter"] form button {
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .11em !important;
+}
+
+footer [data-footer-legal] {
+  font-size: 9px !important;
+  letter-spacing: .12em !important;
+}
+
+/* Services content labels are information, not decorative receipt metadata. */
+[data-screen-label="Services"] [data-service-number],
+[data-screen-label="Services"] [data-service-meta],
+[data-screen-label="Services"] [data-service-included] {
+  font-size: 9.5px !important;
+  letter-spacing: .10em !important;
+}
+
+[data-screen-label="Services"] [data-service-price] {
+  font-size: 10.5px !important;
+  letter-spacing: .11em !important;
+}
+
+/* Program-card catalog text remains small; only the actions are promoted. */
+[data-program-cards] [data-program-action] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .11em !important;
+}
+
+@media (max-width: 700px) {
+  header nav[aria-label="Primary navigation"] { font-size: 10px !important; }
+
+  [data-screen-label="Services"] [data-service-number],
+  [data-screen-label="Services"] [data-service-meta],
+  [data-screen-label="Services"] [data-service-included] {
+    font-size: 10.5px !important;
+    letter-spacing: .095em !important;
+  }
+
+  [data-screen-label="Services"] [data-service-price] {
+    font-size: 11.5px !important;
+    letter-spacing: .10em !important;
+  }
+
+  [data-program-cards] [data-program-action] {
+    font-size: 10px !important;
+    min-height: 44px !important;
+  }
+}

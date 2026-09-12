@@ -47,3 +47,11 @@ This is an inventory, not a blanket instruction to enlarge everything. Receipt m
 - `Site Footer.dc.html`: 7px, 8px, 8.5px, 9px, 10px
 - `Inquiry Form.dc.html`: 7px, 8px, 9px, 10px
 - `Program Cards.dc.html`: 7px, 7.5px, 8px, 9px
+
+## Small-type classification decision
+
+- Functional navigation, CTA, form actions, Services information labels and Program Card actions are promoted by the shared CSS into a readable functional range.
+- Project Inquiry/Contact/Sunday School form labels and actions are governed by the dedicated form typography system.
+- Footer Explore/email/location/social content remains at the approved 12.5px secondary-text scale.
+- Receipt numbers, catalog numbers, status metadata and decorative indexing may intentionally remain below 11px.
+- Newsletter privacy/unsubscribe copy remains intentionally quiet fine print, with its own mobile rule rather than inheriting functional UI sizing.
