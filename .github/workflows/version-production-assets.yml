@@ -1,0 +1,36 @@
+name: Version Production Assets
+
+on:
+  push:
+    branches:
+      - rendered-corrections-2026-09-12
+    paths:
+      - 'scripts/version-production-assets.py'
+      - '.github/workflows/version-production-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  version-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: rendered-corrections-2026-09-12
+          fetch-depth: 0
+
+      - name: Apply versioned production asset URLs
+        run: python3 scripts/version-production-assets.py
+
+      - name: Commit versioned HTML references
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add '*.html' '*/index.html' '*/*/index.html' || true
+          if git diff --cached --quiet; then
+            echo "No HTML asset references needed updating."
+            exit 0
+          fi
+          git commit -m "Bust stale production CSS and JS caches"
+          git push origin HEAD:rendered-corrections-2026-09-12
