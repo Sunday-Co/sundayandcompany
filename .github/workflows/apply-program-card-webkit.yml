@@ -1,0 +1,50 @@
+name: Apply Program Card WebKit Fix
+
+on:
+  push:
+    branches:
+      - full-correction-audit-2026-09-11
+    paths:
+      - scripts/apply-program-card-webkit.py
+      - .github/workflows/apply-program-card-webkit.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: full-correction-audit-2026-09-11
+          fetch-depth: 0
+
+      - name: Apply Safari/WebKit program-card fix
+        run: python3 scripts/apply-program-card-webkit.py
+
+      - name: Validate
+        run: |
+          set -e
+          git diff --check
+          python3 - <<'PY'
+          from pathlib import Path
+          css = Path('assets/site.css').read_text(encoding='utf-8')
+          assert 'BATCH 7 WEBKIT: PROGRAM CARD FLIP COMPATIBILITY' in css
+          assert '-webkit-perspective: 1400px' in css
+          assert '-webkit-transform-style: preserve-3d' in css
+          print('Program-card WebKit compatibility validation passed.')
+          PY
+
+      - name: Commit fix
+        run: |
+          git config user.name "Sunday & Company Corrections"
+          git config user.email "hello@sundayandcompany.co"
+          git add assets/site.css
+          if git diff --cached --quiet; then
+            echo "No program-card CSS changes needed."
+          else
+            git commit -m "Batch 7: fix program card flips in WebKit"
+            git push origin HEAD:full-correction-audit-2026-09-11
+          fi
