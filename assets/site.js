@@ -34,9 +34,7 @@
       document.body.style.setProperty('min-height', '100%', 'important');
       document.body.style.setProperty('max-width', '100%', 'important');
       document.body.style.setProperty('overflow-x', 'hidden', 'important');
-      if (!document.body.style.backgroundColor) {
-        document.body.style.backgroundColor = '#f5efe6';
-      }
+      if (!document.body.style.backgroundColor) document.body.style.backgroundColor = '#f5efe6';
     }
 
     document.querySelectorAll('#dc-root, #dc-root > .sc-host').forEach(function (node) {
@@ -49,7 +47,6 @@
 
   function stabilizeCaptureUI() {
     normalizeRuntimeRoots();
-
     document.querySelectorAll('aside[aria-label="Sunday & Company navigation"][data-sheet-state]').forEach(function (sheet) {
       var open = sheet.getAttribute('data-sheet-state') === 'open';
       if (open) {
@@ -132,7 +129,6 @@
 
   function boot() {
     sync();
-
     var root = document.documentElement;
     var mo = new MutationObserver(function () { sync(); });
     mo.observe(root, {
@@ -147,9 +143,6 @@
     }, 4000);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
-  } else {
-    boot();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+  else boot();
 })();
