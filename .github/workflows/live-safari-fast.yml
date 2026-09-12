@@ -1,0 +1,33 @@
+name: Live Safari Fast Audit
+
+on:
+  push:
+    branches:
+      - safari-motion-fixes-no-deploy-2026-09-12
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply current candidate transform
+        run: python .github/scripts/apply_safari_motion_fixes.py
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Audit live Safari rendering
+        run: node .github/scripts/live_safari_fast.mjs
+      - name: Upload focused live audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-live-fast-audit
+          path: /tmp/sunday-live-fast
+          if-no-files-found: ignore
