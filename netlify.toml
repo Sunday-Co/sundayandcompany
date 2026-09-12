@@ -16,11 +16,14 @@ Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=
 Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 X-XSS-Protection = "1; mode=block"
 
+# Do not mark unhashed production assets immutable. The site uses stable file
+# names such as /assets/site.css and /assets/site.js, so a one-year immutable
+# cache can leave returning browsers on an old visual/interaction build.
 [[headers]]
 for = "/assets/*"
 
 [headers.values]
-Cache-Control = "public, max-age=31536000, immutable"
+Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
 for = "/*.html"
