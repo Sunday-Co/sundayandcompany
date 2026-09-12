@@ -33,6 +33,17 @@
     });
   }
 
+  function normalizeFooterTypography() {
+    document.querySelectorAll('a[data-footer-ui][href="mailto:hello@sundayandcompany.co"], footer [data-footer-location], footer a[data-footer-ui]').forEach(function (node) {
+      node.style.setProperty('font-family', "'Inter Tight', Arial, sans-serif", 'important');
+      node.style.setProperty('font-size', '12.5px', 'important');
+      node.style.setProperty('font-weight', '300', 'important');
+      node.style.setProperty('letter-spacing', '.01em', 'important');
+      node.style.setProperty('line-height', '1.4', 'important');
+      node.style.setProperty('opacity', '1', 'important');
+    });
+  }
+
   function prepareImagesForCapture(scope) {
     var root = scope && scope.querySelectorAll ? scope : document;
     root.querySelectorAll('img').forEach(function (img) {
@@ -122,6 +133,7 @@
   function sync() {
     ensureCorrectionStyles();
     normalizeRuntimeRoots();
+    normalizeFooterTypography();
     prepareImagesForCapture(document);
     markHeroFallbacks();
     ensureOpenSignMotion();
@@ -144,7 +156,10 @@
 
     mo.observe(document.documentElement, { childList: true, subtree: true });
     window.addEventListener('pageshow', sync);
-    window.addEventListener('resize', normalizeRuntimeRoots, { passive: true });
+    window.addEventListener('resize', function () {
+      normalizeRuntimeRoots();
+      normalizeFooterTypography();
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {
