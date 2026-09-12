@@ -4,6 +4,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var observer = null;
   var revealed = new WeakSet();
+  var mediaAnimated = new WeakSet();
 
   function markHeroFallbacks() {
     document.querySelectorAll('section#top, section[data-screen-hero]').forEach(function (hero) {
@@ -21,6 +22,31 @@
     });
   }
 
+  /* Safari Full Page capture can include transformed fixed drawers outside the
+     viewport when calculating the screenshot canvas. Closed navigation sheets
+     are therefore removed from rendering entirely, not merely translated 102%
+     offscreen. This also prevents the captured page from becoming enormously
+     wide with the real site compressed into a narrow strip. */
+  function stabilizeCaptureUI() {
+    document.documentElement.style.maxWidth = '100%';
+    document.documentElement.style.overflowX = 'hidden';
+    if (document.body) {
+      document.body.style.maxWidth = '100%';
+      document.body.style.overflowX = 'hidden';
+    }
+
+    document.querySelectorAll('aside[aria-label="Sunday & Company navigation"][data-sheet-state]').forEach(function (sheet) {
+      var open = sheet.getAttribute('data-sheet-state') === 'open';
+      if (open) {
+        sheet.style.display = 'flex';
+      } else {
+        sheet.style.display = 'none';
+        sheet.style.visibility = 'hidden';
+        sheet.style.transform = 'none';
+      }
+    });
+  }
+
   function getRevealNodes() {
     return Array.prototype.slice.call(document.querySelectorAll('[data-screen-label] > section, main section'))
       .filter(function (node) {
@@ -28,14 +54,36 @@
       });
   }
 
+  /* Large editorial imagery gets a restrained paper/photo reveal. It only runs
+     when the section is genuinely entering the viewport, so offscreen media
+     stays fully painted for Safari Full Page screenshots. */
+  function animateEditorialMedia(node) {
+    if (reduce || !Element.prototype.animate) return;
+    var images = node.querySelectorAll('img');
+    Array.prototype.forEach.call(images, function (img) {
+      if (mediaAnimated.has(img)) return;
+      if (img.closest('header, footer, [role="dialog"], [aria-label="Sunday & Company navigation"]')) return;
+      if ((img.naturalWidth && img.naturalWidth < 420) || (img.naturalHeight && img.naturalHeight < 260)) return;
+      mediaAnimated.add(img);
+      img.animate([
+        { opacity: 0.94, transform: 'scale(1.012)', clipPath: 'inset(0 0 7% 0)' },
+        { opacity: 1, transform: 'scale(1)', clipPath: 'inset(0 0 0 0)' }
+      ], {
+        duration: 520,
+        easing: 'cubic-bezier(.22,.75,.18,1)',
+        fill: 'both'
+      });
+    });
+  }
+
   function revealSections() {
     var nodes = getRevealNodes();
     if (!nodes.length) return false;
 
     /* Full-page capture safety: offscreen sections stay fully visible in the
-       document until they actually approach the viewport. That means Safari/
-       WebKit full-page screenshots never capture large blank blocks simply
-       because IntersectionObserver has not scrolled through the page. */
+       document until they actually approach the viewport. Safari/WebKit full-
+       page screenshots therefore never capture blank blocks simply because an
+       IntersectionObserver has not scrolled through the page. */
     if (reduce || !('IntersectionObserver' in window)) {
       nodes.forEach(function (node) {
         node.classList.remove('sc-reveal');
@@ -50,11 +98,10 @@
           if (!entry.isIntersecting) return;
           var node = entry.target;
           node.classList.add('sc-reveal');
-          /* Force the initial paper position to exist for one frame, then
-             reveal. The class is not added while the section is offscreen. */
           void node.offsetWidth;
           window.requestAnimationFrame(function () {
             node.classList.add('sc-in');
+            animateEditorialMedia(node);
           });
           io.unobserve(node);
         });
@@ -70,6 +117,7 @@
   }
 
   function sync() {
+    stabilizeCaptureUI();
     markHeroFallbacks();
     revealSections();
   }
@@ -77,16 +125,21 @@
   function boot() {
     sync();
 
-    // The DC runtime mounts page/component markup after the document itself loads.
-    // Watch briefly for those mounts so motion and hero fallbacks always bind to
-    // the rendered site instead of depending on script timing.
+    // The DC runtime mounts and updates shared components after document load.
+    // Watch both inserted markup and navigation-sheet state changes so the
+    // capture fix and motion system stay synchronized with the rendered UI.
     var root = document.documentElement;
     var mo = new MutationObserver(function () { sync(); });
-    mo.observe(root, { childList: true, subtree: true });
+    mo.observe(root, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['data-sheet-state']
+    });
     window.setTimeout(function () {
       sync();
       mo.disconnect();
-    }, 2500);
+    }, 4000);
   }
 
   if (document.readyState === 'loading') {
