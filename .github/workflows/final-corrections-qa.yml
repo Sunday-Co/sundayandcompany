@@ -34,6 +34,9 @@ jobs:
           ! grep -q 'sc-accordion-final' assets/rendered-corrections.css
           grep -q "dialogPosition: 'fixed'" 'Program Cards.dc.html'
           grep -q "dialogAria: 'true'" 'Program Cards.dc.html'
+          grep -q 'SUNDAY ARCHIVE LIBRARY CARD MODALS' 'Program Cards.dc.html'
+          grep -q 'SUNDAY & CO. ARCHIVE · RECORD 01' 'Program Cards.dc.html'
+          grep -q 'REFERENCE COPY · FILED 2026' 'Program Cards.dc.html'
           grep -q 'sc-neon-sunday-final 8.4s ease-in-out infinite' assets/rendered-corrections.css
           grep -q 'sc-sway-sunday-continuous 12s ease-in-out infinite' assets/rendered-corrections.css
           grep -q 'v=20260912-8' index.html
