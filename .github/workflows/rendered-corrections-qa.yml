@@ -1,5 +1,6 @@
 name: Rendered Corrections QA
 
+# Final run against the fully corrected production source.
 on:
   push:
     branches:
