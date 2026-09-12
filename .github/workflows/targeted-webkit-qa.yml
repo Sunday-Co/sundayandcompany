@@ -18,6 +18,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Restore approved Inquiry lockup
+        run: python .github/scripts/revert_inquiry_lockup.py
+      - name: Validate source before browser QA
+        run: |
+          node --check assets/site.js
+          git diff --check
       - name: Install WebKit
         run: |
           npm install --no-save playwright@1.55.0
@@ -33,14 +39,16 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sunday-targeted-qa
+          name: sunday-targeted-qa-restored
           path: /tmp/sunday-qa
           if-no-files-found: ignore
-      - name: Remove temporary QA tooling after success
+      - name: Commit verified source and remove temporary QA tooling
         if: success()
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs
-          git commit -m "[skip ci] [skip netlify] Remove targeted WebKit QA tooling"
+          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs .github/scripts/revert_inquiry_lockup.py
+          git add -A
+          git diff --cached --check
+          git commit -m "[skip ci] [skip netlify] Verify final Sunday visual batch"
           git push origin HEAD:${GITHUB_REF_NAME}
