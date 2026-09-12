@@ -8,7 +8,7 @@ This file is temporary and will be removed before merging to `main`. It exists s
 - [x] Work on a separate correction branch, not directly on `main`.
 - [x] Keep `netlify.toml` deploy-only. No build-time HTML/font/CSS rewriting.
 - [x] Remove the abandoned temporary correction workflow/script/marker before new work.
-- [ ] Confirm shared component copies are synchronized before merge.
+- [x] Synchronize all copied shared components from the audited root source.
 - [ ] Remove this checklist before merge.
 
 ## Batch 1 — Global Typography System
@@ -24,28 +24,29 @@ This file is temporary and will be removed before merging to `main`. It exists s
 
 ## Batch 2 — All Forms / Form States Typography Audit
 - [x] Inventory every live form and every confirmation/state across the production site.
-- [ ] Sunday Reservation popup signup state audited on desktop and mobile.
-- [ ] Sunday Reservation popup confirmation state audited on desktop and mobile.
-- [ ] Footer newsletter form audited on desktop and mobile.
-- [ ] Footer newsletter confirmation state audited.
-- [ ] Project Inquiry popup steps 1/2/3 audited on desktop and mobile.
-- [ ] Project Inquiry confirmation state audited on desktop and mobile.
-- [ ] Services-page embedded Project Inquiry audited on desktop and mobile.
-- [ ] Contact form audited on desktop and mobile.
-- [ ] Contact form confirmation state audited on desktop and mobile.
-- [ ] Sunday School signup/waitlist form audited on desktop and mobile.
-- [ ] Sunday School signup/waitlist confirmation state audited.
-- [ ] Join Our Team `Save Your Interest` form audited on desktop and mobile.
-- [ ] Join Our Team interest confirmation state audited.
+- [x] Sunday Reservation popup signup state source audited for desktop/mobile hierarchy.
+- [x] Sunday Reservation popup confirmation state source audited for desktop/mobile hierarchy.
+- [x] Footer newsletter form source audited for desktop/mobile hierarchy.
+- [x] Footer newsletter confirmation state source audited.
+- [x] Project Inquiry popup steps 1/2/3 source audited for desktop/mobile hierarchy.
+- [x] Project Inquiry confirmation state source audited for desktop/mobile hierarchy.
+- [x] Services-page embedded Project Inquiry is synchronized to the same shared form source.
+- [x] Contact form source audited for desktop/mobile hierarchy.
+- [x] Contact form confirmation state source audited.
+- [x] Sunday School signup/waitlist form source audited for desktop/mobile hierarchy.
+- [x] Sunday School signup/waitlist confirmation state source audited.
+- [x] Join Our Team `Save Your Interest` form source audited for desktop/mobile hierarchy.
+- [x] Join Our Team interest confirmation state source audited.
 - [x] No additional standalone form types were found in the production page inventory beyond the shared/global forms and page-specific forms listed above.
-- [ ] Functional labels are readable without becoming visually heavy.
-- [ ] Entered text/placeholders/dropdowns/checks/errors/buttons have an intentional functional scale.
-- [ ] Decorative receipt metadata has its own smaller scale, using 400 when needed for clarity.
-- [ ] Fine print has its own quieter scale and is not accidentally enlarged with functional copy.
-- [ ] `Unsubscribe anytime. Privacy Policy.` is reduced on mobile without shrinking the whole newsletter receipt.
+- [x] Functional labels have a dedicated readable Light-weight scale instead of receipt-metadata sizing.
+- [x] Typed text/placeholders/custom selects/date controls/errors/submit actions have intentional functional sizing rather than one blanket button rule.
+- [x] Decorative receipt metadata has its own smaller 400-weight scale.
+- [x] Fine print has its own quieter scale and is not enlarged with functional copy.
+- [x] `Unsubscribe anytime. Privacy Policy.` has a dedicated reduced mobile treatment without shrinking the whole newsletter receipt.
+- [ ] Final visual verification of every form/state after preview/live rendering.
 
 ## Batch 3 — Project Inquiry Receipt
-- [ ] Both desktop and mobile receipts are truly centered.
+- [x] Shared overlay/source explicitly centers the receipt on desktop and mobile.
 - [x] Desktop receipt max-width reduced to a compact 880px treatment in shared styles.
 - [x] Mobile forced minimum height reduced from the oversized 700px treatment to a restrained content-driven target.
 - [x] Add only a restrained amount of bottom cream breathing room after the ledger.
@@ -54,25 +55,27 @@ This file is temporary and will be removed before merging to `main`. It exists s
 - [x] Field labels are reduced only a smidgen and tracking tightened in the shared form type system.
 - [x] Receipt metadata (`Sunday & Company`, receipt no., status, etc.) has a dedicated larger/clearer small-text treatment.
 - [x] `Next`, `Back`, `Send` and related actions use tighter tracking and Regular weight in shared styles.
-- [ ] Mobile step navigation clearly communicates `01 Project Basics`, `02 Timing & Budget`, `03 Project Scope` and current state.
-- [ ] Services-page inquiry uses the same synchronized shared form source and typography.
+- [x] Step navigation now explicitly shows `01 Project Basics`, `02 Timing & Budget`, `03 Project Scope` with the active stage highlighted.
+- [x] Services-page inquiry uses the synchronized shared form source and typography.
+- [ ] Final visual verification of all three steps and confirmation state.
 
 ## Batch 4 — Sunday Reservation Popup
 - [x] Desktop popup remains somewhat larger than the earlier too-small version while staying controlled.
 - [x] Desktop image is fully full-bleed across the left side with no white strip/inset.
 - [x] Mobile popup keeps the approved stacked image-first composition.
 - [x] Mobile unsubscribe/privacy line has a dedicated quieter 8px fine-print treatment.
-- [ ] Signup and confirmation states visually verified to use the same typography hierarchy.
-- [ ] Popup remains centered and stable in Safari after live/preview QA.
+- [x] Signup and confirmation source states share the same receipt/functional typography system.
+- [ ] Popup centered/stable behavior visually verified in Safari.
 
 ## Batch 5 — Footer / Menu / Small CTAs
-- [ ] Mobile footer is one coherent secondary-font system.
-- [ ] Explore links, email, location, social handle and comparable information share the same optical weight.
-- [ ] Rose footer section labels may be slightly stronger but not visually disconnected.
-- [ ] SC monogram and `A Seat At Our Table` signature remain special brand treatments.
+- [x] Footer functional typography is one Inter Tight system.
+- [x] Explore links, email, location and social handle share the same Light 300 optical weight.
+- [x] Rose footer section labels remain slightly stronger at functional Regular weight rather than a separate heavy treatment.
+- [x] SC monogram and `A Seat At Our Table` signature remain special brand treatments.
 - [x] About `Apply To Join Our Team` CTA copy has a dedicated small readability increase.
 - [x] Mobile menu `Reserve Your Seat` and `Contact` labels have a dedicated small readability increase and tighter tracking.
 - [x] Mobile CTA touch targets are approximately 44px where targeted.
+- [ ] Final mobile footer/menu visual verification.
 
 ## Batch 6 — Services Microtype
 - [x] `01 / 02 / 03` service numbers have a dedicated mobile readability increase.
@@ -81,12 +84,14 @@ This file is temporary and will be removed before merging to `main`. It exists s
 - [x] `What Is Included` has a dedicated mobile readability increase.
 - [x] Included-service rows have a dedicated mobile readability increase.
 - [x] Excessive uppercase tracking is reduced in the targeted Services microtype rules.
-- [ ] Large Playfair service names and body copy visually verified unchanged unless a genuine readability issue is found.
+- [x] Large Playfair service names and body copy were not altered by the microtype selectors.
+- [ ] Final collapsed/expanded visual verification.
 
 ## Batch 7 — Join Our Team Program Cards
-- [ ] On mobile, full program details expand inside the page rather than opening a second fixed scrolling modal.
-- [ ] Expanded details do not introduce a nested scroll area.
-- [ ] Desktop behavior remains intentional and usable.
+- [x] On mobile, full program details are moved into normal page flow instead of a fixed second modal.
+- [x] Mobile detail view removes its nested scroll/max-height behavior.
+- [x] Desktop keeps the original centered fixed-dialog treatment.
+- [ ] Final mobile/desktop visual verification of each program.
 
 ## Batch 8 — Safari / Hero Rendering
 - [ ] Audit every page hero that relies on viewport height, absolute image layers or compositing.
@@ -123,8 +128,8 @@ This file is temporary and will be removed before merging to `main`. It exists s
 - [ ] Header and desktop navigation reviewed.
 - [ ] Mobile menu reviewed.
 - [ ] Footer reviewed.
-- [ ] Every form state and confirmation reviewed.
-- [ ] Every Project Inquiry step reviewed.
+- [ ] Every form state and confirmation reviewed visually.
+- [ ] Every Project Inquiry step reviewed visually.
 - [ ] Remaining sub-11px functional UI text reviewed intentionally.
 - [ ] Heading weights checked sitewide, including split brown/rose italic headlines.
 - [ ] Font flash/layout shift checked.
