@@ -1,0 +1,78 @@
+name: Apply Missed Sunday Corrections
+
+on:
+  push:
+    branches:
+      - fix-missed-corrections
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out correction branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix-missed-corrections
+          fetch-depth: 0
+
+      - name: Apply targeted source corrections
+        run: python3 scripts/fix-missed-corrections.py
+
+      - name: Validate source
+        run: |
+          git diff --check
+          node --check assets/site.js
+          python3 - <<'PY'
+          from pathlib import Path
+          import tomllib
+
+          with open('netlify.toml','rb') as f:
+              cfg = tomllib.load(f)
+          assert cfg['build']['publish'] == '.'
+          assert 'command' not in cfg['build']
+
+          home = Path('index.html').read_text(encoding='utf-8')
+          assert 'Marketing should feel less like noise and more like an invitation.' in home
+          assert 'Marketing Should Feel Less Like Noise' not in home
+
+          inquiry = Path('Inquiry Form.dc.html').read_text(encoding='utf-8')
+          assert 'aria-label="Project inquiry steps"' in inquiry
+          assert '01&nbsp; Project Basics' in inquiry
+          assert '02&nbsp; Timing &amp; Budget' in inquiry
+          assert '03&nbsp; Project Scope' in inquiry
+
+          cards = Path('Program Cards.dc.html').read_text(encoding='utf-8')
+          assert "dialogPosition: t ? 'static' : 'fixed'" in cards
+          assert "dialogInnerOverflow: t ? 'visible' : 'auto'" in cards
+          assert "dialogMaxHeight: t ? 'none'" in cards
+
+          css = Path('assets/site.css').read_text(encoding='utf-8')
+          assert 'width: min(880px, calc(100vw - 64px))' in css
+          assert 'width: min(800px, calc(100vw - 56px))' in css
+          assert 'footer,\nfooter * {' in css
+          assert 'font-size: 8px !important;' in css
+
+          # Shared component copies must match root exactly.
+          root_iq = Path('Inquiry Form.dc.html').read_text(encoding='utf-8')
+          root_pc = Path('Program Cards.dc.html').read_text(encoding='utf-8')
+          for p in Path('.').rglob('Inquiry Form.dc.html'):
+              assert p.read_text(encoding='utf-8') == root_iq, p
+          for p in Path('.').rglob('Program Cards.dc.html'):
+              assert p.read_text(encoding='utf-8') == root_pc, p
+          print('Targeted corrections validated.')
+          PY
+
+      - name: Commit corrections
+        run: |
+          git config user.name "Sunday & Company Corrections"
+          git config user.email "hello@sundayandcompany.co"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes needed."
+          else
+            git commit -m "Apply missed approved website corrections"
+            git push origin HEAD:fix-missed-corrections
+          fi
