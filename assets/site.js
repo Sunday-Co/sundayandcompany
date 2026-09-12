@@ -136,7 +136,7 @@
   function getRevealNodes() {
     return Array.prototype.slice.call(document.querySelectorAll('[data-screen-label] > section, main section'))
       .filter(function (node) {
-        return node.id !== 'top' && !node.closest('[role="dialog"]') && node.offsetHeight > 80;
+        return !node.closest('[role="dialog"]') && node.offsetHeight > 80;
       });
   }
 
