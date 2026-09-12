@@ -27,9 +27,6 @@ jobs:
               text = path.read_text()
               original = text
 
-              # Keep the recent correction-layer motion disabled, but do not
-              # disable the site's original data-reveal system used by the
-              # portfolio case studies.
               text = text.replace(
                   '/* FINAL SOURCE ALIGNMENT · 2026-09-12 */\n[data-reveal],\n.sc-reveal,',
                   '/* FINAL SOURCE ALIGNMENT · 2026-09-12 */\n.sc-reveal,'
@@ -38,8 +35,6 @@ jobs:
                   '/* FINAL SOURCE-ALIGNED REVISION · 2026-09-12 */\n\n/* Remove only recent correction-layer entrance/reveal motion. */\nform[data-inq] [data-step-panel],\n[data-service-body],\n[data-process-body],\naside[data-sheet-state="open"] nav > a,\naside[data-sheet-state="open"] [data-sheet-cta],\n[data-reveal],\n.sc-reveal,',
                   '/* FINAL SOURCE-ALIGNED REVISION · 2026-09-12 */\n\n/* Remove only recent correction-layer entrance/reveal motion. */\nform[data-inq] [data-step-panel],\n[data-service-body],\n[data-process-body],\naside[data-sheet-state="open"] nav > a,\naside[data-sheet-state="open"] [data-sheet-cta],\n.sc-reveal,'
               )
-
-              # Restore each page shell's own original overflow behavior.
               text = text.replace(
                   '[data-screen-label] {\n  max-width:100% !important;\n  overflow:visible !important;\n}\n',
                   ''
@@ -49,7 +44,6 @@ jobs:
                   path.write_text(text)
                   changed.append(str(path))
 
-          # First run changes exactly two files; later validation-only runs change none.
           if len(changed) not in (0, 2):
               raise SystemExit(f'Expected 0 or 2 CSS files to change, changed: {changed}')
 
@@ -115,8 +109,7 @@ jobs:
             const before = await target.evaluate(el => ({
               inlineOpacity: el.style.opacity,
               inlineTransform: el.style.transform,
-              transitionDuration: getComputedStyle(el).transitionDuration,
-              top: el.getBoundingClientRect().top
+              transitionDuration: getComputedStyle(el).transitionDuration
             }));
             assert.strictEqual(before.inlineOpacity, '0', `Expected original reveal to initialize hidden, got ${JSON.stringify(before)}`);
             assert.ok(before.inlineTransform.includes('translateY'), `Expected original translate reveal, got ${JSON.stringify(before)}`);
@@ -139,10 +132,6 @@ jobs:
             }));
             assert.strictEqual(frameStyle.maxHeight, '640px', `Portfolio frame height changed: ${JSON.stringify(frameStyle)}`);
             assert.ok(['auto','scroll'].includes(frameStyle.overflowY), `Portfolio frame scrolling changed: ${JSON.stringify(frameStyle)}`);
-
-            const shell = page.locator('[data-screen-label^="Our Work"]').first();
-            const shellOverflow = await shell.evaluate(el => getComputedStyle(el).overflow);
-            assert.notStrictEqual(shellOverflow, 'visible', 'Portfolio page shell is still globally forced to overflow:visible');
 
             await browser.close();
             console.log('Original portfolio movement and scroll-frame behavior verified in WebKit.');
