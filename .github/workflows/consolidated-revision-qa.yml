@@ -1,0 +1,80 @@
+name: Consolidated Revision WebKit QA
+
+on:
+  push:
+    branches:
+      - safari-motion-fixes-no-deploy-2026-09-12
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Apply consolidated revision
+        run: python .github/scripts/apply_safari_motion_fixes.py
+
+      - name: Validate bounded source
+        run: |
+          node --check assets/site.js
+          git diff --check
+          grep -q 'v=20260912-9' index.html
+          grep -q 'data-sunday-static-hero="true"' index.html
+          ! grep -R -q 'loading="lazy"' --include='*.html' .
+          grep -q 'sc-rock 5.4s' index.html
+          grep -q 'sc-sway 7s' index.html
+          grep -q 'sc-warm 2.6s' index.html
+          grep -q 'sc-neon 3.8s' index.html
+          ! grep -q 'sc-sway-sunday-continuous' assets/rendered-corrections.css
+          ! grep -q 'sc-neon-sunday-final' assets/rendered-corrections.css
+          grep -q 'SUNDAY ARCHIVE LIBRARY CARD MODALS' assets/rendered-corrections.css
+          grep -q 'REFERENCE COPY · FILED 2026' assets/rendered-corrections.css
+          grep -q 'FINAL CONSOLIDATED REVISION' assets/rendered-corrections.css
+          grep -q 'font-size:clamp(58px,7vw,108px)' assets/rendered-corrections.css
+          grep -q '@keyframes sunday-modal-in' assets/site.css
+
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+
+      - name: Serve site
+        run: |
+          python3 -m http.server 4173 > /tmp/sunday-consolidated-http.log 2>&1 &
+          echo $! > /tmp/sunday-consolidated-http.pid
+          sleep 2
+
+      - name: Run consolidated browser QA
+        run: node .github/scripts/consolidated_revision_qa.mjs
+
+      - name: Upload QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-consolidated-revision-qa
+          path: /tmp/sunday-consolidated-qa
+          if-no-files-found: ignore
+
+      - name: Persist verified production files only
+        if: success()
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add assets/rendered-corrections.css
+          find . -name '*.html' -not -path './node_modules/*' -not -path './.github/*' -print0 | xargs -0 git add --
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No production changes to persist"
+          else
+            git commit -m "[skip ci] [skip netlify] Verify consolidated revision batch"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
