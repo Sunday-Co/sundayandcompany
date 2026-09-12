@@ -27,14 +27,16 @@ footer a[href*="instagram.com/sundayand_co"] {
   opacity:1 !important;
 }
 
-/* Avoid WebKit's overflow:clip page-shell/compositing path during long-page snapshots. */
+/* Keep horizontal containment at the true document roots. Do not put any
+   overflow axis on the page shell itself: in WebKit/CSS, hidden on one axis
+   makes visible on the other axis compute to auto, creating a nested scroller. */
 html, body, #dc-root, #dc-root > .sc-host {
   max-width:100% !important;
   overflow-x:hidden !important;
 }
 [data-screen-label] {
-  overflow-x:hidden !important;
-  overflow-y:visible !important;
+  max-width:100% !important;
+  overflow:visible !important;
 }
 
 /* Long portfolio screenshots must participate in the outer document instead of
@@ -111,8 +113,8 @@ for component_name, source in [('Site Header.dc.html', root_header), ('Site Foot
             continue
         target.write_text(source_text, encoding='utf-8')
 
-# 3. Remove overflow:clip only from document/page shells. Keep intentional image crop
-# containers (overflow:hidden) untouched.
+# 3. Remove overflow:clip from document/page shells. Horizontal containment stays
+# on html/body/root hosts only, so the screen wrapper never becomes an inner scroller.
 def normalize_shell_overflow(text: str) -> str:
     text = text.replace('overflow-x: clip;', 'overflow-x: hidden;')
     text = text.replace('overflow-x:clip;', 'overflow-x:hidden;')
@@ -121,7 +123,9 @@ def normalize_shell_overflow(text: str) -> str:
     pattern = re.compile(r'(<div\s+data-screen-label="[^"]+"\s+style=")([^"]*)(")', re.I)
     def repl(m):
         style = m.group(2)
-        style = style.replace('overflow:clip', 'overflow-x:hidden;overflow-y:visible')
+        style = re.sub(r'(^|;)\s*overflow\s*:\s*clip\s*;?', r'\1overflow:visible;', style, flags=re.I)
+        style = re.sub(r'(^|;)\s*overflow-x\s*:\s*(?:clip|hidden|auto|scroll)\s*;?', r'\1overflow-x:visible;', style, flags=re.I)
+        style = re.sub(r'(^|;)\s*overflow-y\s*:\s*(?:hidden|auto|scroll)\s*;?', r'\1overflow-y:visible;', style, flags=re.I)
         return m.group(1) + style + m.group(3)
     return pattern.sub(repl, text)
 
@@ -189,6 +193,9 @@ for path in ROOT.rglob('*.html'):
         raise SystemExit(f'overflow-x:clip remains in {path}')
     if re.search(r'<div\s+style="[^"]*overflow-y:auto[^"]*">\s*<img\b', text, re.I):
         raise SystemExit(f'Nested vertical image scrollport remains in {path}')
+    for m in re.finditer(r'<div\s+data-screen-label="[^"]+"\s+style="([^"]*)"', text, re.I):
+        if re.search(r'overflow(?:-x|-y)?\s*:\s*(?:clip|hidden|auto|scroll)', m.group(1), re.I):
+            raise SystemExit(f'Page shell still has capture-hostile overflow in {path}: {m.group(1)}')
 
 if expanded < 10:
     raise SystemExit(f'Expected to expand at least 10 long-image viewers, expanded only {expanded}')
