@@ -1,0 +1,70 @@
+name: Capture Integrity Candidate QA
+
+on:
+  push:
+    branches:
+      - safari-motion-fixes-no-deploy-2026-09-12
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install image tooling
+        run: python -m pip install --quiet pillow
+      - name: Apply existing verified corrections
+        run: python .github/scripts/apply_safari_motion_fixes.py
+      - name: Build capture-sized assets
+        run: python .github/scripts/build_capture_assets.py
+      - name: Apply capture integrity fixes
+        run: python .github/scripts/apply_capture_integrity_fixes.py
+      - name: Validate transformed source
+        run: |
+          node --check assets/site.js
+          node --check .github/scripts/capture_integrity_qa.mjs
+          git diff --check
+          grep -q 'v=20260912-11' index.html
+          grep -q '/assets/opt/gallery-capitol.jpg' index.html
+          test -f assets/opt/gallery-capitol.jpg
+          ! grep -R -q 'overflow-x:[[:space:]]*clip' --include='*.html' .
+          ! grep -R -q 'max-height:[^\"]*overflow-y:auto[^\"]*><img' --include='*.html' .
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Serve candidate
+        run: |
+          python3 -m http.server 4173 > /tmp/sunday-capture-http.log 2>&1 &
+          echo $! > /tmp/sunday-capture-http.pid
+          sleep 2
+      - name: Run mobile desktop and print capture QA
+        run: node .github/scripts/capture_integrity_qa.mjs
+      - name: Upload candidate screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-capture-integrity-candidate
+          path: /tmp/sunday-capture-integrity
+          if-no-files-found: ignore
+      - name: Persist verified production candidate files
+        if: success()
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add assets/site.js assets/site.css assets/rendered-corrections.css assets/opt/gallery-capitol.jpg Site\ Header.dc.html Site\ Footer.dc.html
+          find . -name '*.html' -not -path './node_modules/*' -not -path './.github/*' -print0 | xargs -0 git add --
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No candidate production changes to persist"
+          else
+            git commit -m "[skip ci] [skip netlify] Verify capture integrity batch"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
