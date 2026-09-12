@@ -27,6 +27,7 @@ jobs:
         run: |
           node --check assets/site.js
           node --check .github/scripts/source_truth_regression_qa.mjs
+          node --check .github/scripts/live_safari_diagnostic.mjs
           git diff --check
           grep -q 'v=20260912-10' index.html
           grep -q 'v=20260912-10' assets/site.js
@@ -74,14 +75,18 @@ jobs:
           node .github/scripts/consolidated_revision_qa.mjs
           node .github/scripts/source_truth_regression_qa.mjs
 
+      - name: Diagnose live deployed Safari rendering
+        run: node .github/scripts/live_safari_diagnostic.mjs
+
       - name: Upload QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sunday-source-truth-qa
+          name: sunday-live-source-truth-qa
           path: |
             /tmp/sunday-consolidated-qa
             /tmp/sunday-source-truth-qa
+            /tmp/sunday-live-safari
           if-no-files-found: ignore
 
       - name: Persist verified production files only
