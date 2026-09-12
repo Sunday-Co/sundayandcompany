@@ -12,9 +12,8 @@ function discoverRoutes(dir = ROOT, rel = '') {
     if (['.git', 'node_modules', 'qa-artifacts'].includes(entry.name)) continue;
     const full = path.join(dir, entry.name);
     const nextRel = path.join(rel, entry.name);
-    if (entry.isDirectory()) {
-      routes.push(...discoverRoutes(full, nextRel));
-    } else if (entry.isFile() && entry.name === 'index.html') {
+    if (entry.isDirectory()) routes.push(...discoverRoutes(full, nextRel));
+    else if (entry.isFile() && entry.name === 'index.html') {
       const folder = path.dirname(nextRel).replaceAll('\\', '/');
       routes.push(folder === '.' ? '/' : `/${folder}/`);
     }
@@ -30,8 +29,8 @@ const profiles = [
 
 const report = [];
 let failures = 0;
-
 const browser = await webkit.launch();
+
 try {
   for (const profile of profiles) {
     const context = await browser.newContext({ viewport: profile.viewport, isMobile: profile.isMobile, userAgent: profile.userAgent, deviceScaleFactor: 1 });
@@ -40,19 +39,22 @@ try {
     for (const route of routes) {
       const url = `http://127.0.0.1:4173${route}`;
       let status = 0;
-      let consoleErrors = [];
+      const consoleErrors = [];
       const onConsole = (msg) => { if (msg.type() === 'error') consoleErrors.push(msg.text()); };
       page.on('console', onConsole);
       try {
-        const response = await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+        const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 12000 });
         status = response?.status() || 0;
-        await page.waitForTimeout(800);
+        await page.waitForFunction(() => document.querySelector('#dc-root .sc-host') || document.querySelector('[data-screen-label]'), null, { timeout: 7000 }).catch(() => {});
+        await page.waitForTimeout(900);
 
         const metrics = await page.evaluate(() => {
           const root = document.documentElement;
           const body = document.body;
           const sheet = document.querySelector('aside[aria-label="Sunday & Company navigation"]');
           const rect = sheet ? sheet.getBoundingClientRect() : null;
+          const sections = Array.from(document.querySelectorAll('[data-screen-label] > section, main section'));
+          const transparentSections = sections.filter((node) => Number.parseFloat(getComputedStyle(node).opacity || '1') < 0.05).length;
           return {
             innerWidth: window.innerWidth,
             docScrollWidth: root.scrollWidth,
@@ -63,8 +65,8 @@ try {
             sheetDisplay: sheet ? getComputedStyle(sheet).display : null,
             sheetRight: rect ? rect.right : null,
             sheetLeft: rect ? rect.left : null,
-            bodyBg: body ? getComputedStyle(body).backgroundColor : null,
-            rootWidth: root.getBoundingClientRect().width
+            rootWidth: root.getBoundingClientRect().width,
+            transparentSections
           };
         });
 
@@ -72,9 +74,9 @@ try {
         const closedSheetPainted = metrics.sheetState === 'closed' && metrics.sheetDisplay !== 'none';
         const routeSlug = route === '/' ? 'home' : route.replace(/^\//, '').replace(/\/$/, '').replaceAll('/', '__').replace('.html', '');
         const shot = path.join(OUT, `${profile.name}__${routeSlug}.png`);
-        await page.screenshot({ path: shot, fullPage: true });
+        await page.screenshot({ path: shot, fullPage: true, animations: 'disabled' });
 
-        const passed = widthOverflow <= 2 && !closedSheetPainted && status < 500;
+        const passed = widthOverflow <= 2 && !closedSheetPainted && metrics.transparentSections === 0 && status < 500;
         if (!passed) failures++;
         report.push({ profile: profile.name, route, status, passed, widthOverflow, closedSheetPainted, consoleErrors, metrics, screenshot: path.basename(shot) });
       } catch (error) {
