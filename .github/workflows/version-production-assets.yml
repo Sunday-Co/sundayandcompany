@@ -7,6 +7,7 @@ on:
     paths:
       - 'scripts/version-production-assets.py'
       - 'scripts/fix-mobile-program-cards.py'
+      - 'scripts/final-source-corrections.py'
       - '.github/workflows/version-production-assets.yml'
 
 permissions:
@@ -21,10 +22,11 @@ jobs:
           ref: rendered-corrections-2026-09-12
           fetch-depth: 0
 
-      - name: Apply rendered source fixes and version production assets
+      - name: Apply final production source fixes
         run: |
           python3 scripts/version-production-assets.py
           python3 scripts/fix-mobile-program-cards.py
+          python3 scripts/final-source-corrections.py
 
       - name: Commit rendered production corrections
         run: |
@@ -35,5 +37,5 @@ jobs:
             echo "No production corrections needed updating."
             exit 0
           fi
-          git commit -m "Apply rendered form and mobile program fixes"
+          git commit -m "Apply final source typography and form corrections"
           git push origin HEAD:rendered-corrections-2026-09-12
