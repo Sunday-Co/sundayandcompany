@@ -22,12 +22,18 @@ jobs:
         run: |
           python .github/scripts/revert_inquiry_lockup.py
           python .github/scripts/fix_open_sign.py
+          python .github/scripts/fix_program_cards.py
       - name: Validate source before browser QA
         run: |
           node --check assets/site.js
           git diff --check
-          grep -q "sc-neon-sunday-final 8.4s" index.html
-          grep -q "sc-sway 12s" index.html
+          grep -q 'data-sign] p\[aria-hidden\].*Pinyon Script' assets/rendered-corrections.css
+          grep -q 'sc-neon-sunday-final 8.4s' assets/rendered-corrections.css
+          grep -q 'sc-sway 12s' assets/rendered-corrections.css
+          grep -q 'max-width:520px' assets/rendered-corrections.css
+          grep -q 'WebKit full-page capture can paint hidden 3D backs' 'Program Cards.dc.html'
+          grep -q 'duration: 1300' assets/site.js
+          grep -q 'duration: 1450' assets/site.js
       - name: Install WebKit
         run: |
           npm install --no-save playwright@1.55.0
@@ -37,7 +43,7 @@ jobs:
           python3 -m http.server 4173 > /tmp/sunday-http.log 2>&1 &
           echo $! > /tmp/sunday-http.pid
           sleep 2
-      - name: Run targeted QA
+      - name: Run final WebKit QA
         run: node .github/scripts/targeted_qa.mjs
       - name: Upload screenshots
         if: always()
@@ -51,7 +57,7 @@ jobs:
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs .github/scripts/revert_inquiry_lockup.py .github/scripts/fix_open_sign.py
+          git rm .github/workflows/targeted-webkit-qa.yml .github/scripts/targeted_qa.mjs .github/scripts/revert_inquiry_lockup.py .github/scripts/fix_open_sign.py .github/scripts/fix_program_cards.py
           git add -A
           git diff --cached --check
           git commit -m "[skip ci] [skip netlify] Verify final Sunday visual batch"
