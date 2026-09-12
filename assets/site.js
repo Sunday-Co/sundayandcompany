@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260912-10';
+    link.href = '/assets/rendered-corrections.css?v=20260912-11';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -30,6 +30,17 @@
       node.style.setProperty('min-height', '100%', 'important');
       node.style.setProperty('max-width', '100%', 'important');
       node.style.setProperty('overflow-x', 'hidden', 'important');
+    });
+  }
+
+  function normalizeFooterTypography() {
+    document.querySelectorAll('a[data-footer-ui][href="mailto:hello@sundayandcompany.co"], footer [data-footer-location], footer a[data-footer-ui]').forEach(function (node) {
+      node.style.setProperty('font-family', "'Inter Tight', Arial, sans-serif", 'important');
+      node.style.setProperty('font-size', '12.5px', 'important');
+      node.style.setProperty('font-weight', '300', 'important');
+      node.style.setProperty('letter-spacing', '.01em', 'important');
+      node.style.setProperty('line-height', '1.4', 'important');
+      node.style.setProperty('opacity', '1', 'important');
     });
   }
 
@@ -122,6 +133,7 @@
   function sync() {
     ensureCorrectionStyles();
     normalizeRuntimeRoots();
+    normalizeFooterTypography();
     prepareImagesForCapture(document);
     markHeroFallbacks();
     ensureOpenSignMotion();
@@ -144,7 +156,10 @@
 
     mo.observe(document.documentElement, { childList: true, subtree: true });
     window.addEventListener('pageshow', sync);
-    window.addEventListener('resize', normalizeRuntimeRoots, { passive: true });
+    window.addEventListener('resize', function () {
+      normalizeRuntimeRoots();
+      normalizeFooterTypography();
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {

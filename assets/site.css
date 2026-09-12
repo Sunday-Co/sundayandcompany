@@ -956,3 +956,77 @@ footer a[href^="mailto:"] { font-weight:400 !important; opacity:1 !important; }
 @media (max-width:700px) {
   [aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size:7px !important; }
 }
+
+
+/* CAPTURE INTEGRITY + FOOTER NORMALIZATION · 2026-09-12 */
+footer [data-footer-ui],
+footer [data-footer-location],
+footer a[href^="mailto:"],
+footer a[href*="instagram.com/sundayand_co"] {
+  font-family:'Inter Tight',Arial,sans-serif !important;
+  font-size:12.5px !important;
+  font-weight:300 !important;
+  letter-spacing:.01em !important;
+  line-height:1.4 !important;
+  opacity:1 !important;
+}
+
+/* Keep horizontal containment at the true document roots. Do not put any
+   overflow axis on the page shell itself: in WebKit/CSS, hidden on one axis
+   makes visible on the other axis compute to auto, creating a nested scroller. */
+html, body, #dc-root, #dc-root > .sc-host {
+  max-width:100% !important;
+  overflow-x:hidden !important;
+}
+[data-screen-label] {
+  max-width:100% !important;
+  overflow:visible !important;
+}
+
+/* Long portfolio screenshots must participate in the outer document instead of
+   living inside their own vertical scrollports. This is required for true full-page capture. */
+[data-capture-full-image] {
+  max-height:none !important;
+  overflow:visible !important;
+  height:auto !important;
+}
+[data-capture-full-image] > img {
+  display:block !important;
+  height:auto !important;
+  max-height:none !important;
+  width:100% !important;
+}
+
+/* Keep actual imagery in the document paint tree for WebKit snapshot/PDF capture. */
+img {
+  content-visibility:visible !important;
+  image-rendering:auto;
+}
+img[data-sunday-static-hero="true"] {
+  backface-visibility:visible !important;
+  -webkit-backface-visibility:visible !important;
+  transform:none !important;
+  will-change:auto !important;
+}
+
+@media print {
+  html, body, #dc-root, #dc-root > .sc-host,
+  [data-screen-label] {
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+  header { position:absolute !important; }
+  [data-capture-full-image] {
+    max-height:none !important;
+    overflow:visible !important;
+    break-inside:avoid !important;
+  }
+  img, video {
+    content-visibility:visible !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+}
