@@ -1,0 +1,62 @@
+name: Sunday Form State QA
+
+on:
+  push:
+    branches:
+      - full-correction-audit-2026-09-11
+    paths:
+      - 'qa/form-state-qa.mjs'
+      - '.github/workflows/form-state-qa.yml'
+      - 'Site Header.dc.html'
+      - 'Site Footer.dc.html'
+      - 'Inquiry Form.dc.html'
+      - 'contact/index.html'
+      - 'join-our-team/index.html'
+      - 'sunday-school/index.html'
+      - 'services/index.html'
+      - 'assets/site.css'
+      - 'assets/site.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  form-state-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: full-correction-audit-2026-09-11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Playwright WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+
+      - name: Start local site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/sunday-form-http.log 2>&1 &
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/sunday-form-http.log
+          exit 1
+
+      - name: Run form-state QA with intercepted submissions
+        run: node qa/form-state-qa.mjs
+
+      - name: Upload form-state screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-form-state-qa-${{ github.run_number }}
+          path: form-qa-artifacts
+          if-no-files-found: warn
+          retention-days: 7
