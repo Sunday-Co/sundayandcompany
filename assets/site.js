@@ -5,14 +5,13 @@
   var reduce = !!(motionQuery && motionQuery.matches);
   var observer = null;
   var revealed = new WeakSet();
-  var mediaAnimated = new WeakSet();
   var menuTimers = new WeakMap();
 
   function ensureCorrectionStyles() {
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260912-4';
+    link.href = '/assets/rendered-corrections.css?v=20260912-5';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -30,6 +29,13 @@
       if (!hero.style.backgroundPosition && img.style.objectPosition) {
         hero.style.backgroundPosition = img.style.objectPosition;
       }
+    });
+  }
+
+  function markProgramShells() {
+    document.querySelectorAll('[data-program-cards]').forEach(function (grid) {
+      var shell = grid.parentElement;
+      if (shell) shell.setAttribute('data-program-shell', 'true');
     });
   }
 
@@ -87,7 +93,7 @@
       window.requestAnimationFrame(function () {
         window.requestAnimationFrame(function () {
           if (sheet.getAttribute('data-sheet-state') !== 'open') return;
-          sheet.style.transition = 'transform 420ms cubic-bezier(.32,.72,0,1), visibility 420ms';
+          sheet.style.transition = 'transform 620ms cubic-bezier(.22,.68,.18,1), visibility 620ms';
           sheet.style.transform = 'translateX(0)';
         });
       });
@@ -112,12 +118,12 @@
     sheet.style.display = 'flex';
     sheet.style.visibility = 'visible';
     sheet.style.pointerEvents = 'none';
-    sheet.style.transition = 'transform 360ms cubic-bezier(.32,.72,0,1), visibility 360ms';
+    sheet.style.transition = 'transform 560ms cubic-bezier(.22,.68,.18,1), visibility 560ms';
     sheet.style.transform = 'translateX(102%)';
 
     var timer = window.setTimeout(function () {
       if (sheet.getAttribute('data-sheet-state') === 'closed') hideSheetNow(sheet);
-    }, 390);
+    }, 600);
     menuTimers.set(sheet, timer);
   }
 
@@ -145,31 +151,12 @@
     var accents = node.querySelectorAll('[style*="Pinyon Script"], [style*="Pinyon"]');
     Array.prototype.forEach.call(accents, function (accent, index) {
       accent.animate([
-        { opacity: 0.18, transform: 'translateY(10px)' },
+        { opacity: 0.42, transform: 'translateY(6px)' },
         { opacity: 1, transform: 'translateY(0)' }
       ], {
-        duration: 720,
-        delay: 90 + (index * 35),
-        easing: 'cubic-bezier(.22,.75,.18,1)',
-        fill: 'both'
-      });
-    });
-  }
-
-  function animateEditorialMedia(node) {
-    if (reduce || !Element.prototype.animate) return;
-    var images = node.querySelectorAll('img');
-    Array.prototype.forEach.call(images, function (img) {
-      if (mediaAnimated.has(img)) return;
-      if (img.closest('header, footer, [role="dialog"], [aria-label="Sunday & Company navigation"]')) return;
-      if ((img.naturalWidth && img.naturalWidth < 420) || (img.naturalHeight && img.naturalHeight < 260)) return;
-      mediaAnimated.add(img);
-      img.animate([
-        { opacity: 0.55, transform: 'scale(1.018)', clipPath: 'inset(0 0 10% 0)' },
-        { opacity: 1, transform: 'scale(1)', clipPath: 'inset(0 0 0 0)' }
-      ], {
-        duration: 900,
-        easing: 'cubic-bezier(.22,.75,.18,1)',
+        duration: 1250,
+        delay: 180 + (index * 60),
+        easing: 'cubic-bezier(.22,.68,.18,1)',
         fill: 'both'
       });
     });
@@ -178,15 +165,14 @@
   function animateSection(node) {
     if (reduce || !Element.prototype.animate) return;
     node.animate([
-      { opacity: 0.22, transform: 'translateY(18px)' },
+      { opacity: 0.46, transform: 'translateY(10px)' },
       { opacity: 1, transform: 'translateY(0)' }
     ], {
-      duration: 760,
-      easing: 'cubic-bezier(.22,.75,.18,1)',
+      duration: 1150,
+      easing: 'cubic-bezier(.22,.68,.18,1)',
       fill: 'both'
     });
     animatePinyon(node);
-    animateEditorialMedia(node);
   }
 
   function revealSections() {
@@ -209,7 +195,7 @@
           animateSection(node);
           io.unobserve(node);
         });
-      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.10 });
+      }, { rootMargin: '0px 0px -5% 0px', threshold: 0.10 });
     }
 
     nodes.forEach(function (node) {
@@ -220,28 +206,12 @@
     return true;
   }
 
-  function animateNewDialogNodes() {
-    if (reduce || !Element.prototype.animate) return;
-    document.querySelectorAll('[aria-label="Project inquiry"], [aria-label="The Sunday Reservation"]').forEach(function (dialog) {
-      if (dialog.dataset.sundayMotionBound) return;
-      dialog.dataset.sundayMotionBound = '1';
-      dialog.animate([
-        { opacity: 0, transform: 'translateY(14px) scale(.992)' },
-        { opacity: 1, transform: 'translateY(0) scale(1)' }
-      ], {
-        duration: 430,
-        easing: 'cubic-bezier(.22,.75,.18,1)',
-        fill: 'both'
-      });
-    });
-  }
-
   function sync() {
     ensureCorrectionStyles();
     stabilizeCaptureUI();
     markHeroFallbacks();
+    markProgramShells();
     revealSections();
-    animateNewDialogNodes();
   }
 
   function boot() {
