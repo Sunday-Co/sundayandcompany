@@ -1,0 +1,30 @@
+name: Fix Nested Main
+
+on:
+  push:
+    branches:
+      - footer-reader-accessibility-fix-no-deploy-2026-09-13
+    paths:
+      - '.github/scripts/fix_nested_main.py'
+      - '.github/workflows/fix-nested-main.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: footer-reader-accessibility-fix-no-deploy-2026-09-13
+      - run: python .github/scripts/fix_nested_main.py
+      - name: Commit source correction
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name 'Sunday-Co'
+          git config user.email 'hello@sundayandcompany.co'
+          git add 404.html
+          git commit -m '[skip netlify] Correct 404 main landmark structure'
+          git push origin HEAD:footer-reader-accessibility-fix-no-deploy-2026-09-13
