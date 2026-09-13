@@ -7,6 +7,7 @@ on:
       - footer-reader-accessibility-fix-no-deploy-2026-09-13
     paths:
       - '.github/scripts/apply_final_accessibility_capture_fix.py'
+      - '.github/workflows/apply-final-accessibility-capture-fix.yml'
 
 permissions:
   contents: write
@@ -27,7 +28,6 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re
           html = Path('index.html').read_text()
           css = Path('assets/site.css').read_text()
           js = Path('assets/site.js').read_text()
