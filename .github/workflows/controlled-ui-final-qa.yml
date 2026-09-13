@@ -1,0 +1,342 @@
+name: Controlled UI Final QA
+
+on:
+  push:
+    branches:
+      - controlled-ui-audit-no-deploy-2026-09-13
+    paths:
+      - '.github/workflows/controlled-ui-final-qa.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate source ownership and locked portfolio
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+
+          site = Path('assets/site.css').read_text()
+          rendered = Path('assets/rendered-corrections.css').read_text()
+          js = Path('assets/site.js').read_text()
+
+          forbidden_js = ['normalizeRuntimeRoots','normalizeFooterTypography','prepareImagesForCapture','markHeroFallbacks']
+          for token in forbidden_js:
+              if token in js:
+                  raise SystemExit(f'Runtime restyling returned: {token}')
+          if '/assets/rendered-corrections.css?v=20260913-12' not in js:
+              raise SystemExit('site.js correction stylesheet cache key is not v12')
+          if 'triggerOriginalOpenSignMotion' not in js or 'IntersectionObserver' not in js:
+              raise SystemExit('OPEN-sign scroll fallback missing')
+          for token in ['sc-warm','sc-neon','sc-rock','sc-sway']:
+              if token not in rendered:
+                  raise SystemExit(f'OPEN-sign animation marker missing: {token}')
+          if 'Project inquiry: light rose Pinyon lead' in rendered:
+              raise SystemExit('Old Project Inquiry Pinyon override remains')
+          if 'CAPTURE INTEGRITY + FOOTER NORMALIZATION' in rendered:
+              raise SystemExit('Old capture/footer override tail remains')
+
+          # Shared generated component copies must be exact duplicates.
+          for name in ['Site Header.dc.html','Site Footer.dc.html','Inquiry Form.dc.html','Program Cards.dc.html']:
+              paths = list(Path('.').rglob(name))
+              if not paths:
+                  raise SystemExit(f'No copies found for {name}')
+              contents = {p.read_text() for p in paths}
+              if len(contents) != 1:
+                  raise SystemExit(f'Generated copies drifted for {name}: {len(contents)} variants')
+
+          # Portfolio pages are locked. Only the v11 -> v12 asset query may differ from production main.
+          locked = [
+            'our-work/index.html',
+            'our-work/luckys-cafe-bakery/index.html',
+            'our-work/petti-pathways/index.html',
+            'our-work/pizzeria-coco/index.html',
+            'our-work/folake/index.html',
+          ]
+          subprocess.run(['git','fetch','origin','main'], check=True, stdout=subprocess.DEVNULL)
+          for p in locked:
+              prod = subprocess.check_output(['git','show','origin/main:'+p], text=True)
+              cand = Path(p).read_text().replace('v=20260913-12','v=20260912-11')
+              if cand != prod:
+                  raise SystemExit(f'LOCKED portfolio page changed beyond cache key: {p}')
+
+          # The original portfolio scroll frame and reveal runtime must still exist.
+          lucky = Path('our-work/luckys-cafe-bakery/index.html').read_text()
+          if 'max-height:640px;overflow-y:auto' not in lucky:
+              raise SystemExit('Original 640px portfolio screenshot frame missing')
+          if 'data-reveal="true"' not in lucky or "n.style.opacity = '0'" not in lucky or 'translateY(20px)' not in lucky:
+              raise SystemExit('Original portfolio reveal behavior missing')
+
+          # No lazy image source markup. Full-page capture should not depend on scroll activation.
+          for p in Path('.').rglob('*.html'):
+              if '.github' not in p.parts and 'loading="lazy"' in p.read_text():
+                  raise SystemExit(f'Lazy image remains in {p}')
+
+          # Current source hierarchy markers.
+          if 'font-size: 13.25px !important' not in site:
+              raise SystemExit('Footer email optical size missing')
+          if 'text-transform: uppercase !important' not in site:
+              raise SystemExit('Uppercase inquiry hierarchy missing')
+          if 'overflow-y: visible !important' not in site:
+              raise SystemExit('Document root vertical overflow correction missing')
+          if 'data-sunday-static-hero="true"' not in Path('index.html').read_text():
+              raise SystemExit('Static homepage hero marker missing')
+          print('Strict source validation passed.')
+          PY
+
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+
+      - name: Serve candidate
+        run: |
+          python3 -m http.server 4173 >/tmp/controlled-final.log 2>&1 &
+          echo $! >/tmp/controlled-final.pid
+          sleep 2
+
+      - name: Verify mobile, desktop, images, capture, and locked portfolio behavior
+        run: |
+          mkdir -p final-qa
+          node <<'NODE'
+          const { webkit } = require('playwright');
+          const assert = require('assert');
+          const fs = require('fs');
+          const base = 'http://127.0.0.1:4173';
+          const report = {};
+
+          const n = v => Number(String(v).replace('px',''));
+          const approx = (v,target,tol=.35) => Math.abs(n(v)-target) <= tol;
+          const visible = async loc => {
+            try { return await loc.count() && await loc.first().isVisible(); } catch { return false; }
+          };
+          const style = async (loc,pseudo=null) => loc.first().evaluate((el,pseudo) => {
+            const s = getComputedStyle(el,pseudo);
+            return {
+              fontFamily:s.fontFamily,fontSize:s.fontSize,fontWeight:s.fontWeight,fontStyle:s.fontStyle,
+              letterSpacing:s.letterSpacing,lineHeight:s.lineHeight,textTransform:s.textTransform,
+              overflow:s.overflow,overflowX:s.overflowX,overflowY:s.overflowY,position:s.position,
+              transform:s.transform,willChange:s.willChange,display:s.display,visibility:s.visibility,
+              opacity:s.opacity,width:s.width,height:s.height
+            };
+          },pseudo);
+          const closeReservation = async page => {
+            const close = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await visible(close)) {
+              await close.first().evaluate(el=>el.click());
+              await page.waitForTimeout(220);
+            }
+          };
+          const waitImages = async page => {
+            await page.evaluate(async () => {
+              const imgs = [...document.images];
+              await Promise.all(imgs.map(img => {
+                if (img.complete && img.naturalWidth) return Promise.resolve();
+                return img.decode().catch(()=>{});
+              }));
+            });
+          };
+          async function sweepImages(page, route) {
+            await page.goto(base+route,{waitUntil:'domcontentloaded'});
+            await page.waitForTimeout(350);
+            await closeReservation(page);
+            const height = await page.evaluate(()=>document.documentElement.scrollHeight);
+            for(let y=0;y<height;y+=700){ await page.evaluate(y=>scrollTo(0,y),y); await page.waitForTimeout(12); }
+            await waitImages(page);
+            const bad = await page.evaluate(() => [...document.images].filter(i=>!i.complete || i.naturalWidth===0).map(i=>i.currentSrc||i.src));
+            assert.deepStrictEqual(bad,[],`Broken/unloaded images on ${route}: ${bad.join(', ')}`);
+            return await page.evaluate(()=>({count:document.images.length,height:document.documentElement.scrollHeight}));
+          }
+
+          async function testViewport(name, viewport) {
+            const browser = await webkit.launch();
+            const page = await browser.newPage({viewport});
+            const out = {};
+
+            // Homepage + Reservation.
+            await page.goto(base+'/',{waitUntil:'domcontentloaded'});
+            await page.waitForTimeout(1100);
+            await waitImages(page);
+            const res = page.locator('[aria-label="The Sunday Reservation"]');
+            assert.ok(await visible(res),`${name}: Reservation did not open`);
+            const support = await style(res.locator('h2 + p'));
+            const fine = await style(res.locator('[data-res-fineprint]'));
+            if(name==='mobile') {
+              assert.ok(approx(support.fontSize,10.5),`${name}: Reservation support ${support.fontSize}`);
+              assert.ok(approx(fine.fontSize,6.5),`${name}: Reservation fineprint ${fine.fontSize}`);
+            } else {
+              assert.ok(approx(support.fontSize,11.25),`${name}: Reservation support ${support.fontSize}`);
+              assert.ok(approx(fine.fontSize,8.5),`${name}: Reservation fineprint ${fine.fontSize}`);
+            }
+            await page.screenshot({path:`final-qa/${name}-reservation.png`});
+            await closeReservation(page);
+
+            // Footer typography.
+            await page.locator('footer').scrollIntoViewIfNeeded();
+            await page.waitForTimeout(100);
+            const emailStyle = await style(page.locator('footer a[href^="mailto:"]'));
+            const locStyle = await style(page.locator('footer [data-footer-location]'));
+            assert.ok(approx(emailStyle.fontSize,13.25),`${name}: footer email ${emailStyle.fontSize}`);
+            assert.ok(approx(locStyle.fontSize,12.5),`${name}: footer location ${locStyle.fontSize}`);
+            assert.strictEqual(emailStyle.fontWeight,'300',`${name}: footer email weight ${emailStyle.fontWeight}`);
+            assert.strictEqual(locStyle.fontWeight,'300',`${name}: footer location weight ${locStyle.fontWeight}`);
+            await page.screenshot({path:`final-qa/${name}-footer.png`});
+
+            // Document roots must not be nested vertical page scrollers.
+            const roots = await page.evaluate(() => [document.documentElement,document.body,document.querySelector('#dc-root'),document.querySelector('#dc-root > .sc-host')].filter(Boolean).map(el=>({tag:el.tagName,id:el.id,cls:el.className,overflowY:getComputedStyle(el).overflowY,scrollH:el.scrollHeight,clientH:el.clientHeight})));
+            for (const r of roots) assert.ok(!['auto','scroll'].includes(r.overflowY),`${name}: nested root scroller ${JSON.stringify(r)}`);
+            out.roots = roots;
+
+            // Static hero structure.
+            await page.evaluate(()=>scrollTo(0,0));
+            const hero = page.locator('#top img[data-sunday-static-hero="true"]');
+            assert.strictEqual(await hero.count(),1,`${name}: static hero image missing`);
+            const heroInfo = await hero.evaluate(img=>{const s=getComputedStyle(img),r=img.getBoundingClientRect();return {complete:img.complete,nw:img.naturalWidth,nh:img.naturalHeight,position:s.position,transform:s.transform,willChange:s.willChange,opacity:s.opacity,visibility:s.visibility,rect:{w:r.width,h:r.height}}});
+            assert.ok(heroInfo.complete && heroInfo.nw>0,`${name}: hero image not loaded`);
+            assert.strictEqual(heroInfo.position,'static',`${name}: hero not static: ${heroInfo.position}`);
+            assert.strictEqual(heroInfo.transform,'none',`${name}: hero transform ${heroInfo.transform}`);
+            assert.strictEqual(heroInfo.willChange,'auto',`${name}: hero will-change ${heroInfo.willChange}`);
+            assert.ok(heroInfo.rect.w>300 && heroInfo.rect.h>500,`${name}: hero rect too small ${JSON.stringify(heroInfo.rect)}`);
+            out.hero = heroInfo;
+
+            // Project Inquiry.
+            const start = page.getByText('Start A Project',{exact:true}).first();
+            await start.evaluate(el=>el.click());
+            await page.waitForTimeout(300);
+            const iq = page.locator('[aria-label="Project inquiry"]');
+            assert.ok(await visible(iq),`${name}: Inquiry not visible`);
+            const iqHeading = await style(iq.locator('h2'));
+            const iqSupport = await style(iq.locator('[data-inquiry-support]'));
+            const iqKicker = await style(iq.locator('[data-inquiry-kicker]'));
+            const iqLabel = await style(iq.locator('form[data-inq] label > span:first-child').first());
+            assert.ok(iqHeading.fontFamily.includes('Playfair'),`${name}: inquiry heading not Playfair`);
+            assert.strictEqual(iqHeading.textTransform,'uppercase',`${name}: inquiry heading not uppercase`);
+            assert.strictEqual(iqSupport.textTransform,'uppercase',`${name}: inquiry support not uppercase`);
+            assert.ok(iqKicker.fontFamily.includes('Inter Tight'),`${name}: inquiry kicker not Inter Tight`);
+            if(name==='mobile') {
+              assert.ok(approx(iqHeading.fontSize,24),`${name}: inquiry heading ${iqHeading.fontSize}`);
+              assert.ok(approx(iqSupport.fontSize,9.25),`${name}: inquiry support ${iqSupport.fontSize}`);
+              assert.ok(approx(iqLabel.fontSize,10),`${name}: inquiry label ${iqLabel.fontSize}`);
+            } else {
+              assert.ok(approx(iqHeading.fontSize,31),`${name}: inquiry heading ${iqHeading.fontSize}`);
+              assert.ok(approx(iqSupport.fontSize,9.75),`${name}: inquiry support ${iqSupport.fontSize}`);
+              assert.ok(approx(iqLabel.fontSize,10.25),`${name}: inquiry label ${iqLabel.fontSize}`);
+            }
+            await page.screenshot({path:`final-qa/${name}-inquiry.png`});
+            const iqClose=iq.locator('button[aria-label="Close"]'); if(await visible(iqClose)) await iqClose.evaluate(el=>el.click());
+
+            // Contact form.
+            await page.goto(base+'/contact/',{waitUntil:'domcontentloaded'}); await page.waitForTimeout(500); await closeReservation(page);
+            const cf=page.locator('form[data-editorial-labels]').first();
+            assert.ok(await cf.count(),`${name}: contact form missing`);
+            const cfLabel=await style(cf.locator('label').first());
+            assert.ok(n(cfLabel.fontSize)<=10.5,`${name}: contact label too large ${cfLabel.fontSize}`);
+            const instruction=page.locator('[data-form-instruction]').first();
+            if(await instruction.count()) {
+              const is=await style(instruction); assert.ok(n(is.fontSize)<=9.1,`${name}: form instruction too large ${is.fontSize}`);
+            }
+            await page.screenshot({path:`final-qa/${name}-contact.png`});
+
+            // Join cards and archive modal microtype.
+            await page.goto(base+'/join-our-team/',{waitUntil:'domcontentloaded'}); await page.waitForTimeout(500); await closeReservation(page);
+            const card=page.locator('[data-program-cards] > article').first();
+            assert.ok(await card.count(),`${name}: program card missing`);
+            const frontButton=card.locator('button').first();
+            const spans=frontButton.locator('span');
+            const spanCount=await spans.count();
+            let visibleSizes=[];
+            for(let i=0;i<spanCount;i++){const loc=spans.nth(i);if(await loc.isVisible().catch(()=>false)){const s=await style(loc);if(n(s.fontSize)>0)visibleSizes.push(n(s.fontSize));}}
+            assert.ok(visibleSizes.some(v=>v>=8),`${name}: Join card metadata did not size up: ${visibleSizes}`);
+            await frontButton.evaluate(el=>el.click()); await page.waitForTimeout(950);
+            const details=card.getByText('View Full Details',{exact:true});
+            assert.ok(await visible(details),`${name}: View Full Details unavailable after flip`);
+            await details.evaluate(el=>el.click()); await page.waitForTimeout(250);
+            const modal=page.locator('[role="dialog"][aria-label="The Fellows Table"]');
+            assert.ok(await visible(modal),`${name}: Fellows modal not visible`);
+            const modalMeta=await modal.locator(':scope > div:nth-child(2)').evaluate(el=>({before:getComputedStyle(el,'::before').fontSize,letter:getComputedStyle(el,'::before').letterSpacing}));
+            const stamp=await modal.evaluate(el=>({size:getComputedStyle(el,'::after').fontSize,letter:getComputedStyle(el,'::after').letterSpacing}));
+            if(name==='mobile') {
+              assert.ok(n(modalMeta.before)>=7.2,`${name}: archive meta ${modalMeta.before}`);
+              assert.ok(n(stamp.size)>=7,`${name}: archive stamp ${stamp.size}`);
+            } else {
+              assert.ok(n(modalMeta.before)>=8,`${name}: archive meta ${modalMeta.before}`);
+              assert.ok(n(stamp.size)>=7.5,`${name}: archive stamp ${stamp.size}`);
+            }
+            await page.screenshot({path:`final-qa/${name}-join-modal.png`});
+            out.reservation={support,fine}; out.footer={emailStyle,locStyle}; out.inquiry={iqHeading,iqSupport,iqKicker,iqLabel}; out.join={visibleSizes,modalMeta,stamp};
+            await browser.close();
+            return out;
+          }
+
+          (async()=>{
+            report.mobile=await testViewport('mobile',{width:390,height:844});
+            report.desktop=await testViewport('desktop',{width:1440,height:1000});
+
+            // Route-wide image decoding audit in WebKit.
+            const browser=await webkit.launch();
+            const page=await browser.newPage({viewport:{width:390,height:844}});
+            report.routes={};
+            const routes=['/','/about/','/services/','/join-our-team/','/sunday-school/','/contact/','/our-work/','/our-work/luckys-cafe-bakery/','/our-work/petti-pathways/','/our-work/pizzeria-coco/','/our-work/folake/'];
+            for(const route of routes) report.routes[route]=await sweepImages(page,route);
+
+            // Original portfolio movement and internal screenshot frame must still work.
+            await page.goto(base+'/our-work/luckys-cafe-bakery/',{waitUntil:'domcontentloaded'}); await page.waitForTimeout(450); await closeReservation(page);
+            const reveal=page.locator('[data-reveal="true"]').filter({has:page.locator('#email')}).first();
+            const target=await reveal.count()?reveal:page.locator('#email');
+            const before=await target.evaluate(el=>({opacity:el.style.opacity,transform:el.style.transform,transition:getComputedStyle(el).transitionDuration}));
+            assert.strictEqual(before.opacity,'0',`Portfolio reveal did not initialize: ${JSON.stringify(before)}`);
+            assert.ok(before.transform.includes('translateY'),`Portfolio reveal transform missing: ${JSON.stringify(before)}`);
+            assert.notStrictEqual(before.transition,'0s',`Portfolio reveal transition disabled: ${JSON.stringify(before)}`);
+            await target.scrollIntoViewIfNeeded(); await page.waitForTimeout(900);
+            const after=await target.evaluate(el=>({opacity:el.style.opacity,computed:getComputedStyle(el).opacity}));
+            assert.strictEqual(after.opacity,'1',`Portfolio reveal did not complete: ${JSON.stringify(after)}`);
+            const frame=page.locator('img[alt="Lucky’s Café and Bakery homepage"]').locator('..');
+            const frameStyle=await frame.evaluate(el=>({maxHeight:getComputedStyle(el).maxHeight,overflowY:getComputedStyle(el).overflowY}));
+            assert.strictEqual(frameStyle.maxHeight,'640px',`Portfolio frame height changed: ${JSON.stringify(frameStyle)}`);
+            assert.ok(['auto','scroll'].includes(frameStyle.overflowY),`Portfolio frame scroll changed: ${JSON.stringify(frameStyle)}`);
+            report.portfolio={before,after,frameStyle};
+            await browser.close();
+
+            // Full-page capture with JS disabled, so hero/photo capture cannot depend on runtime repair.
+            const nojsBrowser=await webkit.launch();
+            const nojs=await nojsBrowser.newPage({viewport:{width:390,height:844},javaScriptEnabled:false});
+            await nojs.goto(base+'/',{waitUntil:'domcontentloaded'}); await waitImages(nojs);
+            const nojsHero=await nojs.locator('#top img[data-sunday-static-hero="true"]').evaluate(img=>({complete:img.complete,nw:img.naturalWidth,position:getComputedStyle(img).position,opacity:getComputedStyle(img).opacity,visibility:getComputedStyle(img).visibility}));
+            assert.ok(nojsHero.complete && nojsHero.nw>0 && nojsHero.position==='static' && nojsHero.opacity==='1' && nojsHero.visibility==='visible',`No-JS hero failed: ${JSON.stringify(nojsHero)}`);
+            await nojs.screenshot({path:'final-qa/mobile-home-full-nojs.png',fullPage:true});
+            report.nojsHero=nojsHero;
+            await nojsBrowser.close();
+
+            // Print-style document capture.
+            const printBrowser=await webkit.launch();
+            const pp=await printBrowser.newPage({viewport:{width:390,height:844}});
+            await pp.goto(base+'/',{waitUntil:'domcontentloaded'}); await pp.waitForTimeout(300); await closeReservation(pp); await pp.emulateMedia({media:'print'}); await waitImages(pp);
+            await pp.screenshot({path:'final-qa/mobile-home-full-print.png',fullPage:true});
+            await printBrowser.close();
+
+            // Normal full-page mobile + desktop captures after explicit image decode.
+            for(const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:1000}]]){
+              const b=await webkit.launch(); const p=await b.newPage({viewport}); await p.goto(base+'/',{waitUntil:'domcontentloaded'}); await p.waitForTimeout(1100); await closeReservation(p); await waitImages(p); await p.screenshot({path:`final-qa/${name}-home-full.png`,fullPage:true}); await b.close();
+            }
+
+            fs.writeFileSync('final-qa/report.json',JSON.stringify(report,null,2));
+            console.log('Strict controlled UI browser QA passed.');
+          })().catch(err=>{console.error(err);process.exit(1)});
+          NODE
+
+      - name: Upload strict QA renders
+        uses: actions/upload-artifact@v4
+        with:
+          name: controlled-ui-final-qa
+          path: final-qa
+          if-no-files-found: error
