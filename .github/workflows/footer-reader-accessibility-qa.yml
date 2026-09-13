@@ -1,4 +1,4 @@
-# Rerun after verified sitewide lang="en" source patch. Slow local routes retry without weakening assertions.
+# Rerun after verified sitewide lang="en" source patch. Each audited route gets a fresh WebKit page so a slow route cannot interrupt the next navigation.
 name: Footer Reader Accessibility QA
 
 on:
@@ -49,13 +49,8 @@ jobs:
 
           async function navigate(page, route) {
             console.log(`Auditing ${route}`);
-            try {
-              await page.goto(base + route, { waitUntil: 'domcontentloaded', timeout: 30000 });
-            } catch (error) {
-              console.log(`Retrying ${route} after navigation timeout`);
-              await page.goto(base + route, { waitUntil: 'commit', timeout: 20000 });
-              await page.waitForFunction(() => document.readyState !== 'loading', null, { timeout: 20000 }).catch(() => {});
-            }
+            await page.goto(base + route, { waitUntil: 'commit', timeout: 30000 });
+            await page.waitForFunction(() => document.readyState !== 'loading', null, { timeout: 20000 }).catch(() => {});
             await page.waitForTimeout(500);
           }
 
@@ -159,14 +154,20 @@ jobs:
           await mobile.goto(base + '/', { waitUntil: 'networkidle', timeout: 60000 });
           await closeReservation(mobile);
           await mobile.screenshot({ path: `${out}/mobile-home-full.png`, fullPage: true });
+          await mobile.close();
 
           const routes = ['/', '/about/', '/services/', '/our-work/', '/our-work/luckys-cafe-bakery/', '/our-work/petti-pathways/', '/our-work/pizzeria-coco/', '/our-work/folake/', '/contact/', '/join-our-team/', '/sunday-school/', '/accessibility/', '/privacy-policy/', '/terms-and-conditions/', '/cookie-policy/'];
           for (const route of routes) {
-            await navigate(mobile, route);
-            await closeReservation(mobile);
-            await auditStructure(mobile, route);
-            await auditImages(mobile, route);
-            await auditInteractiveNames(mobile, route);
+            const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+            try {
+              await navigate(page, route);
+              await closeReservation(page);
+              await auditStructure(page, route);
+              await auditImages(page, route);
+              await auditInteractiveNames(page, route);
+            } finally {
+              await page.close();
+            }
           }
 
           const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
