@@ -1,0 +1,241 @@
+name: Final Site QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - footer-reader-accessibility-fix-no-deploy-2026-09-13
+    paths:
+      - '404.html'
+      - '**/index.html'
+      - '**/Site Header.dc.html'
+      - '**/Site Footer.dc.html'
+      - 'assets/site.css'
+      - 'assets/site.js'
+      - 'assets/rendered-corrections.css'
+      - '.github/workflows/final-site-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  webkit-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install QA dependencies
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 @axe-core/playwright@4.10.2 >/dev/null 2>&1
+          npx playwright install --with-deps webkit
+      - name: Serve candidate
+        run: |
+          python -m http.server 4173 >/tmp/sunday-http.log 2>&1 &
+          echo $! > /tmp/sunday-http.pid
+          sleep 2
+      - name: Run WebKit, keyboard, accessibility, and capture QA
+        run: |
+          cat > final-site-qa.mjs <<'JS'
+          import { webkit } from 'playwright';
+          import AxeBuilder from '@axe-core/playwright';
+          import assert from 'node:assert';
+          import fs from 'node:fs';
+
+          const base = 'http://127.0.0.1:4173';
+          const out = 'final-site-qa';
+          fs.mkdirSync(out, { recursive: true });
+          const routes = ['/', '/about/', '/services/', '/our-work/', '/our-work/luckys-cafe-bakery/', '/our-work/petti-pathways/', '/our-work/pizzeria-coco/', '/our-work/folake/', '/contact/', '/join-our-team/', '/sunday-school/', '/accessibility/', '/privacy-policy/', '/terms-and-conditions/', '/cookie-policy/'];
+
+          const browser = await webkit.launch();
+
+          async function freshPage(viewport, route) {
+            let page = await browser.newPage({ viewport });
+            try {
+              await page.goto(base + route, { waitUntil: 'domcontentloaded', timeout: 45000 });
+            } catch (first) {
+              await page.close();
+              page = await browser.newPage({ viewport });
+              await page.goto(base + route, { waitUntil: 'commit', timeout: 30000 });
+              await page.waitForFunction(() => document.readyState !== 'loading', null, { timeout: 30000 }).catch(() => {});
+            }
+            await page.waitForTimeout(500);
+            return page;
+          }
+
+          async function closeReservation(page) {
+            const btn = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await btn.count() && await btn.first().isVisible().catch(() => false)) {
+              await btn.first().evaluate(el => el.click());
+              await page.waitForTimeout(120);
+            }
+          }
+
+          async function basicAudit(page, route) {
+            const result = await page.evaluate(() => {
+              const visible = el => {
+                const s = getComputedStyle(el), r = el.getBoundingClientRect();
+                return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity || 1) > 0 && r.width > 0 && r.height > 0;
+              };
+              const name = el => {
+                const aria = (el.getAttribute('aria-label') || '').trim(); if (aria) return aria;
+                const labelled = (el.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean).map(id => document.getElementById(id)?.textContent || '').join(' ').trim(); if (labelled) return labelled;
+                if (el.id) { const lab = document.querySelector(`label[for="${CSS.escape(el.id)}"]`); if (lab?.textContent?.trim()) return lab.textContent.trim(); }
+                const wrap = el.closest('label'); if (wrap?.textContent?.trim()) return wrap.textContent.trim();
+                return (el.textContent || '').replace(/\s+/g,' ').trim() || (el.getAttribute('title') || '').trim();
+              };
+              const controls = [...document.querySelectorAll('a[href],button,input,textarea,select')].filter(visible).filter(el => !name(el)).map(el => el.outerHTML.slice(0,180));
+              const missingAlt = [...document.images].filter(img => !img.hasAttribute('alt')).map(img => img.outerHTML.slice(0,180));
+              const h1 = [...document.querySelectorAll('h1')].filter(visible);
+              const imgs = [...document.images].map(img => ({ src:img.getAttribute('src'), complete:img.complete, nw:img.naturalWidth, nh:img.naturalHeight }));
+              return {
+                lang: document.documentElement.lang,
+                title: document.title.trim(),
+                main: !!document.querySelector('main#main-content'),
+                h1Count: h1.length,
+                controls, missingAlt, imgs,
+                overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+                unnamedDialogs: [...document.querySelectorAll('[role="dialog"]')].filter(el => visible(el) && !(el.getAttribute('aria-label') || el.getAttribute('aria-labelledby'))).length,
+              };
+            });
+            assert.strictEqual(result.lang, 'en', `${route}: lang`);
+            assert.ok(result.title, `${route}: title missing`);
+            assert.ok(result.main, `${route}: main landmark missing`);
+            assert.strictEqual(result.h1Count, 1, `${route}: expected one visible H1, got ${result.h1Count}`);
+            assert.deepStrictEqual(result.controls, [], `${route}: unnamed controls ${JSON.stringify(result.controls)}`);
+            assert.deepStrictEqual(result.missingAlt, [], `${route}: missing alt ${JSON.stringify(result.missingAlt)}`);
+            assert.strictEqual(result.unnamedDialogs, 0, `${route}: unnamed visible dialog`);
+            assert.ok(result.overflow <= 2, `${route}: horizontal overflow ${result.overflow}px`);
+            const broken = result.imgs.filter(x => x.complete && x.nw === 0);
+            assert.deepStrictEqual(broken, [], `${route}: broken images ${JSON.stringify(broken)}`);
+
+            const axe = await new AxeBuilder({ page }).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
+            const serious = axe.violations.filter(v => ['critical','serious'].includes(v.impact));
+            assert.deepStrictEqual(serious.map(v => ({id:v.id, impact:v.impact, nodes:v.nodes.length})), [], `${route}: serious axe issues`);
+          }
+
+          // Route-by-route mobile audit, fresh page every time.
+          for (const route of routes) {
+            console.log('Auditing', route);
+            const page = await freshPage({ width:390, height:844 }, route);
+            await closeReservation(page);
+            await basicAudit(page, route);
+            await page.close();
+          }
+
+          // Home keyboard + modal + skip-link + footer + full-page capture.
+          const mobile = await freshPage({ width:390, height:844 }, '/');
+          await closeReservation(mobile);
+          const skip = mobile.locator('a[href="#main-content"]').first();
+          await skip.evaluate(el => el.click());
+          await mobile.waitForTimeout(80);
+          assert.strictEqual(await mobile.evaluate(() => document.activeElement?.id), 'main-content', 'Skip link did not move focus to main');
+
+          const opener = mobile.getByText('Start A Project', { exact:true }).first();
+          await opener.focus();
+          await opener.evaluate(el => el.click());
+          await mobile.waitForTimeout(250);
+          const inquiry = mobile.locator('[aria-label="Project inquiry"]');
+          assert.ok(await inquiry.isVisible(), 'Inquiry not visible');
+          const iq = await inquiry.evaluate(el => { const r=el.getBoundingClientRect(),s=getComputedStyle(el); return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,opacity:s.opacity}; });
+          assert.ok(Math.abs(((iq.top+iq.bottom)/2)-422) <= 28, `Inquiry not centered ${JSON.stringify(iq)}`);
+          assert.strictEqual(iq.opacity, '1');
+          assert.ok(await inquiry.evaluate(el => el.contains(document.activeElement)), 'Focus did not enter inquiry');
+          await mobile.keyboard.press('Escape');
+          await mobile.waitForTimeout(150);
+          assert.ok(!(await inquiry.isVisible().catch(() => false)), 'Escape did not close inquiry');
+          assert.strictEqual((await mobile.evaluate(() => document.activeElement?.textContent || '')).replace(/\s+/g,' ').trim().startsWith('Start A Project'), true, 'Focus did not return to inquiry opener');
+
+          const menu = mobile.getByRole('button', { name:'Open menu' });
+          await menu.focus(); await menu.click(); await mobile.waitForTimeout(160);
+          const sheet = mobile.locator('aside[aria-label="Sunday & Company navigation"]');
+          assert.ok(await sheet.evaluate(el => el.contains(document.activeElement)), 'Focus did not enter mobile menu');
+          await mobile.keyboard.press('Escape'); await mobile.waitForTimeout(140);
+          assert.strictEqual(await mobile.evaluate(() => document.activeElement?.getAttribute('aria-label')), 'Open menu', 'Focus did not return to menu opener');
+
+          await mobile.locator('footer').scrollIntoViewIfNeeded(); await mobile.waitForTimeout(100);
+          const footer = await mobile.locator('footer').evaluate(el => {
+            const s=getComputedStyle(el), email=el.querySelector('a[href^="mailto:"]'), tag=el.querySelector('[data-footer-tagline]'), fine=document.querySelector('[aria-label="Newsletter"] [data-news-fineprint]');
+            return { paddingBottom:parseFloat(s.paddingBottom), emailSize:parseFloat(getComputedStyle(email).fontSize), emailWeight:getComputedStyle(email).fontWeight, tagFamily:getComputedStyle(tag).fontFamily, fineSize:fine?parseFloat(getComputedStyle(fine).fontSize):0 };
+          });
+          assert.ok(footer.paddingBottom >= 44, `Footer bottom ${footer.paddingBottom}`);
+          assert.ok(footer.emailSize >= 13, `Footer email ${footer.emailSize}`);
+          assert.strictEqual(footer.emailWeight, '400');
+          assert.ok(footer.tagFamily.includes('Inter Tight'), `Footer tagline ${footer.tagFamily}`);
+          assert.ok(footer.fineSize >= 8, `Newsletter fine print ${footer.fineSize}`);
+          await mobile.screenshot({ path:`${out}/mobile-footer.png` });
+          await mobile.close();
+
+          const cap = await freshPage({ width:390, height:844 }, '/');
+          await closeReservation(cap);
+          const hero = await cap.locator('section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"]').evaluate(el => { const r=el.getBoundingClientRect(),s=getComputedStyle(el); return { complete:el.complete,nw:el.naturalWidth,nh:el.naturalHeight,h:r.height,w:r.width,pos:s.position,display:s.display,opacity:s.opacity }; });
+          assert.ok(hero.complete && hero.nw > 0 && hero.nh > 0, `Hero not decoded ${JSON.stringify(hero)}`);
+          assert.ok(hero.h >= 680, `Hero flow height ${hero.h}`);
+          assert.strictEqual(hero.pos, 'relative');
+          assert.strictEqual(hero.opacity, '1');
+          await cap.screenshot({ path:`${out}/mobile-home-full.png`, fullPage:true });
+          await cap.emulateMedia({ media:'print' });
+          await cap.screenshot({ path:`${out}/mobile-home-print.png`, fullPage:true });
+          await cap.close();
+
+          // Desktop Our Work regression at two widths.
+          for (const width of [1180,1440]) {
+            const page = await freshPage({ width, height:1000 }, '/our-work/');
+            await closeReservation(page);
+            const layout = await page.evaluate(() => {
+              const title=document.querySelector('#work-title > span'), receipt=document.querySelector('[data-work-receipt]');
+              const a=title.getBoundingClientRect(), b=receipt.getBoundingClientRect();
+              return { text:title.textContent.trim(), white:getComputedStyle(title).whiteSpace, overlap:!(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top) };
+            });
+            assert.ok(layout.text.includes('A Point Of View'), `Work title ${layout.text}`);
+            assert.strictEqual(layout.white, 'nowrap');
+            assert.strictEqual(layout.overlap, false, `Work receipt overlap at ${width}`);
+            await page.screenshot({ path:`${out}/our-work-${width}.png`, fullPage:false });
+            await page.close();
+          }
+
+          // Portfolio structure/movement protection and internal screenshot frames.
+          for (const route of ['/our-work/luckys-cafe-bakery/','/our-work/petti-pathways/','/our-work/pizzeria-coco/','/our-work/folake/']) {
+            const page = await freshPage({ width:1440, height:1000 }, route);
+            await closeReservation(page);
+            const protection = await page.evaluate(() => {
+              const frames=[...document.querySelectorAll('div[style*="max-height:640px"][style*="overflow-y:auto"]')];
+              const reveal=document.querySelector('[data-reveal]');
+              return { frames:frames.length, revealExists:!!reveal, videoPreloads:[...document.querySelectorAll('video')].map(v=>v.getAttribute('preload')) };
+            });
+            assert.ok(protection.frames >= 1, `${route}: internal screenshot frames missing`);
+            assert.ok(protection.revealExists, `${route}: original reveal hooks missing`);
+            assert.ok(protection.videoPreloads.every(v => v !== 'auto'), `${route}: eager portfolio video preload returned`);
+            await page.close();
+          }
+
+          // Join program dialog keyboard focus and microtype.
+          const join = await freshPage({ width:390, height:844 }, '/join-our-team/');
+          await closeReservation(join);
+          const firstCard = join.locator('[data-program-cards] article').first().locator('button').first();
+          await firstCard.evaluate(el => el.click()); await join.waitForTimeout(950);
+          const details = join.getByText('View Full Details', { exact:true }).first();
+          if (await details.count()) {
+            await details.focus(); await details.evaluate(el => el.click()); await join.waitForTimeout(200);
+            const dialog=join.locator('[role="dialog"][aria-label="The Fellows Table"]');
+            assert.ok(await dialog.isVisible(), 'Fellows dialog did not open');
+            assert.ok(await dialog.evaluate(el => el.contains(document.activeElement)), 'Focus did not enter Fellows dialog');
+            const stamp = await dialog.evaluate(el => parseFloat(getComputedStyle(el,'::after').fontSize));
+            assert.ok(stamp >= 7.5, `Join stamp ${stamp}`);
+            await join.keyboard.press('Escape'); await join.waitForTimeout(120);
+            assert.ok(!(await dialog.isVisible().catch(()=>false)), 'Escape did not close Fellows dialog');
+          }
+          await join.screenshot({ path:`${out}/join-mobile.png`, fullPage:false });
+          await join.close();
+
+          await browser.close();
+          console.log(JSON.stringify({ hero, footer, status:'PASS' }, null, 2));
+          JS
+          node final-site-qa.mjs
+      - name: Upload final QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-final-site-qa
+          path: final-site-qa/
+          if-no-files-found: ignore
