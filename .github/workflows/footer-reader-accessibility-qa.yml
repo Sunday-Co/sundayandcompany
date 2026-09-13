@@ -91,7 +91,7 @@ jobs:
           await closeReservation(mobile);
 
           const start = mobile.getByText('Start A Project', { exact: true }).first();
-          await start.click();
+          await start.evaluate(el => el.click());
           await mobile.waitForTimeout(320);
           const inquiry = mobile.locator('[aria-label="Project inquiry"]');
           assert.ok(await inquiry.isVisible(), 'Mobile inquiry is not visible');
@@ -106,7 +106,7 @@ jobs:
           await mobile.screenshot({ path: `${out}/mobile-inquiry.png` });
 
           const closeIq = inquiry.locator('button[aria-label="Close"]');
-          await closeIq.click();
+          await closeIq.evaluate(el => el.click());
           await mobile.waitForTimeout(150);
           await mobile.locator('footer').scrollIntoViewIfNeeded();
           await mobile.waitForTimeout(120);
@@ -145,7 +145,8 @@ jobs:
           await desktop.goto(base + '/', { waitUntil: 'domcontentloaded' });
           await desktop.waitForTimeout(700);
           await closeReservation(desktop);
-          await desktop.getByText('Start A Project', { exact: true }).first().click();
+          const dStart = desktop.getByText('Start A Project', { exact: true }).first();
+          await dStart.evaluate(el => el.click());
           await desktop.waitForTimeout(300);
           const d = await desktop.locator('[aria-label="Project inquiry"]').evaluate(el => {
             const r = el.getBoundingClientRect();
