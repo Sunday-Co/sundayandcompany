@@ -87,11 +87,16 @@
     textarea { min-height: 96px; }
   }
 
+
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
   @media (max-width: 820px) {
+    /* iOS force-zooms any field under 16px */
     input, textarea, select { font-size: 16px !important; min-height: 46px; }
     textarea { min-height: 100px; }
     button { font-size: inherit; }
+    /* CTA rows: heading and button stack instead of the button running off screen.
+       Only flex containers, so grids are untouched. */
+    /* any flex row that pushes items apart wraps instead of clipping */
     [style*="display:flex"][style*="space-between"],
     [style*="display: flex"][style*="space-between"] {
       flex-wrap: wrap !important;
@@ -99,6 +104,8 @@
     }
     [style*="display:flex"][style*="space-between"] > *,
     [style*="display: flex"][style*="space-between"] > * { min-width: 0 !important; }
+    /* service sheet interiors: title above copy, never beside it.
+       keyed on align-items:start so the card's header row is untouched. */
     button > span[style*="align-items: start"][style*="grid-template-columns"],
     button > span[style*="align-items:start"][style*="grid-template-columns"] {
       grid-template-columns: 1fr !important;
@@ -107,15 +114,19 @@
   }
 
   @media (max-width: 700px) {
+    /* masthead logo — same size on every page */
     header > a[aria-label] { width: 120px !important; }
     header > a[aria-label] > span { height: 44px !important; width: 116px !important; }
     header > a[aria-label] > span > img {
       height: 164px !important; width: 164px !important;
       left: -24px !important; top: -57px !important;
     }
+    /* newsletter popup — taller receipt with room for the image on signup and confirmation */
   }
 
   @media (max-width: 700px) {
+    /* project inquiry form: one column and condensed, popup and Services page
+       both, since they are the same component */
     form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
@@ -123,9 +134,11 @@
     form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
     form[data-inq] textarea { min-height: 74px !important; }
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    /* Keep the receipt identity and status rows visible on mobile. */
   }
 
   @media (max-width: 700px) {
+    /* inquiry becomes three short steps so nothing needs scrolling */
     form[data-inq] { grid-template-columns: 1fr !important; }
     form[data-inq][data-cur="1"] [data-step]:not([data-step="1"]) { display: none !important; }
     form[data-inq][data-cur="2"] [data-step]:not([data-step="2"]) { display: none !important; }
@@ -338,6 +351,7 @@ class Component extends DCLogic {
   }
   renderVals() {
     const nw = this.state.narrow;
+    // palette swatches: click to copy
     const HEXES = ['#4A8B8D','#ACBAC7','#273B53','#F8F1E7'];
     const led = { swH: nw ? '80px' : 'clamp(96px,10vw,128px)', swMsg: this.state.swMsg || 'Click To Copy' };
     HEXES.forEach((hx, i) => {
