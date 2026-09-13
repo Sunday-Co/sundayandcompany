@@ -28,3 +28,10 @@ jobs:
           sleep 2
       - name: Run detailed axe report
         run: node .github/scripts/axe_detail_report.mjs
+      - name: Upload accessibility detail report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-axe-detail-report
+          path: axe-detail-artifact/
+          if-no-files-found: error
