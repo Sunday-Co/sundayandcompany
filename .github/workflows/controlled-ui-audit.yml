@@ -1,0 +1,237 @@
+name: Controlled UI Audit
+
+on:
+  push:
+    branches:
+      - controlled-ui-audit-no-deploy-2026-09-13
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Serve site
+        run: |
+          python3 -m http.server 4173 >/tmp/sunday-audit.log 2>&1 &
+          echo $! >/tmp/sunday-audit.pid
+          sleep 2
+      - name: Audit rendered UI
+        run: |
+          mkdir -p audit-output
+          node <<'NODE'
+          const { webkit } = require('playwright');
+          const fs = require('fs');
+          const base = 'http://127.0.0.1:4173';
+
+          const cssSnapshot = async (loc) => loc.evaluate(el => {
+            const s = getComputedStyle(el);
+            return {
+              tag: el.tagName,
+              text: (el.textContent || '').trim().replace(/\s+/g,' ').slice(0,180),
+              fontFamily: s.fontFamily,
+              fontSize: s.fontSize,
+              fontWeight: s.fontWeight,
+              fontStyle: s.fontStyle,
+              letterSpacing: s.letterSpacing,
+              lineHeight: s.lineHeight,
+              textTransform: s.textTransform,
+              display: s.display,
+              position: s.position,
+              overflow: s.overflow,
+              overflowX: s.overflowX,
+              overflowY: s.overflowY,
+              opacity: s.opacity,
+              transform: s.transform,
+              width: s.width,
+              height: s.height
+            };
+          });
+
+          async function visible(loc) {
+            try { return await loc.count() && await loc.first().isVisible(); } catch { return false; }
+          }
+
+          async function closeReservation(page) {
+            const close = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await visible(close)) {
+              await close.first().evaluate(el => el.click());
+              await page.waitForTimeout(250);
+            }
+          }
+
+          async function inspect(viewName, viewport) {
+            const browser = await webkit.launch();
+            const page = await browser.newPage({ viewport });
+            const report = { viewName, viewport };
+
+            await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+            await page.waitForTimeout(1300);
+
+            const res = page.locator('[aria-label="The Sunday Reservation"]');
+            if (await visible(res)) {
+              report.reservation = {
+                title: await cssSnapshot(res.locator('h2').first()),
+                support: await cssSnapshot(res.locator('h2 + p').first()),
+                fineprint: await cssSnapshot(res.locator('[data-res-fineprint]').first()),
+              };
+              await page.screenshot({ path:`audit-output/${viewName}-reservation.png`, fullPage:false });
+            } else report.reservation = { error:'not visible' };
+
+            await closeReservation(page);
+            await page.locator('footer').scrollIntoViewIfNeeded();
+            await page.waitForTimeout(150);
+            const email = page.locator('footer a[href^="mailto:"]').first();
+            const location = page.locator('footer [data-footer-location]').first();
+            const navItem = page.locator('footer [data-footer-ui]').first();
+            report.footer = {
+              email: await cssSnapshot(email),
+              location: await cssSnapshot(location),
+              navItem: await cssSnapshot(navItem)
+            };
+            await page.screenshot({ path:`audit-output/${viewName}-footer.png`, fullPage:false });
+
+            // Homepage hero image and its ancestry.
+            await page.evaluate(() => scrollTo(0,0));
+            await page.waitForTimeout(100);
+            report.hero = await page.evaluate(() => {
+              const imgs = [...document.images].map(img => {
+                const r = img.getBoundingClientRect();
+                const s = getComputedStyle(img);
+                return { img, r, s };
+              }).filter(x => x.r.bottom > 0 && x.r.top < Math.min(innerHeight * 1.5, 1300) && x.r.width > 150 && x.r.height > 150)
+                .sort((a,b) => (b.r.width*b.r.height)-(a.r.width*a.r.height));
+              if (!imgs.length) return { error:'no large image intersects hero viewport' };
+              const x = imgs[0];
+              const ancestors = [];
+              let n = x.img;
+              for (let i=0; n && i<8; i++, n=n.parentElement) {
+                const s = getComputedStyle(n);
+                const r = n.getBoundingClientRect();
+                ancestors.push({
+                  tag:n.tagName, id:n.id || '', cls:(n.className && String(n.className).slice(0,120)) || '',
+                  position:s.position, display:s.display, overflow:s.overflow, overflowX:s.overflowX, overflowY:s.overflowY,
+                  transform:s.transform, filter:s.filter, contain:s.contain, contentVisibility:s.contentVisibility,
+                  willChange:s.willChange, opacity:s.opacity, zIndex:s.zIndex,
+                  rect:{x:r.x,y:r.y,width:r.width,height:r.height}
+                });
+              }
+              return {
+                src:x.img.currentSrc || x.img.src,
+                complete:x.img.complete,
+                naturalWidth:x.img.naturalWidth,
+                naturalHeight:x.img.naturalHeight,
+                loading:x.img.loading,
+                decoding:x.img.decoding,
+                fetchPriority:x.img.fetchPriority,
+                objectFit:x.s.objectFit,
+                position:x.s.position,
+                display:x.s.display,
+                visibility:x.s.visibility,
+                opacity:x.s.opacity,
+                transform:x.s.transform,
+                rect:{x:x.r.x,y:x.r.y,width:x.r.width,height:x.r.height},
+                ancestors
+              };
+            });
+            await page.screenshot({ path:`audit-output/${viewName}-home-full.png`, fullPage:true });
+
+            // Project inquiry.
+            const start = page.getByText('Start A Project', { exact:true }).first();
+            if (await visible(start)) {
+              await start.evaluate(el => el.click());
+              await page.waitForTimeout(350);
+            }
+            const iq = page.locator('[aria-label="Project inquiry"]');
+            if (await visible(iq)) {
+              const kicker = iq.locator('[data-inquiry-kicker]').first();
+              const heading = iq.locator('h2').first();
+              const support = iq.locator('[data-inquiry-support]').first();
+              const label = iq.locator('form[data-inq] label > span:first-child').first();
+              const step = iq.locator('[data-stepnav] span').first();
+              report.inquiry = {
+                kicker: await cssSnapshot(kicker),
+                heading: await cssSnapshot(heading),
+                support: await cssSnapshot(support),
+                fieldLabel: await cssSnapshot(label),
+                stepLabel: await cssSnapshot(step),
+              };
+              await page.screenshot({ path:`audit-output/${viewName}-inquiry.png`, fullPage:false });
+              const close = iq.locator('button[aria-label="Close"]');
+              if (await visible(close)) await close.first().evaluate(el => el.click());
+            } else report.inquiry = { error:'not visible' };
+
+            // Contact form.
+            await page.goto(base + '/contact/', { waitUntil:'domcontentloaded' });
+            await page.waitForTimeout(500);
+            await closeReservation(page);
+            const contactForm = page.locator('form[data-editorial-labels]').first();
+            if (await contactForm.count()) {
+              const labels = contactForm.locator('label');
+              const instruction = page.getByText(/FIELDS MARKED WITH AN ASTERISK ARE REQUIRED/i).first();
+              const writeSunday = page.getByText(/Write To/i).first();
+              report.contact = {
+                firstLabel: labels.count ? await cssSnapshot(labels.first()) : null,
+                instruction: await visible(instruction) ? await cssSnapshot(instruction) : {error:'instruction not visible'},
+                headingCandidate: await visible(writeSunday) ? await cssSnapshot(writeSunday) : {error:'heading not visible'}
+              };
+              await page.screenshot({ path:`audit-output/${viewName}-contact.png`, fullPage:false });
+            } else report.contact = {error:'form not found'};
+
+            // Join page card microtype and modal.
+            await page.goto(base + '/join-our-team/', { waitUntil:'domcontentloaded' });
+            await page.waitForTimeout(500);
+            await closeReservation(page);
+            const firstCard = page.locator('[data-program-cards] > article').first();
+            if (await firstCard.count()) {
+              const frontMeta = firstCard.locator('button > span').first();
+              const action = firstCard.locator('[data-program-action]').first();
+              report.join = {
+                frontMeta: await cssSnapshot(frontMeta),
+                action: await cssSnapshot(action)
+              };
+              // Flip and open details.
+              const front = firstCard.locator('button').first();
+              if (await visible(front)) {
+                await front.evaluate(el => el.click());
+                await page.waitForTimeout(1050);
+                const details = firstCard.getByText('View Full Details', { exact:true });
+                if (await visible(details)) {
+                  await details.evaluate(el => el.click());
+                  await page.waitForTimeout(250);
+                }
+              }
+              const modal = page.locator('[role="dialog"]').filter({hasText:'The Fellows Table'}).first();
+              if (await visible(modal)) {
+                const tiny = modal.locator('span').filter({hasText:/SUNDAY|ARCHIVE|RECORD|FILED|REFERENCE/i}).first();
+                report.join.modalTiny = await tiny.count() ? await cssSnapshot(tiny) : {error:'tiny meta not found'};
+              } else report.join.modalTiny = {error:'modal not visible'};
+              await page.screenshot({ path:`audit-output/${viewName}-join.png`, fullPage:false });
+            } else report.join = {error:'program cards not found'};
+
+            await browser.close();
+            return report;
+          }
+
+          (async()=>{
+            const reports = [];
+            reports.push(await inspect('mobile', {width:390,height:844}));
+            reports.push(await inspect('desktop', {width:1440,height:1000}));
+            fs.writeFileSync('audit-output/computed-styles.json', JSON.stringify(reports,null,2));
+            console.log(JSON.stringify(reports,null,2));
+          })().catch(e=>{ console.error(e); process.exit(1); });
+          NODE
+      - name: Upload audit output
+        uses: actions/upload-artifact@v4
+        with:
+          name: controlled-ui-audit
+          path: audit-output
+          if-no-files-found: error
