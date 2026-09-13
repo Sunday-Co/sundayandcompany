@@ -3,16 +3,30 @@ from pathlib import Path
 p = Path('assets/site.css')
 s = p.read_text()
 
-# 1. Keep the existing modal entrance motion, but never fade the whole dialog.
+# 1. Keep the existing modal entrance movement, but never fade the whole dialog.
+# Isolate exactly one @keyframes block by brace depth so neighboring animations
+# cannot be changed accidentally.
 start = s.find('@keyframes sunday-modal-in {')
-end = s.find('\n}\n\n[aria-label="Project inquiry"]', start)
-if start < 0 or end < 0:
-    raise SystemExit('Could not isolate sunday-modal-in keyframes')
-block = s[start:end + 2]
+if start < 0:
+    raise SystemExit('Could not find sunday-modal-in keyframes')
+brace = s.find('{', start)
+depth = 0
+end = None
+for i in range(brace, len(s)):
+    if s[i] == '{':
+        depth += 1
+    elif s[i] == '}':
+        depth -= 1
+        if depth == 0:
+            end = i + 1
+            break
+if end is None:
+    raise SystemExit('Could not close sunday-modal-in keyframes')
+block = s[start:end]
 if block.count('opacity: 0;') != 1:
-    raise SystemExit(f'Unexpected modal opacity source: {block.count("opacity: 0;")} zero-opacity declarations')
+    raise SystemExit(f'Unexpected modal opacity source inside exact keyframe: {block.count("opacity: 0;")}')
 block_new = block.replace('opacity: 0;', 'opacity: 1;', 1)
-s = s[:start] + block_new + s[end + 2:]
+s = s[:start] + block_new + s[end:]
 print('Modal opacity source corrected.')
 
 # 2. On mobile, anchor Project Inquiry at the top of the overlay instead of
