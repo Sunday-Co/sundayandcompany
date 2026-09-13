@@ -29,7 +29,7 @@ jobs:
 
       - name: Run focused WebKit and accessibility QA
         run: |
-          cat > /tmp/sunday-qa.mjs <<'JS'
+          cat > sunday-qa.mjs <<'JS'
           import { webkit } from 'playwright';
           import assert from 'node:assert';
           import fs from 'node:fs';
@@ -37,11 +37,6 @@ jobs:
           const base = 'http://127.0.0.1:4173';
           const out = 'footer-reader-a11y-qa';
           fs.mkdirSync(out, { recursive: true });
-
-          const visible = el => {
-            const s = getComputedStyle(el), r = el.getBoundingClientRect();
-            return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) > 0 && r.width > 0 && r.height > 0;
-          };
 
           async function closeReservation(page) {
             const btn = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
@@ -90,7 +85,6 @@ jobs:
 
           const browser = await webkit.launch();
 
-          // Mobile: exact regressions from the user's screenshots.
           const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
           await mobile.goto(base + '/', { waitUntil: 'domcontentloaded' });
           await mobile.waitForTimeout(900);
@@ -134,12 +128,10 @@ jobs:
           assert.strictEqual(footer.emailWeight, '400', `Footer email weight ${footer.emailWeight}`);
           await mobile.screenshot({ path: `${out}/mobile-footer.png` });
 
-          // Full-page image capture should still retain photography and the footer breathing room.
           await mobile.goto(base + '/', { waitUntil: 'networkidle' });
           await closeReservation(mobile);
           await mobile.screenshot({ path: `${out}/mobile-home-full.png`, fullPage: true });
 
-          // Broad assistive-technology source sanity across all public routes.
           const routes = ['/', '/about/', '/services/', '/our-work/', '/our-work/luckys-cafe-bakery/', '/our-work/petti-pathways/', '/our-work/pizzeria-coco/', '/our-work/folake/', '/contact/', '/join-our-team/', '/sunday-school/', '/accessibility/', '/privacy-policy/', '/terms-and-conditions/', '/cookie-policy/'];
           for (const route of routes) {
             await mobile.goto(base + route, { waitUntil: 'domcontentloaded' });
@@ -149,7 +141,6 @@ jobs:
             await auditInteractiveNames(mobile, route);
           }
 
-          // Desktop regression check: modal remains centered there too.
           const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
           await desktop.goto(base + '/', { waitUntil: 'domcontentloaded' });
           await desktop.waitForTimeout(700);
@@ -166,7 +157,7 @@ jobs:
           await browser.close();
           console.log(JSON.stringify({ mobileInquiry: iq, footer, desktopInquiry: d }, null, 2));
           JS
-          node /tmp/sunday-qa.mjs
+          node sunday-qa.mjs
 
       - name: Upload QA screenshots
         uses: actions/upload-artifact@v4
