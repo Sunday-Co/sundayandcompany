@@ -1,3 +1,4 @@
+# Rerun after verified sitewide lang="en" source patch.
 name: Footer Reader Accessibility QA
 
 on:
