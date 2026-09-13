@@ -258,3 +258,46 @@ html[data-sunday-sign-fallback="1"] [data-sign] > div[style*="transform-origin"]
 }
 
 
+
+
+/* WCAG UTILITY CONTRAST FINAL · 2026-09-13 */
+:root {
+  --sc-rose-utility-light: #945650;
+  --sc-rose-utility-dark: #c88f87;
+}
+
+/* Small rose utility text on cream/paper. Decorative display rose remains #ac746c. */
+[style*="color:#ac746c"][style*="font-size:8px"],
+[style*="color:#ac746c"][style*="font-size:9px"],
+[style*="color:#ac746c"][style*="font-size:10px"],
+[style*="color:#ac746c"][style*="font-size:11.5px"],
+[data-inquiry-kicker],
+[data-service-price] {
+  color: var(--sc-rose-utility-light) !important;
+}
+
+/* The same small utilities on espresso need the lighter accessible rose. */
+[style*="background:#311d03"] [style*="color:#ac746c"][style*="font-size:8px"],
+[style*="background:#311d03"] [style*="color:#ac746c"][style*="font-size:9px"],
+[style*="background:#311d03"] [style*="color:#ac746c"][style*="font-size:10px"],
+[style*="background:#311d03"] [style*="color:#ac746c"][style*="font-size:11.5px"],
+[style*="background: #311d03"] [style*="color:#ac746c"][style*="font-size:8px"],
+[style*="background: #311d03"] [style*="color:#ac746c"][style*="font-size:9px"],
+[style*="background: #311d03"] [style*="color:#ac746c"][style*="font-size:10px"],
+[style*="background: #311d03"] [style*="color:#ac746c"][style*="font-size:11.5px"],
+#results [style*="color:#ac746c"],
+footer [style*="color:#ac746c"] {
+  color: var(--sc-rose-utility-dark) !important;
+}
+
+/* 404 small inherited rose labels. Keep the large Pinyon 404 accent untouched. */
+[data-screen-label="404"] p[style*="color:#ac746c"] > span:first-child,
+[data-screen-label="404"] a span[style*="color:#ac746c"] {
+  color: var(--sc-rose-utility-light) !important;
+}
+
+/* Keyboard focus for intentionally scrollable case-study regions. */
+[data-scroll-region]:focus-visible {
+  outline: 2px solid #945650 !important;
+  outline-offset: 3px !important;
+}

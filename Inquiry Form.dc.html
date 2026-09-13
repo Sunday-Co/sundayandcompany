@@ -91,6 +91,7 @@
       <button type="button" onClick="{{ goNext }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:8px;gap:11px;justify-content:center;letter-spacing:.18em;min-height:46px;text-transform:uppercase;width:100%;display:{{ nextShow }}">Next<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
     </div>
     <button data-step="3" type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border-radius:0;color:#f5efe6;cursor:pointer;display:{{ sendDisplay }};font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;grid-column:1 / -1;justify-content:center;justify-self:start;letter-spacing:.18em;min-height:39px;padding:0 17px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ sendLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+    <p data-form-privacy data-step="3" style="display:{{ step3Display }};font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:300;grid-column:1 / -1;letter-spacing:.035em;line-height:1.45;margin:1px 0 0;opacity:.72">By submitting this form, you acknowledge our <a href="/privacy-policy" style="border-bottom:1px solid currentColor;padding-bottom:1px">Privacy Policy</a>.</p>
   </form>
   </div>
 </div>
@@ -182,7 +183,7 @@ class Component extends DCLogic {
         type: 'button',
         onClick: () => this.setState({ startDate: iso, dateOpen: false }),
         style: {
-          background: on ? '#ac746c' : 'transparent',
+          background: on ? '#955851' : 'transparent',
           border: 0,
           borderRadius: 0,
           color: on ? '#fffdf8' : '#311d03',
@@ -241,11 +242,11 @@ class Component extends DCLogic {
     out.sendDisplay = st === 3 ? 'inline-flex' : 'none';
     out.backShow = st === 1 ? 'none' : 'inline-flex';
     out.stepLabel = st === 1 ? '01 · Project Basics' : st === 2 ? '02 · Timing & Budget' : '03 · Project Scope';
-    out.step1TabBg = st === 1 ? '#ac746c' : 'transparent';
+    out.step1TabBg = st === 1 ? '#955851' : 'transparent';
     out.step1TabFg = st === 1 ? '#fffdf8' : '#311d03';
-    out.step2TabBg = st === 2 ? '#ac746c' : 'transparent';
+    out.step2TabBg = st === 2 ? '#955851' : 'transparent';
     out.step2TabFg = st === 2 ? '#fffdf8' : '#311d03';
-    out.step3TabBg = st === 3 ? '#ac746c' : 'transparent';
+    out.step3TabBg = st === 3 ? '#955851' : 'transparent';
     out.step3TabFg = st === 3 ? '#fffdf8' : '#311d03';
     out.nextShow = st === 3 ? 'none' : 'flex';
     for (let i = 1; i <= 3; i++) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -148,14 +148,16 @@
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260913-12" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260913-12" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260913-12"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260913-14" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260913-14" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260913-14"></script>
 </helmet>
 
 <div data-screen-label="Case study · Petti Pathways" style="background:#f5efe6;color:#311d03;overflow:clip">
 
   <dc-import name="/Site Header" hint-size="100%,0px"></dc-import>
+
+  <main id="main-content" tabindex="-1">
 
   <section id="top" aria-labelledby="cs-title" style="scroll-margin-top:92px;color:#f5efe6;height:min(700px,84svh);min-height:520px;overflow:hidden;position:relative">
     <img  src="/assets/petti-hero.jpg" alt="Close view of tree rings representing growth, grounding and reflection" style="height:100%;inset:0;object-fit:cover;object-position:center center;position:relative;width:100%" data-sunday-static-hero="true" />
@@ -171,7 +173,7 @@
   <section aria-label="Website walkthrough" style="background:#311d03;padding:clamp(28px,3.2vw,46px) clamp(24px,5vw,72px)">
     <div style="margin:0 auto;max-width:1180px">
       <div style="align-items:baseline;color:#f5efe6;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.18em;margin-bottom:14px;text-transform:uppercase"><span>The Website, In Motion</span><span>Four Service Pathways</span></div>
-      <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" preload="auto" aria-label="Walkthrough of the Petti Pathways Counseling website" style="background:#241708;border:1px solid rgba(245,239,230,.4);height:auto;width:100%">
+      <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" preload="metadata" aria-label="Walkthrough of the Petti Pathways Counseling website" style="background:#241708;border:1px solid rgba(245,239,230,.4);height:auto;width:100%">
         <source src="/assets/petti-site-tour.mp4" type="video/mp4" />
       </video>
     </div>
@@ -268,21 +270,21 @@
           </figure>
         </div>
 
-        <div style="display:flex;gap:clamp(16px,2vw,28px);overflow-x:auto;padding-bottom:14px;scroll-snap-type:x mandatory">
+        <div  data-scroll-region="project-gallery" tabindex="0" role="region" aria-label="Scrollable project gallery 1" style="display:flex;gap:clamp(16px,2vw,28px);overflow-x:auto;padding-bottom:14px;scroll-snap-type:x mandatory">
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
-            <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-home.png" alt="Petti Pathways Counseling homepage" style="display:block;height:auto;width:100%" /></div>
+            <div  data-scroll-region="project-preview" tabindex="0" role="region" aria-label="Scrollable project preview 1" style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-home.png" alt="Petti Pathways Counseling homepage" style="display:block;height:auto;width:100%" /></div>
             <figcaption style="align-items:baseline;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#35807e">04</span>Home</figcaption>
           </figure>
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
-            <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-about.png" alt="Petti Pathways About page" style="display:block;height:auto;width:100%" /></div>
+            <div  data-scroll-region="project-preview" tabindex="0" role="region" aria-label="Scrollable project preview 2" style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-about.png" alt="Petti Pathways About page" style="display:block;height:auto;width:100%" /></div>
             <figcaption style="align-items:baseline;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#35807e">05</span>About</figcaption>
           </figure>
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
-            <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-services.png" alt="Petti Pathways Services page" style="display:block;height:auto;width:100%" /></div>
+            <div  data-scroll-region="project-preview" tabindex="0" role="region" aria-label="Scrollable project preview 3" style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-services.png" alt="Petti Pathways Services page" style="display:block;height:auto;width:100%" /></div>
             <figcaption style="align-items:baseline;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#35807e">06</span>Services</figcaption>
           </figure>
           <figure style="flex:0 0 auto;margin:0;scroll-snap-align:start;width:{{ railW }}">
-            <div style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-contact.png" alt="Petti Pathways Contact page" style="display:block;height:auto;width:100%" /></div>
+            <div  data-scroll-region="project-preview" tabindex="0" role="region" aria-label="Scrollable project preview 4" style="border:1px solid rgba(49,29,3,.24);max-height:640px;overflow-y:auto"><img src="/assets/opt/pg-petti-contact.png" alt="Petti Pathways Contact page" style="display:block;height:auto;width:100%" /></div>
             <figcaption style="align-items:baseline;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:10px;letter-spacing:.16em;margin-top:9px;text-transform:uppercase"><span style="color:#35807e">07</span>Contact</figcaption>
           </figure>
         </div>
@@ -300,6 +302,8 @@
       <a href="/our-work/luckys-cafe-bakery" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;flex:0 0 auto;font-family:'Inter Tight',sans-serif;font-size:9px;gap:14px;letter-spacing:.18em;padding-bottom:6px;text-transform:uppercase;white-space:nowrap">Next Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>
   </section>
+
+    </main>
 
   <dc-import name="/Site Footer" hint-size="100%,420px"></dc-import>
 </div>

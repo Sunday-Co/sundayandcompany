@@ -7,7 +7,7 @@
 </head>
 <body>
 <x-dc>
-<a href="#top" style="background:#311d03;color:#f5efe6;font-family:'Inter Tight',sans-serif;font-size:9px;left:8px;letter-spacing:.16em;padding:10px 14px;position:fixed;text-transform:uppercase;top:-60px;transition:top 160ms ease;z-index:90" style-focus="top:8px">Skip To Content</a>
+<a href="#main-content" style="background:#311d03;color:#f5efe6;font-family:'Inter Tight',sans-serif;font-size:9px;left:8px;letter-spacing:.16em;padding:10px 14px;position:fixed;text-transform:uppercase;top:-60px;transition:top 160ms ease;z-index:90" style-focus="top:8px">Skip To Content</a>
 <header style="align-items:center;display:grid;grid-template-columns:{{ hdrCols }};height:70px;left:0;padding:0 clamp(18px,2.7vw,46px);position:fixed;right:0;top:0;transition:background 240ms ease, border-color 240ms ease;z-index:30;background:{{ hdrBg }};border-bottom:1px solid {{ hdrBorder }};color:{{ hdrFg }}">
   <a href="/" aria-label="Sunday &amp; Company home" style="align-items:center;display:flex;height:100%;width:{{ logoBox }}">
     <span style="display:block;overflow:hidden;position:relative;height:{{ logoH }};width:{{ logoW }}">
@@ -85,7 +85,7 @@
       <div style="display:{{ inqFormDisplay }}">
         <dc-import name="/Inquiry Form" narrow="{{ inqNarrow }}" onDone="{{ inquiryComplete }}" hint-size="100%,520px"></dc-import>
       </div>
-      <div style="display:{{ inqDoneDisplay }};padding:0 0 4px;text-align:center">
+      <div role="status" aria-live="polite" style="display:{{ inqDoneDisplay }};padding:0 0 4px;text-align:center">
         <div data-inquiry-receipt-meta="status" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:-6px 0 28px;padding-bottom:10px;text-align:left;text-transform:uppercase"><span style="min-width:0">Project Inquiry</span><span style="text-align:right;white-space:nowrap">Status: Delivered</span></div>
         <h2 style="font-size:clamp(28px,3vw,38px);font-weight:400;letter-spacing:-.045em;line-height:.94;margin:0">Your Inquiry Is In.</h2>
         <p style="font-size:12px;line-height:1.5;margin:12px auto 0;max-width:520px">Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>
