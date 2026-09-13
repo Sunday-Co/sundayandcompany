@@ -1,0 +1,49 @@
+name: Controlled UI Source Align
+
+on:
+  push:
+    branches:
+      - controlled-ui-audit-no-deploy-2026-09-13
+    paths:
+      - '.github/workflows/controlled-ui-source-align.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  align:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Align footer component source
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          paths = list(Path('.').rglob('Site Footer.dc.html'))
+          if not paths:
+              raise SystemExit('No Site Footer component copies found')
+          changed = 0
+          for p in paths:
+              t = p.read_text()
+              n = re.sub(
+                  r'(<a data-footer-ui href="mailto:hello@sundayandcompany\.co" style="[^"]*?font-size:)12\.5px',
+                  r'\g<1>13.25px', t, count=1
+              )
+              if n != t:
+                  p.write_text(n)
+                  changed += 1
+          if changed != len(paths):
+              raise SystemExit(f'Expected to align {len(paths)} footer copies, changed {changed}')
+          contents = {p.read_text() for p in paths}
+          if len(contents) != 1:
+              raise SystemExit('Footer component copies are not identical after alignment')
+          print(f'Aligned {changed} footer component copies.')
+          PY
+      - name: Commit source alignment
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add -- '**/Site Footer.dc.html' 'Site Footer.dc.html'
+          git commit -m "[skip netlify] Align footer email source size"
+          git push origin HEAD
