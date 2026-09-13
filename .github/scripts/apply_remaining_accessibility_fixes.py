@@ -77,10 +77,16 @@ if petti_count < 1:
 petti = petti.replace('#35807e', '#2f7472')
 write(petti_path, petti)
 
-# 5) Join selector placeholder: darken only the neutral placeholder color.
+# 5) Join selector placeholder: the source uses an alpha espresso neutral which computes
+# to the failing #8e8271 on paper. Replace the source expression, not the computed color.
 join_path = 'join-our-team/index.html'
 join = read(join_path)
-join, c5 = require_replace(join, '#8e8271', '#7b7061', 'Join selector placeholder')
+join, c5 = require_replace(
+    join,
+    "programColor: p ? '#311d03' : 'rgba(49,29,3,.55)',",
+    "programColor: p ? '#311d03' : '#7b7061',",
+    'Join selector placeholder',
+)
 write(join_path, join)
 
 # 6) Make intentionally scrollable project galleries/previews keyboard-focusable without
@@ -97,12 +103,8 @@ vpat = re.compile(r'<div(?![^>]*data-scroll-region)(?P<attrs>[^>]*)style="(?P<st
 
 for path, expected_min in project_paths.items():
     text = read(path)
-    hnum = 0
-    vnum = 0
 
     def hrepl(match):
-        nonlocal_holder = None
-        # Python's nested assignment via list-free counter handled below through function attribute.
         hrepl.count += 1
         attrs = match.group('attrs')
         style = match.group('style')
@@ -166,11 +168,6 @@ footer [style*="color:#ac746c"] {
 [data-screen-label="404"] p[style*="color:#ac746c"] > span:first-child,
 [data-screen-label="404"] a span[style*="color:#ac746c"] {
   color: var(--sc-rose-utility-light) !important;
-}
-
-/* Join selector placeholder only. */
-button[aria-haspopup="listbox"] > .sc-interp {
-  color: #7b7061 !important;
 }
 
 /* Keyboard focus for intentionally scrollable case-study regions. */
