@@ -1,6 +1,7 @@
 from pathlib import Path
 
 # One-time no-deploy source patch for the newsletter field's accessible name.
+# Rerun after correcting the workflow staging pathspec.
 files = list(Path('.').rglob('Site Footer.dc.html'))
 if not files:
     raise SystemExit('No Site Footer.dc.html files found')
