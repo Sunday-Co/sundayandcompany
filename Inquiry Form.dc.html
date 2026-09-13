@@ -182,7 +182,7 @@ class Component extends DCLogic {
         type: 'button',
         onClick: () => this.setState({ startDate: iso, dateOpen: false }),
         style: {
-          background: on ? '#ac746c' : 'transparent',
+          background: on ? '#955851' : 'transparent',
           border: 0,
           borderRadius: 0,
           color: on ? '#fffdf8' : '#311d03',
@@ -241,11 +241,11 @@ class Component extends DCLogic {
     out.sendDisplay = st === 3 ? 'inline-flex' : 'none';
     out.backShow = st === 1 ? 'none' : 'inline-flex';
     out.stepLabel = st === 1 ? '01 · Project Basics' : st === 2 ? '02 · Timing & Budget' : '03 · Project Scope';
-    out.step1TabBg = st === 1 ? '#ac746c' : 'transparent';
+    out.step1TabBg = st === 1 ? '#955851' : 'transparent';
     out.step1TabFg = st === 1 ? '#fffdf8' : '#311d03';
-    out.step2TabBg = st === 2 ? '#ac746c' : 'transparent';
+    out.step2TabBg = st === 2 ? '#955851' : 'transparent';
     out.step2TabFg = st === 2 ? '#fffdf8' : '#311d03';
-    out.step3TabBg = st === 3 ? '#ac746c' : 'transparent';
+    out.step3TabBg = st === 3 ? '#955851' : 'transparent';
     out.step3TabFg = st === 3 ? '#fffdf8' : '#311d03';
     out.nextShow = st === 3 ? 'none' : 'flex';
     for (let i = 1; i <= 3; i++) {
