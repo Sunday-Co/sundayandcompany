@@ -1,0 +1,620 @@
+from pathlib import Path
+import re
+
+root = Path('.')
+site_css = root / 'assets/site.css'
+rendered_css = root / 'assets/rendered-corrections.css'
+site_js = root / 'assets/site.js'
+
+# 1. One authoritative shared form/footer/receipt system in site.css.
+css = site_css.read_text()
+start = css.index('/* ==========================================================\n   FORM TYPOGRAPHY SYSTEM')
+end = css.index('/* ==========================================================\n   MENU / ABOUT CTA / SERVICES MICROTYPE')
+consolidated = r'''/* ==========================================================
+   FORM + RECEIPT + FOOTER TYPOGRAPHY SYSTEM
+   One owner for repeated utility typography.
+   ========================================================== */
+
+form[data-inq] label > span:first-child,
+form[data-inq] fieldset > legend,
+form[data-editorial-labels] label > span:first-child,
+form[data-editorial-labels] > label[for],
+form[data-editorial-labels] > div > span:first-child {
+  font-family: var(--sunday-sans) !important;
+  font-size: 10.25px !important;
+  font-weight: 400 !important;
+  letter-spacing: .055em !important;
+  line-height: 1.32 !important;
+  text-transform: uppercase !important;
+}
+
+form[data-inq] input,
+form[data-inq] textarea,
+form[data-inq] select,
+form[data-editorial-labels] input,
+form[data-editorial-labels] textarea,
+form[data-editorial-labels] select,
+[aria-label="Newsletter"] input,
+[aria-label="The Sunday Reservation"] input {
+  font-family: var(--sunday-sans) !important;
+  font-weight: 300 !important;
+}
+
+form[data-inq] [data-stepbtns] button,
+form[data-inq] > button[type="submit"],
+form[data-editorial-labels] button[type="submit"],
+[aria-label="Newsletter"] form button[type="submit"],
+[aria-label="The Sunday Reservation"] form button[type="submit"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .085em !important;
+}
+
+form[data-editorial-labels] [aria-haspopup="listbox"],
+form[data-editorial-labels] [role="option"],
+form[data-inq] [aria-haspopup="dialog"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+[data-receipt-meta],
+[data-form-meta],
+[aria-label="Project inquiry"] [data-inquiry-receipt-meta],
+#inquiry [data-inquiry-receipt-meta] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 8.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .085em !important;
+  line-height: 1.4 !important;
+  text-transform: uppercase !important;
+}
+
+[data-form-instruction] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: .065em !important;
+  line-height: 1.42 !important;
+  text-transform: uppercase !important;
+}
+
+form[data-inq] [role="alert"],
+form[data-editorial-labels] [role="alert"],
+[aria-label="Newsletter"] [role="alert"],
+[aria-label="The Sunday Reservation"] [role="alert"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+}
+
+form[data-inq] [data-stepnav] span,
+#inquiry form[data-inq] [data-stepnav] span {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: .04em !important;
+  line-height: 1.2 !important;
+  text-transform: uppercase !important;
+}
+
+[data-screen-label="Contact"] form[data-editorial-labels] input,
+[data-screen-label="Contact"] form[data-editorial-labels] textarea,
+[data-screen-label="Sunday School"] form[data-editorial-labels] input,
+[aria-label="Newsletter"] form input {
+  font-size: 16px !important;
+}
+
+[aria-label="Newsletter"] form button,
+[data-screen-label="Sunday School"] form[data-editorial-labels] button {
+  min-height: 44px !important;
+}
+
+[aria-label="Newsletter"] [data-news-receipt] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 8.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .085em !important;
+  line-height: 1.45 !important;
+}
+
+[aria-label="Newsletter"] [data-news-fineprint] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 7.5px !important;
+  font-weight: 300 !important;
+  letter-spacing: .045em !important;
+  line-height: 1.45 !important;
+}
+
+footer [data-footer-ui],
+footer nav,
+footer nav a,
+footer a[href*="instagram.com/sundayand_co"],
+footer [data-footer-location] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 300 !important;
+  letter-spacing: .01em !important;
+  line-height: 1.4 !important;
+}
+footer a[href^="mailto:"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 13.25px !important;
+  font-weight: 300 !important;
+  letter-spacing: .005em !important;
+  line-height: 1.4 !important;
+  opacity: 1 !important;
+}
+footer [data-footer-label] {
+  font-family: var(--sunday-sans) !important;
+  font-weight: 400 !important;
+}
+footer [data-footer-legal] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: .10em !important;
+}
+
+div[role="presentation"]:has(> [aria-label="Project inquiry"]),
+div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
+  align-items: center !important;
+  justify-content: center !important;
+  overscroll-behavior: contain;
+}
+[aria-label="Project inquiry"] {
+  margin: auto !important;
+}
+[aria-label="Project inquiry"] > div {
+  box-sizing: border-box;
+  margin: 0 !important;
+}
+
+[aria-label="Project inquiry"] [data-inquiry-kicker],
+#inquiry [data-inquiry-kicker] {
+  color: var(--sunday-rose) !important;
+  font-family: var(--sunday-sans) !important;
+  font-size: 10px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: .095em !important;
+  line-height: 1.3 !important;
+  margin: 0 0 5px !important;
+  text-transform: uppercase !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+#inquiry [data-inquiry-kicker] + h2 {
+  color: var(--sunday-espresso) !important;
+  font-family: var(--sunday-serif) !important;
+  font-size: 31px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: -.02em !important;
+  line-height: .98 !important;
+  margin: 0 !important;
+  text-transform: uppercase !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-support],
+#inquiry [data-inquiry-support],
+#inquiry header h2 + p {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9.75px !important;
+  font-weight: 300 !important;
+  letter-spacing: .065em !important;
+  line-height: 1.45 !important;
+  margin-top: 9px !important;
+  max-width: 520px !important;
+  text-transform: uppercase !important;
+}
+[aria-label="Project inquiry"] form[data-inq] [data-stepbtns] button,
+[aria-label="Project inquiry"] form[data-inq] > button,
+[aria-label="Project inquiry"] [data-inquiry-ledger],
+#inquiry form[data-inq] [data-stepbtns] button,
+#inquiry form[data-inq] > button {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .085em !important;
+}
+
+@media (min-width: 701px) {
+  [aria-label="Project inquiry"] {
+    width: min(880px, calc(100vw - 64px)) !important;
+    max-width: 880px !important;
+    max-height: calc(100vh - 64px) !important;
+    overflow-y: auto !important;
+  }
+  [aria-label="Project inquiry"] > div {
+    min-height: 0 !important;
+    padding: 30px 38px 46px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
+    padding: 12px !important;
+    overflow-y: auto !important;
+  }
+  [aria-label="Project inquiry"] {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100svh - 24px) !important;
+    overflow-y: auto !important;
+  }
+  [aria-label="Project inquiry"] > div {
+    min-height: min(620px, 70svh) !important;
+    padding: 22px 18px 48px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-kicker],
+  #inquiry [data-inquiry-kicker] {
+    font-size: 9.5px !important;
+    letter-spacing: .09em !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+  #inquiry [data-inquiry-kicker] + h2 {
+    font-size: 24px !important;
+    line-height: 1 !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-support],
+  #inquiry [data-inquiry-support] {
+    font-size: 9.25px !important;
+    letter-spacing: .06em !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] label > span:first-child,
+  [aria-label="Project inquiry"] form[data-inq] legend,
+  #inquiry form[data-inq] label > span:first-child,
+  #inquiry form[data-inq] legend,
+  form[data-editorial-labels] label > span:first-child,
+  form[data-editorial-labels] > label[for],
+  form[data-editorial-labels] > div > span:first-child {
+    font-size: 10px !important;
+    letter-spacing: .05em !important;
+  }
+  [data-form-instruction] {
+    font-size: 8.75px !important;
+    letter-spacing: .06em !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] input,
+  [aria-label="Project inquiry"] form[data-inq] select,
+  [aria-label="Project inquiry"] form[data-inq] textarea,
+  #inquiry form[data-inq] input,
+  #inquiry form[data-inq] select,
+  #inquiry form[data-inq] textarea,
+  form[data-editorial-labels] input,
+  form[data-editorial-labels] textarea,
+  form[data-editorial-labels] select {
+    font-size: 16px !important;
+  }
+  form[data-editorial-labels] input,
+  form[data-editorial-labels] select { min-height: 44px !important; }
+  form[data-editorial-labels] textarea { min-height: 112px !important; }
+  form[data-editorial-labels] button { min-height: 44px !important; }
+}
+
+[aria-label="The Sunday Reservation"] {
+  box-sizing: border-box;
+  margin: auto !important;
+}
+[aria-label="The Sunday Reservation"] h2 + p {
+  font-family: var(--sunday-sans) !important;
+  font-size: 11.25px !important;
+  font-weight: 300 !important;
+  letter-spacing: .005em !important;
+  line-height: 1.48 !important;
+}
+[aria-label="The Sunday Reservation"] [data-res-fineprint] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 8.5px !important;
+  font-weight: 300 !important;
+  letter-spacing: .04em !important;
+  line-height: 1.42 !important;
+  opacity: .76 !important;
+}
+
+@media (min-width: 701px) {
+  [aria-label="The Sunday Reservation"] {
+    width: min(800px, calc(100vw - 56px)) !important;
+    max-width: 800px !important;
+    height: 540px !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 56px) !important;
+    grid-template-columns: 1fr 1.06fr !important;
+    overflow: hidden !important;
+  }
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] {
+    align-self: stretch !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    overflow: hidden !important;
+  }
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] img {
+    height: 100% !important;
+    object-fit: cover !important;
+    width: 100% !important;
+  }
+  [aria-label="The Sunday Reservation"] > div:last-child {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 34px 32px 28px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  [aria-label="The Sunday Reservation"] {
+    width: calc(100vw - 28px) !important;
+    max-width: calc(100vw - 28px) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: calc(100svh - 28px) !important;
+    grid-template-columns: 1fr !important;
+    overflow-y: auto !important;
+  }
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] {
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+  }
+  [aria-label="The Sunday Reservation"] > div:last-child {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 22px 20px 21px !important;
+  }
+  [aria-label="The Sunday Reservation"] h2 + p {
+    font-size: 10.5px !important;
+    line-height: 1.45 !important;
+    margin-top: 11px !important;
+    max-width: 310px !important;
+  }
+  [aria-label="The Sunday Reservation"] [data-res-fineprint] {
+    font-size: 6.5px !important;
+    letter-spacing: .04em !important;
+    line-height: 1.38 !important;
+    margin-top: 6px !important;
+  }
+  [aria-label="The Sunday Reservation"] input { font-size: 16px !important; }
+  [aria-label="The Sunday Reservation"] form button { min-height: 44px !important; }
+}
+
+html,
+body {
+  max-width: 100% !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+#dc-root,
+#dc-root > .sc-host {
+  height: auto !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+img {
+  content-visibility: visible !important;
+}
+img[data-sunday-static-hero="true"] {
+  display: block !important;
+  height: 100% !important;
+  inset: auto !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  opacity: 1 !important;
+  position: static !important;
+  transform: none !important;
+  visibility: visible !important;
+  width: 100% !important;
+  will-change: auto !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+@media print {
+  html,
+  body,
+  #dc-root,
+  #dc-root > .sc-host,
+  [data-screen-label] {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  img {
+    content-visibility: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  img[data-sunday-static-hero="true"] {
+    display: block !important;
+    position: static !important;
+  }
+}
+
+'''
+css = css[:start] + consolidated + css[end:]
+site_css.write_text(css)
+
+# 2. Remove duplicate typography/capture ownership from rendered CSS.
+rc = rendered_css.read_text()
+root_end = rc.index('}\n', rc.index(':root')) + 2
+services_anchor = rc.index('[data-screen-label="Services"] [data-service-number]')
+rc = rc[:root_end] + '\n\n' + rc[services_anchor:]
+rc = re.sub(
+    r'form\[data-inq\] > button,\nform\[data-editorial-labels\] button\[type="submit"\],[\s\S]*?(?=@media \(min-width:1100px\))',
+    '', rc, count=1
+)
+rc = re.sub(
+    r'/\* Full-page capture safeguards\.[\s\S]*?(?=/\* OPEN sign motion uses the original homepage sequence\. \*/)',
+    '', rc, count=1
+)
+rc = re.sub(
+    r'/\* Project Inquiry hierarchy:[\s\S]*?(?=/\* Our Work: A Point Of View always one line on desktop\.)',
+    '', rc, count=1
+)
+rc = re.sub(
+    r'\n/\* CAPTURE INTEGRITY \+ FOOTER NORMALIZATION · 2026-09-12 \*/[\s\S]*$',
+    '\n', rc, count=1
+)
+rc = rc.replace('font-size:7px;\n  font-weight:500;\n  letter-spacing:.16em;',
+                'font-size:8px;\n  font-weight:500;\n  letter-spacing:.135em;', 1)
+rc = rc.replace('font-size:6.5px;\n  font-weight:600;\n  letter-spacing:.18em;',
+                'font-size:7.5px;\n  font-weight:600;\n  letter-spacing:.14em;', 1)
+rc = rc.replace('font-size:6.25px;\n    letter-spacing:.145em;',
+                'font-size:7.25px;\n    letter-spacing:.125em;', 1)
+rc = rc.replace('font-size:6px;\n    margin-top:16px;',
+                'font-size:7px;\n    margin-top:16px;', 1)
+rendered_css.write_text(rc)
+
+# 3. Stop JS from restyling page/footer/images; preserve OPEN sign fallback.
+js = site_js.read_text()
+js = re.sub(
+    r'\n  function normalizeRuntimeRoots\(\) \{[\s\S]*?\n  \}\n\n  function normalizeFooterTypography\(\) \{[\s\S]*?\n  \}\n\n  function prepareImagesForCapture\(scope\) \{[\s\S]*?\n  \}\n\n  function markHeroFallbacks\(\) \{[\s\S]*?\n  \}\n',
+    '\n', js, count=1
+)
+js = js.replace(
+    '    normalizeRuntimeRoots();\n    normalizeFooterTypography();\n    prepareImagesForCapture(document);\n    markHeroFallbacks();\n    ensureOpenSignMotion();',
+    '    ensureOpenSignMotion();'
+)
+js = js.replace(
+    "    window.addEventListener('resize', function () {\n      normalizeRuntimeRoots();\n      normalizeFooterTypography();\n    }, { passive: true });\n",
+    ''
+)
+if any(x in js for x in ['normalizeFooterTypography', 'prepareImagesForCapture', 'markHeroFallbacks']):
+    raise SystemExit('Runtime style/image normalization was not fully removed from site.js')
+if 'triggerOriginalOpenSignMotion' not in js or 'IntersectionObserver' not in js:
+    raise SystemExit('OPEN sign fallback was accidentally removed')
+site_js.write_text(js)
+
+# 4. Align shared component source.
+tree_paths = [p for p in root.rglob('*') if p.is_file()]
+header_paths = [p for p in tree_paths if p.name == 'Site Header.dc.html']
+footer_paths = [p for p in tree_paths if p.name == 'Site Footer.dc.html']
+inquiry_paths = [p for p in tree_paths if p.name == 'Inquiry Form.dc.html']
+program_paths = [p for p in tree_paths if p.name == 'Program Cards.dc.html']
+
+for p in header_paths:
+    t = p.read_text()
+    t = t.replace(
+        "<p data-inquiry-kicker style=\"color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:11.5px;font-style:normal;font-weight:400;letter-spacing:.12em;line-height:1.25;margin:0 0 3px;text-transform:uppercase\">A Seat At Our Table</p>",
+        "<p data-inquiry-kicker style=\"color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:10px;font-style:normal;font-weight:400;letter-spacing:.095em;line-height:1.3;margin:0 0 5px;text-transform:uppercase\">A Seat At Our Table</p>"
+    )
+    t = t.replace(
+        '<h2 style="font-size:clamp(27px,3vw,37px);font-weight:400;letter-spacing:-.045em;line-height:.96;margin:0">Tell Us What You Are Building</h2>',
+        '<h2 style="font-size:clamp(24px,2.45vw,31px);font-weight:400;letter-spacing:-.02em;line-height:.98;margin:0;text-transform:uppercase">Tell Us What You Are Building</h2>'
+    )
+    t = t.replace(
+        "<p data-inquiry-support style=\"font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:300;line-height:1.5;margin:10px 0 0;max-width:520px\">Share the essentials. We’ll take it from there.</p>",
+        "<p data-inquiry-support style=\"font-family:'Inter Tight',sans-serif;font-size:9.75px;font-weight:300;letter-spacing:.065em;line-height:1.45;margin:9px 0 0;max-width:520px;text-transform:uppercase\">Share the essentials. We’ll take it from there.</p>"
+    )
+    t = t.replace(
+        "<p style=\"font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:300;line-height:1.5;margin:13px auto 0;max-width:330px\">Join our newsletter for thoughtful notes on branding, business and the work behind both.</p>",
+        "<p style=\"font-family:'Inter Tight',sans-serif;font-size:11.25px;font-weight:300;line-height:1.48;margin:13px auto 0;max-width:330px\">Join our newsletter for thoughtful notes on branding, business and the work behind both.</p>"
+    )
+    t = t.replace(
+        "data-res-fineprint style=\"font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.1em;line-height:1.5;",
+        "data-res-fineprint style=\"font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.04em;line-height:1.42;"
+    )
+    p.write_text(t)
+
+for p in footer_paths:
+    t = p.read_text()
+    t = re.sub(
+        r'(<a href="mailto:hello@sundayandcompany\.co"[^>]*font-size:)12\.5px',
+        r'\g<1>13.25px', t, count=1
+    )
+    p.write_text(t)
+
+for p in inquiry_paths:
+    t = p.read_text()
+    t = t.replace(
+        'font-size:11.25px;font-weight:400;letter-spacing:.10em',
+        'font-size:10.25px;font-weight:400;letter-spacing:.055em'
+    )
+    t = t.replace(
+        'font-size:10px !important;\n  font-weight:400;\n  letter-spacing:.12em;',
+        'font-size:10.25px !important;\n  font-weight:400;\n  letter-spacing:.055em;'
+    )
+    p.write_text(t)
+
+size_map = {'7': '8', '7.5': '8.5', '8': '8.75'}
+for p in program_paths:
+    t = p.read_text()
+    t = re.sub(r'font-size:(7(?:\.5)?|8)px', lambda m: f"font-size:{size_map[m.group(1)]}px", t)
+    t = t.replace('letter-spacing:.18em', 'letter-spacing:.14em')
+    t = t.replace('letter-spacing:.15em', 'letter-spacing:.12em')
+    p.write_text(t)
+
+# 5. Balance display accents on non-portfolio pages only.
+replacements = {
+    'about/index.html': [
+        ('font-size:.84em;font-style:italic', 'font-size:.94em;font-style:italic'),
+    ],
+    'services/index.html': [
+        ("font-family:'Pinyon Script',cursive;font-size:.9em", "font-family:'Pinyon Script',cursive;font-size:1em"),
+    ],
+    'join-our-team/index.html': [
+        ('font-size:.84em;font-style:italic', 'font-size:.94em;font-style:italic'),
+        ("font-family:'Pinyon Script',cursive;font-style:normal;font-weight:400\">Seat</em>",
+         "font-family:'Pinyon Script',cursive;font-size:1.12em;font-style:normal;font-weight:400\">Seat</em>"),
+    ],
+    'sunday-school/index.html': [
+        ('font-size:.84em;font-style:italic', 'font-size:.94em;font-style:italic'),
+    ],
+    'contact/index.html': [
+        ("font-size:1.05em;font-style:normal;font-weight:400\">Sunday</em>",
+         "font-size:1.15em;font-style:normal;font-weight:400\">Sunday</em>"),
+        ("font-size:.95em;font-style:normal;font-weight:400\">Note</em>",
+         "font-size:1.05em;font-style:normal;font-weight:400\">Note</em>"),
+        ("font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase\">Send A Message</p>",
+         "font-size:8.5px;font-weight:500;letter-spacing:.18em;line-height:1.4;text-transform:uppercase\">Send A Message</p>"),
+    ],
+}
+for rel, reps in replacements.items():
+    p = root / rel
+    t = p.read_text()
+    for old, new in reps:
+        t = t.replace(old, new)
+    if rel == 'contact/index.html':
+        t = re.sub(
+            r'(<p data-form-instruction style="[^"]*?)font-size:8px;([^"]*?)letter-spacing:.11em;',
+            r'\g<1>font-size:9px;\g<2>letter-spacing:.065em;', t, count=1
+        )
+    p.write_text(t)
+
+# 6. Static hero/capture structure. No runtime image mutation required.
+for rel in ['index.html', 'about/index.html']:
+    p = root / rel
+    t = p.read_text()
+    t = t.replace(
+        'position:relative;width:100%;z-index:0\" data-sunday-static-hero="true"',
+        'display:block;position:static;width:100%\" data-sunday-static-hero="true"'
+    )
+    p.write_text(t)
+
+# Candidate asset cache key. Portfolio files get query-only change, nothing visual.
+for p in root.rglob('*.html'):
+    if '.github' in p.parts:
+        continue
+    t = p.read_text()
+    t2 = t.replace('v=20260912-11', 'v=20260913-12')
+    if t2 != t:
+        p.write_text(t2)
+
+# Source assertions.
+site = site_css.read_text()
+rendered = rendered_css.read_text()
+js = site_js.read_text()
+assert 'font-size: 13.25px !important' in site
+assert 'overflow-x: clip !important' in site
+assert '#dc-root > .sc-host' in site
+assert 'Project inquiry: light rose Pinyon lead' not in rendered
+assert 'CAPTURE INTEGRITY + FOOTER NORMALIZATION' not in rendered
+assert 'normalizeFooterTypography' not in js
+assert 'prepareImagesForCapture' not in js
+assert 'markHeroFallbacks' not in js
+assert 'triggerOriginalOpenSignMotion' in js
+assert 'sc-rock' in rendered and 'sc-sway' in rendered
+print('Controlled source corrections applied.')
