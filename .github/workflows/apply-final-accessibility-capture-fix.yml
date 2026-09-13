@@ -1,0 +1,53 @@
+name: Apply Final Accessibility Capture Fix
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - footer-reader-accessibility-fix-no-deploy-2026-09-13
+    paths:
+      - '.github/scripts/apply_final_accessibility_capture_fix.py'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: footer-reader-accessibility-fix-no-deploy-2026-09-13
+          fetch-depth: 0
+      - name: Apply controlled source fixes
+        run: python .github/scripts/apply_final_accessibility_capture_fix.py
+      - name: Validate bounded source changes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('index.html').read_text()
+          css = Path('assets/site.css').read_text()
+          js = Path('assets/site.js').read_text()
+          assert '<main id="main-content" tabindex="-1">' in html
+          assert 'decoding="sync"' in html
+          assert 'FINAL ACCESSIBILITY + SAFARI FULL-PAGE SOURCE ALIGNMENT' in css
+          assert 'function installAccessibleSurfaceManagement()' in js
+          assert 'v=20260913-14' in html
+          assert 'align-items: center !important' in css
+          assert Path('netlify.toml').exists()
+          print('Source validation passed')
+          PY
+      - name: Commit candidate source
+        run: |
+          if git diff --quiet; then
+            echo 'No source changes to commit.'
+            exit 0
+          fi
+          git config user.name 'Sunday-Co'
+          git config user.email 'hello@sundayandcompany.co'
+          git add 'READ ME FIRST.md' 404.html index.html about accessibility contact cookie-policy join-our-team our-work privacy-policy services sunday-school terms-and-conditions assets 'Site Header.dc.html' 'Site Footer.dc.html'
+          git commit -m '[skip netlify] Apply final accessibility and Safari source corrections'
+          git push origin HEAD:footer-reader-accessibility-fix-no-deploy-2026-09-13
