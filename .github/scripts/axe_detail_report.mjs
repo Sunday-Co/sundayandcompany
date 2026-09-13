@@ -1,3 +1,4 @@
+// Rerun after remaining accessibility remediation. Assertions and route coverage unchanged.
 import { webkit } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs';
