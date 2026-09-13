@@ -4,6 +4,7 @@ ROOT = Path('.')
 
 # User-approved correction to the no-deploy accessibility candidate:
 # preserve the Petti Pathways brand teal exactly as originally designed.
+# This direct no-deploy commit also triggers final branch QA on the corrected candidate.
 petti_path = ROOT / 'our-work/petti-pathways/index.html'
 text = petti_path.read_text(encoding='utf-8')
 
