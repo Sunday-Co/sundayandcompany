@@ -106,7 +106,8 @@ a[style*="font-family:'Inter Tight'"],
 }
 
 /* ==========================================================
-   FORM TYPOGRAPHY SYSTEM
+   FORM + RECEIPT + FOOTER TYPOGRAPHY SYSTEM
+   One owner for repeated utility typography.
    ========================================================== */
 
 form[data-inq] label > span:first-child,
@@ -115,11 +116,11 @@ form[data-editorial-labels] label > span:first-child,
 form[data-editorial-labels] > label[for],
 form[data-editorial-labels] > div > span:first-child {
   font-family: var(--sunday-sans) !important;
-  font-size: 11px !important;
+  font-size: 10.25px !important;
   font-weight: 400 !important;
-  letter-spacing: .07em !important;
-  line-height: 1.35 !important;
-  text-transform: uppercase;
+  letter-spacing: .055em !important;
+  line-height: 1.32 !important;
+  text-transform: uppercase !important;
 }
 
 form[data-inq] input,
@@ -136,23 +137,17 @@ form[data-editorial-labels] select,
 
 form[data-inq] [data-stepbtns] button,
 form[data-inq] > button[type="submit"],
-form[data-editorial-labels] > button[type="submit"],
+form[data-editorial-labels] button[type="submit"],
 [aria-label="Newsletter"] form button[type="submit"],
 [aria-label="The Sunday Reservation"] form button[type="submit"] {
   font-family: var(--sunday-sans) !important;
-  font-size: 10px !important;
+  font-size: 9.5px !important;
   font-weight: 400 !important;
-  letter-spacing: .11em !important;
+  letter-spacing: .085em !important;
 }
 
 form[data-editorial-labels] [aria-haspopup="listbox"],
-form[data-editorial-labels] [role="option"] {
-  font-family: var(--sunday-sans) !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-}
-
+form[data-editorial-labels] [role="option"],
 form[data-inq] [aria-haspopup="dialog"] {
   font-family: var(--sunday-sans) !important;
   font-size: 14px !important;
@@ -160,104 +155,103 @@ form[data-inq] [aria-haspopup="dialog"] {
   letter-spacing: 0 !important;
 }
 
-[data-receipt-meta] {
+[data-receipt-meta],
+[data-form-meta],
+[aria-label="Project inquiry"] [data-inquiry-receipt-meta],
+#inquiry [data-inquiry-receipt-meta] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.5px !important;
+  font-size: 8.5px !important;
   font-weight: 400 !important;
-  letter-spacing: .10em !important;
+  letter-spacing: .085em !important;
   line-height: 1.4 !important;
-  text-transform: uppercase;
+  text-transform: uppercase !important;
+}
+
+[data-form-instruction] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: .065em !important;
+  line-height: 1.42 !important;
+  text-transform: uppercase !important;
 }
 
 form[data-inq] [role="alert"],
 form[data-editorial-labels] [role="alert"],
 [aria-label="Newsletter"] [role="alert"],
 [aria-label="The Sunday Reservation"] [role="alert"] {
-  font-size: 11px !important;
+  font-family: var(--sunday-sans) !important;
+  font-size: 10.5px !important;
   line-height: 1.4 !important;
 }
 
-[data-screen-label="Contact"] div:has(> form[data-editorial-labels]) > div[aria-hidden] {
+form[data-inq] [data-stepnav] span,
+#inquiry form[data-inq] [data-stepnav] span {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.5px !important;
+  font-size: 9px !important;
   font-weight: 400 !important;
-  letter-spacing: .10em !important;
-  line-height: 1.4 !important;
+  letter-spacing: .04em !important;
+  line-height: 1.2 !important;
+  text-transform: uppercase !important;
 }
 
 [data-screen-label="Contact"] form[data-editorial-labels] input,
-[data-screen-label="Contact"] form[data-editorial-labels] textarea {
-  font-size: 16px !important;
-}
-
-[data-screen-label="Sunday School"] form[data-editorial-labels] > label[for] {
-  font-size: 11px !important;
-  font-weight: 400 !important;
-  letter-spacing: .10em !important;
-}
-
-[data-screen-label="Sunday School"] form[data-editorial-labels] input {
-  font-size: 18px !important;
-  font-weight: 300 !important;
-}
-
-[data-screen-label="Sunday School"] form[data-editorial-labels] button {
-  min-height: 44px !important;
-}
-
+[data-screen-label="Contact"] form[data-editorial-labels] textarea,
+[data-screen-label="Sunday School"] form[data-editorial-labels] input,
 [aria-label="Newsletter"] form input {
   font-size: 16px !important;
 }
 
-[aria-label="Newsletter"] form button {
+[aria-label="Newsletter"] form button,
+[data-screen-label="Sunday School"] form[data-editorial-labels] button {
   min-height: 44px !important;
 }
 
 [aria-label="Newsletter"] [data-news-receipt] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9px !important;
+  font-size: 8.5px !important;
   font-weight: 400 !important;
-  letter-spacing: .10em !important;
+  letter-spacing: .085em !important;
   line-height: 1.45 !important;
 }
 
 [aria-label="Newsletter"] [data-news-fineprint] {
   font-family: var(--sunday-sans) !important;
-  font-size: 8px !important;
+  font-size: 7.5px !important;
   font-weight: 300 !important;
-  letter-spacing: .055em !important;
+  letter-spacing: .045em !important;
   line-height: 1.45 !important;
 }
-
-/* ==========================================================
-   FOOTER
-   ========================================================== */
 
 footer [data-footer-ui],
 footer nav,
 footer nav a,
-footer a[href^="mailto:"],
-footer a[href*="instagram.com/sundayand_co"],
-footer [data-footer-location],
-footer [data-footer-legal] {
-  font-family: var(--sunday-sans) !important;
-}
-
-footer [data-footer-ui],
-footer a[href^="mailto:"],
 footer a[href*="instagram.com/sundayand_co"],
 footer [data-footer-location] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 12.5px !important;
   font-weight: 300 !important;
+  letter-spacing: .01em !important;
+  line-height: 1.4 !important;
 }
-
-footer [data-footer-label],
-footer [data-footer-legal] {
+footer a[href^="mailto:"] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 13.25px !important;
+  font-weight: 300 !important;
+  letter-spacing: .005em !important;
+  line-height: 1.4 !important;
+  opacity: 1 !important;
+}
+footer [data-footer-label] {
+  font-family: var(--sunday-sans) !important;
   font-weight: 400 !important;
 }
-
-/* ==========================================================
-   PROJECT INQUIRY RECEIPT
-   ========================================================== */
+footer [data-footer-legal] {
+  font-family: var(--sunday-sans) !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+  letter-spacing: .10em !important;
+}
 
 div[role="presentation"]:has(> [aria-label="Project inquiry"]),
 div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
@@ -265,48 +259,59 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   justify-content: center !important;
   overscroll-behavior: contain;
 }
-
 [aria-label="Project inquiry"] {
   margin: auto !important;
 }
-
 [aria-label="Project inquiry"] > div {
   box-sizing: border-box;
   margin: 0 !important;
 }
 
-[aria-label="Project inquiry"] [data-inquiry-receipt-meta],
-#inquiry [data-inquiry-receipt-meta] {
+[aria-label="Project inquiry"] [data-inquiry-kicker],
+#inquiry [data-inquiry-kicker] {
+  color: var(--sunday-rose) !important;
   font-family: var(--sunday-sans) !important;
   font-size: 10px !important;
+  font-style: normal !important;
   font-weight: 400 !important;
-  letter-spacing: .10em !important;
-  line-height: 1.35 !important;
+  letter-spacing: .095em !important;
+  line-height: 1.3 !important;
+  margin: 0 0 5px !important;
+  text-transform: uppercase !important;
 }
-
-[aria-label="Project inquiry"] [data-inquiry-kicker] {
-  font-size: 40px !important;
-  line-height: .94 !important;
+[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+#inquiry [data-inquiry-kicker] + h2 {
+  color: var(--sunday-espresso) !important;
+  font-family: var(--sunday-serif) !important;
+  font-size: 31px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: -.02em !important;
+  line-height: .98 !important;
+  margin: 0 !important;
+  text-transform: uppercase !important;
 }
-
 [aria-label="Project inquiry"] [data-inquiry-support],
+#inquiry [data-inquiry-support],
 #inquiry header h2 + p {
   font-family: var(--sunday-sans) !important;
-  font-size: 13px !important;
+  font-size: 9.75px !important;
   font-weight: 300 !important;
-  letter-spacing: .01em !important;
-  line-height: 1.5 !important;
+  letter-spacing: .065em !important;
+  line-height: 1.45 !important;
+  margin-top: 9px !important;
+  max-width: 520px !important;
+  text-transform: uppercase !important;
 }
-
 [aria-label="Project inquiry"] form[data-inq] [data-stepbtns] button,
 [aria-label="Project inquiry"] form[data-inq] > button,
 [aria-label="Project inquiry"] [data-inquiry-ledger],
 #inquiry form[data-inq] [data-stepbtns] button,
 #inquiry form[data-inq] > button {
   font-family: var(--sunday-sans) !important;
-  font-size: 10px !important;
+  font-size: 9.5px !important;
   font-weight: 400 !important;
-  letter-spacing: .10em !important;
+  letter-spacing: .085em !important;
 }
 
 @media (min-width: 701px) {
@@ -316,14 +321,9 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     max-height: calc(100vh - 64px) !important;
     overflow-y: auto !important;
   }
-
   [aria-label="Project inquiry"] > div {
     min-height: 0 !important;
-    padding: 30px 38px 34px !important;
-  }
-
-  [aria-label="Project inquiry"] [data-inquiry-receipt-meta] {
-    font-size: 10.5px !important;
+    padding: 30px 38px 46px !important;
   }
 }
 
@@ -332,84 +332,80 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     padding: 12px !important;
     overflow-y: auto !important;
   }
-
   [aria-label="Project inquiry"] {
     width: calc(100vw - 24px) !important;
     max-width: calc(100vw - 24px) !important;
     max-height: calc(100svh - 24px) !important;
     overflow-y: auto !important;
   }
-
   [aria-label="Project inquiry"] > div {
     min-height: min(620px, 70svh) !important;
-    padding: 22px 18px 28px !important;
+    padding: 22px 18px 48px !important;
   }
-
-  [aria-label="Project inquiry"] [data-inquiry-kicker] {
-    font-size: 46px !important;
-    line-height: .94 !important;
-    margin-bottom: 14px !important;
+  [aria-label="Project inquiry"] [data-inquiry-kicker],
+  #inquiry [data-inquiry-kicker] {
+    font-size: 9.5px !important;
+    letter-spacing: .09em !important;
   }
-
-  [aria-label="Project inquiry"] h2 {
-    font-size: 25px !important;
+  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
+  #inquiry [data-inquiry-kicker] + h2 {
+    font-size: 24px !important;
+    line-height: 1 !important;
   }
-
-  [aria-label="Project inquiry"] [data-inquiry-support] {
-    font-size: 13px !important;
+  [aria-label="Project inquiry"] [data-inquiry-support],
+  #inquiry [data-inquiry-support] {
+    font-size: 9.25px !important;
+    letter-spacing: .06em !important;
   }
-
-  [aria-label="Project inquiry"] [data-inquiry-receipt-meta] {
-    font-size: 10px !important;
-  }
-
-  [aria-label="Project inquiry"] form[data-inq],
-  #inquiry form[data-inq] {
-    grid-template-columns: 1fr !important;
-    gap: 7px !important;
-  }
-
-  [aria-label="Project inquiry"] form[data-inq] fieldset,
-  #inquiry form[data-inq] fieldset {
-    grid-template-columns: 1fr !important;
-  }
-
   [aria-label="Project inquiry"] form[data-inq] label > span:first-child,
   [aria-label="Project inquiry"] form[data-inq] legend,
   #inquiry form[data-inq] label > span:first-child,
-  #inquiry form[data-inq] legend {
-    font-size: 11.25px !important;
+  #inquiry form[data-inq] legend,
+  form[data-editorial-labels] label > span:first-child,
+  form[data-editorial-labels] > label[for],
+  form[data-editorial-labels] > div > span:first-child {
+    font-size: 10px !important;
+    letter-spacing: .05em !important;
   }
-
+  [data-form-instruction] {
+    font-size: 8.75px !important;
+    letter-spacing: .06em !important;
+  }
   [aria-label="Project inquiry"] form[data-inq] input,
   [aria-label="Project inquiry"] form[data-inq] select,
-  #inquiry form[data-inq] input,
-  #inquiry form[data-inq] select {
-    font-size: 16px !important;
-    min-height: 43px !important;
-  }
-
   [aria-label="Project inquiry"] form[data-inq] textarea,
-  #inquiry form[data-inq] textarea {
+  #inquiry form[data-inq] input,
+  #inquiry form[data-inq] select,
+  #inquiry form[data-inq] textarea,
+  form[data-editorial-labels] input,
+  form[data-editorial-labels] textarea,
+  form[data-editorial-labels] select {
     font-size: 16px !important;
-    min-height: 74px !important;
   }
+  form[data-editorial-labels] input,
+  form[data-editorial-labels] select { min-height: 44px !important; }
+  form[data-editorial-labels] textarea { min-height: 112px !important; }
+  form[data-editorial-labels] button { min-height: 44px !important; }
 }
-
-/* ==========================================================
-   SUNDAY RESERVATION POPUP
-   ========================================================== */
 
 [aria-label="The Sunday Reservation"] {
   box-sizing: border-box;
   margin: auto !important;
 }
-
+[aria-label="The Sunday Reservation"] h2 + p {
+  font-family: var(--sunday-sans) !important;
+  font-size: 11.25px !important;
+  font-weight: 300 !important;
+  letter-spacing: .005em !important;
+  line-height: 1.48 !important;
+}
 [aria-label="The Sunday Reservation"] [data-res-fineprint] {
   font-family: var(--sunday-sans) !important;
+  font-size: 8.5px !important;
   font-weight: 300 !important;
-  letter-spacing: .065em !important;
-  line-height: 1.45 !important;
+  letter-spacing: .04em !important;
+  line-height: 1.42 !important;
+  opacity: .76 !important;
 }
 
 @media (min-width: 701px) {
@@ -422,7 +418,6 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     grid-template-columns: 1fr 1.06fr !important;
     overflow: hidden !important;
   }
-
   [aria-label="The Sunday Reservation"] > div[aria-hidden] {
     align-self: stretch !important;
     height: 100% !important;
@@ -430,22 +425,16 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     max-height: none !important;
     overflow: hidden !important;
   }
-
   [aria-label="The Sunday Reservation"] > div[aria-hidden] img {
     height: 100% !important;
     object-fit: cover !important;
     width: 100% !important;
   }
-
   [aria-label="The Sunday Reservation"] > div:last-child {
     height: 100% !important;
     min-height: 0 !important;
     overflow-y: auto !important;
     padding: 34px 32px 28px !important;
-  }
-
-  [aria-label="The Sunday Reservation"] [data-res-fineprint] {
-    font-size: 9px !important;
   }
 }
 
@@ -459,81 +448,83 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     grid-template-columns: 1fr !important;
     overflow-y: auto !important;
   }
-
   [aria-label="The Sunday Reservation"] > div[aria-hidden] {
     height: 180px !important;
     min-height: 180px !important;
     max-height: 180px !important;
   }
-
   [aria-label="The Sunday Reservation"] > div:last-child {
     min-height: 0 !important;
     height: auto !important;
     padding: 22px 20px 21px !important;
   }
-
+  [aria-label="The Sunday Reservation"] h2 + p {
+    font-size: 10.5px !important;
+    line-height: 1.45 !important;
+    margin-top: 11px !important;
+    max-width: 310px !important;
+  }
   [aria-label="The Sunday Reservation"] [data-res-fineprint] {
-    font-size: 8px !important;
-    letter-spacing: .055em !important;
+    font-size: 6.5px !important;
+    letter-spacing: .04em !important;
+    line-height: 1.38 !important;
+    margin-top: 6px !important;
   }
-
-  [aria-label="The Sunday Reservation"] input {
-    font-size: 16px !important;
-  }
-
-  [aria-label="The Sunday Reservation"] form button {
-    min-height: 44px !important;
-  }
+  [aria-label="The Sunday Reservation"] input { font-size: 16px !important; }
+  [aria-label="The Sunday Reservation"] form button { min-height: 44px !important; }
 }
 
-/* ==========================================================
-   CONTACT + SUNDAY SCHOOL MOBILE FORM READABILITY
-   ========================================================== */
-
-@media (max-width: 700px) {
-  form[data-editorial-labels] label > span:first-child,
-  form[data-editorial-labels] > label[for],
-  form[data-editorial-labels] > div > span:first-child {
-    font-size: 11.25px !important;
-    letter-spacing: .075em !important;
+html,
+body {
+  max-width: 100% !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+#dc-root,
+#dc-root > .sc-host {
+  height: auto !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+img {
+  content-visibility: visible !important;
+}
+img[data-sunday-static-hero="true"] {
+  display: block !important;
+  height: 100% !important;
+  inset: auto !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  opacity: 1 !important;
+  position: static !important;
+  transform: none !important;
+  visibility: visible !important;
+  width: 100% !important;
+  will-change: auto !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+@media print {
+  html,
+  body,
+  #dc-root,
+  #dc-root > .sc-host,
+  [data-screen-label] {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
-
-  form[data-editorial-labels] input,
-  form[data-editorial-labels] textarea,
-  form[data-editorial-labels] select {
-    font-size: 16px !important;
+  img {
+    content-visibility: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
-
-  form[data-editorial-labels] input,
-  form[data-editorial-labels] select {
-    min-height: 44px !important;
-  }
-
-  form[data-editorial-labels] textarea {
-    min-height: 112px !important;
-  }
-
-  form[data-editorial-labels] button {
-    min-height: 44px !important;
-  }
-
-  [data-screen-label="Sunday School"] form[data-editorial-labels] input {
-    font-size: 16px !important;
-  }
-
-  [aria-label="Newsletter"] form input {
-    font-size: 16px !important;
-  }
-
-  [aria-label="Newsletter"] form button {
-    min-height: 44px !important;
-    font-size: 10px !important;
-  }
-
-  [aria-label="Newsletter"] [data-news-fineprint] {
-    font-size: 7.5px !important;
-    letter-spacing: .045em !important;
-    line-height: 1.45 !important;
+  img[data-sunday-static-hero="true"] {
+    display: block !important;
+    position: static !important;
   }
 }
 
