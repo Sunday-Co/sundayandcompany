@@ -1,66 +1,54 @@
-# Sunday & Company — Netlify Deploy
+# Sunday & Company Website
 
-## What to upload
+## Current production setup
 
-Drag the **`deploy`** folder onto Netlify. That is the whole site and nothing else.
-Do not upload `reference/` — it is documentation for you, not for the web.
+This repository is the source of truth for `https://sundayandcompany.co`.
 
-Netlify: log in → **Sites** → drag the `deploy` folder onto the drop zone.
-It publishes in about thirty seconds and gives you a temporary URL to check.
+- Production branch: `main`
+- Hosting: Netlify, connected to this GitHub repository
+- Publish directory: repository root (`.`)
+- Domain: `sundayandcompany.co`
+- `www` and HTTP redirect to the HTTPS bare domain through `netlify.toml`
 
-## Connect your domain
+Do **not** drag a folder into Netlify for normal updates. Do **not** recreate the Netlify site or reconnect the domain.
 
-1. In Netlify: **Domain management → Add a domain →** `sundayandcompany.co`
-2. Netlify shows you four nameservers. Copy them.
-3. In GoDaddy: **My Products → Domains → sundayandcompany.co → Nameservers →
-   Change → I'll use my own nameservers.** Paste all four, save.
-4. Wait. Usually under an hour, occasionally up to 24. Netlify issues the HTTPS
-   certificate automatically once DNS resolves — you do nothing for that.
+## Safe editing workflow
 
-Your old Wix site stays live until the nameservers switch, so there is no gap.
+1. Start from the current `main` branch.
+2. Make changes on a temporary/no-deploy branch when the change affects layout, forms, motion, Safari rendering, or shared components.
+3. Test mobile and desktop before production. For Safari-sensitive work, include WebKit/browser capture checks.
+4. Keep temporary QA scripts and workflows off `main`.
+5. Promote one clean production commit to `main` only after the candidate is verified.
+6. If CSS or JavaScript behavior changes, bump the asset query version used by the HTML so Safari does not reuse a stale cached file.
 
-## What is already handled
+## Files that should not be changed casually
 
-`netlify.toml` travels inside `deploy/` and configures all of this on publish:
+### `netlify.toml`
 
-- Security headers — HSTS, clickjacking protection, no MIME sniffing and a strict referrer policy
-- HTTPS forced, `www` redirected to the bare domain
-- Clean URLs — `/about`, `/our-work/luckys-cafe-bakery`, no `.html` anywhere
-- `404.html` served on unknown paths
-- Long-lived caching on assets, none on HTML, so corrections publish instantly
+The current file already handles the production publish root, cache rules, and domain redirects. Visual/UI corrections normally do **not** require a `netlify.toml` change.
 
-`robots.txt` and `sitemap.xml` are in there too. Nothing to configure.
+### Shared site assets
 
-## Two things to do after it is live
+- `assets/site.css` contains the shared typography, responsive, modal, footer, Safari/capture, and accessibility-related production rules.
+- `assets/site.js` contains only shared runtime behavior that truly needs JavaScript.
+- `assets/rendered-corrections.css` is a production compatibility layer. Avoid stacking new one-off overrides when a source/component correction is possible.
 
-**1. Submit the sitemap.** Google Search Console → add `sundayandcompany.co` →
-verify (easiest via the DNS record Netlify can host) → **Sitemaps** → submit
-`https://sundayandcompany.co/sitemap.xml`. This is what gets you indexed in days
-rather than weeks.
+### Shared components
 
-**2. Take the old Wix site down.** It is still indexed calling Sunday "a
-full-service marketing agency," which competes with the new site for your own
-name. Either unpublish it or point it at the new domain.
-
-## One Google Business Profile edit
-
-Your profile is verified and correctly set as a service-area business with no
-public address. The only gap: it lists no North Carolina areas, while the site
-names North Carolina — and two of four case studies are NC work.
-
-Add to the profile's service areas: **Raleigh NC, Durham NC, North Carolina.**
-Site and profile should agree; a mismatch weakens both.
+The root `Site Header.dc.html`, `Site Footer.dc.html`, `Inquiry Form.dc.html`, and `Program Cards.dc.html` are the canonical shared component sources. Keep generated/duplicate copies aligned when they are intentionally retained in the repository.
 
 ## Forms
 
-All seven post to Web3Forms on your three existing keys. Nothing to set up.
-Test one after launch and check `hello@sundayandcompany.co`.
+Forms submit through the existing Web3Forms integration. Do not replace the keys or form transport during visual changes. After a form-related production update, test a real submission and confirm delivery to `hello@sundayandcompany.co`.
 
-One optional hardening step: in your Web3Forms dashboard, switch on captcha for
-the **project inquiry** key only. Honeypots are already in every form and stop
-most bots; captcha stops the determined ones. Leave the newsletter frictionless.
+## Accessibility
 
-## If something looks wrong after publishing
+Safari **Reader** is a browser reading view, not the site's screen-reader implementation. It intentionally removes navigation, controls, and other non-article material and cannot be used as the requirement that every visual element appear in Reader.
 
-Netlify keeps every previous deploy. **Deploys →** pick the last good one →
-**Publish deploy.** Instant rollback, no rebuild.
+The accessibility target for this site is semantic HTML, keyboard access, visible focus, meaningful image alt text, labelled controls, reduced-motion support, and compatibility with assistive technology such as Apple VoiceOver.
+
+## If production looks wrong
+
+First confirm that the live HTML is serving the newest asset query version. If it is still serving the previous version, do not create another visual patch just to force a redeploy. Wait for or diagnose the current Netlify deploy/cache state.
+
+For a real regression, roll back to the last known-good GitHub/Netlify deploy, correct the source on a branch, retest, and then publish one clean commit.

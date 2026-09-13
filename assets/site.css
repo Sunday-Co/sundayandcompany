@@ -237,7 +237,7 @@ footer [data-footer-location] {
 footer a[href^="mailto:"] {
   font-family: var(--sunday-sans) !important;
   font-size: 13.25px !important;
-  font-weight: 300 !important;
+  font-weight: 400 !important;
   letter-spacing: .005em !important;
   line-height: 1.4 !important;
   opacity: 1 !important;
@@ -251,6 +251,32 @@ footer [data-footer-legal] {
   font-size: 9px !important;
   font-weight: 400 !important;
   letter-spacing: .10em !important;
+}
+
+/* Footer source alignment: secondary-font tagline, readable email, and real bottom breathing room. */
+footer [data-footer-tagline] {
+  font-family: var(--sunday-sans) !important;
+  font-size: clamp(15px, 1.3vw, 18px) !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  letter-spacing: .015em !important;
+  line-height: 1.2 !important;
+}
+footer [data-footer-tagline] em {
+  font-family: var(--sunday-sans) !important;
+  font-style: italic !important;
+  font-weight: 300 !important;
+  letter-spacing: .015em !important;
+}
+
+@media (max-width: 700px) {
+  footer {
+    padding-bottom: calc(44px + env(safe-area-inset-bottom)) !important;
+  }
+  footer a[href^="mailto:"] {
+    font-size: 13.25px !important;
+    font-weight: 400 !important;
+  }
 }
 
 div[role="presentation"]:has(> [aria-label="Project inquiry"]),
@@ -329,15 +355,16 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
 
 @media (max-width: 700px) {
   div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
-    align-items: flex-start !important;
-    padding: 12px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 18px 12px calc(18px + env(safe-area-inset-bottom)) !important;
     overflow-y: auto !important;
   }
   [aria-label="Project inquiry"] {
-    margin: 0 auto !important;
+    margin: auto !important;
     width: calc(100vw - 24px) !important;
     max-width: calc(100vw - 24px) !important;
-    max-height: calc(100dvh - 24px) !important;
+    max-height: calc(100dvh - 36px) !important;
     overflow-y: auto !important;
   }
   [aria-label="Project inquiry"] > div {
