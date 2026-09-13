@@ -1,0 +1,85 @@
+name: Controlled UI Final QA Rerun
+
+on:
+  push:
+    branches: [controlled-ui-audit-no-deploy-2026-09-13]
+    paths: ['.github/workflows/controlled-ui-final-qa-rerun.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Validate cleaned source
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          site=Path('assets/site.css').read_text(); rendered=Path('assets/rendered-corrections.css').read_text(); js=Path('assets/site.js').read_text()
+          for x in ['normalizeRuntimeRoots','normalizeFooterTypography','prepareImagesForCapture','markHeroFallbacks','CAPTURE INTEGRITY + FOOTER NORMALIZATION','[data-capture-full-image]']:
+              if x in site+js: raise SystemExit('obsolete source remains: '+x)
+          for x in ['font-size: 13.25px !important','font-size: 6.5px !important','overflow-y: visible !important']:
+              if x not in site: raise SystemExit('required source missing: '+x)
+          if '/assets/rendered-corrections.css?v=20260913-12' not in js: raise SystemExit('wrong rendered CSS cache key')
+          for x in ['sc-warm','sc-neon','sc-rock','sc-sway']:
+              if x not in rendered: raise SystemExit('OPEN sign sequence missing '+x)
+          for name in ['Site Header.dc.html','Site Footer.dc.html','Inquiry Form.dc.html','Program Cards.dc.html']:
+              vals={p.read_text() for p in Path('.').rglob(name)}
+              if len(vals)!=1: raise SystemExit(f'{name} has {len(vals)} variants')
+          subprocess.run(['git','fetch','origin','main'],check=True,stdout=subprocess.DEVNULL)
+          locked=['our-work/index.html','our-work/luckys-cafe-bakery/index.html','our-work/petti-pathways/index.html','our-work/pizzeria-coco/index.html','our-work/folake/index.html']
+          for p in locked:
+              prod=subprocess.check_output(['git','show','origin/main:'+p],text=True)
+              cand=Path(p).read_text().replace('v=20260913-12','v=20260912-11')
+              if cand!=prod: raise SystemExit('portfolio changed beyond cache key: '+p)
+          lucky=Path('our-work/luckys-cafe-bakery/index.html').read_text()
+          if 'max-height:640px;overflow-y:auto' not in lucky or "n.style.opacity = '0'" not in lucky or 'translateY(20px)' not in lucky: raise SystemExit('original portfolio behavior missing')
+          for p in Path('.').rglob('*.html'):
+              if '.github' not in p.parts and 'loading="lazy"' in p.read_text(): raise SystemExit('lazy image remains '+str(p))
+          print('clean source validation passed')
+          PY
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Serve
+        run: |
+          python3 -m http.server 4173 >/tmp/uiqa.log 2>&1 &
+          sleep 2
+      - name: Browser QA
+        run: |
+          mkdir -p final-qa
+          node <<'NODE'
+          const {webkit}=require('playwright'); const assert=require('assert'); const fs=require('fs');
+          const base='http://127.0.0.1:4173'; const num=v=>+String(v).replace('px',''); const near=(v,x,t=.36)=>Math.abs(num(v)-x)<=t;
+          const vis=async l=>{try{return await l.count()&&await l.first().isVisible()}catch{return false}};
+          const css=async l=>l.first().evaluate(el=>{let s=getComputedStyle(el);return {size:s.fontSize,weight:s.fontWeight,family:s.fontFamily,spacing:s.letterSpacing,transform:s.textTransform,overflowY:s.overflowY,position:s.position,willChange:s.willChange,opacity:s.opacity,visibility:s.visibility}});
+          const closeRes=async p=>{let x=p.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');if(await vis(x)){await x.first().evaluate(e=>e.click());await p.waitForTimeout(180)}};
+          const decode=async p=>p.evaluate(async()=>Promise.all([...document.images].map(i=>(i.complete&&i.naturalWidth)?1:i.decode().catch(()=>0))));
+          async function view(name,vp){let b=await webkit.launch(),p=await b.newPage({viewport:vp}),r={};await p.goto(base+'/',{waitUntil:'domcontentloaded'});await p.waitForTimeout(1100);await decode(p);
+            let res=p.locator('[aria-label="The Sunday Reservation"]'); assert.ok(await vis(res),name+' reservation missing'); let sup=await css(res.locator('h2 + p')),fine=await css(res.locator('[data-res-fineprint]'));
+            assert.ok(near(sup.size,name==='mobile'?10.5:11.25),name+' reservation support '+sup.size); assert.ok(near(fine.size,name==='mobile'?6.5:8.5),name+' reservation fine '+fine.size); await p.screenshot({path:`final-qa/${name}-reservation.png`}); await closeRes(p);
+            await p.locator('footer').scrollIntoViewIfNeeded(); let em=await css(p.locator('footer a[href^="mailto:"]')),loc=await css(p.locator('footer [data-footer-location]')); assert.ok(near(em.size,13.25),name+' email '+em.size); assert.ok(near(loc.size,12.5),name+' location '+loc.size); assert.equal(em.weight,'300'); assert.equal(loc.weight,'300'); await p.screenshot({path:`final-qa/${name}-footer.png`});
+            let roots=await p.evaluate(()=>[document.documentElement,document.body,document.querySelector('#dc-root'),document.querySelector('#dc-root > .sc-host')].filter(Boolean).map(e=>({tag:e.tagName,oy:getComputedStyle(e).overflowY,sh:e.scrollHeight,ch:e.clientHeight}))); roots.forEach(x=>assert.ok(!['auto','scroll'].includes(x.oy),name+' nested scroller '+JSON.stringify(x))); r.roots=roots;
+            await p.evaluate(()=>scrollTo(0,0)); let hero=p.locator('#top img[data-sunday-static-hero="true"]'); assert.equal(await hero.count(),1); let hi=await hero.evaluate(i=>{let s=getComputedStyle(i),q=i.getBoundingClientRect();return {ok:i.complete&&i.naturalWidth>0,pos:s.position,transform:s.transform,wc:s.willChange,op:s.opacity,vis:s.visibility,w:q.width,h:q.height}}); assert.ok(hi.ok);assert.equal(hi.pos,'static');assert.equal(hi.transform,'none');assert.equal(hi.wc,'auto');assert.ok(hi.w>300&&hi.h>500);r.hero=hi;
+            await p.getByText('Start A Project',{exact:true}).first().evaluate(e=>e.click());await p.waitForTimeout(280);let iq=p.locator('[aria-label="Project inquiry"]');assert.ok(await vis(iq));let h=await css(iq.locator('h2')),s=await css(iq.locator('[data-inquiry-support]')),k=await css(iq.locator('[data-inquiry-kicker]')),lab=await css(iq.locator('form[data-inq] label > span:first-child').first());assert.ok(h.family.includes('Playfair'));assert.equal(h.transform,'uppercase');assert.equal(s.transform,'uppercase');assert.ok(k.family.includes('Inter Tight'));assert.ok(near(h.size,name==='mobile'?24:31));assert.ok(near(s.size,name==='mobile'?9.25:9.75));assert.ok(near(lab.size,name==='mobile'?10:10.25));await p.screenshot({path:`final-qa/${name}-inquiry.png`});let qc=iq.locator('button[aria-label="Close"]');if(await vis(qc))await qc.evaluate(e=>e.click());
+            await p.goto(base+'/contact/',{waitUntil:'domcontentloaded'});await p.waitForTimeout(450);await closeRes(p);let f=p.locator('form[data-editorial-labels]').first();assert.ok(await f.count());let fl=await css(f.locator('label').first());assert.ok(num(fl.size)<=10.5,name+' contact label '+fl.size);let instr=p.locator('[data-form-instruction]').first();if(await instr.count()){let z=await css(instr);assert.ok(num(z.size)<=9.1,name+' instruction '+z.size)}await p.screenshot({path:`final-qa/${name}-contact.png`});
+            await p.goto(base+'/join-our-team/',{waitUntil:'domcontentloaded'});await p.waitForTimeout(450);await closeRes(p);let card=p.locator('[data-program-cards] > article').first(),btn=card.locator('button').first();assert.ok(await btn.count());let spans=btn.locator('span'),sizes=[];for(let i=0;i<await spans.count();i++){if(await spans.nth(i).isVisible().catch(()=>false)){let z=await css(spans.nth(i));if(num(z.size)>0)sizes.push(num(z.size))}}assert.ok(sizes.some(x=>x>=8),name+' join meta '+sizes);await btn.evaluate(e=>e.click());await p.waitForTimeout(950);let details=card.getByText('View Full Details',{exact:true});assert.ok(await vis(details));await details.evaluate(e=>e.click());await p.waitForTimeout(220);let modal=p.locator('[role="dialog"][aria-label="The Fellows Table"]');assert.ok(await vis(modal));let meta=await modal.locator(':scope > div:nth-child(2)').evaluate(e=>getComputedStyle(e,'::before').fontSize),stamp=await modal.evaluate(e=>getComputedStyle(e,'::after').fontSize);assert.ok(num(meta)>=(name==='mobile'?7.2:8));assert.ok(num(stamp)>=(name==='mobile'?7:7.5));await p.screenshot({path:`final-qa/${name}-join-modal.png`});r.type={sup,fine,em,loc,h,s,k,lab,join:sizes,meta,stamp};await b.close();return r}
+          (async()=>{let R={};R.mobile=await view('mobile',{width:390,height:844});R.desktop=await view('desktop',{width:1440,height:1000});
+            let b=await webkit.launch(),p=await b.newPage({viewport:{width:390,height:844}}),routes=['/','/about/','/services/','/join-our-team/','/sunday-school/','/contact/','/our-work/','/our-work/luckys-cafe-bakery/','/our-work/petti-pathways/','/our-work/pizzeria-coco/','/our-work/folake/'];R.routes={};for(let route of routes){await p.goto(base+route,{waitUntil:'domcontentloaded'});await p.waitForTimeout(250);await closeRes(p);let ht=await p.evaluate(()=>document.documentElement.scrollHeight);for(let y=0;y<ht;y+=700){await p.evaluate(y=>scrollTo(0,y),y);await p.waitForTimeout(8)}await decode(p);let bad=await p.evaluate(()=>[...document.images].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.currentSrc||i.src));assert.deepEqual(bad,[],route+' images '+bad);R.routes[route]=await p.evaluate(()=>({images:document.images.length,height:document.documentElement.scrollHeight}))}
+            await p.goto(base+'/our-work/luckys-cafe-bakery/',{waitUntil:'domcontentloaded'});await p.waitForTimeout(450);await closeRes(p);let target=p.locator('#email');let bef=await target.evaluate(e=>({o:e.style.opacity,t:e.style.transform,d:getComputedStyle(e).transitionDuration}));assert.equal(bef.o,'0');assert.ok(bef.t.includes('translateY'));assert.notEqual(bef.d,'0s');await target.scrollIntoViewIfNeeded();await p.waitForTimeout(900);assert.equal(await target.evaluate(e=>e.style.opacity),'1');let frame=p.locator('img[alt="Lucky’s Café and Bakery homepage"]').locator('..'),fr=await frame.evaluate(e=>({m:getComputedStyle(e).maxHeight,o:getComputedStyle(e).overflowY}));assert.equal(fr.m,'640px');assert.ok(['auto','scroll'].includes(fr.o));R.portfolio={bef,fr};await b.close();
+            let nb=await webkit.launch(),np=await nb.newPage({viewport:{width:390,height:844},javaScriptEnabled:false});await np.goto(base+'/',{waitUntil:'domcontentloaded'});await decode(np);let nh=await np.locator('#top img[data-sunday-static-hero="true"]').evaluate(i=>({ok:i.complete&&i.naturalWidth>0,p:getComputedStyle(i).position,o:getComputedStyle(i).opacity,v:getComputedStyle(i).visibility}));assert.ok(nh.ok&&nh.p==='static'&&nh.o==='1'&&nh.v==='visible');await np.screenshot({path:'final-qa/mobile-home-full-nojs.png',fullPage:true});R.nojs=nh;await nb.close();
+            for(let [name,vp] of [['mobile',{width:390,height:844}],['desktop',{width:1440,height:1000}]]){let x=await webkit.launch(),q=await x.newPage({viewport:vp});await q.goto(base+'/',{waitUntil:'domcontentloaded'});await q.waitForTimeout(1100);await closeRes(q);await decode(q);await q.screenshot({path:`final-qa/${name}-home-full.png`,fullPage:true});await x.close()}
+            let pb=await webkit.launch(),pp=await pb.newPage({viewport:{width:390,height:844}});await pp.goto(base+'/',{waitUntil:'domcontentloaded'});await pp.waitForTimeout(300);await closeRes(pp);await pp.emulateMedia({media:'print'});await decode(pp);await pp.screenshot({path:'final-qa/mobile-home-full-print.png',fullPage:true});await pb.close();fs.writeFileSync('final-qa/report.json',JSON.stringify(R,null,2));console.log('strict controlled UI QA passed')})().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Upload QA renders
+        uses: actions/upload-artifact@v4
+        with:
+          name: controlled-ui-final-qa-rerun
+          path: final-qa
+          if-no-files-found: error
