@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 
+# One-time no-deploy source patch for the document language declaration.
 pages = [
     p for p in Path('.').rglob('*.html')
     if '.github' not in p.parts and not p.name.endswith('.dc.html')
