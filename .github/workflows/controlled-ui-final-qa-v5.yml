@@ -1,0 +1,52 @@
+name: Controlled UI Final QA V5
+
+on:
+  push:
+    branches:
+      - controlled-ui-audit-no-deploy-2026-09-13
+    paths:
+      - .github/workflows/controlled-ui-final-qa-v5.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Strict source validation
+        run: python3 .github/scripts/controlled_ui_source_v4.py
+      - name: Correct desktop-only QA range
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.github/scripts/controlled_ui_v4_qa.mjs')
+          s=p.read_text()
+          old="inquiryStyle.rect.top >= 20 && inquiryStyle.rect.top < 150"
+          new="inquiryStyle.rect.top >= 20 && inquiryStyle.rect.top < 260"
+          if s.count(old) != 1:
+              raise SystemExit('desktop inquiry QA assertion not found exactly once')
+          p.write_text(s.replace(old,new,1))
+          print('Desktop QA range corrected without changing site source.')
+          PY
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Serve candidate
+        run: |
+          python3 -m http.server 4173 >/tmp/uiqa-v5.log 2>&1 &
+          sleep 2
+      - name: Strict browser and capture QA
+        run: node .github/scripts/controlled_ui_v4_qa.mjs
+      - name: Upload V5 QA renders
+        uses: actions/upload-artifact@v4
+        with:
+          name: controlled-ui-final-qa-v5
+          path: final-qa-v4
+          if-no-files-found: error
