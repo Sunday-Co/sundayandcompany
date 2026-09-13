@@ -83,6 +83,22 @@ jobs:
             assert.deepStrictEqual(missing, [], `${route}: images missing alt attributes: ${JSON.stringify(missing)}`);
           }
 
+          async function auditStructure(page, route) {
+            const structure = await page.evaluate(() => ({
+              lang: document.documentElement.getAttribute('lang') || '',
+              title: document.title.trim(),
+              h1: [...document.querySelectorAll('h1')].filter(el => {
+                const s = getComputedStyle(el), r = el.getBoundingClientRect();
+                return s.display !== 'none' && s.visibility !== 'hidden' && r.width > 0 && r.height > 0;
+              }).length,
+              unnamedDialogs: [...document.querySelectorAll('[role="dialog"]')].filter(el => !(el.getAttribute('aria-label') || el.getAttribute('aria-labelledby'))).map(el => el.outerHTML.slice(0,180)),
+            }));
+            assert.ok(structure.lang, `${route}: html language missing`);
+            assert.ok(structure.title, `${route}: document title missing`);
+            assert.ok(structure.h1 >= 1, `${route}: visible H1 missing`);
+            assert.deepStrictEqual(structure.unnamedDialogs, [], `${route}: unnamed dialogs ${JSON.stringify(structure.unnamedDialogs)}`);
+          }
+
           const browser = await webkit.launch();
 
           const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -137,6 +153,7 @@ jobs:
             await mobile.goto(base + route, { waitUntil: 'domcontentloaded' });
             await mobile.waitForTimeout(350);
             await closeReservation(mobile);
+            await auditStructure(mobile, route);
             await auditImages(mobile, route);
             await auditInteractiveNames(mobile, route);
           }
