@@ -1,54 +1,43 @@
-# Sunday & Company Website
+# Sunday & Company — GitHub + Netlify
 
-## Current production setup
+## Production source
 
-This repository is the source of truth for `https://sundayandcompany.co`.
+The **repository root is the production site**. Netlify is connected to this GitHub repository and publishes from `.` as configured in `netlify.toml`.
 
-- Production branch: `main`
-- Hosting: Netlify, connected to this GitHub repository
-- Publish directory: repository root (`.`)
-- Domain: `sundayandcompany.co`
-- `www` and HTTP redirect to the HTTPS bare domain through `netlify.toml`
+Do **not** drag a separate `deploy` folder into Netlify. There is no separate production folder in the current workflow.
 
-Do **not** drag a folder into Netlify for normal updates. Do **not** recreate the Netlify site or reconnect the domain.
+## Normal update workflow
 
-## Safe editing workflow
+1. Make and verify source changes in this repository.
+2. Keep shared production assets and each page's asset-version query aligned.
+3. Use `[skip netlify]` on preparatory commits when a production deploy is not wanted yet.
+4. When the source is fully verified and a deploy is intended, publish the final approved GitHub state through the connected Netlify workflow.
+5. Check the live site after deployment on desktop and mobile before considering the change complete.
 
-1. Start from the current `main` branch.
-2. Make changes on a temporary/no-deploy branch when the change affects layout, forms, motion, Safari rendering, or shared components.
-3. Test mobile and desktop before production. For Safari-sensitive work, include WebKit/browser capture checks.
-4. Keep temporary QA scripts and workflows off `main`.
-5. Promote one clean production commit to `main` only after the candidate is verified.
-6. If CSS or JavaScript behavior changes, bump the asset query version used by the HTML so Safari does not reuse a stale cached file.
+## Netlify configuration
 
-## Files that should not be changed casually
+`netlify.toml` lives at the repository root and currently configures:
 
-### `netlify.toml`
+- `publish = "."`
+- Security headers, including HSTS, clickjacking protection, MIME-sniffing protection and a strict referrer policy
+- HTTPS and `www` redirects to `https://sundayandcompany.co`
+- Asset caching at `public, max-age=3600, must-revalidate`
+- HTML revalidation at `public, max-age=0, must-revalidate`
 
-The current file already handles the production publish root, cache rules, and domain redirects. Visual/UI corrections normally do **not** require a `netlify.toml` change.
+The production site uses stable asset filenames such as `/assets/site.css`, `/assets/rendered-corrections.css` and `/assets/site.js`, with version query strings in the HTML for cache-busting. Do not leave pages pointing at an older version after a shared asset update.
 
-### Shared site assets
+## Site files
 
-- `assets/site.css` contains the shared typography, responsive, modal, footer, Safari/capture, and accessibility-related production rules.
-- `assets/site.js` contains only shared runtime behavior that truly needs JavaScript.
-- `assets/rendered-corrections.css` is a production compatibility layer. Avoid stacking new one-off overrides when a source/component correction is possible.
+The public routes live in the repository root and route folders. `404.html`, `robots.txt`, `sitemap.xml`, `support.js`, `web3forms.js` and the `/assets` directory are also production files.
 
-### Shared components
-
-The root `Site Header.dc.html`, `Site Footer.dc.html`, `Inquiry Form.dc.html`, and `Program Cards.dc.html` are the canonical shared component sources. Keep generated/duplicate copies aligned when they are intentionally retained in the repository.
+`robots.txt` points search engines to `https://sundayandcompany.co/sitemap.xml`.
 
 ## Forms
 
-Forms submit through the existing Web3Forms integration. Do not replace the keys or form transport during visual changes. After a form-related production update, test a real submission and confirm delivery to `hello@sundayandcompany.co`.
+Forms post through Web3Forms using the existing site configuration. After a production form change, submit a real test and confirm delivery to `hello@sundayandcompany.co`.
 
-## Accessibility
+## If something looks wrong after publishing
 
-Safari **Reader** is a browser reading view, not the site's screen-reader implementation. It intentionally removes navigation, controls, and other non-article material and cannot be used as the requirement that every visual element appear in Reader.
+First verify that the live page is requesting the same current asset version as the source in GitHub. Then check the latest Netlify deploy against the expected GitHub commit. If a deployment itself is bad, Netlify keeps previous deploys available for rollback.
 
-The accessibility target for this site is semantic HTML, keyboard access, visible focus, meaningful image alt text, labelled controls, reduced-motion support, and compatibility with assistive technology such as Apple VoiceOver.
-
-## If production looks wrong
-
-First confirm that the live HTML is serving the newest asset query version. If it is still serving the previous version, do not create another visual patch just to force a redeploy. Wait for or diagnose the current Netlify deploy/cache state.
-
-For a real regression, roll back to the last known-good GitHub/Netlify deploy, correct the source on a branch, retest, and then publish one clean commit.
+Avoid making broad global CSS or JavaScript changes to fix a single page unless the shared behavior is actually the source of the issue. Prefer the smallest source-aligned correction and verify it before deploying again.
