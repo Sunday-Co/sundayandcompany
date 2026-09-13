@@ -217,9 +217,9 @@ form[data-inq] [data-stepnav] span,
 
 [aria-label="Newsletter"] [data-news-fineprint] {
   font-family: var(--sunday-sans) !important;
-  font-size: 7.5px !important;
+  font-size: 8.25px !important;
   font-weight: 300 !important;
-  letter-spacing: .045em !important;
+  letter-spacing: .035em !important;
   line-height: 1.45 !important;
 }
 
@@ -934,4 +934,73 @@ button[data-program-action] { min-height:44px !important; }
   form[data-editorial-labels] [aria-haspopup="listbox"],
   form[data-inq] [aria-haspopup="dialog"] { font-size:16px !important; min-height:44px !important; }
   [data-program-action] { font-size:10.5px !important; }
+}
+
+
+/* FINAL ACCESSIBILITY + SAFARI FULL-PAGE SOURCE ALIGNMENT · 2026-09-13 */
+
+/* Keep the homepage hero image in normal flow so Safari Full Page paints the image,
+   while preserving the same visual height used by the hero container. */
+section#top[data-screen-hero="home"] {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
+  display: block !important;
+  height: clamp(680px, 66.5vw, 900px) !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: 50% 48% !important;
+  opacity: 1 !important;
+  position: relative !important;
+  transform: none !important;
+  width: 100% !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+@media (max-width: 700px) {
+  section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
+    height: clamp(680px, 185vw, 820px) !important;
+  }
+}
+
+/* Keep utility copy editorial but readable on a phone. */
+@media (max-width: 700px) {
+  [aria-label="Newsletter"] [data-news-fineprint] {
+    font-size: 8.25px !important;
+    letter-spacing: .035em !important;
+    line-height: 1.5 !important;
+  }
+  footer [data-footer-legal] {
+    line-height: 1.55 !important;
+  }
+}
+
+/* Small visual controls keep their design size but receive a usable touch target. */
+@media (pointer: coarse) {
+  button[aria-label="Close"],
+  button[aria-label="Open menu"],
+  button[aria-label="Close menu"],
+  footer a[aria-label],
+  header a[aria-label="Instagram"],
+  header a[aria-label="TikTok"],
+  header a[aria-label="LinkedIn"] {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+}
+
+/* Program archive microtype remains small, but not sub-legible. */
+[role="dialog"][aria-label="The Fellows Table"]::after,
+[role="dialog"][aria-label="The Espresso Club"]::after,
+[role="dialog"][aria-label="The Founders Club"]::after {
+  font-size: 8px !important;
+}
+@media (max-width: 720px) {
+  [role="dialog"][aria-label="The Fellows Table"]::after,
+  [role="dialog"][aria-label="The Espresso Club"]::after,
+  [role="dialog"][aria-label="The Founders Club"]::after {
+    font-size: 7.5px !important;
+  }
 }
