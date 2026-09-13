@@ -1,0 +1,58 @@
+name: Controlled UI Tail Cleanup
+
+on:
+  push:
+    branches:
+      - controlled-ui-audit-no-deploy-2026-09-13
+    paths:
+      - '.github/workflows/controlled-ui-tail-cleanup.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  clean:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove obsolete late overrides
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('assets/site.css')
+          t = p.read_text()
+
+          # The new authoritative system appears earlier in the file. This old tail
+          # was overriding it and also carried the abandoned portfolio capture rules.
+          marker = '/* FINAL SOURCE ALIGNMENT · 2026-09-12 */'
+          if marker not in t:
+              raise SystemExit('Expected obsolete FINAL SOURCE ALIGNMENT tail not found')
+          t = t[:t.index(marker)].rstrip() + '\n'
+
+          # Remove one older duplicated form-instruction rule from the retained
+          # control-readability section so the authoritative shared form system owns it.
+          t = re.sub(
+              r'\n\[data-form-instruction\] \{\n  font-family:var\(--sunday-sans\) !important;\n  font-size:10\.5px !important;\n  font-weight:400 !important;\n  letter-spacing:\.07em !important;\n\}\n',
+              '\n', t, count=1
+          )
+
+          if 'CAPTURE INTEGRITY + FOOTER NORMALIZATION' in t:
+              raise SystemExit('Obsolete capture integrity tail remains')
+          if '[data-capture-full-image]' in t:
+              raise SystemExit('Abandoned portfolio capture selector remains')
+          if '[aria-label="The Sunday Reservation"] [data-res-fineprint] { font-size:7px' in t:
+              raise SystemExit('Old mobile reservation fineprint override remains')
+          if 'footer a[href^="mailto:"] { font-weight:400' in t:
+              raise SystemExit('Old footer email override remains')
+
+          p.write_text(t)
+          print('Obsolete late CSS overrides removed.')
+          PY
+      - name: Commit cleanup
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add assets/site.css
+          git commit -m "[skip netlify] Remove obsolete late CSS overrides"
+          git push origin HEAD
