@@ -1,0 +1,39 @@
+name: Controlled UI Final QA V4
+
+on:
+  push:
+    branches:
+      - controlled-ui-audit-no-deploy-2026-09-13
+    paths:
+      - .github/workflows/controlled-ui-final-qa-v4.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Strict source validation
+        run: python3 .github/scripts/controlled_ui_source_v4.py
+      - name: Install WebKit
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps webkit
+      - name: Serve candidate
+        run: |
+          python3 -m http.server 4173 >/tmp/uiqa-v4.log 2>&1 &
+          sleep 2
+      - name: Strict browser and capture QA
+        run: node .github/scripts/controlled_ui_v4_qa.mjs
+      - name: Upload V4 QA renders
+        uses: actions/upload-artifact@v4
+        with:
+          name: controlled-ui-final-qa-v4
+          path: final-qa-v4
+          if-no-files-found: error
