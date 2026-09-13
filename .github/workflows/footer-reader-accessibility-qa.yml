@@ -1,4 +1,4 @@
-# Rerun after verified sitewide lang="en" source patch.
+# Rerun after verified sitewide lang="en" source patch. Slow local routes retry without weakening assertions.
 name: Footer Reader Accessibility QA
 
 on:
@@ -45,6 +45,18 @@ jobs:
               await btn.first().click();
               await page.waitForTimeout(180);
             }
+          }
+
+          async function navigate(page, route) {
+            console.log(`Auditing ${route}`);
+            try {
+              await page.goto(base + route, { waitUntil: 'domcontentloaded', timeout: 30000 });
+            } catch (error) {
+              console.log(`Retrying ${route} after navigation timeout`);
+              await page.goto(base + route, { waitUntil: 'commit', timeout: 20000 });
+              await page.waitForFunction(() => document.readyState !== 'loading', null, { timeout: 20000 }).catch(() => {});
+            }
+            await page.waitForTimeout(500);
           }
 
           async function auditInteractiveNames(page, route) {
@@ -103,8 +115,7 @@ jobs:
           const browser = await webkit.launch();
 
           const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
-          await mobile.goto(base + '/', { waitUntil: 'domcontentloaded' });
-          await mobile.waitForTimeout(900);
+          await navigate(mobile, '/');
           await closeReservation(mobile);
 
           const start = mobile.getByText('Start A Project', { exact: true }).first();
@@ -145,14 +156,13 @@ jobs:
           assert.strictEqual(footer.emailWeight, '400', `Footer email weight ${footer.emailWeight}`);
           await mobile.screenshot({ path: `${out}/mobile-footer.png` });
 
-          await mobile.goto(base + '/', { waitUntil: 'networkidle' });
+          await mobile.goto(base + '/', { waitUntil: 'networkidle', timeout: 60000 });
           await closeReservation(mobile);
           await mobile.screenshot({ path: `${out}/mobile-home-full.png`, fullPage: true });
 
           const routes = ['/', '/about/', '/services/', '/our-work/', '/our-work/luckys-cafe-bakery/', '/our-work/petti-pathways/', '/our-work/pizzeria-coco/', '/our-work/folake/', '/contact/', '/join-our-team/', '/sunday-school/', '/accessibility/', '/privacy-policy/', '/terms-and-conditions/', '/cookie-policy/'];
           for (const route of routes) {
-            await mobile.goto(base + route, { waitUntil: 'domcontentloaded' });
-            await mobile.waitForTimeout(350);
+            await navigate(mobile, route);
             await closeReservation(mobile);
             await auditStructure(mobile, route);
             await auditImages(mobile, route);
@@ -160,8 +170,7 @@ jobs:
           }
 
           const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-          await desktop.goto(base + '/', { waitUntil: 'domcontentloaded' });
-          await desktop.waitForTimeout(700);
+          await navigate(desktop, '/');
           await closeReservation(desktop);
           const dStart = desktop.getByText('Start A Project', { exact: true }).first();
           await dStart.evaluate(el => el.click());
