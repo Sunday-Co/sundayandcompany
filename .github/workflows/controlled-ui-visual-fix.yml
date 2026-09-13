@@ -2,8 +2,11 @@ name: Controlled UI Visual Fix
 
 on:
   push:
-    branches: [controlled-ui-audit-no-deploy-2026-09-13]
-    paths: ['.github/workflows/controlled-ui-visual-fix.yml']
+    branches:
+      - controlled-ui-audit-no-deploy-2026-09-13
+    paths:
+      - .github/workflows/controlled-ui-visual-fix.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,90 +16,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Apply visual corrections
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('assets/site.css')
-          s=p.read_text()
-          reps=[]
-          reps.append(("""@keyframes sunday-modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(.995);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}""","""@keyframes sunday-modal-in {
-  from {
-    opacity: 1;
-    transform: translateY(8px) scale(.995);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}"""))
-          reps.append(("""  div[role=\"presentation\"]:has(> [aria-label=\"Project inquiry\"]) {
-    padding: 12px !important;
-    overflow-y: auto !important;
-  }
-  [aria-label=\"Project inquiry\"] {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    max-height: calc(100svh - 24px) !important;
-    overflow-y: auto !important;
-  }""","""  div[role=\"presentation\"]:has(> [aria-label=\"Project inquiry\"]) {
-    align-items: flex-start !important;
-    padding: 12px !important;
-    overflow-y: auto !important;
-  }
-  [aria-label=\"Project inquiry\"] {
-    margin: 0 auto !important;
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    max-height: calc(100dvh - 24px) !important;
-    overflow-y: auto !important;
-  }"""))
-          reps.append(("""  [aria-label=\"The Sunday Reservation\"] h2 + p {
-    font-size: 10.5px !important;
-    line-height: 1.45 !important;
-    margin-top: 11px !important;
-    max-width: 310px !important;
-  }
-  [aria-label=\"The Sunday Reservation\"] [data-res-fineprint] {
-    font-size: 6.5px !important;
-    letter-spacing: .04em !important;
-    line-height: 1.38 !important;
-    margin-top: 6px !important;
-  }""","""  [aria-label=\"The Sunday Reservation\"] h2 + p {
-    font-size: 11.5px !important;
-    line-height: 1.48 !important;
-    margin-top: 11px !important;
-    max-width: 310px !important;
-  }
-  [aria-label=\"The Sunday Reservation\"] [data-res-fineprint] {
-    font-size: 8px !important;
-    letter-spacing: .035em !important;
-    line-height: 1.42 !important;
-    margin-top: 7px !important;
-    opacity: .78 !important;
-  }"""))
-          for old,new in reps:
-              c=s.count(old)
-              if c != 1:
-                  raise SystemExit(f'Expected one exact match, found {c}: {old[:70]!r}')
-              s=s.replace(old,new,1)
-          p.write_text(s)
-          print('Applied 3 controlled visual replacements.')
-          PY
+      - name: Apply controlled corrections
+        run: python3 .github/scripts/controlled_ui_visual_fix.py
       - name: Commit source correction
         run: |
-          git config user.name 'Sunday-Co'
-          git config user.email 'hello@sundayandcompany.co'
+          git config user.name Sunday-Co
+          git config user.email hello@sundayandcompany.co
           git add assets/site.css
           git diff --cached --check
-          git commit -m '[skip netlify] Fix modal visibility and mobile reservation readability'
+          git commit -m "[skip netlify] Fix modal visibility and reservation readability"
           git push
