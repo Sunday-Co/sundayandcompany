@@ -1,0 +1,176 @@
+name: Footer Reader Accessibility QA
+
+on:
+  push:
+    branches:
+      - footer-reader-accessibility-fix-no-deploy-2026-09-13
+
+permissions:
+  contents: read
+
+jobs:
+  webkit-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Playwright WebKit
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps webkit
+
+      - name: Serve candidate
+        run: |
+          python -m http.server 4173 >/tmp/sunday-http.log 2>&1 &
+          echo $! > /tmp/sunday-http.pid
+          sleep 2
+
+      - name: Run focused WebKit and accessibility QA
+        run: |
+          cat > /tmp/sunday-qa.mjs <<'JS'
+          import { webkit } from 'playwright';
+          import assert from 'node:assert';
+          import fs from 'node:fs';
+
+          const base = 'http://127.0.0.1:4173';
+          const out = 'footer-reader-a11y-qa';
+          fs.mkdirSync(out, { recursive: true });
+
+          const visible = el => {
+            const s = getComputedStyle(el), r = el.getBoundingClientRect();
+            return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) > 0 && r.width > 0 && r.height > 0;
+          };
+
+          async function closeReservation(page) {
+            const btn = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await btn.count() && await btn.first().isVisible().catch(() => false)) {
+              await btn.first().click();
+              await page.waitForTimeout(180);
+            }
+          }
+
+          async function auditInteractiveNames(page, route) {
+            const problems = await page.evaluate(() => {
+              const visible = el => {
+                const s = getComputedStyle(el), r = el.getBoundingClientRect();
+                return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) > 0 && r.width > 0 && r.height > 0;
+              };
+              const textByIds = ids => (ids || '').split(/\s+/).filter(Boolean).map(id => document.getElementById(id)?.textContent || '').join(' ').trim();
+              const name = el => {
+                const aria = (el.getAttribute('aria-label') || '').trim();
+                if (aria) return aria;
+                const labelled = textByIds(el.getAttribute('aria-labelledby'));
+                if (labelled) return labelled;
+                if (el.id) {
+                  const lab = document.querySelector(`label[for="${CSS.escape(el.id)}"]`);
+                  if (lab?.textContent?.trim()) return lab.textContent.trim();
+                }
+                const wrap = el.closest('label');
+                if (wrap?.textContent?.trim()) return wrap.textContent.trim();
+                const txt = (el.textContent || '').replace(/\s+/g,' ').trim();
+                if (txt) return txt;
+                const title = (el.getAttribute('title') || '').trim();
+                if (title) return title;
+                return '';
+              };
+              return [...document.querySelectorAll('a[href],button,input,textarea,select')]
+                .filter(visible)
+                .filter(el => !name(el))
+                .map(el => ({ tag: el.tagName, type: el.getAttribute('type'), href: el.getAttribute('href'), html: el.outerHTML.slice(0,220) }));
+            });
+            assert.deepStrictEqual(problems, [], `${route}: visible interactive elements without accessible names: ${JSON.stringify(problems)}`);
+          }
+
+          async function auditImages(page, route) {
+            const missing = await page.evaluate(() => [...document.images].filter(img => !img.hasAttribute('alt')).map(img => img.outerHTML.slice(0,220)));
+            assert.deepStrictEqual(missing, [], `${route}: images missing alt attributes: ${JSON.stringify(missing)}`);
+          }
+
+          const browser = await webkit.launch();
+
+          // Mobile: exact regressions from the user's screenshots.
+          const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
+          await mobile.goto(base + '/', { waitUntil: 'domcontentloaded' });
+          await mobile.waitForTimeout(900);
+          await closeReservation(mobile);
+
+          const start = mobile.getByText('Start A Project', { exact: true }).first();
+          await start.click();
+          await mobile.waitForTimeout(320);
+          const inquiry = mobile.locator('[aria-label="Project inquiry"]');
+          assert.ok(await inquiry.isVisible(), 'Mobile inquiry is not visible');
+          const iq = await inquiry.evaluate(el => {
+            const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+            return { top:r.top,bottom:r.bottom,left:r.left,right:r.right,width:r.width,height:r.height,opacity:s.opacity };
+          });
+          const center = (iq.top + iq.bottom) / 2;
+          assert.ok(Math.abs(center - 422) <= 22, `Mobile inquiry is not centered: ${JSON.stringify(iq)}`);
+          assert.ok(iq.top >= 0 && iq.bottom <= 844, `Mobile inquiry clips outside viewport: ${JSON.stringify(iq)}`);
+          assert.strictEqual(iq.opacity, '1');
+          await mobile.screenshot({ path: `${out}/mobile-inquiry.png` });
+
+          const closeIq = inquiry.locator('button[aria-label="Close"]');
+          await closeIq.click();
+          await mobile.waitForTimeout(150);
+          await mobile.locator('footer').scrollIntoViewIfNeeded();
+          await mobile.waitForTimeout(120);
+
+          const footer = await mobile.locator('footer').evaluate(el => {
+            const s = getComputedStyle(el);
+            const tag = el.querySelector('[data-footer-tagline]');
+            const email = el.querySelector('a[href^="mailto:"]');
+            return {
+              paddingBottom: parseFloat(s.paddingBottom),
+              taglineFamily: tag ? getComputedStyle(tag).fontFamily : '',
+              taglineSize: tag ? getComputedStyle(tag).fontSize : '',
+              emailWeight: email ? getComputedStyle(email).fontWeight : '',
+              emailSize: email ? getComputedStyle(email).fontSize : '',
+            };
+          });
+          assert.ok(footer.paddingBottom >= 44, `Mobile footer bottom padding ${footer.paddingBottom}`);
+          assert.ok(footer.taglineFamily.includes('Inter Tight'), `Footer tagline font ${footer.taglineFamily}`);
+          assert.strictEqual(footer.emailWeight, '400', `Footer email weight ${footer.emailWeight}`);
+          await mobile.screenshot({ path: `${out}/mobile-footer.png` });
+
+          // Full-page image capture should still retain photography and the footer breathing room.
+          await mobile.goto(base + '/', { waitUntil: 'networkidle' });
+          await closeReservation(mobile);
+          await mobile.screenshot({ path: `${out}/mobile-home-full.png`, fullPage: true });
+
+          // Broad assistive-technology source sanity across all public routes.
+          const routes = ['/', '/about/', '/services/', '/our-work/', '/our-work/luckys-cafe-bakery/', '/our-work/petti-pathways/', '/our-work/pizzeria-coco/', '/our-work/folake/', '/contact/', '/join-our-team/', '/sunday-school/', '/accessibility/', '/privacy-policy/', '/terms-and-conditions/', '/cookie-policy/'];
+          for (const route of routes) {
+            await mobile.goto(base + route, { waitUntil: 'domcontentloaded' });
+            await mobile.waitForTimeout(350);
+            await closeReservation(mobile);
+            await auditImages(mobile, route);
+            await auditInteractiveNames(mobile, route);
+          }
+
+          // Desktop regression check: modal remains centered there too.
+          const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+          await desktop.goto(base + '/', { waitUntil: 'domcontentloaded' });
+          await desktop.waitForTimeout(700);
+          await closeReservation(desktop);
+          await desktop.getByText('Start A Project', { exact: true }).first().click();
+          await desktop.waitForTimeout(300);
+          const d = await desktop.locator('[aria-label="Project inquiry"]').evaluate(el => {
+            const r = el.getBoundingClientRect();
+            return { top:r.top,bottom:r.bottom,left:r.left,right:r.right,width:r.width,height:r.height };
+          });
+          assert.ok(Math.abs(((d.top+d.bottom)/2) - 500) <= 24, `Desktop inquiry not centered: ${JSON.stringify(d)}`);
+          await desktop.screenshot({ path: `${out}/desktop-inquiry.png` });
+
+          await browser.close();
+          console.log(JSON.stringify({ mobileInquiry: iq, footer, desktopInquiry: d }, null, 2));
+          JS
+          node /tmp/sunday-qa.mjs
+
+      - name: Upload QA screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: footer-reader-accessibility-qa
+          path: footer-reader-a11y-qa
+          if-no-files-found: error
