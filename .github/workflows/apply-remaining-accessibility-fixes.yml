@@ -24,9 +24,45 @@ jobs:
       - name: Apply scoped remediation
         run: python .github/scripts/apply_remaining_accessibility_fixes.py
 
+      - name: Add form privacy notices
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def insert_after_button(path, marker, notice):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              if 'data-form-privacy' in text:
+                  print(f'{path}: privacy notice already present')
+                  return
+              start = text.find(marker)
+              if start < 0:
+                  raise SystemExit(f'{path}: submit button marker not found')
+              end = text.find('</button>', start)
+              if end < 0:
+                  raise SystemExit(f'{path}: submit button closing tag not found')
+              end += len('</button>')
+              text = text[:end] + '\n' + notice + text[end:]
+              p.write_text(text, encoding='utf-8')
+              print(f'{path}: privacy notice added')
+
+          insert_after_button(
+              'contact/index.html',
+              '        <button type="submit" disabled="{{ busy }}"',
+              "        <p data-form-privacy style=\"font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:300;letter-spacing:.035em;line-height:1.45;margin:1px 0 0;opacity:.72\">By submitting this form, you acknowledge our <a href=\"/privacy-policy\" style=\"border-bottom:1px solid currentColor;padding-bottom:1px\">Privacy Policy</a>.</p>"
+          )
+
+          insert_after_button(
+              'Inquiry Form.dc.html',
+              '    <button data-step="3" type="submit" disabled="{{ busy }}"',
+              "    <p data-form-privacy data-step=\"3\" style=\"display:{{ step3Display }};font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:300;grid-column:1 / -1;letter-spacing:.035em;line-height:1.45;margin:1px 0 0;opacity:.72\">By submitting this form, you acknowledge our <a href=\"/privacy-policy\" style=\"border-bottom:1px solid currentColor;padding-bottom:1px\">Privacy Policy</a>.</p>"
+          )
+
       - name: Validate patch formatting
         run: |
           git diff --check
+          grep -n "data-form-privacy" contact/index.html
+          grep -n "data-form-privacy" 'Inquiry Form.dc.html'
           git status --short
 
       - name: Persist verified source changes to no-deploy branch
@@ -36,6 +72,7 @@ jobs:
           git add \
             'Site Footer.dc.html' \
             'Inquiry Form.dc.html' \
+            'contact/index.html' \
             'index.html' \
             'join-our-team/index.html' \
             'our-work/luckys-cafe-bakery/index.html' \
@@ -46,6 +83,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No source changes to commit"
           else
-            git commit -m "[skip netlify] Apply remaining accessibility remediation"
+            git commit -m "[skip netlify] Add privacy notices to forms"
             git push origin HEAD:footer-reader-accessibility-fix-no-deploy-2026-09-13
           fi
