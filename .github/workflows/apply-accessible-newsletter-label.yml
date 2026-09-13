@@ -1,0 +1,47 @@
+name: Apply Accessible Newsletter Label
+
+on:
+  push:
+    branches:
+      - footer-reader-accessibility-fix-no-deploy-2026-09-13
+    paths:
+      - '.github/scripts/apply_accessible_newsletter_label.py'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply source patch
+        run: python .github/scripts/apply_accessible_newsletter_label.py
+
+      - name: Verify source patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files = list(Path('.').rglob('Site Footer.dc.html'))
+          assert files
+          for p in files:
+              t = p.read_text(encoding='utf-8')
+              assert t.count('aria-label="Email address" autocomplete="email" name="email" placeholder="Email Address"') == 1, p
+          print(f'Verified {len(files)} footer component copies.')
+          PY
+
+      - name: Commit source changes
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add 'Site Footer.dc.html' '*/Site Footer.dc.html' '*/*/Site Footer.dc.html' '*/*/*/Site Footer.dc.html' || true
+          if git diff --cached --quiet; then
+            echo "No source changes to commit."
+            exit 0
+          fi
+          git commit -m "[skip netlify] Label newsletter email field for assistive technology"
+          git push origin HEAD:footer-reader-accessibility-fix-no-deploy-2026-09-13
