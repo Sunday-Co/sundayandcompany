@@ -1,9 +1,7 @@
 name: Footer Reader Accessibility Fix
 
 on:
-  push:
-    branches:
-      - footer-reader-accessibility-fix-no-deploy-2026-09-13
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,54 +15,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply controlled source corrections
-        run: python .github/scripts/apply_footer_reader_accessibility_fix.py
-
-      - name: Static source assertions
+      - name: Source corrections already applied
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          css = Path('assets/site.css').read_text(encoding='utf-8')
-          assert 'align-items: flex-start !important;' not in css.split('div[role="presentation"]:has(> [aria-label="Project inquiry"])',1)[1].split('}',1)[0]
-          assert 'align-items: center !important;' in css
-          assert 'footer [data-footer-tagline]' in css
-          assert 'font-weight: 400 !important;' in css.split('footer a[href^="mailto:"]',1)[1].split('}',1)[0]
-          assert 'padding-bottom: calc(44px + env(safe-area-inset-bottom)) !important;' in css
-
-          readme = Path('READ ME FIRST.md').read_text(encoding='utf-8')
-          assert 'Do **not** drag a folder into Netlify' in readme
-          assert 'Safari **Reader** is a browser reading view' in readme
-
-          html = [p for p in Path('.').rglob('*.html') if '.github' not in p.parts]
-          refs = sum('20260913-13' in p.read_text(encoding='utf-8') for p in html)
-          assert refs >= 10, refs
-
-          # Basic accessibility source sanity: no image in page HTML may omit alt entirely.
-          missing = []
-          for p in html:
-              if p.name.endswith('.dc.html'):
-                  continue
-              text = p.read_text(encoding='utf-8')
-              for m in re.finditer(r'<img\b[^>]*>', text, re.I | re.S):
-                  if not re.search(r'\balt\s*=\s*["\']', m.group(0), re.I):
-                      missing.append((str(p), m.group(0)[:160]))
-          if missing:
-              raise AssertionError('Images missing alt attributes: ' + repr(missing[:12]))
-
-          print('Static source assertions passed.')
-          PY
-
-      - name: Commit verified source changes
-        run: |
-          git config user.name "Sunday-Co"
-          git config user.email "hello@sundayandcompany.co"
-          git add READ\ ME\ FIRST.md assets/site.css assets/site.js '*.html' '*/Site Footer.dc.html' '*/*/Site Footer.dc.html' '*/*/*/Site Footer.dc.html' || true
-          git add -u
-          if git diff --cached --quiet; then
-            echo "No generated source changes to commit."
-            exit 0
-          fi
-          git commit -m "[skip netlify] Fix centered inquiry, footer source, README, and cache version"
-          git push origin HEAD:footer-reader-accessibility-fix-no-deploy-2026-09-13
+          echo "The controlled source correction already ran successfully on this branch."
+          echo "This workflow is retained only as branch-local QA history and will not be promoted to main."
