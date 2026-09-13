@@ -38,7 +38,7 @@ jobs:
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git add 'Site Footer.dc.html' '*/Site Footer.dc.html' '*/*/Site Footer.dc.html' '*/*/*/Site Footer.dc.html' || true
+          git add -u
           if git diff --cached --quiet; then
             echo "No source changes to commit."
             exit 0
