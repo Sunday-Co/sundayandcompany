@@ -1,3 +1,4 @@
+# Trigger scoped privacy notice application on the no-deploy accessibility candidate.
 name: Add Form Privacy Notice
 
 on:
