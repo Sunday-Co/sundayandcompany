@@ -19,9 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Apply candidate changes
-        run: |
-          python .github/scripts/apply_form_date_sign_polish.py
-          python .github/scripts/patch_open_sign_visibility.py
+        run: python .github/scripts/apply_form_date_sign_polish.py
 
       - name: Validate diff
         run: git diff --check
