@@ -6,6 +6,7 @@ on:
       - mobile-typography-faq-hotfix-2026-09-13
     paths:
       - '.github/scripts/apply_mobile_hotfix.py'
+      - '.github/workflows/mobile-typography-faq-hotfix.yml'
 
 permissions:
   contents: write
