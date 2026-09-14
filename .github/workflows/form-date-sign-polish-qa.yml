@@ -54,7 +54,7 @@ jobs:
         run: |
           git config user.name "Sunday-Co"
           git config user.email "hello@sundayandcompany.co"
-          git add . ':!.github'
+          git add . ':!.github' ':!qa-artifacts'
           if git diff --cached --quiet; then
             echo "No website changes to commit"
             exit 0
