@@ -185,6 +185,16 @@ inquiry, date_count = re.subn(
 )
 if date_count != 1:
     raise SystemExit(f'Expected one Project Inquiry date trigger, found {date_count}')
+
+# Remove the component-level 10px !important rule that was still winning in
+# WebKit after render. This is the exact override that caused the repeated issue.
+inquiry, inquiry_rule_count = re.subn(
+    r'(\[data-inq\] label > span:first-child,\s*\[data-inq\] fieldset > legend,\s*\[data-inq\] div\[data-step\] > span:first-child \{\s*font-family: \'Inter Tight\', sans-serif !important;\s*font-size:) 10px( !important;)',
+    r'\g<1> 9.5px\2',
+    inquiry
+)
+if inquiry_rule_count < 1:
+    raise SystemExit('Did not find the Project Inquiry 10px component override')
 inquiry_path.write_text(inquiry)
 
 # Join's Select A Program control is placeholder-like copy inside a button.
@@ -199,6 +209,41 @@ join, join_trigger_count = re.subn(
 if join_trigger_count != 1:
     raise SystemExit(f'Expected one Join program trigger, found {join_trigger_count}')
 join_path.write_text(join)
+
+# Page-level mobile rules also contained 10px !important guidance sizing.
+# Reduce only the form-guidance selectors, not unrelated UI microtype.
+page_patterns = [
+    (
+        re.compile(r'(form\[data-inq\] label > span,\s*form\[data-inq\] legend \{ font-size:) 10px( !important; \})'),
+        r'\g<1> 9.5px\2'
+    ),
+    (
+        re.compile(r'(form\[data-editorial-labels\] label > span:first-child,\s*form\[data-editorial-labels\] > div > span:first-child \{\s*font-family: \'Inter Tight\', sans-serif !important;\s*font-size:) 10px( !important;)'),
+        r'\g<1> 9.5px\2'
+    ),
+    (
+        re.compile(r'(form\[data-editorial-labels\] > label\[for\] \{\s*font-family: \'Inter Tight\', sans-serif !important;\s*font-size:) 10px( !important;)'),
+        r'\g<1> 9.5px\2'
+    ),
+    (
+        re.compile(r'(form\[data-editorial-labels\] label > span:first-child \{\s*font-family: \'Inter Tight\', sans-serif !important;\s*font-size:) 10px( !important;)'),
+        r'\g<1> 9.5px\2'
+    ),
+]
+
+page_rule_changes = 0
+for path in Path('.').rglob('*.html'):
+    if any(part in {'.git', '.github', 'node_modules'} for part in path.parts):
+        continue
+    text = path.read_text()
+    updated = text
+    for pattern, replacement in page_patterns:
+        updated, count = pattern.subn(replacement, updated)
+        page_rule_changes += count
+    if updated != text:
+        path.write_text(updated)
+if page_rule_changes < 3:
+    raise SystemExit(f'Expected multiple page-level 10px form guidance overrides, changed only {page_rule_changes}')
 
 changed = []
 for path in Path('.').rglob('*.html'):
@@ -235,4 +280,4 @@ for path_str in ['Site Header.dc.html', 'Site Footer.dc.html', 'Inquiry Form.dc.
     if component_marker not in Path(path_str).read_text():
         raise SystemExit('Missing component guidance styles in ' + path_str)
 
-print(f'Applied authoritative form guidance microtype; bumped {len(changed)} HTML files to asset version 20260913-16.')
+print(f'Applied authoritative form guidance microtype; removed {inquiry_rule_count + page_rule_changes} remaining 10px form-label overrides; bumped {len(changed)} HTML files to asset version 20260913-16.')
