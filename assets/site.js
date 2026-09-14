@@ -1,16 +1,11 @@
 (function () {
   'use strict';
 
-  /* This shared file can be referenced through more than one DC component
-     path. Run the behavior layer only once so modal/body locks cannot stack. */
-  if (window.__sundaySharedRuntimeLoaded) return;
-  window.__sundaySharedRuntimeLoaded = true;
-
   function ensureCorrectionStyles() {
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260914-19';
+    link.href = '/assets/rendered-corrections.css?v=20260914-18';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -169,172 +164,6 @@
     window.setTimeout(restore, 120);
   }
 
-  var sundayMobileModalLock = null;
-  var sundayMobileUnlockTimer = 0;
-  var sundayMobileLockWatch = 0;
-  var sundayViewportTimerA = 0;
-  var sundayViewportTimerB = 0;
-
-  function sundayMobileFormKind(surface) {
-    if (!surface || !window.matchMedia || !window.matchMedia('(max-width: 820px)').matches) return '';
-    var label = surface.getAttribute('aria-label') || '';
-    if (label === 'Project inquiry') return 'inquiry';
-    if (label === 'The Sunday Reservation') return 'reservation';
-    return '';
-  }
-
-  function sundayIsMobileFormSurface(surface) {
-    return !!sundayMobileFormKind(surface);
-  }
-
-  function sundaySetVisualHeight() {
-    if (!sundayMobileModalLock) return;
-    var root = document.documentElement;
-    var vv = window.visualViewport;
-    var height = vv && vv.height ? vv.height : window.innerHeight;
-    var offsetTop = vv && typeof vv.offsetTop === 'number' ? vv.offsetTop : 0;
-    if (!height) return;
-    var value = (Math.round(height * 100) / 100) + 'px';
-    var topValue = (Math.round(offsetTop * 100) / 100) + 'px';
-    if (root.style.getPropertyValue('--sunday-visual-height') !== value) {
-      root.style.setProperty('--sunday-visual-height', value);
-    }
-    if (root.style.getPropertyValue('--sunday-visual-top') !== topValue) {
-      root.style.setProperty('--sunday-visual-top', topValue);
-    }
-  }
-
-  function sundayScheduleVisualHeight() {
-    sundaySetVisualHeight();
-    if (sundayViewportTimerA) window.clearTimeout(sundayViewportTimerA);
-    if (sundayViewportTimerB) window.clearTimeout(sundayViewportTimerB);
-    sundayViewportTimerA = window.setTimeout(sundaySetVisualHeight, 120);
-    sundayViewportTimerB = window.setTimeout(sundaySetVisualHeight, 320);
-  }
-
-  function sundayCancelMobileUnlock() {
-    if (!sundayMobileUnlockTimer) return;
-    window.clearTimeout(sundayMobileUnlockTimer);
-    sundayMobileUnlockTimer = 0;
-  }
-
-  function sundayStopMobileLockWatch() {
-    if (!sundayMobileLockWatch) return;
-    window.clearInterval(sundayMobileLockWatch);
-    sundayMobileLockWatch = 0;
-  }
-
-  function sundayScheduleMobileUnlock() {
-    if (!sundayMobileModalLock || sundayMobileUnlockTimer) return;
-    sundayMobileUnlockTimer = window.setTimeout(function () {
-      sundayMobileUnlockTimer = 0;
-      var liveSurface = sundayCurrentSurface();
-      if (sundayIsMobileFormSurface(liveSurface)) {
-        sundayLockMobileFormSurface(liveSurface);
-        return;
-      }
-      sundayUnlockMobileFormSurface(true);
-    }, 160);
-  }
-
-  function sundayStartMobileLockWatch() {
-    if (sundayMobileLockWatch) return;
-    sundayMobileLockWatch = window.setInterval(function () {
-      if (!sundayMobileModalLock) {
-        sundayStopMobileLockWatch();
-        return;
-      }
-      var liveSurface = sundayCurrentSurface();
-      if (sundayIsMobileFormSurface(liveSurface)) {
-        sundayCancelMobileUnlock();
-        sundayMobileModalLock.surface = liveSurface;
-        sundayMobileModalLock.kind = sundayMobileFormKind(liveSurface);
-        return;
-      }
-      sundayScheduleMobileUnlock();
-    }, 120);
-  }
-
-  function sundayLockMobileFormSurface(surface) {
-    if (!document.body) return;
-    var kind = sundayMobileFormKind(surface);
-    if (!kind) return;
-    sundayCancelMobileUnlock();
-
-    /* DC can replace the modal DOM node while the same logical modal stays
-       open. Keep one page-lock snapshot for the whole modal session instead
-       of re-locking every newly rendered node. */
-    if (sundayMobileModalLock) {
-      sundayMobileModalLock.surface = surface;
-      sundayMobileModalLock.kind = kind;
-      document.documentElement.setAttribute('data-sunday-form-modal', 'open');
-      sundayStartMobileLockWatch();
-      sundayScheduleVisualHeight();
-      return;
-    }
-
-    var body = document.body;
-    var scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
-    sundayMobileModalLock = {
-      surface: surface,
-      kind: kind,
-      scrollY: scrollY,
-      position: body.style.position,
-      top: body.style.top,
-      left: body.style.left,
-      right: body.style.right,
-      width: body.style.width,
-      overflow: body.style.overflow
-    };
-
-    document.documentElement.setAttribute('data-sunday-form-modal', 'open');
-    body.style.position = 'fixed';
-    body.style.top = '-' + scrollY + 'px';
-    body.style.left = '0';
-    body.style.right = '0';
-    body.style.width = '100%';
-    body.style.overflow = 'hidden';
-    sundayStartMobileLockWatch();
-    sundayScheduleVisualHeight();
-  }
-
-  function sundayUnlockMobileFormSurface(restoreScroll) {
-    sundayCancelMobileUnlock();
-    sundayStopMobileLockWatch();
-    if (!sundayMobileModalLock || !document.body) {
-      document.documentElement.removeAttribute('data-sunday-form-modal');
-      document.documentElement.style.removeProperty('--sunday-visual-height');
-      document.documentElement.style.removeProperty('--sunday-visual-top');
-      return;
-    }
-
-    var lock = sundayMobileModalLock;
-    sundayMobileModalLock = null;
-    var body = document.body;
-
-    body.style.position = lock.position;
-    body.style.top = lock.top;
-    body.style.left = lock.left;
-    body.style.right = lock.right;
-    body.style.width = lock.width;
-    body.style.overflow = lock.overflow;
-    document.documentElement.removeAttribute('data-sunday-form-modal');
-    document.documentElement.style.removeProperty('--sunday-visual-height');
-    document.documentElement.style.removeProperty('--sunday-visual-top');
-
-    if (restoreScroll !== false) {
-      window.requestAnimationFrame(function () {
-        window.scrollTo({ left: 0, top: lock.scrollY, behavior: 'auto' });
-      });
-    }
-  }
-
-  function syncMobileFormFocusStability() {
-    var surface = sundayCurrentSurface();
-    if (sundayIsMobileFormSurface(surface)) sundayLockMobileFormSurface(surface);
-    else sundayScheduleMobileUnlock();
-  }
-
   function syncAccessibleSurface() {
     var next = sundayCurrentSurface();
 
@@ -447,23 +276,11 @@
     ensureCorrectionStyles();
     applyFormRenderCorrections();
     syncAccessibleSurface();
-    syncMobileFormFocusStability();
   }
 
   function boot() {
     ensureCorrectionStyles();
     installAccessibleSurfaceManagement();
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', sundayScheduleVisualHeight, { passive: true });
-      window.visualViewport.addEventListener('scroll', sundayScheduleVisualHeight, { passive: true });
-    }
-    window.addEventListener('resize', sundayScheduleVisualHeight, { passive: true });
-    document.addEventListener('focusin', function (event) {
-      var target = event.target;
-      if (!target || !target.matches) return;
-      if (!target.matches('input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),textarea,select,[contenteditable="true"]')) return;
-      if (sundayIsMobileFormSurface(sundayCurrentSurface())) sundayScheduleVisualHeight();
-    }, true);
     sync();
 
     var mo = new MutationObserver(function (mutations) {
