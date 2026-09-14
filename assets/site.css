@@ -1048,3 +1048,13 @@ form[data-inq] [aria-haspopup="dialog"] {
     font-size: 12px !important;
   }
 }
+
+/* SERVICES FOOTER EMAIL · 2026-09-14
+   Narrow correction for the Services runtime utility-size collision. */
+@media (max-width: 700px) {
+  [data-screen-label="Services"] footer a[data-footer-ui][href^="mailto:"] {
+    font-size: 15.5px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+  }
+}
