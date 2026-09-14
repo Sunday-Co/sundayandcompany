@@ -14,20 +14,31 @@ block = r'''  var sundayMobileModalLock = null;
   var sundayViewportTimerA = 0;
   var sundayViewportTimerB = 0;
 
-  function sundayIsMobileFormSurface(surface) {
-    if (!surface || !window.matchMedia || !window.matchMedia('(max-width: 820px)').matches) return false;
+  function sundayMobileFormKind(surface) {
+    if (!surface || !window.matchMedia || !window.matchMedia('(max-width: 820px)').matches) return '';
     var label = surface.getAttribute('aria-label') || '';
-    return label === 'Project inquiry' || label === 'The Sunday Reservation';
+    if (label === 'Project inquiry') return 'inquiry';
+    if (label === 'The Sunday Reservation') return 'reservation';
+    return '';
+  }
+
+  function sundayIsMobileFormSurface(surface) {
+    return !!sundayMobileFormKind(surface);
   }
 
   function sundaySetVisualHeight() {
     var root = document.documentElement;
     var vv = window.visualViewport;
     var height = vv && vv.height ? vv.height : window.innerHeight;
+    var offsetTop = vv && typeof vv.offsetTop === 'number' ? vv.offsetTop : 0;
     if (!height) return;
     var value = (Math.round(height * 100) / 100) + 'px';
+    var topValue = (Math.round(offsetTop * 100) / 100) + 'px';
     if (root.style.getPropertyValue('--sunday-visual-height') !== value) {
       root.style.setProperty('--sunday-visual-height', value);
+    }
+    if (root.style.getPropertyValue('--sunday-visual-top') !== topValue) {
+      root.style.setProperty('--sunday-visual-top', topValue);
     }
   }
 
@@ -41,16 +52,25 @@ block = r'''  var sundayMobileModalLock = null;
 
   function sundayLockMobileFormSurface(surface) {
     if (!document.body) return;
-    if (sundayMobileModalLock && sundayMobileModalLock.surface === surface) {
+    var kind = sundayMobileFormKind(surface);
+    if (!kind) return;
+
+    /* DC can replace the modal DOM node while the same logical modal stays
+       open. Keep one page-lock snapshot for the whole modal session instead
+       of re-locking every newly rendered node. */
+    if (sundayMobileModalLock) {
+      sundayMobileModalLock.surface = surface;
+      sundayMobileModalLock.kind = kind;
+      document.documentElement.setAttribute('data-sunday-form-modal', 'open');
       sundayScheduleVisualHeight();
       return;
     }
-    if (sundayMobileModalLock) sundayUnlockMobileFormSurface(false);
 
     var body = document.body;
     var scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
     sundayMobileModalLock = {
       surface: surface,
+      kind: kind,
       scrollY: scrollY,
       position: body.style.position,
       top: body.style.top,
@@ -71,7 +91,13 @@ block = r'''  var sundayMobileModalLock = null;
   }
 
   function sundayUnlockMobileFormSurface(restoreScroll) {
-    if (!sundayMobileModalLock || !document.body) return;
+    if (!sundayMobileModalLock || !document.body) {
+      document.documentElement.removeAttribute('data-sunday-form-modal');
+      document.documentElement.style.removeProperty('--sunday-visual-height');
+      document.documentElement.style.removeProperty('--sunday-visual-top');
+      return;
+    }
+
     var lock = sundayMobileModalLock;
     sundayMobileModalLock = null;
     var body = document.body;
@@ -84,6 +110,7 @@ block = r'''  var sundayMobileModalLock = null;
     body.style.overflow = lock.overflow;
     document.documentElement.removeAttribute('data-sunday-form-modal');
     document.documentElement.style.removeProperty('--sunday-visual-height');
+    document.documentElement.style.removeProperty('--sunday-visual-top');
 
     if (restoreScroll !== false) {
       window.requestAnimationFrame(function () {
@@ -129,6 +156,7 @@ boot_marker = """    installAccessibleSurfaceManagement();
 boot_new = """    installAccessibleSurfaceManagement();
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', sundayScheduleVisualHeight, { passive: true });
+      window.visualViewport.addEventListener('scroll', sundayScheduleVisualHeight, { passive: true });
     }
     window.addEventListener('resize', sundayScheduleVisualHeight, { passive: true });
     document.addEventListener('focusin', function (event) {
@@ -193,11 +221,14 @@ css_block = r'''
     align-items:flex-start !important;
     bottom:auto !important;
     height:var(--sunday-visual-height,100dvh) !important;
+    left:0 !important;
     max-height:var(--sunday-visual-height,100dvh) !important;
     min-height:0 !important;
     overflow:hidden !important;
     overscroll-behavior:none !important;
     padding:12px !important;
+    right:0 !important;
+    top:var(--sunday-visual-top,0px) !important;
   }
 
   html[data-sunday-form-modal="open"] [aria-label="Project inquiry"],
@@ -215,8 +246,8 @@ css_block = r'''
 }
 '''
 if css_marker not in c:
-    c = c.rstrip() + css_block + '\n'
-css_path.write_text(c)
+    c = c.rstrip() + css_block
+css_path.write_text(c.rstrip() + '\n')
 
 # Cache-bust all public HTML references together so iOS Safari cannot retain the old JS/CSS.
 changed_html = 0
@@ -228,9 +259,10 @@ for p in Path('.').rglob('*.html'):
         changed_html += 1
 
 checks = {
-    'mobile modal page lock installed': 'function sundayLockMobileFormSurface(surface)' in s,
+    'single-owner mobile modal lock installed': 'if (sundayMobileModalLock) {' in s and 'sundayMobileModalLock.surface = surface;' in s,
     'scroll restoration installed': "window.scrollTo({ left: 0, top: lock.scrollY, behavior: 'auto' });" in s,
-    'visual viewport listener installed': "window.visualViewport.addEventListener('resize', sundayScheduleVisualHeight" in s,
+    'visual viewport resize and scroll listeners installed': "window.visualViewport.addEventListener('resize', sundayScheduleVisualHeight" in s and "window.visualViewport.addEventListener('scroll', sundayScheduleVisualHeight" in s,
+    'visual viewport offset tracked': "--sunday-visual-top" in s and "var(--sunday-visual-top,0px)" in c,
     'sync activates focus stability': 'syncMobileFormFocusStability();' in s,
     'mobile editable controls forced to 16px': 'font-size:16px !important;' in c,
     'modal overlay uses visual viewport height': 'var(--sunday-visual-height,100dvh)' in c,
