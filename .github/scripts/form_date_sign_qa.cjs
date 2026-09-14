@@ -31,7 +31,7 @@ async function fillStep1(root){
 }
 async function verifyDateLabel(root,prefix){
   const label=root.locator('[data-start-date-label]').first();
-  const reference=root.locator('[data-step="2"] label > span').first();
+  const reference=root.getByText('Current Website',{exact:true}).first();
   const ls=await label.evaluate(el=>({size:getComputedStyle(el).fontSize,family:getComputedStyle(el).fontFamily,weight:getComputedStyle(el).fontWeight,letter:getComputedStyle(el).letterSpacing}));
   const rs=await reference.evaluate(el=>({size:getComputedStyle(el).fontSize,family:getComputedStyle(el).fontFamily}));
   const match=Math.abs(parseFloat(ls.size)-parseFloat(rs.size))<=1;
@@ -48,7 +48,6 @@ async function verifyPrivacy(root,prefix){
   for(const cfg of [{name:'desktop',width:1440,height:900},{name:'mobile',width:390,height:844}]){
     const page=await browser.newPage({viewport:{width:cfg.width,height:cfg.height}});
 
-    // Header modal Project Inquiry.
     await page.goto(base+'/',{waitUntil:'networkidle',timeout:60000});
     await page.waitForTimeout(300); await closeReservation(page);
     const modal=await openInquiry(page);
@@ -76,7 +75,6 @@ async function verifyPrivacy(root,prefix){
     await page.screenshot({path:`qa-artifacts/${cfg.name}-header-privacy.png`,fullPage:false});
     await page.keyboard.press('Escape');
 
-    // Visible embedded Project Inquiry on Services, not the hidden header copy.
     await page.goto(base+'/services/',{waitUntil:'networkidle',timeout:60000});
     await page.waitForTimeout(350); await closeReservation(page);
     const form=await visibleInquiryForm(page);
@@ -102,7 +100,6 @@ async function verifyPrivacy(root,prefix){
     await verifyPrivacy(form,`${cfg.name} services`);
     await page.screenshot({path:`qa-artifacts/${cfg.name}-services-privacy.png`,fullPage:false});
 
-    // OPEN sign entry swing, slow neon pulse, and manual re-swing.
     await page.goto(base+'/',{waitUntil:'networkidle',timeout:60000});
     await page.waitForTimeout(300); await closeReservation(page);
     await page.evaluate(()=>{window.__signStarts=0;const el=document.querySelector('[data-sign-swing]');if(el)el.addEventListener('animationstart',()=>window.__signStarts++);});
