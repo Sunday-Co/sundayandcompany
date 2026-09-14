@@ -7,11 +7,66 @@ const check = (name, ok, detail = '') => {
   if (!ok) failures.push(name + (detail ? ' :: ' + detail : ''));
 };
 
-async function waitUnlocked(page) {
-  await page.waitForFunction(() => {
-    return !document.documentElement.hasAttribute('data-sunday-form-modal') &&
-      document.body.style.position !== 'fixed';
-  }, null, { timeout: 3000 });
+async function modalDiagnostics(page, label) {
+  const state = await page.evaluate(() => {
+    const dialogs = Array.from(document.querySelectorAll('[role="dialog"]')).map((el, i) => {
+      const cs = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      const parent = el.closest('[role="presentation"]');
+      const pcs = parent ? getComputedStyle(parent) : null;
+      const pr = parent ? parent.getBoundingClientRect() : null;
+      return {
+        i,
+        label: el.getAttribute('aria-label'),
+        connected: el.isConnected,
+        display: cs.display,
+        visibility: cs.visibility,
+        opacity: cs.opacity,
+        rect: { x:r.x, y:r.y, w:r.width, h:r.height },
+        parent: parent ? {
+          display: pcs.display,
+          visibility: pcs.visibility,
+          opacity: pcs.opacity,
+          inlineDisplay: parent.style.display,
+          rect: { x:pr.x, y:pr.y, w:pr.width, h:pr.height }
+        } : null
+      };
+    });
+    return {
+      rootModal: document.documentElement.getAttribute('data-sunday-form-modal'),
+      visualHeight: document.documentElement.style.getPropertyValue('--sunday-visual-height'),
+      visualTop: document.documentElement.style.getPropertyValue('--sunday-visual-top'),
+      body: {
+        position: document.body.style.position,
+        top: document.body.style.top,
+        left: document.body.style.left,
+        right: document.body.style.right,
+        width: document.body.style.width,
+        overflow: document.body.style.overflow
+      },
+      scrollY: window.scrollY,
+      active: document.activeElement ? {
+        tag: document.activeElement.tagName,
+        name: document.activeElement.getAttribute('name'),
+        label: document.activeElement.getAttribute('aria-label')
+      } : null,
+      dialogs
+    };
+  });
+  console.log(`DIAG | ${label} | ${JSON.stringify(state)}`);
+  return state;
+}
+
+async function waitUnlocked(page, label = 'unlock') {
+  try {
+    await page.waitForFunction(() => {
+      return !document.documentElement.hasAttribute('data-sunday-form-modal') &&
+        document.body.style.position !== 'fixed';
+    }, null, { timeout: 3000 });
+  } catch (err) {
+    await modalDiagnostics(page, label);
+    throw err;
+  }
 }
 
 async function closeReservation(page) {
@@ -19,7 +74,7 @@ async function closeReservation(page) {
   if (await dialog.count() && await dialog.first().isVisible().catch(() => false)) {
     await dialog.first().locator('button[aria-label="Close"]').click();
     await dialog.first().waitFor({ state: 'hidden' });
-    await waitUnlocked(page);
+    await waitUnlocked(page, 'closeReservation helper');
   }
 }
 
@@ -63,8 +118,6 @@ async function checkVisibleEditableSizes(page, prefix) {
 (async () => {
   const browser = await webkit.launch();
 
-  // General form pass with the timed Reservation suppressed so it cannot
-  // interfere with ordinary page-form measurements.
   const routeContext = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
   await routeContext.addInitScript(() => {
     try { sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (_) {}
@@ -84,9 +137,6 @@ async function checkVisibleEditableSizes(page, prefix) {
   }
   await routeContext.close();
 
-  // Sequential modal lifecycle pass. This deliberately opens Reservation,
-  // closes it, scrolls the page, then opens Inquiry. It catches stale nested
-  // body locks from component re-renders or one popup handing off to another.
   const modalContext = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' });
   const page = await modalContext.newPage();
   page.on('console', msg => { if (msg.type() === 'error') consoleErrors.push(msg.text()); });
@@ -123,7 +173,9 @@ async function checkVisibleEditableSizes(page, prefix) {
   await page.waitForTimeout(260);
   await reservation.locator('button[aria-label="Close"]').click();
   await reservation.waitFor({ state: 'hidden' });
-  await waitUnlocked(page);
+  await page.waitForTimeout(500);
+  await modalDiagnostics(page, '500ms after Reservation close');
+  await waitUnlocked(page, 'Reservation close unlock timeout');
   const afterReservation = await page.evaluate(() => ({
     y: window.scrollY,
     modal: document.documentElement.getAttribute('data-sunday-form-modal'),
@@ -181,7 +233,7 @@ async function checkVisibleEditableSizes(page, prefix) {
   await page.waitForTimeout(280);
   await page.keyboard.press('Escape');
   await modal.waitFor({ state: 'hidden' });
-  await waitUnlocked(page);
+  await waitUnlocked(page, 'Inquiry close unlock timeout');
   await page.waitForTimeout(160);
   const restored = await page.evaluate(() => ({
     y: window.scrollY,
