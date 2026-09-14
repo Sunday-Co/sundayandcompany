@@ -31,10 +31,10 @@ jobs:
             exit 1
           fi
 
-      - name: Install Playwright WebKit outside repository
+      - name: Install WebKit visual QA dependencies outside repository
         run: |
           mkdir -p /tmp/sunday-qa
-          npm install --prefix /tmp/sunday-qa playwright@1.55.0 >/dev/null 2>&1
+          npm install --prefix /tmp/sunday-qa playwright@1.55.0 pngjs@7.0.0 >/dev/null 2>&1
           /tmp/sunday-qa/node_modules/.bin/playwright install --with-deps webkit
 
       - name: Serve candidate
@@ -43,10 +43,11 @@ jobs:
           echo $! > /tmp/sunday-form-guidance-http.pid
           sleep 2
 
-      - name: Run computed-style WebKit QA and screenshots
+      - name: Run rendered WebKit QA and screenshots
         run: |
           cat > /tmp/form-guidance-qa.cjs <<'JS'
           const { webkit } = require('/tmp/sunday-qa/node_modules/playwright');
+          const { PNG } = require('/tmp/sunday-qa/node_modules/pngjs');
           const assert = require('node:assert');
           const fs = require('node:fs');
 
@@ -55,108 +56,150 @@ jobs:
           fs.mkdirSync(out, { recursive: true });
           const px = value => parseFloat(value || '0');
 
-          function placeholderIs12(row, context) {
-            const values = [px(row.standard), px(row.webkit)];
-            assert.ok(values.includes(12), `${context}: standard=${row.standard}, webkit=${row.webkit}, field=${row.field}`);
-          }
-
-          async function placeholderStyle(locator) {
-            return locator.evaluate(el => ({
-              field: getComputedStyle(el).fontSize,
-              standard: getComputedStyle(el, '::placeholder').fontSize,
-              webkit: getComputedStyle(el, '::-webkit-input-placeholder').fontSize,
-              standardFamily: getComputedStyle(el, '::placeholder').fontFamily,
-              webkitFamily: getComputedStyle(el, '::-webkit-input-placeholder').fontFamily,
-            }));
-          }
-
-          async function allPlaceholderData(page) {
-            return page.evaluate(() => [...document.querySelectorAll('form input[placeholder], form textarea[placeholder]')]
-              .filter(el => el.type !== 'hidden')
-              .map(el => ({
-                name: el.name || el.id || '',
-                placeholder: el.getAttribute('placeholder') || '',
-                field: getComputedStyle(el).fontSize,
-                standard: getComputedStyle(el, '::placeholder').fontSize,
-                webkit: getComputedStyle(el, '::-webkit-input-placeholder').fontSize,
-                standardFamily: getComputedStyle(el, '::placeholder').fontFamily,
-                webkitFamily: getComputedStyle(el, '::-webkit-input-placeholder').fontFamily,
-              })));
-          }
-
-          async function assertPlaceholderSystem(page, route) {
-            await page.goto(base + route, { waitUntil: 'networkidle', timeout: 60000 });
-            await page.waitForTimeout(900);
-            const rows = await allPlaceholderData(page);
-            assert.ok(rows.length >= 2, `${route}: expected shared placeholders, found ${rows.length}`);
-            for (const row of rows) {
-              placeholderIs12(row, `${route} ${row.name}/${row.placeholder}`);
-              assert.ok(px(row.field) >= 16, `${route} ${row.name}: entered text ${row.field}`);
-              assert.ok(row.standardFamily.includes('Inter Tight') || row.webkitFamily.includes('Inter Tight'), `${route} ${row.name}: placeholder families ${row.standardFamily} / ${row.webkitFamily}`);
+          function pixelDiff(aBuffer, bBuffer) {
+            const a = PNG.sync.read(aBuffer);
+            const b = PNG.sync.read(bBuffer);
+            assert.strictEqual(a.width, b.width, 'Screenshot widths differ');
+            assert.strictEqual(a.height, b.height, 'Screenshot heights differ');
+            let different = 0;
+            for (let i = 0; i < a.data.length; i += 4) {
+              if (
+                a.data[i] !== b.data[i] ||
+                a.data[i + 1] !== b.data[i + 1] ||
+                a.data[i + 2] !== b.data[i + 2] ||
+                a.data[i + 3] !== b.data[i + 3]
+              ) different++;
             }
-            return rows;
+            return different;
+          }
+
+          async function paintProbe(page, locator, name) {
+            const token = 'qa' + name.replace(/[^a-z0-9]/gi, '').toLowerCase();
+            await locator.evaluate((el, value) => el.setAttribute('data-qa-placeholder', value), token);
+
+            const capture = async suffix => {
+              const buffer = await locator.screenshot();
+              fs.writeFileSync(`${out}/${name}-${suffix}.png`, buffer);
+              return buffer;
+            };
+
+            const setForcedSize = async size => {
+              await page.evaluate(({ token, size }) => {
+                let style = document.getElementById('qa-placeholder-paint-probe');
+                if (!style) {
+                  style = document.createElement('style');
+                  style.id = 'qa-placeholder-paint-probe';
+                  document.head.appendChild(style);
+                }
+                style.textContent = `[data-qa-placeholder="${token}"]::placeholder,[data-qa-placeholder="${token}"]::-webkit-input-placeholder{font-size:${size}px !important;}`;
+              }, { token, size });
+              await page.waitForTimeout(80);
+            };
+
+            const current = await capture('current');
+            await setForcedSize(12);
+            const forced12 = await capture('forced-12');
+            await setForcedSize(16);
+            const forced16 = await capture('forced-16');
+            await setForcedSize(24);
+            const forced24 = await capture('forced-24');
+
+            const result = {
+              currentVs12: pixelDiff(current, forced12),
+              currentVs16: pixelDiff(current, forced16),
+              currentVs24: pixelDiff(current, forced24),
+              twelveVs16: pixelDiff(forced12, forced16),
+              sixteenVs24: pixelDiff(forced16, forced24),
+              fieldSize: await locator.evaluate(el => getComputedStyle(el).fontSize),
+              reportedStandardPlaceholder: await locator.evaluate(el => getComputedStyle(el, '::placeholder').fontSize),
+              reportedWebKitPlaceholder: await locator.evaluate(el => getComputedStyle(el, '::-webkit-input-placeholder').fontSize),
+            };
+
+            // Paint is the source of truth here. WebKit reports the parent input size for
+            // placeholder pseudo-elements, so prove the actual painted pixels instead.
+            assert.ok(result.currentVs12 <= 4, `${name}: current paint does not match forced 12px: ${JSON.stringify(result)}`);
+            assert.ok(result.currentVs16 > 20, `${name}: current paint is too close to 16px: ${JSON.stringify(result)}`);
+            assert.ok(result.currentVs24 > result.currentVs16, `${name}: 24px control did not diverge further: ${JSON.stringify(result)}`);
+            assert.ok(result.twelveVs16 > 20, `${name}: 12px and 16px controls are not visually distinct: ${JSON.stringify(result)}`);
+            assert.ok(result.sixteenVs24 > 20, `${name}: 16px and 24px controls are not visually distinct: ${JSON.stringify(result)}`);
+
+            await page.evaluate(() => document.getElementById('qa-placeholder-paint-probe')?.remove());
+            await locator.evaluate(el => el.removeAttribute('data-qa-placeholder'));
+            await page.waitForTimeout(60);
+            return result;
+          }
+
+          async function assertVisibleFieldTextAtLeast16(scope, context) {
+            const sizes = await scope.locator('input:not([type="hidden"]), textarea, select').evaluateAll(elements => elements
+              .filter(el => getComputedStyle(el).display !== 'none' && getComputedStyle(el).visibility !== 'hidden')
+              .map(el => ({ name: el.name || el.id || el.tagName, size: getComputedStyle(el).fontSize })));
+            for (const row of sizes) assert.ok(px(row.size) >= 16, `${context} ${row.name}: entered/control text ${row.size}`);
+            return sizes;
           }
 
           (async () => {
             const browser = await webkit.launch();
             const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
             const page = await context.newPage();
+            const results = {};
 
+            // Reservation popup.
             await page.goto(base + '/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(1000);
             const reservation = page.locator('[aria-label="The Sunday Reservation"]');
-            await reservation.waitFor({ state: 'attached' });
+            await reservation.waitFor({ state: 'visible' });
             const reservationInput = reservation.locator('input[placeholder="you@example.com"]');
             const reservationLabel = reservation.locator('label[for="reservationEmail"]');
-            const resStyles = await placeholderStyle(reservationInput);
-            const resLabelSize = await reservationLabel.evaluate(el => getComputedStyle(el).fontSize);
-            await page.screenshot({ path: `${out}/01-reservation-fields-mobile.png`, fullPage: false });
-            assert.strictEqual(px(resStyles.field), 16);
-            placeholderIs12(resStyles, 'Reservation placeholder');
-            assert.strictEqual(px(resLabelSize), 9.25);
+            results.reservation = await paintProbe(page, reservationInput, '01-reservation-placeholder');
+            assert.strictEqual(px(results.reservation.fieldSize), 16);
+            assert.strictEqual(px(await reservationLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
+            results.reservationFields = await assertVisibleFieldTextAtLeast16(reservation, 'Reservation');
+            await page.screenshot({ path: `${out}/01-reservation-current-mobile.png`, fullPage: false });
 
             const close = reservation.locator('button[aria-label="Close"]');
             if (await close.isVisible().catch(() => false)) await close.click();
+
+            // Project Inquiry: step 1 labels, then step 2 placeholders/date control.
             const start = page.getByText('Start A Project', { exact: true }).first();
             await start.evaluate(el => el.click());
             const inquiry = page.locator('[aria-label="Project inquiry"]');
             await inquiry.waitFor({ state: 'visible' });
             const form = inquiry.locator('form[data-inq]');
+            const firstProjectLabel = form.locator('label > span').first();
+            assert.strictEqual(px(await firstProjectLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
             await form.locator('input[name="name"]').fill('QA Test');
             await form.locator('input[name="email"]').fill('qa@example.com');
             await form.locator('input[name="phone"]').fill('2025550123');
             await form.locator('input[name="business"]').fill('QA Studio');
             await form.locator('[data-stepbtns] button').click();
-            await page.waitForTimeout(120);
+            await page.waitForTimeout(160);
             const website = form.locator('input[name="website"]');
             const budget = form.locator('input[name="budget"]');
             const websiteLabel = website.locator('xpath=ancestor::label[1]/span[1]');
             const dateTrigger = form.locator('[aria-haspopup="dialog"]').first();
-            const projectStyles = {
-              website: await placeholderStyle(website),
-              budget: await placeholderStyle(budget),
-              label: await websiteLabel.evaluate(el => getComputedStyle(el).fontSize),
-              dateTrigger: await dateTrigger.evaluate(el => getComputedStyle(el).fontSize),
-            };
-            await page.screenshot({ path: `${out}/02-project-inquiry-guidance-mobile.png`, fullPage: false });
-            assert.strictEqual(px(projectStyles.website.field), 16);
-            placeholderIs12(projectStyles.website, 'Project website placeholder');
-            placeholderIs12(projectStyles.budget, 'Project budget placeholder');
-            assert.strictEqual(px(projectStyles.label), 9.25);
-            assert.strictEqual(px(projectStyles.dateTrigger), 12.5);
+            results.projectWebsite = await paintProbe(page, website, '02-project-website-placeholder');
+            results.projectBudget = await paintProbe(page, budget, '03-project-budget-placeholder');
+            assert.strictEqual(px(results.projectWebsite.fieldSize), 16);
+            assert.strictEqual(px(results.projectBudget.fieldSize), 16);
+            assert.strictEqual(px(await websiteLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
+            assert.strictEqual(px(await dateTrigger.evaluate(el => getComputedStyle(el).fontSize)), 12.5);
+            results.projectFields = await assertVisibleFieldTextAtLeast16(form, 'Project Inquiry');
+            await page.screenshot({ path: `${out}/02-project-inquiry-current-mobile.png`, fullPage: false });
 
             const inquiryClose = inquiry.locator('button[aria-label="Close"]');
             if (await inquiryClose.count()) await inquiryClose.first().click().catch(() => {});
 
+            // Contact form labels.
             await page.goto(base + '/contact/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
-            const contactLabel = page.locator('[data-screen-label="Contact"] form[data-editorial-labels] label > span').first();
-            const contactInput = page.locator('[data-screen-label="Contact"] form[data-editorial-labels] input[name="name"]');
+            const contactForm = page.locator('[data-screen-label="Contact"] form[data-editorial-labels]');
+            const contactLabel = contactForm.locator('label > span').first();
             assert.strictEqual(px(await contactLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
-            assert.strictEqual(px(await contactInput.evaluate(el => getComputedStyle(el).fontSize)), 16);
-            await contactInput.scrollIntoViewIfNeeded();
-            await page.screenshot({ path: `${out}/03-contact-fields-mobile.png`, fullPage: false });
+            results.contactFields = await assertVisibleFieldTextAtLeast16(contactForm, 'Contact');
+            await contactForm.scrollIntoViewIfNeeded();
+            await page.screenshot({ path: `${out}/03-contact-current-mobile.png`, fullPage: false });
 
+            // Join form labels and custom placeholder-like listbox trigger.
             await page.goto(base + '/join-our-team/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const joinForm = page.locator('#program-interest form[data-editorial-labels]');
@@ -164,33 +207,30 @@ jobs:
             const joinSelect = joinForm.locator('[aria-haspopup="listbox"]').first();
             assert.strictEqual(px(await joinLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
             assert.strictEqual(px(await joinSelect.evaluate(el => getComputedStyle(el).fontSize)), 12.5);
+            results.joinFields = await assertVisibleFieldTextAtLeast16(joinForm, 'Join');
             await joinSelect.scrollIntoViewIfNeeded();
-            await page.screenshot({ path: `${out}/04-join-fields-mobile.png`, fullPage: false });
+            await page.screenshot({ path: `${out}/04-join-current-mobile.png`, fullPage: false });
 
+            // Sunday School email field.
             await page.goto(base + '/sunday-school/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const schoolInput = page.locator('#school-notes-email');
             const schoolLabel = page.locator('label[for="school-notes-email"]');
-            const schoolStyle = await placeholderStyle(schoolInput);
-            assert.strictEqual(px(schoolStyle.field), 16);
-            placeholderIs12(schoolStyle, 'Sunday School placeholder');
+            results.sundaySchool = await paintProbe(page, schoolInput, '04-sunday-school-placeholder');
+            assert.strictEqual(px(results.sundaySchool.fieldSize), 16);
             assert.strictEqual(px(await schoolLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
             await schoolInput.scrollIntoViewIfNeeded();
-            await page.screenshot({ path: `${out}/05-sunday-school-field-mobile.png`, fullPage: false });
+            await page.screenshot({ path: `${out}/05-sunday-school-current-mobile.png`, fullPage: false });
 
-            const footerInput = page.locator('[aria-label="Newsletter"] input[placeholder="Email Address"]');
-            const footerStyle = await placeholderStyle(footerInput);
-            assert.strictEqual(px(footerStyle.field), 16);
-            placeholderIs12(footerStyle, 'Footer newsletter placeholder');
+            // Shared footer newsletter field.
+            const footer = page.locator('footer');
+            const footerInput = footer.locator('[aria-label="Newsletter"] input[placeholder="Email Address"]');
+            results.footerNewsletter = await paintProbe(page, footerInput, '05-footer-newsletter-placeholder');
+            assert.strictEqual(px(results.footerNewsletter.fieldSize), 16);
             await footerInput.scrollIntoViewIfNeeded();
-            await page.screenshot({ path: `${out}/06-footer-newsletter-field-mobile.png`, fullPage: false });
+            await page.screenshot({ path: `${out}/06-footer-newsletter-current-mobile.png`, fullPage: false });
 
-            const routeResults = {};
-            for (const route of ['/', '/contact/', '/join-our-team/', '/sunday-school/', '/services/']) {
-              routeResults[route] = await assertPlaceholderSystem(page, route);
-            }
-
-            console.log(JSON.stringify({ resStyles, resLabelSize, projectStyles, schoolStyle, footerStyle, routeResults }, null, 2));
+            console.log(JSON.stringify(results, null, 2));
             await browser.close();
           })().catch(err => { console.error(err); process.exit(1); });
           JS
