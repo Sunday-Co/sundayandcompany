@@ -21,6 +21,7 @@ jobs:
       - name: Apply focus-stability candidate
         run: |
           python .github/scripts/mobile_form_focus_stability.py
+          python .github/scripts/mobile_form_singleton_patch.py
           python - <<'PY'
           from pathlib import Path
           p = Path('assets/rendered-corrections.css')
