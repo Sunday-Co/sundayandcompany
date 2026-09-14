@@ -1,0 +1,106 @@
+name: Project Inquiry Style Trace
+
+on:
+  push:
+    branches:
+      - mobile-typography-faq-hotfix-2026-09-13
+    paths:
+      - '.github/workflows/project-inquiry-style-trace.yml'
+
+jobs:
+  trace:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply candidate source transformation
+        run: python .github/scripts/apply_form_guidance_microtype.py
+      - name: Install WebKit
+        run: |
+          mkdir -p /tmp/trace
+          npm install --prefix /tmp/trace playwright@1.55.0 >/dev/null 2>&1
+          /tmp/trace/node_modules/.bin/playwright install --with-deps webkit
+      - name: Serve candidate
+        run: |
+          python -m http.server 4173 >/tmp/trace-http.log 2>&1 &
+          sleep 2
+      - name: Trace winning Project Inquiry label styles
+        run: |
+          cat > /tmp/trace.cjs <<'JS'
+          const { webkit } = require('/tmp/trace/node_modules/playwright');
+
+          (async () => {
+            const browser = await webkit.launch();
+            const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+            await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForTimeout(800);
+
+            const reservationClose = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await reservationClose.count() && await reservationClose.first().isVisible().catch(() => false)) {
+              await reservationClose.first().click();
+            }
+
+            const start = page.getByText('Start A Project', { exact: true }).first();
+            await start.evaluate(el => el.click());
+            const inquiry = page.locator('[aria-label="Project inquiry"]');
+            await inquiry.waitFor({ state: 'visible' });
+            const label = inquiry.locator('form[data-inq] label > span').first();
+
+            const trace = await label.evaluate(el => {
+              const result = {
+                computed: getComputedStyle(el).fontSize,
+                inline: el.getAttribute('style'),
+                outerHTML: el.outerHTML,
+                rootNode: el.getRootNode() === document ? 'document' : String(el.getRootNode()),
+                matches: [],
+                styleTagsContaining10px: [],
+              };
+
+              function walkRules(rules, href, media = '') {
+                if (!rules) return;
+                for (const rule of rules) {
+                  if (rule.cssRules) {
+                    const nextMedia = rule.conditionText || rule.media?.mediaText || media;
+                    walkRules(rule.cssRules, href, nextMedia);
+                    continue;
+                  }
+                  if (!rule.selectorText || !rule.style) continue;
+                  let matched = false;
+                  try { matched = el.matches(rule.selectorText); } catch {}
+                  if (!matched) continue;
+                  const value = rule.style.getPropertyValue('font-size');
+                  if (!value) continue;
+                  result.matches.push({
+                    href: href || 'inline-style-sheet',
+                    media,
+                    selector: rule.selectorText,
+                    value,
+                    priority: rule.style.getPropertyPriority('font-size'),
+                    cssText: rule.cssText,
+                  });
+                }
+              }
+
+              for (const sheet of document.styleSheets) {
+                try { walkRules(sheet.cssRules, sheet.href || 'inline-style-sheet'); } catch (err) {
+                  result.matches.push({ href: sheet.href || 'inline-style-sheet', error: String(err) });
+                }
+              }
+
+              [...document.querySelectorAll('style')].forEach((style, i) => {
+                const text = style.textContent || '';
+                if (text.includes('[data-inq]') && text.includes('10px')) {
+                  const snippets = text.split('\n').filter(line => line.includes('10px') || line.includes('[data-inq]')).slice(0, 60);
+                  result.styleTagsContaining10px.push({ index: i, snippets });
+                }
+              });
+
+              return result;
+            });
+
+            console.log('PROJECT_INQUIRY_STYLE_TRACE_START');
+            console.log(JSON.stringify(trace, null, 2));
+            console.log('PROJECT_INQUIRY_STYLE_TRACE_END');
+            await browser.close();
+          })().catch(err => { console.error(err); process.exit(1); });
+          JS
+          node /tmp/trace.cjs
