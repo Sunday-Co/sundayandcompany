@@ -1,0 +1,58 @@
+name: Contact Overflow Trace
+
+on:
+  push:
+    branches:
+      - mobile-typography-faq-hotfix-2026-09-13
+    paths:
+      - '.github/workflows/contact-overflow-trace.yml'
+
+jobs:
+  trace:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply candidate
+        run: python .github/scripts/apply_form_guidance_microtype.py
+      - name: Install WebKit
+        run: |
+          mkdir -p /tmp/contact-trace
+          npm install --prefix /tmp/contact-trace playwright@1.55.0 >/dev/null 2>&1
+          /tmp/contact-trace/node_modules/.bin/playwright install --with-deps webkit
+      - name: Serve
+        run: |
+          python -m http.server 4173 >/tmp/contact-trace-http.log 2>&1 &
+          sleep 2
+      - name: Trace overflow
+        run: |
+          cat >/tmp/contact-trace.cjs <<'JS'
+          const { webkit }=require('/tmp/contact-trace/node_modules/playwright');
+          (async()=>{
+            const browser=await webkit.launch();
+            const page=await browser.newPage({viewport:{width:390,height:844}});
+            await page.goto('http://127.0.0.1:4173/contact/',{waitUntil:'networkidle',timeout:60000});
+            await page.waitForTimeout(700);
+            const reservation=page.locator('[aria-label="The Sunday Reservation"]');
+            if(await reservation.count() && await reservation.isVisible().catch(()=>false)){
+              const close=reservation.locator('button[aria-label="Close"]'); if(await close.count()) await close.first().click().catch(()=>{});
+            }
+            const result=await page.evaluate(()=>{
+              const W=innerWidth;
+              const all=[...document.querySelectorAll('body *')].map((el,i)=>{
+                const r=el.getBoundingClientRect(), s=getComputedStyle(el);
+                return {i,tag:el.tagName,id:el.id,cls:typeof el.className==='string'?el.className.slice(0,120):'',left:r.left,right:r.right,width:r.width,position:s.position,display:s.display,overflowX:s.overflowX,transform:s.transform,text:(el.textContent||'').trim().replace(/\s+/g,' ').slice(0,100),html:el.outerHTML.slice(0,450)};
+              });
+              return {
+                htmlScrollWidth:document.documentElement.scrollWidth,
+                bodyScrollWidth:document.body.scrollWidth,
+                bodyRect:document.body.getBoundingClientRect().toJSON(),
+                intersectingOverflow:all.filter(x=>x.right>W+1 && x.left<W && x.display!=='none').sort((a,b)=>b.right-a.right).slice(0,80),
+                leftNegative:all.filter(x=>x.left<-1 && x.right>0 && x.display!=='none').sort((a,b)=>a.left-b.left).slice(0,40),
+                near427:all.filter(x=>x.right>390 && x.right<500 && x.left<390 && x.display!=='none').sort((a,b)=>b.right-a.right).slice(0,80),
+              };
+            });
+            console.log('CONTACT_OVERFLOW_TRACE_START'); console.log(JSON.stringify(result,null,2)); console.log('CONTACT_OVERFLOW_TRACE_END');
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          JS
+          node /tmp/contact-trace.cjs
