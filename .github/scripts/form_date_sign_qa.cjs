@@ -46,7 +46,10 @@ async function verifyPrivacy(root,prefix){
 (async()=>{
   const browser=await webkit.launch();
   for(const cfg of [{name:'desktop',width:1440,height:900},{name:'mobile',width:390,height:844}]){
-    const page=await browser.newPage({viewport:{width:cfg.width,height:cfg.height}});
+    const context=await browser.newContext({viewport:{width:cfg.width,height:cfg.height},reducedMotion:'no-preference'});
+    const page=await context.newPage();
+    const reduced=await page.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches);
+    check(`${cfg.name} motion QA uses no-preference`,reduced===false,JSON.stringify({reducedMotion:reduced}));
 
     await page.goto(base+'/',{waitUntil:'networkidle',timeout:60000});
     await page.waitForTimeout(300); await closeReservation(page);
@@ -105,19 +108,33 @@ async function verifyPrivacy(root,prefix){
     await page.evaluate(()=>{window.__signStarts=0;const el=document.querySelector('[data-sign-swing]');if(el)el.addEventListener('animationstart',()=>window.__signStarts++);});
     const sign=page.locator('[data-sign]').first();
     await sign.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(350);
     const swing=page.locator('[data-sign-swing]').first(); const open=page.locator('[data-sign-open]').first();
     const anim=await swing.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
     const openAnim=await open.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration,opacity:getComputedStyle(el).opacity}));
     check(`${cfg.name} sign swings on entry`,anim.name.includes('sc-rock')&&anim.name.includes('sc-sway')&&anim.duration.includes('6.2s')&&anim.duration.includes('8.5s'),JSON.stringify(anim));
     check(`${cfg.name} sign has stronger slow pulse`,openAnim.name.includes('sc-neon')&&openAnim.duration.includes('5.6s'),JSON.stringify(openAnim));
     const startsBefore=await page.evaluate(()=>window.__signStarts||0);
-    await open.click({force:true}); await page.waitForTimeout(250);
+    await open.dispatchEvent('pointerdown'); await page.waitForTimeout(300);
     const startsAfter=await page.evaluate(()=>window.__signStarts||0);
     check(`${cfg.name} sign re-swings on touch`,startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
     await page.screenshot({path:`qa-artifacts/${cfg.name}-open-sign.png`,fullPage:false});
-    await page.close();
+    await context.close();
   }
+
+  const reducedContext=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
+  const reducedPage=await reducedContext.newPage();
+  await reducedPage.goto(base+'/',{waitUntil:'networkidle',timeout:60000});
+  await reducedPage.waitForTimeout(300); await closeReservation(reducedPage);
+  const reducedFlag=await reducedPage.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const reducedSign=reducedPage.locator('[data-sign]').first();
+  await reducedSign.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
+  await reducedPage.waitForTimeout(350);
+  const reducedAnim=await reducedPage.locator('[data-sign-swing]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
+  const reducedOpen=await reducedPage.locator('[data-sign-open]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
+  check('reduced-motion preference is honored',reducedFlag===true&&reducedAnim.name==='none'&&reducedOpen.name==='none',JSON.stringify({reducedFlag,reducedAnim,reducedOpen}));
+  await reducedContext.close();
+
   await browser.close();
   if(failures.length){console.error('\nFAILURES\n'+failures.join('\n'));process.exit(1);}
 })().catch(e=>{console.error(e);process.exit(2);});
