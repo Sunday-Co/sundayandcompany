@@ -1,0 +1,215 @@
+name: Imported Shared Components Live QA
+
+on:
+  push:
+    branches:
+      - sync-live-shared-components-2026-09-14
+    paths:
+      - '.github/scripts/fix_imported_shared_components.py'
+      - '.github/workflows/imported-shared-components-live-qa.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply authoritative shared-component fix
+        run: python .github/scripts/fix_imported_shared_components.py
+
+      - name: Verify shared component copies are identical
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          dirs = [
+            'about','accessibility','contact','cookie-policy','join-our-team','our-work',
+            'our-work/folake','our-work/luckys-cafe-bakery','our-work/petti-pathways',
+            'our-work/pizzeria-coco','privacy-policy','services','sunday-school','terms-and-conditions'
+          ]
+          for name in ['Inquiry Form.dc.html','Site Footer.dc.html','Site Header.dc.html']:
+              root = Path(name).read_bytes()
+              for d in dirs:
+                  p = Path(d) / name
+                  assert p.read_bytes() == root, f'drift: {p}'
+          print('All 42 page-local shared component copies match their root owners byte-for-byte.')
+          PY
+          git diff --check
+
+      - name: Install Playwright WebKit
+        run: |
+          mkdir -p /tmp/sunday-live-path-qa
+          npm install --prefix /tmp/sunday-live-path-qa playwright@1.55.0 >/dev/null 2>&1
+          /tmp/sunday-live-path-qa/node_modules/.bin/playwright install --with-deps webkit
+
+      - name: Serve candidate
+        run: |
+          python -m http.server 4173 >/tmp/sunday-live-path-http.log 2>&1 &
+          sleep 2
+
+      - name: Test rendered page-local components
+        run: |
+          cat > /tmp/live-path-qa.cjs <<'JS'
+          const { webkit } = require('/tmp/sunday-live-path-qa/node_modules/playwright');
+          const assert = require('node:assert');
+          const fs = require('node:fs');
+
+          const base = 'http://127.0.0.1:4173';
+          const out = 'imported-live-path-qa';
+          fs.mkdirSync(out, { recursive: true });
+          const routes = ['/', '/about/', '/accessibility/', '/contact/', '/cookie-policy/', '/join-our-team/', '/our-work/', '/our-work/folake/', '/our-work/luckys-cafe-bakery/', '/our-work/petti-pathways/', '/our-work/pizzeria-coco/', '/privacy-policy/', '/services/', '/sunday-school/', '/terms-and-conditions/'];
+          const px = v => parseFloat(v || '0');
+
+          async function closeReservation(page) {
+            const close = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await close.count() && await close.first().isVisible().catch(() => false)) {
+              await close.first().click();
+            }
+          }
+
+          async function openInquiry(page) {
+            const desktop = page.getByRole('button', { name: 'Reserve Your Seat' }).filter({ visible: true });
+            const allButtons = page.getByRole('button', { name: 'Reserve Your Seat' });
+            for (let i = 0; i < await allButtons.count(); i++) {
+              if (await allButtons.nth(i).isVisible().catch(() => false)) {
+                await allButtons.nth(i).click();
+                return;
+              }
+            }
+            const menu = page.getByRole('button', { name: 'Open menu' });
+            if (await menu.isVisible().catch(() => false)) {
+              await menu.click();
+              const sheetCta = page.locator('[data-sheet-cta]').filter({ hasText: 'Reserve Your Seat' });
+              await sheetCta.click();
+              return;
+            }
+            throw new Error('Could not find a visible Project Inquiry opener');
+          }
+
+          (async () => {
+            const browser = await webkit.launch();
+            const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+            const page = await context.newPage();
+            const results = {};
+
+            for (const route of routes) {
+              await page.goto(base + route, { waitUntil: 'networkidle', timeout: 60000 });
+              await page.waitForTimeout(450);
+              await closeReservation(page);
+
+              const footerEmail = page.locator('footer a[href^="mailto:hello@sundayandcompany.co"]');
+              await footerEmail.waitFor({ state: 'attached' });
+              const emailSize = px(await footerEmail.evaluate(el => getComputedStyle(el).fontSize));
+              assert.ok(emailSize >= 16.4, `${route}: footer email rendered ${emailSize}px`);
+
+              const fine = page.locator('[aria-label="Newsletter"] [data-news-fineprint]');
+              await fine.waitFor({ state: 'attached' });
+              const fineStyles = await fine.evaluate(el => ({
+                size: getComputedStyle(el).fontSize,
+                weight: getComputedStyle(el).fontWeight,
+                opacity: getComputedStyle(el).opacity,
+              }));
+              assert.ok(px(fineStyles.size) <= 8.3, `${route}: newsletter disclaimer size ${fineStyles.size}`);
+              assert.strictEqual(fineStyles.weight, '300', `${route}: newsletter disclaimer weight ${fineStyles.weight}`);
+              assert.ok(parseFloat(fineStyles.opacity) <= .73, `${route}: newsletter disclaimer opacity ${fineStyles.opacity}`);
+
+              results[route] = { emailSize, fineStyles };
+            }
+
+            // Verify the ACTUAL Site Header success receipt the live modal switches to.
+            await page.goto(base + '/sunday-school/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForTimeout(500);
+            await closeReservation(page);
+            await openInquiry(page);
+            const modal = page.locator('[aria-label="Project inquiry"]');
+            await modal.waitFor({ state: 'visible' });
+            const statusMeta = modal.locator('[data-inquiry-receipt-meta="status"]');
+            await statusMeta.waitFor({ state: 'attached' });
+            const liveSuccess = statusMeta.locator('xpath=..');
+            const h2 = liveSuccess.locator('h2');
+            const body = liveSuccess.locator('p').last();
+            const successStyles = {
+              headingText: await h2.textContent(),
+              bodyText: await body.textContent(),
+              headingFamily: await h2.evaluate(el => getComputedStyle(el).fontFamily),
+              bodyFamily: await body.evaluate(el => getComputedStyle(el).fontFamily),
+              headingTransform: await h2.evaluate(el => getComputedStyle(el).textTransform),
+              bodyTransform: await body.evaluate(el => getComputedStyle(el).textTransform),
+              headingSize: await h2.evaluate(el => getComputedStyle(el).fontSize),
+              bodySize: await body.evaluate(el => getComputedStyle(el).fontSize),
+            };
+            assert.strictEqual(successStyles.headingText.trim(), 'YOUR INQUIRY IS IN.');
+            assert.ok(successStyles.bodyText.trim().startsWith('THANK YOU FOR SHARING THE DETAILS.'));
+            assert.ok(successStyles.headingFamily.includes('Inter Tight'), successStyles.headingFamily);
+            assert.ok(successStyles.bodyFamily.includes('Inter Tight'), successStyles.bodyFamily);
+            assert.strictEqual(successStyles.headingTransform, 'uppercase');
+            assert.strictEqual(successStyles.bodyTransform, 'uppercase');
+
+            // Reveal the real success DOM without submitting another form/email.
+            await liveSuccess.evaluate(el => { el.style.display = 'block'; });
+            await modal.locator('form[data-inq]').evaluate(el => {
+              const host = el.closest('.sc-host') || el.parentElement;
+              if (host) host.style.display = 'none';
+              else el.style.display = 'none';
+            }).catch(() => {});
+            await page.waitForTimeout(100);
+            await modal.screenshot({ path: `${out}/01-actual-live-inquiry-success-mobile.png` });
+
+            // Footer proof from the page shown in the user's screenshot.
+            await page.goto(base + '/sunday-school/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForTimeout(450);
+            await closeReservation(page);
+            const footer = page.locator('footer');
+            await footer.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(100);
+            await page.screenshot({ path: `${out}/02-sunday-school-footer-mobile.png`, fullPage: false });
+
+            // Contact FAQ must not become sticky/overlap while scrolling.
+            await page.goto(base + '/contact/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForTimeout(450);
+            await closeReservation(page);
+            const intro = page.getByText('More detail about our services, pricing and what happens after you inquire.', { exact: true });
+            await intro.scrollIntoViewIfNeeded();
+            await page.evaluate(() => window.scrollBy(0, 260));
+            await page.waitForTimeout(120);
+            const stickyAncestors = await intro.evaluate(el => {
+              const rows = [];
+              let cur = el;
+              for (let i = 0; cur && i < 6; i++, cur = cur.parentElement) {
+                const p = getComputedStyle(cur).position;
+                if (p === 'sticky' || p === '-webkit-sticky') rows.push({ tag: cur.tagName, cls: cur.className || '', position: p });
+              }
+              return rows;
+            });
+            assert.strictEqual(stickyAncestors.length, 0, `FAQ still has sticky ancestor: ${JSON.stringify(stickyAncestors)}`);
+            await page.screenshot({ path: `${out}/03-contact-faq-scrolled-mobile.png`, fullPage: false });
+
+            console.log(JSON.stringify({ results, successStyles, stickyAncestors }, null, 2));
+            await browser.close();
+          })().catch(err => { console.error(err); process.exit(1); });
+          JS
+          node /tmp/live-path-qa.cjs
+
+      - name: Upload proof screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: imported-live-path-qa
+          path: imported-live-path-qa
+          if-no-files-found: error
+
+      - name: Commit only verified website source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 'Inquiry Form.dc.html' 'Site Footer.dc.html' 'Site Header.dc.html'
+          for d in about accessibility contact cookie-policy join-our-team our-work our-work/folake our-work/luckys-cafe-bakery our-work/petti-pathways our-work/pizzeria-coco privacy-policy services sunday-school terms-and-conditions; do
+            git add "$d/Inquiry Form.dc.html" "$d/Site Footer.dc.html" "$d/Site Header.dc.html"
+          done
+          git diff --cached --check
+          git commit -m '[skip netlify] Fix actual imported shared component sources'
+          git push
