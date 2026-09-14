@@ -83,7 +83,27 @@ inq = inq.replace('>Your Inquiry Is In.</h3>', '>YOUR INQUIRY IS IN.</h3>', 1)
 inq = inq.replace('>Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>', '>THANK YOU FOR SHARING THE DETAILS. WE HAVE RECEIVED YOUR INQUIRY AND WILL REVIEW IT BEFORE FOLLOWING UP.</p>', 1)
 inq_path.write_text(inq)
 
-# 4) Synchronize every page-local imported copy to the canonical root component.
+# 4) Update the actual later global rule that was still overriding the imported
+#    footer component on iPhone/WebKit.
+css_path = Path('assets/site.css')
+css = css_path.read_text()
+old_email_rule = '''  footer a[href^="mailto:"] {
+    font-size: 15.5px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+  }'''
+new_email_rule = '''  footer a[href^="mailto:"] {
+    font-size: 16.5px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+  }'''
+if old_email_rule in css:
+    css = css.replace(old_email_rule, new_email_rule, 1)
+elif new_email_rule not in css:
+    raise SystemExit('Could not locate the winning mobile footer email rule in assets/site.css.')
+css_path.write_text(css)
+
+# 5) Synchronize every page-local imported copy to the canonical root component.
 canonical = {
     'Inquiry Form.dc.html': Path('Inquiry Form.dc.html').read_text(),
     'Site Footer.dc.html': Path('Site Footer.dc.html').read_text(),
@@ -96,19 +116,22 @@ for directory in DIRS:
             raise SystemExit(f'Missing expected page-local component: {path}')
         path.write_text(content)
 
-# 5) Refuse to finish unless all copies are byte-for-byte identical.
+# 6) Refuse to finish unless all copies are byte-for-byte identical.
 for directory in DIRS:
     for name, content in canonical.items():
         path = Path(directory) / name
         if path.read_text() != content:
             raise SystemExit(f'Shared component drift remains: {path}')
 
-# Guard the exact live success source and footer rules.
+# Guard the exact live success source and both footer ownership layers.
 final_header = header_path.read_text()
 final_footer = footer_path.read_text()
+final_css = css_path.read_text()
 if 'YOUR INQUIRY IS IN.' not in final_header or "font-family:'Inter Tight',sans-serif;font-size:clamp(18px,2.2vw,24px)" not in final_header:
     raise SystemExit('Live Header success typography did not land.')
 if 'font-size:16.5px !important' not in final_footer or 'font-weight:300' not in final_footer:
-    raise SystemExit('Authoritative footer mobile typography did not land.')
+    raise SystemExit('Authoritative footer component typography did not land.')
+if 'font-size: 16.5px !important;' not in final_css:
+    raise SystemExit('Winning mobile footer email rule did not land in assets/site.css.')
 
-print(f'Corrected live Header success state and synchronized {len(DIRS) * 3} page-local shared components.')
+print(f'Corrected live Header success state, winning footer email rule, and synchronized {len(DIRS) * 3} page-local shared components.')
