@@ -1,0 +1,260 @@
+name: Form Date Sign Polish QA
+
+on:
+  push:
+    branches:
+      - form-date-sign-polish-2026-09-14
+
+permissions:
+  contents: write
+
+jobs:
+  fix-and-verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout candidate branch
+        uses: actions/checkout@v4
+        with:
+          ref: form-date-sign-polish-2026-09-14
+          fetch-depth: 0
+
+      - name: Apply narrow fixes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path, old, new):
+              p = Path(path)
+              s = p.read_text()
+              if old in s:
+                  p.write_text(s.replace(old, new, 1))
+              elif new in s:
+                  return
+              else:
+                  raise SystemExit(f"Expected text not found in {path}: {old[:120]!r}")
+
+          inquiry = Path('Inquiry Form.dc.html')
+          s = inquiry.read_text()
+
+          marker = """  [data-inq] button {\n    font-family: 'Inter Tight', sans-serif !important;\n    font-weight: 400;\n  }\n"""
+          addition = marker + """  [data-inq] [data-start-date-label] {\n    font-family: 'Inter Tight', sans-serif !important;\n    font-size: 9.5px !important;\n    font-weight: 400 !important;\n    letter-spacing: .055em !important;\n    line-height: 1.25 !important;\n    text-transform: uppercase !important;\n  }\n  [data-inq] [data-form-privacy] {\n    font-family: 'Inter Tight', sans-serif !important;\n    font-size: 8.5px !important;\n    font-weight: 300 !important;\n    letter-spacing: .02em !important;\n    line-height: 1.35 !important;\n    white-space: nowrap !important;\n  }\n  [data-inq] [data-date-panel] {\n    bottom: calc(100% + 6px) !important;\n    top: auto !important;\n  }\n"""
+          if '[data-start-date-label]' not in s.split('</style>',1)[0]:
+              if marker not in s: raise SystemExit('Inquiry style marker missing')
+              s = s.replace(marker, addition, 1)
+
+          s = s.replace("<span style=\"font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.10em;text-transform:uppercase\">Ideal Start Date</span>",
+                        "<span data-start-date-label style=\"font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase\">Ideal Start Date</span>")
+          s = s.replace("<div role=\"dialog\" aria-label=\"Choose a start date\" style=\"background:#fffdf8;border:1px solid #311d03;border-radius:0;box-shadow:6px 8px 0 rgba(49,29,3,.13);left:0;max-width:100%;padding:8px;position:absolute;top:100%;width:min(320px,100%);z-index:30;display:{{ datePanel }}\">",
+                        "<div data-date-panel role=\"dialog\" aria-label=\"Choose a start date\" style=\"background:#fffdf8;border:1px solid #311d03;border-radius:0;bottom:calc(100% + 6px);box-shadow:6px 8px 0 rgba(49,29,3,.13);left:0;max-width:100%;padding:8px;position:absolute;top:auto;width:min(320px,100%);z-index:30;display:{{ datePanel }}\">")
+          s = s.replace("style=\"display:{{ step3Display }};font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:300;grid-column:1 / -1;letter-spacing:.035em;line-height:1.45;margin:1px 0 0;opacity:.72\"",
+                        "style=\"display:{{ step3Display }};font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:300;grid-column:1 / -1;letter-spacing:.02em;line-height:1.35;margin:1px 0 0;opacity:.72;white-space:nowrap\"")
+          inquiry.write_text(s)
+
+          home = Path('index.html')
+          h = home.read_text()
+          h = h.replace("""  @keyframes sc-rock {\n    0%   { transform: rotate(2.6deg) }\n    14%  { transform: rotate(-2.1deg) }\n    28%  { transform: rotate(1.5deg) }\n    42%  { transform: rotate(-1.05deg) }\n    56%  { transform: rotate(.7deg) }\n    70%  { transform: rotate(-.45deg) }\n    84%  { transform: rotate(.26deg) }\n    100% { transform: rotate(-.6deg) }\n  }\n  @keyframes sc-sway {\n    0%, 100% { transform: rotate(-.6deg) }\n    50%      { transform: rotate(.45deg) }\n  }\n""",
+"""  @keyframes sc-rock {\n    0%   { transform: rotate(3.2deg) }\n    16%  { transform: rotate(-2.55deg) }\n    32%  { transform: rotate(1.78deg) }\n    48%  { transform: rotate(-1.18deg) }\n    64%  { transform: rotate(.72deg) }\n    80%  { transform: rotate(-.34deg) }\n    100% { transform: rotate(-.55deg) }\n  }\n  @keyframes sc-sway {\n    0%, 100% { transform: rotate(-.55deg) }\n    50%      { transform: rotate(.52deg) }\n  }\n""")
+          old_neon = "  @keyframes sc-neon { 0%,100% { text-shadow:0 0 6px rgba(255,240,236,.5), 0 0 18px rgba(172,116,108,.75), 0 0 44px rgba(172,116,108,.4), 0 0 80px rgba(172,116,108,.18) } 50% { text-shadow:0 0 8px rgba(255,240,236,.75), 0 0 26px rgba(172,116,108,.95), 0 0 62px rgba(172,116,108,.6), 0 0 110px rgba(172,116,108,.3) } }"
+          new_neon = "  @keyframes sc-neon { 0%,100% { opacity:.72; text-shadow:0 0 5px rgba(255,240,236,.38), 0 0 15px rgba(172,116,108,.62), 0 0 38px rgba(172,116,108,.32), 0 0 70px rgba(172,116,108,.14) } 50% { opacity:1; text-shadow:0 0 10px rgba(255,240,236,.88), 0 0 31px rgba(172,116,108,1), 0 0 72px rgba(172,116,108,.72), 0 0 122px rgba(172,116,108,.36) } }"
+          if old_neon in h: h = h.replace(old_neon, new_neon, 1)
+          elif new_neon not in h: raise SystemExit('sc-neon marker missing')
+
+          h = h.replace('<div style="animation:{{ rockAnim }};transform-origin:50% 0">','<div data-sign-swing style="animation:{{ rockAnim }};transform-origin:50% 0">',1)
+          h = h.replace('<p aria-hidden="true" style="animation:{{ signAnim }};color:#ac746c;', '<p data-sign-open aria-hidden="true" style="animation:{{ signAnim }};color:#ac746c;',1)
+
+          sign_setup = """      this._sio.observe(sign);\n      this._signEl = sign;\n"""
+          sign_setup_new = """      this._sio.observe(sign);\n      this._signClick = (event) => {\n        const target = event && event.target;\n        if (target && target.closest && target.closest('button,a,input,textarea,select')) return;\n        this.nudgeSign();\n      };\n      sign.addEventListener('click', this._signClick);\n      this._signEl = sign;\n"""
+          if 'sign.addEventListener(\'click\', this._signClick)' not in h:
+              if sign_setup not in h: raise SystemExit('sign setup marker missing')
+              h = h.replace(sign_setup, sign_setup_new, 1)
+          h = h.replace("? 'sc-rock 5.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 7s ease-in-out 5.4s infinite'",
+                        "? 'sc-rock 6.2s cubic-bezier(.34,.08,.18,.96) 1 both, sc-sway 8.5s ease-in-out 6.2s infinite'")
+          h = h.replace("? 'sc-warm 2.6s ease-out 1 both, sc-neon 3.8s ease-in-out 2.6s infinite'",
+                        "? 'sc-warm 2.8s ease-out 1 both, sc-neon 5.6s ease-in-out 2.8s infinite'")
+          home.write_text(h)
+
+          # Keep every page-local Inquiry component identical to the root source.
+          dirs=['about','accessibility','contact','cookie-policy','join-our-team','our-work','our-work/folake','our-work/luckys-cafe-bakery','our-work/petti-pathways','our-work/pizzeria-coco','privacy-policy','services','sunday-school','terms-and-conditions']
+          source = inquiry.read_bytes()
+          for d in dirs:
+              (Path(d)/'Inquiry Form.dc.html').write_bytes(source)
+
+          # Cache-bust the reviewed release on every public page and the JS fallback.
+          routes=['index.html','about/index.html','accessibility/index.html','contact/index.html','cookie-policy/index.html','join-our-team/index.html','our-work/index.html','our-work/folake/index.html','our-work/luckys-cafe-bakery/index.html','our-work/petti-pathways/index.html','our-work/pizzeria-coco/index.html','privacy-policy/index.html','services/index.html','sunday-school/index.html','terms-and-conditions/index.html']
+          for route in routes:
+              p=Path(route); p.write_text(p.read_text().replace('20260914-17','20260914-18'))
+          p=Path('assets/site.js'); p.write_text(p.read_text().replace('20260914-17','20260914-18'))
+          PY
+
+      - name: Static integrity checks
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          failures=[]
+          def check(name, ok, detail=''):
+              print(('PASS' if ok else 'FAIL')+' | '+name+((' | '+detail) if detail else ''))
+              if not ok: failures.append(name)
+          inquiry=Path('Inquiry Form.dc.html').read_text(); home=Path('index.html').read_text()
+          check('date label has explicit hook','data-start-date-label' in inquiry)
+          check('calendar opens upward','data-date-panel' in inquiry and 'bottom:calc(100% + 6px)' in inquiry and 'top:auto' in inquiry)
+          check('privacy is one-line','data-form-privacy' in inquiry and 'white-space:nowrap' in inquiry)
+          check('manual sign swing restored',"sign.addEventListener('click', this._signClick)" in home)
+          check('sign click ignores real controls',"target.closest('button,a,input,textarea,select')" in home)
+          check('slow swing timing','sc-rock 6.2s' in home and 'sc-sway 8.5s' in home)
+          check('stronger slow neon pulse','opacity:.72' in home and 'sc-neon 5.6s' in home)
+          dirs=['about','accessibility','contact','cookie-policy','join-our-team','our-work','our-work/folake','our-work/luckys-cafe-bakery','our-work/petti-pathways','our-work/pizzeria-coco','privacy-policy','services','sunday-school','terms-and-conditions']
+          root=Path('Inquiry Form.dc.html').read_bytes(); drift=[]
+          for d in dirs:
+              if (Path(d)/'Inquiry Form.dc.html').read_bytes()!=root: drift.append(d)
+          check('all 14 page-local inquiry copies synchronized',not drift,','.join(drift))
+          routes=['index.html','about/index.html','accessibility/index.html','contact/index.html','cookie-policy/index.html','join-our-team/index.html','our-work/index.html','our-work/folake/index.html','our-work/luckys-cafe-bakery/index.html','our-work/petti-pathways/index.html','our-work/pizzeria-coco/index.html','privacy-policy/index.html','services/index.html','sunday-school/index.html','terms-and-conditions/index.html']
+          check('all public pages use v18',all('20260914-18' in Path(r).read_text() and '20260914-17' not in Path(r).read_text() for r in routes))
+          petti=Path('our-work/petti-pathways/index.html').read_text().lower(); check('Petti teal preserved','#35807e' in petti and '#2f7472' not in petti)
+          if failures: raise SystemExit(', '.join(failures))
+          PY
+          git diff --check
+
+      - name: Install WebKit
+        shell: bash
+        run: |
+          mkdir -p /tmp/sunday-polish
+          npm install --prefix /tmp/sunday-polish playwright@1.55.0 >/dev/null 2>&1
+          /tmp/sunday-polish/node_modules/.bin/playwright install --with-deps webkit
+
+      - name: Serve candidate
+        shell: bash
+        run: |
+          python -m http.server 4173 >/tmp/sunday-polish-http.log 2>&1 &
+          sleep 2
+
+      - name: Rendered WebKit verification
+        shell: bash
+        run: |
+          mkdir -p qa-artifacts
+          cat > /tmp/sunday-polish-qa.cjs <<'JS'
+          const { webkit } = require('/tmp/sunday-polish/node_modules/playwright');
+          const base='http://127.0.0.1:4173';
+          const failures=[];
+          const check=(name,ok,detail='')=>{console.log(`${ok?'PASS':'FAIL'} | ${name}${detail?' | '+detail:''}`);if(!ok)failures.push(name+(detail?' :: '+detail:''));};
+          async function closeReservation(page){const c=page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');if(await c.count()&&await c.first().isVisible().catch(()=>false))await c.first().click();}
+          async function openInquiry(page){await page.evaluate(()=>window.dispatchEvent(new CustomEvent('sunday:open-inquiry')));const modal=page.locator('[role="dialog"][aria-label="Project inquiry"]');await modal.waitFor({state:'visible'});return modal;}
+          async function toStep2(modal){
+            await modal.locator('input[name="name"]').fill('QA Test');
+            await modal.locator('input[name="email"]').fill('qa@example.com');
+            await modal.locator('input[name="phone"]').fill('2025550123');
+            await modal.locator('input[name="business"]').fill('QA Studio');
+            await modal.getByRole('button',{name:/^Next/}).click();
+            await modal.locator('[data-step="2"]').first().waitFor({state:'visible'});
+          }
+          async function verifyDateAndPrivacy(page, modal, prefix, shotPrefix){
+            await toStep2(modal);
+            const label=modal.locator('[data-start-date-label]').first();
+            const lstyle=await label.evaluate(el=>({size:getComputedStyle(el).fontSize,family:getComputedStyle(el).fontFamily,weight:getComputedStyle(el).fontWeight}));
+            check(`${prefix} start-date label matches microtype`,parseFloat(lstyle.size)<=10&&lstyle.family.includes('Inter Tight'),JSON.stringify(lstyle));
+            await modal.locator('input[name="budget"]').fill('2500');
+            const trigger=modal.getByRole('button',{name:/Select A Date|\d{4}-\d{2}-\d{2}/}).first();
+            await trigger.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
+            await page.waitForTimeout(100);
+            const overlay=modal.locator('..');
+            const before=await overlay.evaluate(el=>({scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,scrollTop:el.scrollTop}));
+            await trigger.click();
+            await page.waitForTimeout(120);
+            const panel=modal.locator('[data-date-panel]').first();
+            const box=await panel.boundingBox();
+            const after=await overlay.evaluate(el=>({scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,scrollTop:el.scrollTop}));
+            check(`${prefix} calendar does not create extra modal scroll`,after.scrollHeight<=before.scrollHeight+4,JSON.stringify({before,after}));
+            const vp=page.viewportSize();
+            check(`${prefix} calendar stays in viewport`,!!box&&box.y>=0&&box.y+box.height<=vp.height+1,JSON.stringify({box,vp}));
+            await page.screenshot({path:`qa-artifacts/${shotPrefix}-date-open.png`,fullPage:false});
+            await trigger.click();
+            await modal.getByRole('button',{name:/^Next/}).click();
+            const firstChoice=modal.locator('[role="checkbox"]').first();
+            await firstChoice.click();
+            const privacy=modal.locator('[data-form-privacy]').first();
+            const ps=await privacy.evaluate(el=>({fontSize:getComputedStyle(el).fontSize,whiteSpace:getComputedStyle(el).whiteSpace,height:el.getBoundingClientRect().height,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth}));
+            check(`${prefix} privacy stays on one line`,ps.whiteSpace==='nowrap'&&ps.height<18&&ps.scrollWidth<=ps.clientWidth+2,JSON.stringify(ps));
+            await page.screenshot({path:`qa-artifacts/${shotPrefix}-privacy.png`,fullPage:false});
+          }
+          (async()=>{
+            const browser=await webkit.launch();
+            for(const cfg of [{name:'desktop',width:1440,height:900},{name:'mobile',width:390,height:844}]){
+              const page=await browser.newPage({viewport:{width:cfg.width,height:cfg.height}});
+              await page.goto(base+'/',{waitUntil:'networkidle',timeout:60000});await page.waitForTimeout(250);await closeReservation(page);
+              let modal=await openInquiry(page);
+              await verifyDateAndPrivacy(page,modal,`${cfg.name} header inquiry`,`${cfg.name}-header-inquiry`);
+              await page.keyboard.press('Escape');
+
+              await page.goto(base+'/services/',{waitUntil:'networkidle',timeout:60000});await page.waitForTimeout(250);await closeReservation(page);
+              const form=page.locator('form[data-inq]').first();
+              await form.scrollIntoViewIfNeeded();
+              const serviceModal=form.locator('xpath=ancestor::div[1]');
+              await form.locator('input[name="name"]').fill('QA Test');
+              await form.locator('input[name="email"]').fill('qa@example.com');
+              await form.locator('input[name="phone"]').fill('2025550123');
+              await form.locator('input[name="business"]').fill('QA Studio');
+              await form.getByRole('button',{name:/^Next/}).click();
+              const serviceLabel=form.locator('[data-start-date-label]').first();
+              const ss=await serviceLabel.evaluate(el=>({size:getComputedStyle(el).fontSize,family:getComputedStyle(el).fontFamily}));
+              check(`${cfg.name} services start-date label matches microtype`,parseFloat(ss.size)<=10&&ss.family.includes('Inter Tight'),JSON.stringify(ss));
+              await form.locator('input[name="budget"]').fill('2500');
+              const serviceTrigger=form.getByRole('button',{name:/Select A Date|\d{4}-\d{2}-\d{2}/}).first();
+              await serviceTrigger.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
+              const bodyBefore=await page.evaluate(()=>document.documentElement.scrollHeight);
+              await serviceTrigger.click();await page.waitForTimeout(100);
+              const servicePanel=form.locator('[data-date-panel]').first(); const sb=await servicePanel.boundingBox(); const svp=page.viewportSize();
+              const bodyAfter=await page.evaluate(()=>document.documentElement.scrollHeight);
+              check(`${cfg.name} services calendar does not grow page`,bodyAfter<=bodyBefore+4,JSON.stringify({bodyBefore,bodyAfter}));
+              check(`${cfg.name} services calendar stays in viewport`,!!sb&&sb.y>=0&&sb.y+sb.height<=svp.height+1,JSON.stringify({sb,svp}));
+              await page.screenshot({path:`qa-artifacts/${cfg.name}-services-date-open.png`,fullPage:false});
+              await serviceTrigger.click(); await form.getByRole('button',{name:/^Next/}).click(); await form.locator('[role="checkbox"]').first().click();
+              const sp=form.locator('[data-form-privacy]').first(); const spv=await sp.evaluate(el=>({whiteSpace:getComputedStyle(el).whiteSpace,height:el.getBoundingClientRect().height,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,fontSize:getComputedStyle(el).fontSize}));
+              check(`${cfg.name} services privacy stays on one line`,spv.whiteSpace==='nowrap'&&spv.height<18&&spv.scrollWidth<=spv.clientWidth+2,JSON.stringify(spv));
+              await page.screenshot({path:`qa-artifacts/${cfg.name}-services-privacy.png`,fullPage:false});
+
+              await page.goto(base+'/',{waitUntil:'networkidle',timeout:60000});await page.waitForTimeout(250);await closeReservation(page);
+              await page.evaluate(()=>{window.__signStarts=0;const el=document.querySelector('[data-sign-swing]');if(el)el.addEventListener('animationstart',()=>window.__signStarts++);});
+              const sign=page.locator('[data-sign]').first();await sign.scrollIntoViewIfNeeded();await page.waitForTimeout(180);
+              const swing=page.locator('[data-sign-swing]').first(); const open=page.locator('[data-sign-open]').first();
+              const anim=await swing.evaluate(el=>getComputedStyle(el).animationName);
+              const openAnim=await open.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
+              check(`${cfg.name} sign swings on entry`,anim.includes('sc-rock')&&anim.includes('sc-sway'),anim);
+              check(`${cfg.name} sign has stronger slow light pulse`,openAnim.name.includes('sc-neon')&&openAnim.duration.includes('5.6s'),JSON.stringify(openAnim));
+              const startsBefore=await page.evaluate(()=>window.__signStarts||0);
+              await open.click({force:true});await page.waitForTimeout(160);
+              const startsAfter=await page.evaluate(()=>window.__signStarts||0);
+              check(`${cfg.name} sign re-swings when touched`,startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
+              await page.screenshot({path:`qa-artifacts/${cfg.name}-open-sign.png`,fullPage:false});
+              await page.close();
+            }
+            await browser.close();
+            if(failures.length){console.error('\nFAILURES\n'+failures.join('\n'));process.exit(1);}
+          })().catch(e=>{console.error(e);process.exit(2)});
+          JS
+          node /tmp/sunday-polish-qa.cjs
+
+      - name: Upload QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: form-date-sign-polish-qa
+          path: qa-artifacts
+          if-no-files-found: warn
+
+      - name: Commit verified source only
+        shell: bash
+        run: |
+          git config user.name "Sunday-Co"
+          git config user.email "hello@sundayandcompany.co"
+          git add 'Inquiry Form.dc.html' index.html assets/site.js \
+            about/'Inquiry Form.dc.html' accessibility/'Inquiry Form.dc.html' contact/'Inquiry Form.dc.html' cookie-policy/'Inquiry Form.dc.html' \
+            join-our-team/'Inquiry Form.dc.html' our-work/'Inquiry Form.dc.html' our-work/folake/'Inquiry Form.dc.html' \
+            our-work/luckys-cafe-bakery/'Inquiry Form.dc.html' our-work/petti-pathways/'Inquiry Form.dc.html' our-work/pizzeria-coco/'Inquiry Form.dc.html' \
+            privacy-policy/'Inquiry Form.dc.html' services/'Inquiry Form.dc.html' sunday-school/'Inquiry Form.dc.html' terms-and-conditions/'Inquiry Form.dc.html' \
+            about/index.html accessibility/index.html contact/index.html cookie-policy/index.html join-our-team/index.html our-work/index.html \
+            our-work/folake/index.html our-work/luckys-cafe-bakery/index.html our-work/petti-pathways/index.html our-work/pizzeria-coco/index.html \
+            privacy-policy/index.html services/index.html sunday-school/index.html terms-and-conditions/index.html
+          if git diff --cached --quiet; then echo "No website changes to commit"; exit 0; fi
+          git commit -m "[skip netlify] Fix date picker, privacy line, and Open sign motion"
+          git push origin HEAD:form-date-sign-polish-2026-09-14
