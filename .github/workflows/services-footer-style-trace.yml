@@ -1,0 +1,79 @@
+name: Services Footer Style Trace
+
+on:
+  push:
+    branches:
+      - sync-live-shared-components-2026-09-14
+    paths:
+      - '.github/workflows/services-footer-style-trace.yml'
+
+jobs:
+  trace:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply candidate source fix
+        run: python .github/scripts/fix_imported_shared_components.py
+      - name: Install WebKit
+        run: |
+          mkdir -p /tmp/trace
+          npm install --prefix /tmp/trace playwright@1.55.0 >/dev/null 2>&1
+          /tmp/trace/node_modules/.bin/playwright install --with-deps webkit
+      - name: Serve
+        run: |
+          python -m http.server 4173 >/tmp/trace-http.log 2>&1 &
+          sleep 2
+      - name: Trace Services footer email
+        run: |
+          cat > /tmp/trace.cjs <<'JS'
+          const { webkit } = require('/tmp/trace/node_modules/playwright');
+          (async () => {
+            const browser = await webkit.launch();
+            const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+            await page.goto('http://127.0.0.1:4173/services/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForTimeout(800);
+            const close = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await close.count() && await close.first().isVisible().catch(() => false)) await close.first().click();
+            const candidates = page.locator('footer a[href^="mailto:hello@sundayandcompany.co"]');
+            console.log('candidate count', await candidates.count());
+            for (let i = 0; i < await candidates.count(); i++) {
+              const item = candidates.nth(i);
+              const trace = await item.evaluate(el => {
+                const result = {
+                  text: el.textContent,
+                  outerHTML: el.outerHTML,
+                  computed: getComputedStyle(el).fontSize,
+                  parents: [],
+                  matches: [],
+                };
+                let cur = el;
+                for (let i = 0; cur && i < 8; i++, cur = cur.parentElement) {
+                  result.parents.push({tag:cur.tagName,id:cur.id,cls:cur.className,style:cur.getAttribute('style')});
+                }
+                function walk(rules, source, media='') {
+                  if (!rules) return;
+                  for (const rule of rules) {
+                    if (rule.cssRules) {
+                      walk(rule.cssRules, source, rule.conditionText || rule.media?.mediaText || media);
+                      continue;
+                    }
+                    if (!rule.selectorText || !rule.style) continue;
+                    let ok=false;
+                    try { ok = el.matches(rule.selectorText); } catch {}
+                    if (!ok) continue;
+                    const value = rule.style.getPropertyValue('font-size');
+                    if (!value) continue;
+                    result.matches.push({source,media,selector:rule.selectorText,value,important:rule.style.getPropertyPriority('font-size'),cssText:rule.cssText});
+                  }
+                }
+                for (const sheet of document.styleSheets) {
+                  try { walk(sheet.cssRules, sheet.href || 'inline'); } catch (e) { result.matches.push({source:sheet.href,error:String(e)}); }
+                }
+                return result;
+              });
+              console.log('TRACE', i, JSON.stringify(trace,null,2));
+            }
+            await browser.close();
+          })().catch(e => { console.error(e); process.exit(1); });
+          JS
+          node /tmp/trace.cjs
