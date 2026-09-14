@@ -1007,3 +1007,44 @@ section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
     font-size: 7.5px !important;
   }
 }
+
+/* FORM FIELD GUIDANCE MICROTYPE · 2026-09-13 */
+/* Keep entered text at 16px on mobile to prevent iOS focus zoom.
+   Size only labels, placeholders, and placeholder-like custom controls down. */
+form input::placeholder,
+form textarea::placeholder,
+form input::-webkit-input-placeholder,
+form textarea::-webkit-input-placeholder {
+  font-family: var(--sunday-sans) !important;
+  font-size: 12px !important;
+  font-weight: 300 !important;
+  letter-spacing: .01em !important;
+  line-height: 1.3 !important;
+}
+
+form[data-inq] label > span:first-child,
+form[data-inq] fieldset > legend,
+form[data-editorial-labels] label > span:first-child,
+form[data-editorial-labels] > label[for],
+form[data-editorial-labels] > div > span:first-child,
+[aria-label="The Sunday Reservation"] label[for="reservationEmail"] {
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: .05em !important;
+  line-height: 1.3 !important;
+}
+
+form[data-editorial-labels] [aria-haspopup="listbox"],
+form[data-inq] [aria-haspopup="dialog"] {
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+}
+
+@media (max-width: 700px) {
+  form input::placeholder,
+  form textarea::placeholder,
+  form input::-webkit-input-placeholder,
+  form textarea::-webkit-input-placeholder {
+    font-size: 12px !important;
+  }
+}

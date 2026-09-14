@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="/support.js"></script>
+<style>
+/* COMPONENT FORM GUIDANCE MICROTYPE · 2026-09-13 */
+form[data-editorial-labels] label > span:first-child,
+form[data-editorial-labels] > div > span:first-child {
+  font-size:9.5px !important;
+  font-weight:400 !important;
+  letter-spacing:.05em !important;
+}
+form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !important; }
+</style>
 </head>
 <body>
 <x-dc>
@@ -129,7 +139,7 @@
     form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 10px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; }
     form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
     form[data-inq] textarea { min-height: 74px !important; }
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
@@ -149,7 +159,7 @@
   form[data-editorial-labels] label > span:first-child,
   form[data-editorial-labels] > div > span:first-child {
     font-family: 'Inter Tight', sans-serif !important;
-    font-size: 10px !important;
+    font-size: 9.5px !important;
     font-weight: 300 !important;
     letter-spacing: .12em !important;
     text-transform: uppercase;
@@ -162,9 +172,9 @@
     font-weight: 300;
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260913-15" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260913-15" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260913-15"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260913-16" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260913-16" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260913-16"></script>
 </helmet>
 
 <div data-screen-label="Join Our Team" id="top" style="background:#f5efe6;color:#311d03;overflow:hidden">
@@ -213,13 +223,13 @@
       </div>
       <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitInterest }}" style="display:grid;gap:13px 16px;grid-template-columns:{{ gc5 }};padding-top:18px;display:{{ interestFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" maxlength="120" /></label>
-        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
-        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
+        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" maxlength="120" /></label>
+        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
+        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
         <div style="display:grid;gap:7px;position:relative">
-          <span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Program Of Interest *</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Program Of Interest *</span>
           <input name="program" type="hidden" value="{{ program }}" />
-          <button type="button" aria-haspopup="listbox" aria-expanded="{{ selOpen }}" onClick="{{ toggleSel }}" style="align-items:center;background:#fffdf8;border:1px solid rgba(49,29,3,.52);border-radius:0;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:16px;font-weight:400;justify-content:space-between;min-height:44px;padding:7px 10px;text-align:left;width:100%;color:{{ programColor }}">{{ programLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:15px;transition:transform 200ms ease;width:15px;transform:{{ selRot }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+          <button type="button" aria-haspopup="listbox" aria-expanded="{{ selOpen }}" onClick="{{ toggleSel }}" style="align-items:center;background:#fffdf8;border:1px solid rgba(49,29,3,.52);border-radius:0;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:12.5px!important;font-weight:400;justify-content:space-between;min-height:44px;padding:7px 10px;text-align:left;width:100%;color:{{ programColor }}">{{ programLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:15px;transition:transform 200ms ease;width:15px;transform:{{ selRot }}"><path d="m6 9 6 6 6-6"></path></svg></button>
           <div role="listbox" aria-label="Program of interest" style="background:#fffdf8;border:1px solid #311d03;left:0;position:absolute;right:0;top:100%;z-index:20;display:{{ selDisplay }}">
             <button type="button" role="option" onClick="{{ pickFellows }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">The Fellows Table</button>
             <button type="button" role="option" onClick="{{ pickEspresso }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">The Espresso Club</button>

@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="/support.js"></script>
+<style>
+/* COMPONENT FORM GUIDANCE MICROTYPE · 2026-09-13 */
+form[data-editorial-labels] label > span:first-child,
+form[data-editorial-labels] > label[for] {
+  font-size:9.5px !important;
+  font-weight:400 !important;
+  letter-spacing:.05em !important;
+}
+</style>
 </head>
 <body>
 <x-dc>
@@ -130,7 +139,7 @@
     form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 10px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; }
     form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
     form[data-inq] textarea { min-height: 74px !important; }
     form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
@@ -149,7 +158,7 @@
   }
   form[data-editorial-labels] label > span:first-child {
     font-family: 'Inter Tight', sans-serif !important;
-    font-size: 10px !important;
+    font-size: 9.5px !important;
     font-weight: 300 !important;
     letter-spacing: .12em !important;
     text-transform: uppercase;
@@ -162,9 +171,9 @@
     font-weight: 300;
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260913-15" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260913-15" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260913-15"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260913-16" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260913-16" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260913-16"></script>
 </helmet>
 
 <div data-screen-label="Contact" style="background:#f5efe6;color:#311d03;overflow:visible;">
@@ -173,7 +182,7 @@
 
   <main id="main-content" tabindex="-1">
 
-  <section id="top" aria-labelledby="contact-title" style="scroll-margin-top:92px;align-items:end;background:#311d03;color:#f5efe6;display:grid;gap:18px 60px;grid-template-columns:{{ gc1 }};min-height:58svh;padding:145px clamp(22px,7vw,110px) clamp(54px,7vw,92px);position:relative">
+  <section id="top" aria-labelledby="contact-title" style="scroll-margin-top:92px;align-items:end;background:#311d03;color:#f5efe6;display:grid;gap:18px 60px;grid-template-columns:{{ gc1 }};min-height:58svh;padding:145px clamp(22px,7vw,110px) clamp(54px,7vw,92px);overflow:hidden;position:relative">
     <span aria-hidden="true" style="color:rgba(245,239,230,.045);font-size:clamp(100px,18vw,285px);left:50%;line-height:.65;position:absolute;top:45%;transform:translate(-50%, -50%);white-space:nowrap">CONTACT</span>
     <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;grid-column:1 / -1;letter-spacing:.22em;line-height:1.4;position:relative;text-transform:uppercase;z-index:1">Contact Sunday</p>
     <h1 id="contact-title" style="font-size:clamp(62px,8.5vw,126px);font-weight:400;letter-spacing:-.07em;line-height:.78;margin:0;position:relative;z-index:1">Send Us A <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:.95em;font-style:normal;font-weight:400;margin-left:.55em">Note</em></h1>
@@ -237,11 +246,11 @@
       </div>
       <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitNote }}" style="display:grid;gap:9px;display:{{ noteFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Business Name</span><input autocomplete="organization" name="business" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Subject *</span><input name="message_subject" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Message *</span><textarea name="message" required="required" rows="6" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;padding:8px 10px"maxlength="2000"></textarea></label>
+        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
+        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" /></label>
+        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Business Name</span><input autocomplete="organization" name="business" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
+        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Subject *</span><input name="message_subject" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
+        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Message *</span><textarea name="message" required="required" rows="6" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;padding:8px 10px"maxlength="2000"></textarea></label>
         <p role="alert" style="color:#8c2f22;font-size:11px;margin:0;display:{{ noteErrorDisplay }}">{{ noteError }}</p>
         <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;gap:12px;justify-content:center;letter-spacing:.18em;min-height:44px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ noteLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
         <p data-form-privacy style="font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:300;letter-spacing:.035em;line-height:1.45;margin:1px 0 0;opacity:.72">By submitting this form, you acknowledge our <a href="/privacy-policy" style="border-bottom:1px solid currentColor;padding-bottom:1px">Privacy Policy</a>.</p>
