@@ -19,7 +19,13 @@ jobs:
           fetch-depth: 0
 
       - name: Apply focus-stability candidate
-        run: python .github/scripts/mobile_form_focus_stability.py
+        run: |
+          python .github/scripts/mobile_form_focus_stability.py
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('assets/rendered-corrections.css')
+          p.write_text(p.read_text().rstrip() + '\n')
+          PY
 
       - name: Validate diff
         run: git diff --check
