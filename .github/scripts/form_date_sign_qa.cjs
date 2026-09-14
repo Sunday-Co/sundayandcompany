@@ -21,6 +21,23 @@ async function visibleInquiryForm(page){
   }
   throw new Error('No visible Project Inquiry form found');
 }
+async function visibleSign(page){
+  const signs=page.locator('[data-sign]');
+  const count=await signs.count();
+  const details=[];
+  for(let i=0;i<count;i++){
+    const item=signs.nth(i);
+    const visible=await item.isVisible().catch(()=>false);
+    const box=await item.boundingBox().catch(()=>null);
+    details.push({i,visible,box});
+    if(visible){
+      console.log(`INFO | visible sign resolved | ${JSON.stringify({count,details})}`);
+      return item;
+    }
+  }
+  console.log(`INFO | sign resolution failed | ${JSON.stringify({count,details})}`);
+  throw new Error('No visible OPEN sign found');
+}
 async function fillStep1(root){
   await root.locator('input[name="name"]').fill('QA Test');
   await root.locator('input[name="email"]').fill('qa@example.com');
@@ -105,12 +122,14 @@ async function verifyPrivacy(root,prefix){
 
     await page.goto(base+'/',{waitUntil:'networkidle',timeout:60000});
     await page.waitForTimeout(300); await closeReservation(page);
-    await page.evaluate(()=>{window.__signStarts=0;const el=document.querySelector('[data-sign-swing]');if(el)el.addEventListener('animationstart',()=>window.__signStarts++);});
-    const sign=page.locator('[data-sign]').first();
+    const sign=await visibleSign(page);
+    const swing=sign.locator('[data-sign-swing]').first();
+    const open=sign.locator('[data-sign-open]').first();
+    check(`${cfg.name} sign QA hooks are inside visible sign`,await swing.count()===1&&await open.count()===1,JSON.stringify({swingCount:await swing.count(),openCount:await open.count()}));
+    await swing.evaluate(el=>{window.__signStarts=0;el.addEventListener('animationstart',()=>window.__signStarts++);});
     await sign.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
     await page.waitForTimeout(350);
-    const swing=page.locator('[data-sign-swing]').first(); const open=page.locator('[data-sign-open]').first();
-    const anim=await swing.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
+    const anim=await swing.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration,transform:getComputedStyle(el).transform}));
     const openAnim=await open.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration,opacity:getComputedStyle(el).opacity}));
     check(`${cfg.name} sign swings on entry`,anim.name.includes('sc-rock')&&anim.name.includes('sc-sway')&&anim.duration.includes('6.2s')&&anim.duration.includes('8.5s'),JSON.stringify(anim));
     check(`${cfg.name} sign has stronger slow pulse`,openAnim.name.includes('sc-neon')&&openAnim.duration.includes('5.6s'),JSON.stringify(openAnim));
@@ -127,11 +146,11 @@ async function verifyPrivacy(root,prefix){
   await reducedPage.goto(base+'/',{waitUntil:'networkidle',timeout:60000});
   await reducedPage.waitForTimeout(300); await closeReservation(reducedPage);
   const reducedFlag=await reducedPage.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const reducedSign=reducedPage.locator('[data-sign]').first();
+  const reducedSign=await visibleSign(reducedPage);
   await reducedSign.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
   await reducedPage.waitForTimeout(350);
-  const reducedAnim=await reducedPage.locator('[data-sign-swing]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
-  const reducedOpen=await reducedPage.locator('[data-sign-open]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
+  const reducedAnim=await reducedSign.locator('[data-sign-swing]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
+  const reducedOpen=await reducedSign.locator('[data-sign-open]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
   check('reduced-motion preference is honored',reducedFlag===true&&reducedAnim.name==='none'&&reducedOpen.name==='none',JSON.stringify({reducedFlag,reducedAnim,reducedOpen}));
   await reducedContext.close();
 
