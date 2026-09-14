@@ -206,10 +206,10 @@ html[data-sunday-sign-fallback="0"] [data-sign] > div[style*="transform-origin"]
   animation:none !important;
 }
 html[data-sunday-sign-fallback="1"] [data-sign] p[aria-hidden][style*="Pinyon Script"] {
-  animation:sc-warm 2.8s ease-out 1 both, sc-neon 5.6s ease-in-out 2.8s infinite !important;
+  animation:sc-warm 2.6s ease-out 1 both, sc-neon 3.8s ease-in-out 2.6s infinite !important;
 }
 html[data-sunday-sign-fallback="1"] [data-sign] > div[style*="transform-origin"] {
-  animation:sc-rock 6.2s cubic-bezier(.34,.08,.18,.96) 1 both, sc-sway 8.5s ease-in-out 6.2s infinite !important;
+  animation:sc-rock 5.4s cubic-bezier(.36,.07,.19,.97) 1 both, sc-sway 7s ease-in-out 5.4s infinite !important;
 }
 
 /* Our Work: A Point Of View always one line on desktop. Keep the large Bill of Work. */

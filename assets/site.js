@@ -38,17 +38,6 @@
     var sign = document.querySelector('[data-sign]');
     if (!sign) return;
 
-    if (!signMotionClickBound) {
-      document.addEventListener('click', function (event) {
-        var target = event.target;
-        var hit = target && target.closest ? target.closest('[data-sign]') : null;
-        if (!hit) return;
-        if (target.closest && target.closest('button,a[href],input,textarea,select')) return;
-        triggerOriginalOpenSignMotion();
-      });
-      signMotionClickBound = true;
-    }
-
     if (!('IntersectionObserver' in window)) {
       triggerOriginalOpenSignMotion();
       return;
