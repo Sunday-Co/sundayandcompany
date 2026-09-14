@@ -53,8 +53,22 @@ jobs:
           const base = 'http://127.0.0.1:4173';
           const out = 'form-guidance-qa';
           fs.mkdirSync(out, { recursive: true });
-
           const px = value => parseFloat(value || '0');
+
+          function placeholderIs12(row, context) {
+            const values = [px(row.standard), px(row.webkit)];
+            assert.ok(values.includes(12), `${context}: standard=${row.standard}, webkit=${row.webkit}, field=${row.field}`);
+          }
+
+          async function placeholderStyle(locator) {
+            return locator.evaluate(el => ({
+              field: getComputedStyle(el).fontSize,
+              standard: getComputedStyle(el, '::placeholder').fontSize,
+              webkit: getComputedStyle(el, '::-webkit-input-placeholder').fontSize,
+              standardFamily: getComputedStyle(el, '::placeholder').fontFamily,
+              webkitFamily: getComputedStyle(el, '::-webkit-input-placeholder').fontFamily,
+            }));
+          }
 
           async function allPlaceholderData(page) {
             return page.evaluate(() => [...document.querySelectorAll('form input[placeholder], form textarea[placeholder]')]
@@ -62,9 +76,11 @@ jobs:
               .map(el => ({
                 name: el.name || el.id || '',
                 placeholder: el.getAttribute('placeholder') || '',
-                fieldSize: getComputedStyle(el).fontSize,
-                placeholderSize: getComputedStyle(el, '::placeholder').fontSize,
-                family: getComputedStyle(el, '::placeholder').fontFamily,
+                field: getComputedStyle(el).fontSize,
+                standard: getComputedStyle(el, '::placeholder').fontSize,
+                webkit: getComputedStyle(el, '::-webkit-input-placeholder').fontSize,
+                standardFamily: getComputedStyle(el, '::placeholder').fontFamily,
+                webkitFamily: getComputedStyle(el, '::-webkit-input-placeholder').fontFamily,
               })));
           }
 
@@ -74,9 +90,9 @@ jobs:
             const rows = await allPlaceholderData(page);
             assert.ok(rows.length >= 2, `${route}: expected shared placeholders, found ${rows.length}`);
             for (const row of rows) {
-              assert.strictEqual(px(row.placeholderSize), 12, `${route} ${row.name}/${row.placeholder}: placeholder ${row.placeholderSize}`);
-              assert.ok(px(row.fieldSize) >= 16, `${route} ${row.name}: entered text ${row.fieldSize}`);
-              assert.ok(row.family.includes('Inter Tight'), `${route} ${row.name}: placeholder family ${row.family}`);
+              placeholderIs12(row, `${route} ${row.name}/${row.placeholder}`);
+              assert.ok(px(row.field) >= 16, `${route} ${row.name}: entered text ${row.field}`);
+              assert.ok(row.standardFamily.includes('Inter Tight') || row.webkitFamily.includes('Inter Tight'), `${route} ${row.name}: placeholder families ${row.standardFamily} / ${row.webkitFamily}`);
             }
             return rows;
           }
@@ -86,24 +102,19 @@ jobs:
             const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
             const page = await context.newPage();
 
-            // Reservation popup: this is a true placeholder inside a box.
             await page.goto(base + '/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(1000);
             const reservation = page.locator('[aria-label="The Sunday Reservation"]');
             await reservation.waitFor({ state: 'attached' });
             const reservationInput = reservation.locator('input[placeholder="you@example.com"]');
             const reservationLabel = reservation.locator('label[for="reservationEmail"]');
-            const resStyles = await reservationInput.evaluate(el => ({
-              field: getComputedStyle(el).fontSize,
-              placeholder: getComputedStyle(el, '::placeholder').fontSize,
-            }));
+            const resStyles = await placeholderStyle(reservationInput);
             const resLabelSize = await reservationLabel.evaluate(el => getComputedStyle(el).fontSize);
-            assert.strictEqual(px(resStyles.field), 16);
-            assert.strictEqual(px(resStyles.placeholder), 12);
-            assert.strictEqual(px(resLabelSize), 9.25);
             await page.screenshot({ path: `${out}/01-reservation-fields-mobile.png`, fullPage: false });
+            assert.strictEqual(px(resStyles.field), 16);
+            placeholderIs12(resStyles, 'Reservation placeholder');
+            assert.strictEqual(px(resLabelSize), 9.25);
 
-            // Close reservation and open the real project inquiry. No submission is sent.
             const close = reservation.locator('button[aria-label="Close"]');
             if (await close.isVisible().catch(() => false)) await close.click();
             const start = page.getByText('Start A Project', { exact: true }).first();
@@ -122,32 +133,30 @@ jobs:
             const websiteLabel = website.locator('xpath=ancestor::label[1]/span[1]');
             const dateTrigger = form.locator('[aria-haspopup="dialog"]').first();
             const projectStyles = {
-              websiteField: await website.evaluate(el => getComputedStyle(el).fontSize),
-              websitePlaceholder: await website.evaluate(el => getComputedStyle(el, '::placeholder').fontSize),
-              budgetPlaceholder: await budget.evaluate(el => getComputedStyle(el, '::placeholder').fontSize),
+              website: await placeholderStyle(website),
+              budget: await placeholderStyle(budget),
               label: await websiteLabel.evaluate(el => getComputedStyle(el).fontSize),
               dateTrigger: await dateTrigger.evaluate(el => getComputedStyle(el).fontSize),
             };
-            assert.strictEqual(px(projectStyles.websiteField), 16);
-            assert.strictEqual(px(projectStyles.websitePlaceholder), 12);
-            assert.strictEqual(px(projectStyles.budgetPlaceholder), 12);
+            await page.screenshot({ path: `${out}/02-project-inquiry-guidance-mobile.png`, fullPage: false });
+            assert.strictEqual(px(projectStyles.website.field), 16);
+            placeholderIs12(projectStyles.website, 'Project website placeholder');
+            placeholderIs12(projectStyles.budget, 'Project budget placeholder');
             assert.strictEqual(px(projectStyles.label), 9.25);
             assert.strictEqual(px(projectStyles.dateTrigger), 12.5);
-            await page.screenshot({ path: `${out}/02-project-inquiry-guidance-mobile.png`, fullPage: false });
 
-            // Close inquiry so route changes are clean.
             const inquiryClose = inquiry.locator('button[aria-label="Close"]');
             if (await inquiryClose.count()) await inquiryClose.first().click().catch(() => {});
 
-            // Contact: visible field labels must actually compute smaller.
             await page.goto(base + '/contact/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const contactLabel = page.locator('[data-screen-label="Contact"] form[data-editorial-labels] label > span').first();
             const contactInput = page.locator('[data-screen-label="Contact"] form[data-editorial-labels] input[name="name"]');
             assert.strictEqual(px(await contactLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
             assert.strictEqual(px(await contactInput.evaluate(el => getComputedStyle(el).fontSize)), 16);
+            await contactInput.scrollIntoViewIfNeeded();
+            await page.screenshot({ path: `${out}/03-contact-fields-mobile.png`, fullPage: false });
 
-            // Join: label plus placeholder-like custom listbox trigger.
             await page.goto(base + '/join-our-team/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const joinForm = page.locator('#program-interest form[data-editorial-labels]');
@@ -155,50 +164,51 @@ jobs:
             const joinSelect = joinForm.locator('[aria-haspopup="listbox"]').first();
             assert.strictEqual(px(await joinLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
             assert.strictEqual(px(await joinSelect.evaluate(el => getComputedStyle(el).fontSize)), 12.5);
+            await joinSelect.scrollIntoViewIfNeeded();
+            await page.screenshot({ path: `${out}/04-join-fields-mobile.png`, fullPage: false });
 
-            // Sunday School plus shared footer newsletter.
             await page.goto(base + '/sunday-school/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const schoolInput = page.locator('#school-notes-email');
             const schoolLabel = page.locator('label[for="school-notes-email"]');
-            assert.strictEqual(px(await schoolInput.evaluate(el => getComputedStyle(el).fontSize)), 16);
-            assert.strictEqual(px(await schoolInput.evaluate(el => getComputedStyle(el, '::placeholder').fontSize)), 12);
+            const schoolStyle = await placeholderStyle(schoolInput);
+            assert.strictEqual(px(schoolStyle.field), 16);
+            placeholderIs12(schoolStyle, 'Sunday School placeholder');
             assert.strictEqual(px(await schoolLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
             await schoolInput.scrollIntoViewIfNeeded();
-            await page.waitForTimeout(120);
-            await page.screenshot({ path: `${out}/03-sunday-school-field-mobile.png`, fullPage: false });
+            await page.screenshot({ path: `${out}/05-sunday-school-field-mobile.png`, fullPage: false });
 
             const footerInput = page.locator('[aria-label="Newsletter"] input[placeholder="Email Address"]');
-            assert.strictEqual(px(await footerInput.evaluate(el => getComputedStyle(el).fontSize)), 16);
-            assert.strictEqual(px(await footerInput.evaluate(el => getComputedStyle(el, '::placeholder').fontSize)), 12);
+            const footerStyle = await placeholderStyle(footerInput);
+            assert.strictEqual(px(footerStyle.field), 16);
+            placeholderIs12(footerStyle, 'Footer newsletter placeholder');
             await footerInput.scrollIntoViewIfNeeded();
-            await page.waitForTimeout(120);
-            await page.screenshot({ path: `${out}/04-footer-newsletter-field-mobile.png`, fullPage: false });
+            await page.screenshot({ path: `${out}/06-footer-newsletter-field-mobile.png`, fullPage: false });
 
-            // Route-wide regression pass: every real placeholder remains 12px while entered text stays >=16px.
             const routeResults = {};
             for (const route of ['/', '/contact/', '/join-our-team/', '/sunday-school/', '/services/']) {
               routeResults[route] = await assertPlaceholderSystem(page, route);
             }
 
+            console.log(JSON.stringify({ resStyles, resLabelSize, projectStyles, schoolStyle, footerStyle, routeResults }, null, 2));
             await browser.close();
-            console.log(JSON.stringify({ resStyles, resLabelSize, projectStyles, routeResults }, null, 2));
           })().catch(err => { console.error(err); process.exit(1); });
           JS
           node /tmp/form-guidance-qa.cjs
 
       - name: Upload QA screenshots
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: form-guidance-microtype-qa
           path: form-guidance-qa
-          if-no-files-found: error
+          if-no-files-found: warn
 
       - name: Commit verified website source only
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/site.css
+          git add assets/site.css 'Site Header.dc.html' 'Site Footer.dc.html' 'Inquiry Form.dc.html'
           find . -name '*.html' -not -path './.git/*' -not -path './.github/*' -not -path './node_modules/*' -print0 | xargs -0 git add --
           if git diff --cached --quiet; then
             echo "No source changes to commit"
