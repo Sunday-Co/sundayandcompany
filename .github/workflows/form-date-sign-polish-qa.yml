@@ -55,6 +55,7 @@ jobs:
               await cta.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
               await page.waitForTimeout(900);
               const afterControl=await page.evaluate(()=>window.__signStarts||0);
+              check(`${cfg.name} sign controls do not replay swing`,afterControl===beforeControl,JSON.stringify({beforeControl,afterControl}));
           """
           new = """    const startsBefore=await page.evaluate(()=>window.__signStarts||0);
               await sign.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
@@ -68,11 +69,12 @@ jobs:
               check(`${cfg.name} sign re-swings on pointer/touch`,replayObserved&&startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
 
               const cta=sign.getByRole('button',{name:/Write Your Name In/}).first();
-              await page.waitForTimeout(500);
-              const beforeControl=await page.evaluate(()=>window.__signStarts||0);
+              await page.waitForTimeout(900);
+              const beforeControl=await swing.evaluate(el=>{const a=el.getAnimations().find(x=>x.animationName==='sc-rock')||el.getAnimations()[0];return a&&a.currentTime!=null?Number(a.currentTime):0;});
               await cta.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
-              await page.waitForTimeout(1800);
-              const afterControl=await page.evaluate(()=>window.__signStarts||0);
+              await page.waitForTimeout(300);
+              const afterControl=await swing.evaluate(el=>{const a=el.getAnimations().find(x=>x.animationName==='sc-rock')||el.getAnimations()[0];return a&&a.currentTime!=null?Number(a.currentTime):0;});
+              check(`${cfg.name} sign controls do not replay swing`,beforeControl>250&&afterControl>=beforeControl,JSON.stringify({beforeControl,afterControl}));
           """
           if old not in s:
               raise SystemExit('QA replay timing marker missing')
