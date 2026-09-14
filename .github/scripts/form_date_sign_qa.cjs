@@ -134,9 +134,17 @@ async function verifyPrivacy(root,prefix){
     check(`${cfg.name} sign swings on entry`,anim.name.includes('sc-rock')&&anim.name.includes('sc-sway')&&anim.duration.includes('6.2s')&&anim.duration.includes('8.5s'),JSON.stringify(anim));
     check(`${cfg.name} sign has stronger slow pulse`,openAnim.name.includes('sc-neon')&&openAnim.duration.includes('5.6s'),JSON.stringify(openAnim));
     const startsBefore=await page.evaluate(()=>window.__signStarts||0);
-    await open.click({force:true}); await page.waitForTimeout(350);
+    await open.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
+    await page.waitForTimeout(350);
     const startsAfter=await page.evaluate(()=>window.__signStarts||0);
-    check(`${cfg.name} sign re-swings on touch/click`,startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
+    check(`${cfg.name} sign re-swings on pointer/touch`,startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
+
+    const cta=sign.getByRole('button',{name:/Write Your Name In/}).first();
+    const beforeControl=await page.evaluate(()=>window.__signStarts||0);
+    await cta.dispatchEvent('pointerdown');
+    await page.waitForTimeout(250);
+    const afterControl=await page.evaluate(()=>window.__signStarts||0);
+    check(`${cfg.name} sign controls do not replay swing`,afterControl===beforeControl,JSON.stringify({beforeControl,afterControl}));
     await page.screenshot({path:`qa-artifacts/${cfg.name}-open-sign.png`,fullPage:false});
     await context.close();
   }
