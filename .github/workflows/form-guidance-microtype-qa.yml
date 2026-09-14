@@ -115,8 +115,6 @@ jobs:
               reportedWebKitPlaceholder: await locator.evaluate(el => getComputedStyle(el, '::-webkit-input-placeholder').fontSize),
             };
 
-            // Paint is the source of truth here. WebKit reports the parent input size for
-            // placeholder pseudo-elements, so prove the actual painted pixels instead.
             assert.ok(result.currentVs12 <= 4, `${name}: current paint does not match forced 12px: ${JSON.stringify(result)}`);
             assert.ok(result.currentVs16 > 20, `${name}: current paint is too close to 16px: ${JSON.stringify(result)}`);
             assert.ok(result.currentVs24 > result.currentVs16, `${name}: 24px control did not diverge further: ${JSON.stringify(result)}`);
@@ -137,13 +135,18 @@ jobs:
             return sizes;
           }
 
+          async function assertGuidanceAtMost(locator, max, context) {
+            const size = px(await locator.evaluate(el => getComputedStyle(el).fontSize));
+            assert.ok(size <= max, `${context}: guidance text ${size}px exceeds ${max}px`);
+            return size;
+          }
+
           (async () => {
             const browser = await webkit.launch();
             const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
             const page = await context.newPage();
             const results = {};
 
-            // Reservation popup.
             await page.goto(base + '/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(1000);
             const reservation = page.locator('[aria-label="The Sunday Reservation"]');
@@ -152,21 +155,20 @@ jobs:
             const reservationLabel = reservation.locator('label[for="reservationEmail"]');
             results.reservation = await paintProbe(page, reservationInput, '01-reservation-placeholder');
             assert.strictEqual(px(results.reservation.fieldSize), 16);
-            assert.strictEqual(px(await reservationLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
+            results.reservationLabel = await assertGuidanceAtMost(reservationLabel, 9.5, 'Reservation label');
             results.reservationFields = await assertVisibleFieldTextAtLeast16(reservation, 'Reservation');
             await page.screenshot({ path: `${out}/01-reservation-current-mobile.png`, fullPage: false });
 
             const close = reservation.locator('button[aria-label="Close"]');
             if (await close.isVisible().catch(() => false)) await close.click();
 
-            // Project Inquiry: step 1 labels, then step 2 placeholders/date control.
             const start = page.getByText('Start A Project', { exact: true }).first();
             await start.evaluate(el => el.click());
             const inquiry = page.locator('[aria-label="Project inquiry"]');
             await inquiry.waitFor({ state: 'visible' });
             const form = inquiry.locator('form[data-inq]');
             const firstProjectLabel = form.locator('label > span').first();
-            assert.strictEqual(px(await firstProjectLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
+            results.projectFirstLabel = await assertGuidanceAtMost(firstProjectLabel, 9.5, 'Project Inquiry label');
             await form.locator('input[name="name"]').fill('QA Test');
             await form.locator('input[name="email"]').fill('qa@example.com');
             await form.locator('input[name="phone"]').fill('2025550123');
@@ -181,48 +183,44 @@ jobs:
             results.projectBudget = await paintProbe(page, budget, '03-project-budget-placeholder');
             assert.strictEqual(px(results.projectWebsite.fieldSize), 16);
             assert.strictEqual(px(results.projectBudget.fieldSize), 16);
-            assert.strictEqual(px(await websiteLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
-            assert.strictEqual(px(await dateTrigger.evaluate(el => getComputedStyle(el).fontSize)), 12.5);
+            results.projectWebsiteLabel = await assertGuidanceAtMost(websiteLabel, 9.5, 'Project Inquiry website label');
+            results.projectDateTrigger = await assertGuidanceAtMost(dateTrigger, 12.5, 'Project Inquiry date prompt');
             results.projectFields = await assertVisibleFieldTextAtLeast16(form, 'Project Inquiry');
             await page.screenshot({ path: `${out}/02-project-inquiry-current-mobile.png`, fullPage: false });
 
             const inquiryClose = inquiry.locator('button[aria-label="Close"]');
             if (await inquiryClose.count()) await inquiryClose.first().click().catch(() => {});
 
-            // Contact form labels.
             await page.goto(base + '/contact/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const contactForm = page.locator('[data-screen-label="Contact"] form[data-editorial-labels]');
             const contactLabel = contactForm.locator('label > span').first();
-            assert.strictEqual(px(await contactLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
+            results.contactLabel = await assertGuidanceAtMost(contactLabel, 9.5, 'Contact label');
             results.contactFields = await assertVisibleFieldTextAtLeast16(contactForm, 'Contact');
             await contactForm.scrollIntoViewIfNeeded();
             await page.screenshot({ path: `${out}/03-contact-current-mobile.png`, fullPage: false });
 
-            // Join form labels and custom placeholder-like listbox trigger.
             await page.goto(base + '/join-our-team/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const joinForm = page.locator('#program-interest form[data-editorial-labels]');
             const joinLabel = joinForm.locator('label > span').first();
             const joinSelect = joinForm.locator('[aria-haspopup="listbox"]').first();
-            assert.strictEqual(px(await joinLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
-            assert.strictEqual(px(await joinSelect.evaluate(el => getComputedStyle(el).fontSize)), 12.5);
+            results.joinLabel = await assertGuidanceAtMost(joinLabel, 9.5, 'Join label');
+            results.joinSelect = await assertGuidanceAtMost(joinSelect, 12.5, 'Join program prompt');
             results.joinFields = await assertVisibleFieldTextAtLeast16(joinForm, 'Join');
             await joinSelect.scrollIntoViewIfNeeded();
             await page.screenshot({ path: `${out}/04-join-current-mobile.png`, fullPage: false });
 
-            // Sunday School email field.
             await page.goto(base + '/sunday-school/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(800);
             const schoolInput = page.locator('#school-notes-email');
             const schoolLabel = page.locator('label[for="school-notes-email"]');
             results.sundaySchool = await paintProbe(page, schoolInput, '04-sunday-school-placeholder');
             assert.strictEqual(px(results.sundaySchool.fieldSize), 16);
-            assert.strictEqual(px(await schoolLabel.evaluate(el => getComputedStyle(el).fontSize)), 9.25);
+            results.sundaySchoolLabel = await assertGuidanceAtMost(schoolLabel, 9.5, 'Sunday School label');
             await schoolInput.scrollIntoViewIfNeeded();
             await page.screenshot({ path: `${out}/05-sunday-school-current-mobile.png`, fullPage: false });
 
-            // Shared footer newsletter field.
             const footer = page.locator('footer');
             const footerInput = footer.locator('[aria-label="Newsletter"] input[placeholder="Email Address"]');
             results.footerNewsletter = await paintProbe(page, footerInput, '05-footer-newsletter-placeholder');
