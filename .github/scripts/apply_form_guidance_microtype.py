@@ -53,7 +53,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 
 css = CSS.read_text()
 if MARKER not in css:
-    CSS.write_text(css.rstrip() + BLOCK + '\n')
+    CSS.write_text(css.rstrip() + BLOCK.rstrip() + '\n')
 
 changed = []
 for path in Path('.').rglob('*.html'):
