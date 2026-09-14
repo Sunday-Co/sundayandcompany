@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Apply candidate source fix
+      - name: Apply latest candidate source fix
         run: python .github/scripts/fix_imported_shared_components.py
       - name: Install WebKit
         run: |
@@ -23,7 +23,7 @@ jobs:
         run: |
           python -m http.server 4173 >/tmp/trace-http.log 2>&1 &
           sleep 2
-      - name: Trace Services footer email
+      - name: Trace post-rendered Services footer email and component styles
         run: |
           cat > /tmp/trace.cjs <<'JS'
           const { webkit } = require('/tmp/trace/node_modules/playwright');
@@ -31,48 +31,60 @@ jobs:
             const browser = await webkit.launch();
             const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
             await page.goto('http://127.0.0.1:4173/services/', { waitUntil: 'networkidle', timeout: 60000 });
-            await page.waitForTimeout(800);
+            await page.waitForTimeout(900);
             const close = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
             if (await close.count() && await close.first().isVisible().catch(() => false)) await close.first().click();
-            const candidates = page.locator('footer a[href^="mailto:hello@sundayandcompany.co"]');
-            console.log('candidate count', await candidates.count());
-            for (let i = 0; i < await candidates.count(); i++) {
-              const item = candidates.nth(i);
-              const trace = await item.evaluate(el => {
-                const result = {
-                  text: el.textContent,
-                  outerHTML: el.outerHTML,
-                  computed: getComputedStyle(el).fontSize,
-                  parents: [],
-                  matches: [],
-                };
-                let cur = el;
-                for (let i = 0; cur && i < 8; i++, cur = cur.parentElement) {
-                  result.parents.push({tag:cur.tagName,id:cur.id,cls:cur.className,style:cur.getAttribute('style')});
-                }
-                function walk(rules, source, media='') {
-                  if (!rules) return;
-                  for (const rule of rules) {
-                    if (rule.cssRules) {
-                      walk(rule.cssRules, source, rule.conditionText || rule.media?.mediaText || media);
-                      continue;
-                    }
-                    if (!rule.selectorText || !rule.style) continue;
-                    let ok=false;
-                    try { ok = el.matches(rule.selectorText); } catch {}
-                    if (!ok) continue;
-                    const value = rule.style.getPropertyValue('font-size');
-                    if (!value) continue;
-                    result.matches.push({source,media,selector:rule.selectorText,value,important:rule.style.getPropertyPriority('font-size'),cssText:rule.cssText});
+            const item = page.locator('footer a[href^="mailto:hello@sundayandcompany.co"]').first();
+            await item.waitFor({ state: 'attached' });
+            const trace = await item.evaluate(el => {
+              const result = {
+                text: el.textContent,
+                outerHTML: el.outerHTML,
+                styleAttr: el.getAttribute('style'),
+                styleFontSize: el.style.fontSize,
+                stylePriority: el.style.getPropertyPriority('font-size'),
+                computed: getComputedStyle(el).fontSize,
+                computedFamily: getComputedStyle(el).fontFamily,
+                computedWeight: getComputedStyle(el).fontWeight,
+                className: el.className,
+                parents: [],
+                documentMatches: [],
+                nearbyStyles: [],
+              };
+              let cur = el;
+              for (let i = 0; cur && i < 8; i++, cur = cur.parentElement) {
+                result.parents.push({tag:cur.tagName,id:cur.id,cls:cur.className,style:cur.getAttribute('style')});
+              }
+              function walk(rules, source, media='') {
+                if (!rules) return;
+                for (const rule of rules) {
+                  if (rule.cssRules) {
+                    walk(rule.cssRules, source, rule.conditionText || rule.media?.mediaText || media);
+                    continue;
                   }
+                  if (!rule.selectorText || !rule.style) continue;
+                  let ok=false;
+                  try { ok = el.matches(rule.selectorText); } catch {}
+                  if (!ok) continue;
+                  const value = rule.style.getPropertyValue('font-size');
+                  if (!value) continue;
+                  result.documentMatches.push({source,media,selector:rule.selectorText,value,important:rule.style.getPropertyPriority('font-size'),cssText:rule.cssText});
                 }
-                for (const sheet of document.styleSheets) {
-                  try { walk(sheet.cssRules, sheet.href || 'inline'); } catch (e) { result.matches.push({source:sheet.href,error:String(e)}); }
+              }
+              for (const sheet of document.styleSheets) {
+                try { walk(sheet.cssRules, sheet.href || 'inline'); } catch (e) { result.documentMatches.push({source:sheet.href,error:String(e)}); }
+              }
+              for (const style of document.querySelectorAll('style')) {
+                const txt = style.textContent || '';
+                if ((result.className && txt.includes('.' + result.className)) || txt.includes('mailto:')) {
+                  result.nearbyStyles.push(txt.slice(0, 12000));
                 }
-                return result;
-              });
-              console.log('TRACE', i, JSON.stringify(trace,null,2));
-            }
+              }
+              return result;
+            });
+            console.log('LATEST_RUNTIME_TRACE_START');
+            console.log(JSON.stringify(trace,null,2));
+            console.log('LATEST_RUNTIME_TRACE_END');
             await browser.close();
           })().catch(e => { console.error(e); process.exit(1); });
           JS
