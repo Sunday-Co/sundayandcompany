@@ -1,0 +1,149 @@
+name: Mobile Typography FAQ Hotfix
+
+on:
+  push:
+    branches:
+      - mobile-typography-faq-hotfix-2026-09-13
+    paths:
+      - '.github/scripts/apply_mobile_hotfix.py'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-qa:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply source-level fixes
+        run: python .github/scripts/apply_mobile_hotfix.py
+
+      - name: Validate diff
+        run: git diff --check
+
+      - name: Install Playwright WebKit
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps webkit
+
+      - name: Serve candidate
+        run: |
+          python -m http.server 4173 >/tmp/sunday-hotfix-http.log 2>&1 &
+          echo $! > /tmp/sunday-hotfix-http.pid
+          sleep 2
+
+      - name: Run mobile QA and capture screenshots
+        run: |
+          cat > mobile-hotfix-qa.mjs <<'JS'
+          import { webkit } from 'playwright';
+          import assert from 'node:assert';
+          import fs from 'node:fs';
+
+          const base = 'http://127.0.0.1:4173';
+          const out = 'mobile-hotfix-qa';
+          fs.mkdirSync(out, { recursive: true });
+
+          async function closeReservation(page) {
+            const btn = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
+            if (await btn.count() && await btn.first().isVisible().catch(() => false)) {
+              await btn.first().click();
+              await page.waitForTimeout(150);
+            }
+          }
+
+          const browser = await webkit.launch();
+          const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+          await page.route('**/api.web3forms.com/**', async route => {
+            await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, message: 'Success' }) });
+          });
+
+          // Project inquiry confirmation: exercise the real UI, intercept only the network submission.
+          await page.goto(base + '/', { waitUntil: 'networkidle', timeout: 60000 });
+          await closeReservation(page);
+          const start = page.getByText('Start A Project', { exact: true }).first();
+          await start.evaluate(el => el.click());
+          const inquiry = page.locator('[aria-label="Project inquiry"]');
+          await inquiry.waitFor({ state: 'visible' });
+          await inquiry.locator('input[name="name"]').fill('Sunday QA');
+          await inquiry.locator('input[name="email"]').fill('qa@example.com');
+          await inquiry.locator('input[name="phone"]').fill('2025550188');
+          await inquiry.locator('input[name="business"]').fill('Sunday QA Studio');
+          await inquiry.getByText('Next', { exact: true }).click();
+          await inquiry.locator('input[name="budget"]').fill('5000');
+          await inquiry.getByText('Next', { exact: true }).click();
+          await inquiry.locator('button[role="checkbox"]').nth(1).click();
+          await inquiry.getByText('Send Your Inquiry', { exact: true }).click();
+          const success = inquiry.locator('[data-inquiry-success]');
+          await success.waitFor({ state: 'visible', timeout: 15000 });
+          const successType = await success.evaluate(el => {
+            const h = el.querySelector('h3');
+            const p = el.querySelector('p');
+            return {
+              family: getComputedStyle(el).fontFamily,
+              transform: h ? getComputedStyle(h).textTransform : '',
+              bodyTransform: p ? getComputedStyle(p).textTransform : '',
+            };
+          });
+          assert.ok(successType.family.includes('Inter Tight'), `Success family: ${successType.family}`);
+          assert.strictEqual(successType.transform, 'uppercase');
+          assert.strictEqual(successType.bodyTransform, 'uppercase');
+          await page.screenshot({ path: `${out}/01-inquiry-confirmation-mobile.png`, fullPage: false });
+
+          // Contact FAQ: mobile intro must be in normal flow, never sticky over rows.
+          await page.goto(base + '/contact/', { waitUntil: 'networkidle', timeout: 60000 });
+          await closeReservation(page);
+          const faq = page.locator('section[aria-labelledby="faq-title"]');
+          const faqIntro = faq.locator('> div').first();
+          const faqPosition = await faqIntro.evaluate(el => getComputedStyle(el).position);
+          assert.strictEqual(faqPosition, 'static', `Mobile FAQ intro position: ${faqPosition}`);
+          await faq.getByText('What Does Starting At Mean?', { exact: true }).scrollIntoViewIfNeeded();
+          await page.evaluate(() => window.scrollBy(0, 90));
+          await page.waitForTimeout(120);
+          await page.screenshot({ path: `${out}/02-contact-faq-scroll-mobile.png`, fullPage: false });
+
+          // Footer/newsletter: confirm actual iPhone-scale email and lighter fine print.
+          await page.goto(base + '/sunday-school/', { waitUntil: 'networkidle', timeout: 60000 });
+          await closeReservation(page);
+          const footer = page.locator('footer');
+          await footer.scrollIntoViewIfNeeded();
+          await page.waitForTimeout(150);
+          const email = footer.locator('a[href^="mailto:"]').first();
+          const emailSize = parseFloat(await email.evaluate(el => getComputedStyle(el).fontSize));
+          assert.ok(emailSize >= 15, `Mobile footer email size: ${emailSize}`);
+          const fine = page.locator('[aria-label="Newsletter"] [data-news-fineprint]').first();
+          const fineData = await fine.evaluate(el => ({
+            weight: getComputedStyle(el).fontWeight,
+            opacity: parseFloat(getComputedStyle(el).opacity),
+          }));
+          assert.strictEqual(fineData.weight, '300');
+          assert.ok(fineData.opacity <= 0.7, `Newsletter fine print opacity: ${fineData.opacity}`);
+          await page.screenshot({ path: `${out}/03-footer-newsletter-mobile.png`, fullPage: false });
+
+          await browser.close();
+          console.log(JSON.stringify({ successType, faqPosition, emailSize, fineData }, null, 2));
+          JS
+          node mobile-hotfix-qa.mjs
+
+      - name: Upload mobile QA screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-typography-faq-hotfix-qa
+          path: mobile-hotfix-qa
+          if-no-files-found: error
+
+      - name: Commit verified source changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 'Inquiry Form.dc.html' contact/index.html assets/site.css '*.html' about accessibility contact cookie-policy join-our-team our-work privacy-policy services sunday-school terms-and-conditions 404.html 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No source changes to commit"
+            exit 0
+          fi
+          git commit -m "[skip netlify] Apply mobile typography and FAQ hotfix"
+          git push
