@@ -94,9 +94,22 @@ jobs:
           const faqIntro = faq.locator('> div').first();
           const faqPosition = await faqIntro.evaluate(el => getComputedStyle(el).position);
           assert.strictEqual(faqPosition, 'static', `Mobile FAQ intro position: ${faqPosition}`);
-          await faq.getByText('What Does Starting At Mean?', { exact: true }).scrollIntoViewIfNeeded();
+          const thirdFaq = faq.locator('button').nth(2);
+          await thirdFaq.scrollIntoViewIfNeeded();
           await page.evaluate(() => window.scrollBy(0, 90));
           await page.waitForTimeout(120);
+          const overlap = await page.evaluate(() => {
+            const section = document.querySelector('section[aria-labelledby="faq-title"]');
+            if (!section) return null;
+            const intro = section.children[0];
+            const buttons = section.querySelectorAll('button');
+            const row = buttons[2];
+            if (!intro || !row) return null;
+            const a = intro.getBoundingClientRect();
+            const b = row.getBoundingClientRect();
+            return { introBottom: a.bottom, rowTop: b.top, overlaps: a.bottom > b.top && a.top < b.bottom };
+          });
+          assert.ok(overlap && !overlap.overlaps, `FAQ intro overlaps row: ${JSON.stringify(overlap)}`);
           await page.screenshot({ path: `${out}/02-contact-faq-scroll-mobile.png`, fullPage: false });
 
           // Footer/newsletter: confirm actual iPhone-scale email and lighter fine print.
@@ -118,7 +131,7 @@ jobs:
           await page.screenshot({ path: `${out}/03-footer-newsletter-mobile.png`, fullPage: false });
 
           await browser.close();
-          console.log(JSON.stringify({ successType, faqPosition, emailSize, fineData }, null, 2));
+          console.log(JSON.stringify({ successType, faqPosition, overlap, emailSize, fineData }, null, 2));
           JS
           node mobile-hotfix-qa.mjs
 
