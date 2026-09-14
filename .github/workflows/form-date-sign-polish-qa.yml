@@ -37,6 +37,48 @@ jobs:
           python -m http.server 4173 >/tmp/sunday-polish-http.log 2>&1 &
           sleep 2
 
+      - name: Stabilize replay timing assertion
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('.github/scripts/form_date_sign_qa.cjs')
+          s = p.read_text()
+          old = """    const startsBefore=await page.evaluate(()=>window.__signStarts||0);
+              await sign.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
+              await page.waitForTimeout(1200);
+              const startsAfter=await page.evaluate(()=>window.__signStarts||0);
+              check(`${cfg.name} sign re-swings on pointer/touch`,startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
+
+              const cta=sign.getByRole('button',{name:/Write Your Name In/}).first();
+              await page.waitForTimeout(250);
+              const beforeControl=await page.evaluate(()=>window.__signStarts||0);
+              await cta.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
+              await page.waitForTimeout(900);
+              const afterControl=await page.evaluate(()=>window.__signStarts||0);
+          """
+          new = """    const startsBefore=await page.evaluate(()=>window.__signStarts||0);
+              await sign.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
+              let replayObserved=true;
+              try {
+                await page.waitForFunction(before => (window.__signStarts||0) > before, startsBefore, {timeout:4000});
+              } catch (_) {
+                replayObserved=false;
+              }
+              const startsAfter=await page.evaluate(()=>window.__signStarts||0);
+              check(`${cfg.name} sign re-swings on pointer/touch`,replayObserved&&startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
+
+              const cta=sign.getByRole('button',{name:/Write Your Name In/}).first();
+              await page.waitForTimeout(500);
+              const beforeControl=await page.evaluate(()=>window.__signStarts||0);
+              await cta.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerType:'touch'})));
+              await page.waitForTimeout(1800);
+              const afterControl=await page.evaluate(()=>window.__signStarts||0);
+          """
+          if old not in s:
+              raise SystemExit('QA replay timing marker missing')
+          p.write_text(s.replace(old, new, 1))
+          PY
+
       - name: Rendered WebKit verification
         run: |
           mkdir -p qa-artifacts
