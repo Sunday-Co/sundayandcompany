@@ -11,6 +11,8 @@ s = s.replace(f"/assets/rendered-corrections.css?v={VERSION_OLD}", f"/assets/ren
 
 marker = "  function syncAccessibleSurface() {\n"
 block = r'''  var sundayMobileModalLock = null;
+  var sundayMobileUnlockTimer = 0;
+  var sundayMobileLockWatch = 0;
   var sundayViewportTimerA = 0;
   var sundayViewportTimerB = 0;
 
@@ -27,6 +29,7 @@ block = r'''  var sundayMobileModalLock = null;
   }
 
   function sundaySetVisualHeight() {
+    if (!sundayMobileModalLock) return;
     var root = document.documentElement;
     var vv = window.visualViewport;
     var height = vv && vv.height ? vv.height : window.innerHeight;
@@ -50,10 +53,54 @@ block = r'''  var sundayMobileModalLock = null;
     sundayViewportTimerB = window.setTimeout(sundaySetVisualHeight, 320);
   }
 
+  function sundayCancelMobileUnlock() {
+    if (!sundayMobileUnlockTimer) return;
+    window.clearTimeout(sundayMobileUnlockTimer);
+    sundayMobileUnlockTimer = 0;
+  }
+
+  function sundayStopMobileLockWatch() {
+    if (!sundayMobileLockWatch) return;
+    window.clearInterval(sundayMobileLockWatch);
+    sundayMobileLockWatch = 0;
+  }
+
+  function sundayScheduleMobileUnlock() {
+    if (!sundayMobileModalLock || sundayMobileUnlockTimer) return;
+    sundayMobileUnlockTimer = window.setTimeout(function () {
+      sundayMobileUnlockTimer = 0;
+      var liveSurface = sundayCurrentSurface();
+      if (sundayIsMobileFormSurface(liveSurface)) {
+        sundayLockMobileFormSurface(liveSurface);
+        return;
+      }
+      sundayUnlockMobileFormSurface(true);
+    }, 160);
+  }
+
+  function sundayStartMobileLockWatch() {
+    if (sundayMobileLockWatch) return;
+    sundayMobileLockWatch = window.setInterval(function () {
+      if (!sundayMobileModalLock) {
+        sundayStopMobileLockWatch();
+        return;
+      }
+      var liveSurface = sundayCurrentSurface();
+      if (sundayIsMobileFormSurface(liveSurface)) {
+        sundayCancelMobileUnlock();
+        sundayMobileModalLock.surface = liveSurface;
+        sundayMobileModalLock.kind = sundayMobileFormKind(liveSurface);
+        return;
+      }
+      sundayScheduleMobileUnlock();
+    }, 120);
+  }
+
   function sundayLockMobileFormSurface(surface) {
     if (!document.body) return;
     var kind = sundayMobileFormKind(surface);
     if (!kind) return;
+    sundayCancelMobileUnlock();
 
     /* DC can replace the modal DOM node while the same logical modal stays
        open. Keep one page-lock snapshot for the whole modal session instead
@@ -62,6 +109,7 @@ block = r'''  var sundayMobileModalLock = null;
       sundayMobileModalLock.surface = surface;
       sundayMobileModalLock.kind = kind;
       document.documentElement.setAttribute('data-sunday-form-modal', 'open');
+      sundayStartMobileLockWatch();
       sundayScheduleVisualHeight();
       return;
     }
@@ -87,10 +135,13 @@ block = r'''  var sundayMobileModalLock = null;
     body.style.right = '0';
     body.style.width = '100%';
     body.style.overflow = 'hidden';
+    sundayStartMobileLockWatch();
     sundayScheduleVisualHeight();
   }
 
   function sundayUnlockMobileFormSurface(restoreScroll) {
+    sundayCancelMobileUnlock();
+    sundayStopMobileLockWatch();
     if (!sundayMobileModalLock || !document.body) {
       document.documentElement.removeAttribute('data-sunday-form-modal');
       document.documentElement.style.removeProperty('--sunday-visual-height');
@@ -122,7 +173,7 @@ block = r'''  var sundayMobileModalLock = null;
   function syncMobileFormFocusStability() {
     var surface = sundayCurrentSurface();
     if (sundayIsMobileFormSurface(surface)) sundayLockMobileFormSurface(surface);
-    else sundayUnlockMobileFormSurface(true);
+    else sundayScheduleMobileUnlock();
   }
 
 '''
@@ -260,6 +311,7 @@ for p in Path('.').rglob('*.html'):
 
 checks = {
     'single-owner mobile modal lock installed': 'if (sundayMobileModalLock) {' in s and 'sundayMobileModalLock.surface = surface;' in s,
+    'rerender-safe unlock watcher installed': 'function sundayStartMobileLockWatch()' in s and 'function sundayScheduleMobileUnlock()' in s,
     'scroll restoration installed': "window.scrollTo({ left: 0, top: lock.scrollY, behavior: 'auto' });" in s,
     'visual viewport resize and scroll listeners installed': "window.visualViewport.addEventListener('resize', sundayScheduleVisualHeight" in s and "window.visualViewport.addEventListener('scroll', sundayScheduleVisualHeight" in s,
     'visual viewport offset tracked': "--sunday-visual-top" in s and "var(--sunday-visual-top,0px)" in c,
