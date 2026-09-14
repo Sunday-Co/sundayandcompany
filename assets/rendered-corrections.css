@@ -301,3 +301,68 @@ footer [style*="color:#ac746c"] {
   outline: 2px solid #945650 !important;
   outline-offset: 3px !important;
 }
+
+/* MOBILE FORM FOCUS STABILITY · 2026-09-14 */
+@media (max-width:820px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+  textarea,
+  select,
+  [contenteditable="true"] {
+    font-size:16px !important;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+
+  input,
+  textarea,
+  select,
+  button,
+  [role="button"] {
+    touch-action:manipulation;
+  }
+
+  input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select,
+  [contenteditable="true"] {
+    scroll-margin-top:92px;
+    scroll-margin-bottom:32vh;
+  }
+
+  html[data-sunday-form-modal="open"],
+  html[data-sunday-form-modal="open"] body {
+    overscroll-behavior:none !important;
+  }
+
+  html[data-sunday-form-modal="open"] body {
+    overflow:hidden !important;
+  }
+
+  html[data-sunday-form-modal="open"] div[role="presentation"]:has(> [aria-label="Project inquiry"]),
+  html[data-sunday-form-modal="open"] div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
+    align-items:flex-start !important;
+    bottom:auto !important;
+    height:var(--sunday-visual-height,100dvh) !important;
+    left:0 !important;
+    max-height:var(--sunday-visual-height,100dvh) !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    overscroll-behavior:none !important;
+    padding:12px !important;
+    right:0 !important;
+    top:var(--sunday-visual-top,0px) !important;
+  }
+
+  html[data-sunday-form-modal="open"] [aria-label="Project inquiry"],
+  html[data-sunday-form-modal="open"] [aria-label="The Sunday Reservation"] {
+    margin:0 auto !important;
+    max-height:calc(var(--sunday-visual-height,100dvh) - 24px) !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain !important;
+    scroll-behavior:auto !important;
+    scroll-padding-top:18px;
+    scroll-padding-bottom:clamp(140px,32dvh,280px);
+    -webkit-overflow-scrolling:touch;
+  }
+}
