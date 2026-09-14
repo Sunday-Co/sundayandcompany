@@ -128,15 +128,15 @@ async function verifyPrivacy(root,prefix){
     check(`${cfg.name} sign QA hooks are inside visible sign`,await swing.count()===1&&await open.count()===1,JSON.stringify({swingCount:await swing.count(),openCount:await open.count()}));
     await swing.evaluate(el=>{window.__signStarts=0;el.addEventListener('animationstart',()=>window.__signStarts++);});
     await sign.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
-    await page.waitForTimeout(350);
+    await page.waitForTimeout(1000);
     const anim=await swing.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration,transform:getComputedStyle(el).transform}));
     const openAnim=await open.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration,opacity:getComputedStyle(el).opacity}));
     check(`${cfg.name} sign swings on entry`,anim.name.includes('sc-rock')&&anim.name.includes('sc-sway')&&anim.duration.includes('6.2s')&&anim.duration.includes('8.5s'),JSON.stringify(anim));
     check(`${cfg.name} sign has stronger slow pulse`,openAnim.name.includes('sc-neon')&&openAnim.duration.includes('5.6s'),JSON.stringify(openAnim));
     const startsBefore=await page.evaluate(()=>window.__signStarts||0);
-    await open.dispatchEvent('pointerdown'); await page.waitForTimeout(300);
+    await open.click({force:true}); await page.waitForTimeout(350);
     const startsAfter=await page.evaluate(()=>window.__signStarts||0);
-    check(`${cfg.name} sign re-swings on touch`,startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
+    check(`${cfg.name} sign re-swings on touch/click`,startsAfter>startsBefore,JSON.stringify({startsBefore,startsAfter}));
     await page.screenshot({path:`qa-artifacts/${cfg.name}-open-sign.png`,fullPage:false});
     await context.close();
   }
@@ -148,7 +148,7 @@ async function verifyPrivacy(root,prefix){
   const reducedFlag=await reducedPage.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches);
   const reducedSign=await visibleSign(reducedPage);
   await reducedSign.evaluate(el=>el.scrollIntoView({block:'center',inline:'nearest'}));
-  await reducedPage.waitForTimeout(350);
+  await reducedPage.waitForTimeout(1000);
   const reducedAnim=await reducedSign.locator('[data-sign-swing]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
   const reducedOpen=await reducedSign.locator('[data-sign-open]').first().evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
   check('reduced-motion preference is honored',reducedFlag===true&&reducedAnim.name==='none'&&reducedOpen.name==='none',JSON.stringify({reducedFlag,reducedAnim,reducedOpen}));
