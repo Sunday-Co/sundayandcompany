@@ -1,3 +1,4 @@
+# Re-run after refining visual QA; source transformations remain unchanged.
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
