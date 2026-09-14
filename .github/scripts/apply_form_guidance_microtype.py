@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 CSS = Path('assets/site.css')
 MARKER = '/* FORM FIELD GUIDANCE MICROTYPE · 2026-09-13 */'
@@ -43,15 +44,6 @@ form[data-inq] [aria-haspopup="dialog"] {
   form textarea::-webkit-input-placeholder {
     font-size: 12px !important;
   }
-
-  form[data-inq] label > span:first-child,
-  form[data-inq] fieldset > legend,
-  form[data-editorial-labels] label > span:first-child,
-  form[data-editorial-labels] > label[for],
-  form[data-editorial-labels] > div > span:first-child,
-  [aria-label="The Sunday Reservation"] label[for="reservationEmail"] {
-    font-size: 9.25px !important;
-  }
 }
 '''
 
@@ -68,11 +60,20 @@ def inject_head_style(path_str, marker, rules):
     return True
 
 
+def required_replace(path_str, old, new, minimum=1):
+    path = Path(path_str)
+    text = path.read_text()
+    count = text.count(old)
+    if count < minimum:
+        raise SystemExit(f'Expected at least {minimum} matches in {path_str}, found {count}: {old[:80]}')
+    path.write_text(text.replace(old, new))
+    return count
+
+
 css = CSS.read_text()
 if MARKER not in css:
     CSS.write_text(css.rstrip() + BLOCK.rstrip() + '\n')
 else:
-    # Upgrade a previously staged version to include the WebKit placeholder selector.
     if 'form input::-webkit-input-placeholder' not in css:
         css = css.replace(
             'form input::placeholder,\nform textarea::placeholder {',
@@ -92,15 +93,6 @@ inject_head_style('Site Header.dc.html', component_marker, r'''
   font-size:12px !important;
   font-weight:300 !important;
   letter-spacing:.01em !important;
-}
-[aria-label="The Sunday Reservation"] label[for="reservationEmail"] {
-  font-family:'Inter Tight',sans-serif !important;
-  font-size:9.5px !important;
-  font-weight:400 !important;
-  letter-spacing:.05em !important;
-}
-@media (max-width:700px) {
-  [aria-label="The Sunday Reservation"] label[for="reservationEmail"] { font-size:9.25px !important; }
 }
 ''')
 
@@ -124,17 +116,6 @@ form[data-inq] textarea::-webkit-input-placeholder {
   font-weight:300 !important;
   letter-spacing:.01em !important;
 }
-form[data-inq] label > span:first-child,
-form[data-inq] fieldset > legend {
-  font-size:9.5px !important;
-  font-weight:400 !important;
-  letter-spacing:.05em !important;
-}
-form[data-inq] [aria-haspopup="dialog"] { font-size:12.5px !important; }
-@media (max-width:700px) {
-  form[data-inq] label > span:first-child,
-  form[data-inq] fieldset > legend { font-size:9.25px !important; }
-}
 ''')
 
 inject_head_style('sunday-school/index.html', component_marker, r'''
@@ -145,8 +126,6 @@ inject_head_style('sunday-school/index.html', component_marker, r'''
   font-weight:300 !important;
   letter-spacing:.01em !important;
 }
-label[for="school-notes-email"] { font-size:9.5px !important; }
-@media (max-width:700px) { label[for="school-notes-email"] { font-size:9.25px !important; } }
 ''')
 
 inject_head_style('contact/index.html', component_marker, r'''
@@ -155,10 +134,6 @@ form[data-editorial-labels] > label[for] {
   font-size:9.5px !important;
   font-weight:400 !important;
   letter-spacing:.05em !important;
-}
-@media (max-width:700px) {
-  form[data-editorial-labels] label > span:first-child,
-  form[data-editorial-labels] > label[for] { font-size:9.25px !important; }
 }
 ''')
 
@@ -170,11 +145,60 @@ form[data-editorial-labels] > div > span:first-child {
   letter-spacing:.05em !important;
 }
 form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !important; }
-@media (max-width:700px) {
-  form[data-editorial-labels] label > span:first-child,
-  form[data-editorial-labels] > div > span:first-child { font-size:9.25px !important; }
-}
 ''')
+
+# Make the owning markup authoritative too. This prevents component/page-level
+# rules from silently overriding the guidance sizing after render.
+required_replace(
+    'Site Header.dc.html',
+    "font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase\">Email Address</label>",
+    "font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase\">Email Address</label>"
+)
+
+for page in ['contact/index.html', 'join-our-team/index.html']:
+    required_replace(
+        page,
+        "font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.075em;text-transform:uppercase",
+        "font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase",
+        minimum=3
+    )
+
+# Project Inquiry field labels only. Leave service-option/checklist copy alone.
+inquiry_path = Path('Inquiry Form.dc.html')
+inquiry = inquiry_path.read_text()
+inquiry, label_count = re.subn(
+    r'(<label data-step-panel[^>]*>\s*<span style="[^"]*?)font-size:10\.25px',
+    r'\1font-size:9.5px!important',
+    inquiry
+)
+if label_count < 6:
+    raise SystemExit(f'Expected at least 6 Project Inquiry field labels, found {label_count}')
+inquiry = inquiry.replace(
+    "font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:400;letter-spacing:.10em;text-transform:uppercase\">Ideal Start Date</span>",
+    "font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.10em;text-transform:uppercase\">Ideal Start Date</span>"
+)
+inquiry, date_count = re.subn(
+    r'(aria-haspopup="dialog"[^>]*style="[^"]*?font-size:)14px',
+    r'\g<1>12.5px!important',
+    inquiry,
+    count=1
+)
+if date_count != 1:
+    raise SystemExit(f'Expected one Project Inquiry date trigger, found {date_count}')
+inquiry_path.write_text(inquiry)
+
+# Join's Select A Program control is placeholder-like copy inside a button.
+join_path = Path('join-our-team/index.html')
+join = join_path.read_text()
+join, join_trigger_count = re.subn(
+    r'(aria-haspopup="listbox"[^>]*style="[^"]*?font-size:)16px',
+    r'\g<1>12.5px!important',
+    join,
+    count=1
+)
+if join_trigger_count != 1:
+    raise SystemExit(f'Expected one Join program trigger, found {join_trigger_count}')
+join_path.write_text(join)
 
 changed = []
 for path in Path('.').rglob('*.html'):
@@ -196,16 +220,14 @@ if remaining:
     raise SystemExit('Old v15 asset refs remain: ' + ', '.join(remaining))
 
 final_css = CSS.read_text()
-checks = [
+for item in [
     MARKER,
     'form input::placeholder',
     'form input::-webkit-input-placeholder',
     'font-size: 12px !important;',
-    '[aria-label="The Sunday Reservation"] label[for="reservationEmail"]',
-    'font-size: 9.25px !important;',
+    'font-size: 9.5px !important;',
     'form[data-editorial-labels] [aria-haspopup="listbox"]',
-]
-for item in checks:
+]:
     if item not in final_css:
         raise SystemExit('Missing expected shared CSS: ' + item)
 
@@ -213,4 +235,4 @@ for path_str in ['Site Header.dc.html', 'Site Footer.dc.html', 'Inquiry Form.dc.
     if component_marker not in Path(path_str).read_text():
         raise SystemExit('Missing component guidance styles in ' + path_str)
 
-print(f'Applied component-owned form guidance microtype; bumped {len(changed)} HTML files to asset version 20260913-16.')
+print(f'Applied authoritative form guidance microtype; bumped {len(changed)} HTML files to asset version 20260913-16.')
