@@ -1,0 +1,42 @@
+name: Post Rollback QA
+
+on:
+  push:
+    branches:
+      - post-rollback-qa-2026-09-14
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact rollback source
+        uses: actions/checkout@v4
+        with:
+          ref: post-rollback-qa-2026-09-14
+
+      - name: Install WebKit
+        run: |
+          mkdir -p /tmp/sunday-post-rollback
+          npm install --prefix /tmp/sunday-post-rollback playwright@1.55.0 >/dev/null 2>&1
+          /tmp/sunday-post-rollback/node_modules/.bin/playwright install --with-deps webkit
+
+      - name: Serve exact site source
+        run: |
+          python -m http.server 4173 >/tmp/sunday-post-rollback-http.log 2>&1 &
+          sleep 2
+
+      - name: Run full post-rollback browser QA
+        run: |
+          mkdir -p qa-artifacts
+          node .github/scripts/post_rollback_qa.cjs
+
+      - name: Upload visual proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: post-rollback-qa
+          path: qa-artifacts
+          if-no-files-found: warn
