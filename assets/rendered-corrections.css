@@ -149,7 +149,7 @@ aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
   [role="dialog"][aria-label="The Fellows Table"] > div:nth-child(2)::before,
   [role="dialog"][aria-label="The Espresso Club"] > div:nth-child(2)::before,
   [role="dialog"][aria-label="The Founders Club"] > div:nth-child(2)::before {
-    font-size:7.25px;
+    font-size:7.5px;
     letter-spacing:.125em;
     line-height:1.65;
     padding:7px 0;

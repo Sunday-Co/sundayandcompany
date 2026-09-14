@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260913-14';
+    link.href = '/assets/rendered-corrections.css?v=20260914-17';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -37,16 +37,6 @@
   function ensureOpenSignMotion() {
     var sign = document.querySelector('[data-sign]');
     if (!sign) return;
-
-    if (!signMotionClickBound) {
-      document.addEventListener('click', function (event) {
-        var target = event.target;
-        if (target && target.closest && target.closest('[data-sign]')) {
-          triggerOriginalOpenSignMotion();
-        }
-      });
-      signMotionClickBound = true;
-    }
 
     if (!('IntersectionObserver' in window)) {
       triggerOriginalOpenSignMotion();

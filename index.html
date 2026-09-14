@@ -180,9 +180,9 @@
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260913-16" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260913-16" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260913-16"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260914-17" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260914-17" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260914-17"></script>
 </helmet>
 
 <div data-screen-label="Home" style="background:#f5efe6;color:#311d03;overflow:visible;">
@@ -456,7 +456,7 @@
   </section>
 
   <section id="reserve" aria-labelledby="reserve-title" style="background:#311d03;color:#f5efe6;padding:clamp(40px,3.6vw,48px) clamp(22px,6vw,90px) clamp(44px,4.2vw,62px);scroll-margin-top:92px">
-    <div data-sign="true" style="cursor:pointer;margin:0 auto;max-width:{{ rbMax }};position:relative">
+    <div data-sign="true" style="margin:0 auto;max-width:{{ rbMax }};position:relative">
       <div style="position:relative;z-index:2">
         <span aria-hidden="true" style="background:rgba(172,116,108,.5);display:block;height:2px;margin:0 4%"></span>
         <span aria-hidden="true" style="background:rgba(172,116,108,.55);border-radius:50%;height:7px;left:calc(4% - 2px);position:absolute;top:-2px;width:7px"></span>
@@ -538,8 +538,6 @@ class Component extends DCLogic {
         es.forEach((e) => { if (e.isIntersecting) this.nudgeSign(); });
       }, { threshold: 0.35 });
       this._sio.observe(sign);
-      this._signClick = () => this.nudgeSign(true);
-      sign.addEventListener('click', this._signClick);
       this._signEl = sign;
     } else {
       this.setState({ signOn: true });
