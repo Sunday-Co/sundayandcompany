@@ -23,7 +23,7 @@ jobs:
       - name: Apply authoritative shared-component fix
         run: python .github/scripts/fix_imported_shared_components.py
 
-      - name: Verify shared component copies are identical
+      - name: Verify transformed source before browser QA
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -38,6 +38,21 @@ jobs:
                   p = Path(d) / name
                   assert p.read_bytes() == root, f'drift: {p}'
           print('All 42 page-local shared component copies match their root owners byte-for-byte.')
+
+          header = Path('Site Header.dc.html').read_text()
+          footer = Path('Site Footer.dc.html').read_text()
+          css = Path('assets/site.css').read_text()
+          assert 'YOUR INQUIRY IS IN.' in header
+          assert "font-size:clamp(18px,2.2vw,24px)!important" in header
+          assert "font-size:{{ footerEmailSize }}!important" in footer
+          assert "footerEmailSize: n ? '16.5px' : '13.25px'" in footer
+          assert 'font-size:8.25px!important;font-weight:300!important' in footer
+          assert 'font-size: 16.5px !important;' in css
+
+          public_pages = [Path('404.html')] + list(Path('.').glob('*/index.html')) + list(Path('our-work').glob('*/index.html'))
+          stale = [str(p) for p in public_pages if p.exists() and '20260913-16' in p.read_text()]
+          assert not stale, f'stale v16 asset refs: {stale}'
+          print('Canonical source owners and reviewed asset version are correct.')
           PY
           git diff --check
 
@@ -52,7 +67,7 @@ jobs:
           python -m http.server 4173 >/tmp/sunday-live-path-http.log 2>&1 &
           sleep 2
 
-      - name: Test rendered page-local components
+      - name: Test the actual rendered runtime
         run: |
           cat > /tmp/live-path-qa.cjs <<'JS'
           const { webkit } = require('/tmp/sunday-live-path-qa/node_modules/playwright');
@@ -67,17 +82,14 @@ jobs:
 
           async function closeReservation(page) {
             const close = page.locator('[aria-label="The Sunday Reservation"] button[aria-label="Close"]');
-            if (await close.count() && await close.first().isVisible().catch(() => false)) {
-              await close.first().click();
-            }
+            if (await close.count() && await close.first().isVisible().catch(() => false)) await close.first().click();
           }
 
           async function openInquiry(page) {
-            const desktop = page.getByRole('button', { name: 'Reserve Your Seat' }).filter({ visible: true });
-            const allButtons = page.getByRole('button', { name: 'Reserve Your Seat' });
-            for (let i = 0; i < await allButtons.count(); i++) {
-              if (await allButtons.nth(i).isVisible().catch(() => false)) {
-                await allButtons.nth(i).click();
+            const buttons = page.getByRole('button', { name: 'Reserve Your Seat' });
+            for (let i = 0; i < await buttons.count(); i++) {
+              if (await buttons.nth(i).isVisible().catch(() => false)) {
+                await buttons.nth(i).click();
                 return;
               }
             }
@@ -97,6 +109,7 @@ jobs:
             const page = await context.newPage();
             const results = {};
 
+            // Check the exact rendered footer typography across every real route.
             for (const route of routes) {
               await page.goto(base + route, { waitUntil: 'networkidle', timeout: 60000 });
               await page.waitForTimeout(450);
@@ -104,8 +117,14 @@ jobs:
 
               const footerEmail = page.locator('footer a[href^="mailto:hello@sundayandcompany.co"]');
               await footerEmail.waitFor({ state: 'attached' });
-              const emailSize = px(await footerEmail.evaluate(el => getComputedStyle(el).fontSize));
-              assert.ok(emailSize >= 16.4, `${route}: footer email rendered ${emailSize}px`);
+              const emailStyles = await footerEmail.evaluate(el => ({
+                size: getComputedStyle(el).fontSize,
+                weight: getComputedStyle(el).fontWeight,
+                family: getComputedStyle(el).fontFamily,
+              }));
+              assert.ok(px(emailStyles.size) >= 16.4 && px(emailStyles.size) <= 16.6, `${route}: footer email rendered ${emailStyles.size}`);
+              assert.strictEqual(emailStyles.weight, '400', `${route}: footer email weight ${emailStyles.weight}`);
+              assert.ok(emailStyles.family.includes('Inter Tight'), `${route}: footer email family ${emailStyles.family}`);
 
               const fine = page.locator('[aria-label="Newsletter"] [data-news-fineprint]');
               await fine.waitFor({ state: 'attached' });
@@ -113,12 +132,14 @@ jobs:
                 size: getComputedStyle(el).fontSize,
                 weight: getComputedStyle(el).fontWeight,
                 opacity: getComputedStyle(el).opacity,
+                family: getComputedStyle(el).fontFamily,
               }));
-              assert.ok(px(fineStyles.size) <= 8.3, `${route}: newsletter disclaimer size ${fineStyles.size}`);
+              assert.ok(px(fineStyles.size) >= 8.2 && px(fineStyles.size) <= 8.3, `${route}: newsletter disclaimer size ${fineStyles.size}`);
               assert.strictEqual(fineStyles.weight, '300', `${route}: newsletter disclaimer weight ${fineStyles.weight}`);
               assert.ok(parseFloat(fineStyles.opacity) <= .73, `${route}: newsletter disclaimer opacity ${fineStyles.opacity}`);
+              assert.ok(fineStyles.family.includes('Inter Tight'), `${route}: disclaimer family ${fineStyles.family}`);
 
-              results[route] = { emailSize, fineStyles };
+              results[route] = { emailStyles, fineStyles };
             }
 
             // Verify the ACTUAL Site Header success receipt the live modal switches to.
@@ -128,39 +149,39 @@ jobs:
             await openInquiry(page);
             const modal = page.locator('[aria-label="Project inquiry"]');
             await modal.waitFor({ state: 'visible' });
-            const statusMeta = modal.locator('[data-inquiry-receipt-meta="status"]');
-            await statusMeta.waitFor({ state: 'attached' });
-            const liveSuccess = statusMeta.locator('xpath=..');
+            const liveSuccess = modal.locator('div[role="status"][aria-live="polite"]').last();
+            await liveSuccess.waitFor({ state: 'attached' });
             const h2 = liveSuccess.locator('h2');
             const body = liveSuccess.locator('p').last();
             const successStyles = {
-              headingText: await h2.textContent(),
-              bodyText: await body.textContent(),
+              headingText: (await h2.textContent()).trim(),
+              bodyText: (await body.textContent()).trim(),
               headingFamily: await h2.evaluate(el => getComputedStyle(el).fontFamily),
               bodyFamily: await body.evaluate(el => getComputedStyle(el).fontFamily),
               headingTransform: await h2.evaluate(el => getComputedStyle(el).textTransform),
               bodyTransform: await body.evaluate(el => getComputedStyle(el).textTransform),
               headingSize: await h2.evaluate(el => getComputedStyle(el).fontSize),
               bodySize: await body.evaluate(el => getComputedStyle(el).fontSize),
+              bodyWeight: await body.evaluate(el => getComputedStyle(el).fontWeight),
             };
-            assert.strictEqual(successStyles.headingText.trim(), 'YOUR INQUIRY IS IN.');
-            assert.ok(successStyles.bodyText.trim().startsWith('THANK YOU FOR SHARING THE DETAILS.'));
+            assert.strictEqual(successStyles.headingText, 'YOUR INQUIRY IS IN.');
+            assert.ok(successStyles.bodyText.startsWith('THANK YOU FOR SHARING THE DETAILS.'));
             assert.ok(successStyles.headingFamily.includes('Inter Tight'), successStyles.headingFamily);
             assert.ok(successStyles.bodyFamily.includes('Inter Tight'), successStyles.bodyFamily);
             assert.strictEqual(successStyles.headingTransform, 'uppercase');
             assert.strictEqual(successStyles.bodyTransform, 'uppercase');
+            assert.ok(px(successStyles.headingSize) <= 24, successStyles.headingSize);
+            assert.ok(px(successStyles.bodySize) <= 10.1, successStyles.bodySize);
+            assert.strictEqual(successStyles.bodyWeight, '300');
 
-            // Reveal the real success DOM without submitting another form/email.
+            // Reveal the actual success receipt without submitting another inquiry/email.
+            await modal.locator('div[style*="display:"][style*="text-align:left"]').first().evaluate(el => { el.style.display = 'none'; }).catch(() => {});
+            await modal.locator('dc-import[name="/Inquiry Form"]').evaluate(el => { const p = el.parentElement; if (p) p.style.display = 'none'; }).catch(() => {});
             await liveSuccess.evaluate(el => { el.style.display = 'block'; });
-            await modal.locator('form[data-inq]').evaluate(el => {
-              const host = el.closest('.sc-host') || el.parentElement;
-              if (host) host.style.display = 'none';
-              else el.style.display = 'none';
-            }).catch(() => {});
-            await page.waitForTimeout(100);
+            await page.waitForTimeout(120);
             await modal.screenshot({ path: `${out}/01-actual-live-inquiry-success-mobile.png` });
 
-            // Footer proof from the page shown in the user's screenshot.
+            // Footer proof from Sunday School, matching the user's live screenshot context.
             await page.goto(base + '/sunday-school/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(450);
             await closeReservation(page);
@@ -169,7 +190,7 @@ jobs:
             await page.waitForTimeout(100);
             await page.screenshot({ path: `${out}/02-sunday-school-footer-mobile.png`, fullPage: false });
 
-            // Contact FAQ must not become sticky/overlap while scrolling.
+            // Contact FAQ must scroll normally and never become sticky/overlap.
             await page.goto(base + '/contact/', { waitUntil: 'networkidle', timeout: 60000 });
             await page.waitForTimeout(450);
             await closeReservation(page);
@@ -196,20 +217,23 @@ jobs:
           node /tmp/live-path-qa.cjs
 
       - name: Upload proof screenshots
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: imported-live-path-qa
           path: imported-live-path-qa
-          if-no-files-found: error
+          if-no-files-found: warn
 
       - name: Commit only verified website source
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add 'Inquiry Form.dc.html' 'Site Footer.dc.html' 'Site Header.dc.html'
-          for d in about accessibility contact cookie-policy join-our-team our-work our-work/folake our-work/luckys-cafe-bakery our-work/petti-pathways our-work/pizzeria-coco privacy-policy services sunday-school terms-and-conditions; do
-            git add "$d/Inquiry Form.dc.html" "$d/Site Footer.dc.html" "$d/Site Header.dc.html"
-          done
+          git add assets/site.css 'Inquiry Form.dc.html' 'Site Footer.dc.html' 'Site Header.dc.html'
+          find . -name '*.html' -not -path './.git/*' -not -path './.github/*' -not -path './node_modules/*' -print0 | xargs -0 git add --
           git diff --cached --check
+          if git diff --cached --quiet; then
+            echo 'No verified website changes to commit'
+            exit 0
+          fi
           git commit -m '[skip netlify] Fix actual imported shared component sources'
           git push
