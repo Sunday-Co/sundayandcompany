@@ -274,8 +274,9 @@ footer [data-footer-tagline] em {
     padding-bottom: calc(44px + env(safe-area-inset-bottom)) !important;
   }
   footer a[href^="mailto:"] {
-    font-size: 13.25px !important;
+    font-size: 15.5px !important;
     font-weight: 400 !important;
+    letter-spacing: 0 !important;
   }
 }
 
@@ -969,8 +970,10 @@ section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
 @media (max-width: 700px) {
   [aria-label="Newsletter"] [data-news-fineprint] {
     font-size: 8.25px !important;
-    letter-spacing: .035em !important;
+    font-weight: 300 !important;
+    letter-spacing: .03em !important;
     line-height: 1.5 !important;
+    opacity: .68 !important;
   }
   footer [data-footer-legal] {
     line-height: 1.55 !important;
