@@ -25,6 +25,15 @@ for = "/assets/*"
 [headers.values]
 Cache-Control = "public, max-age=3600, must-revalidate"
 
+# The rendered correction layer carries narrow production fixes. Revalidate it
+# on each navigation so a same-day CSS release cannot be masked by a stale
+# browser copy while the stable asset filename remains in use.
+[[headers]]
+for = "/assets/rendered-corrections.css"
+
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
 [[headers]]
 for = "/*.html"
 
