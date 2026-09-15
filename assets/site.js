@@ -10,6 +10,22 @@
     document.head.appendChild(link);
   }
 
+  function stabilizeIOSFormFocusZoom() {
+    var ua = navigator.userAgent || '';
+    var platform = navigator.platform || '';
+    var isIOS = /iPad|iPhone|iPod/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!isIOS) return;
+
+    var viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) return;
+
+    var content = viewport.getAttribute('content') || '';
+    if (/maximum-scale\s*=/.test(content)) return;
+
+    content = content.replace(/\s*,?\s*$/, '');
+    viewport.setAttribute('content', content + ', maximum-scale=1');
+  }
+
 
   var signMotionObserver = null;
   var observedSign = null;
@@ -273,12 +289,14 @@
   }
 
   function sync() {
+    stabilizeIOSFormFocusZoom();
     ensureCorrectionStyles();
     applyFormRenderCorrections();
     syncAccessibleSurface();
   }
 
   function boot() {
+    stabilizeIOSFormFocusZoom();
     ensureCorrectionStyles();
     installAccessibleSurfaceManagement();
     sync();

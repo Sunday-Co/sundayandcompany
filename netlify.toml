@@ -27,6 +27,15 @@ for = "/assets/rendered-corrections.css"
 [headers.values]
 Cache-Control = "public, max-age=0, must-revalidate"
 
+# The shared interaction script also carries mobile form behavior. Revalidate
+# it on each navigation so iPhone Safari receives focus-behavior fixes without
+# waiting for the broader one-hour asset cache to expire.
+[[headers]]
+for = "/assets/site.js"
+
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
 # Do not mark unhashed production assets immutable. The site uses stable file
 # names such as /assets/site.css and /assets/site.js, so a one-year immutable
 # cache can leave returning browsers on an old visual/interaction build.
