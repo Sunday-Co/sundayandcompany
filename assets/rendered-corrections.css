@@ -194,10 +194,11 @@ a[href="#inquiry"] svg {
   transition:none !important;
 }
 
-/* Keep original popup opening animation. */
+/* Keep the original popup entrance, but do not retain its transform after 300ms.
+   A persisted transform leaves iOS Safari focusing fields inside a transformed fixed surface. */
 [aria-label="Project inquiry"],
 [aria-label="The Sunday Reservation"] {
-  animation:sunday-modal-in 300ms cubic-bezier(.22,.75,.18,1) both;
+  animation:sunday-modal-in 300ms cubic-bezier(.22,.75,.18,1);
 }
 
 /* OPEN sign: original warm-up + first swing, then continuous neon pulse and gentle sway. */
@@ -300,4 +301,25 @@ footer [style*="color:#ac746c"] {
 [data-scroll-region]:focus-visible {
   outline: 2px solid #945650 !important;
   outline-offset: 3px !important;
+}
+
+/* iOS FORM FOCUS GEOMETRY · 2026-09-14
+   The fixed overlay owns the phone inset. The dialogs fill that content box instead
+   of re-deriving their width from 100vw, so Safari focus/pan cannot create a second
+   horizontal coordinate system for the modal. */
+@media (max-width:700px) {
+  [aria-label="Project inquiry"],
+  [aria-label="The Sunday Reservation"] {
+    box-sizing:border-box !important;
+    min-width:0 !important;
+    width:100% !important;
+  }
+
+  [aria-label="Project inquiry"] {
+    max-width:880px !important;
+  }
+
+  [aria-label="The Sunday Reservation"] {
+    max-width:800px !important;
+  }
 }
