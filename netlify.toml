@@ -16,6 +16,17 @@ Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=
 Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 X-XSS-Protection = "1; mode=block"
 
+# The rendered correction layer carries narrow production fixes. Revalidate it
+# on each navigation so a same-day CSS release cannot be masked by a stale
+# browser copy while the stable asset filename remains in use. This specific
+# rule must come before the broader /assets/* rule because Netlify uses the
+# first matching header rule.
+[[headers]]
+for = "/assets/rendered-corrections.css"
+
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
 # Do not mark unhashed production assets immutable. The site uses stable file
 # names such as /assets/site.css and /assets/site.js, so a one-year immutable
 # cache can leave returning browsers on an old visual/interaction build.
