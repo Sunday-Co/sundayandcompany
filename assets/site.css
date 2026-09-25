@@ -995,15 +995,15 @@ section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
 }
 
 /* Program archive microtype remains small, but not sub-legible. */
-[role="dialog"][aria-label="The Fellows Table"]::after,
-[role="dialog"][aria-label="The Espresso Club"]::after,
-[role="dialog"][aria-label="The Founders Club"]::after {
+[role="dialog"][aria-label="Fellows Table"]::after,
+[role="dialog"][aria-label="Espresso Club"]::after,
+[role="dialog"][aria-label="Founders Club"]::after {
   font-size: 8px !important;
 }
 @media (max-width: 720px) {
-  [role="dialog"][aria-label="The Fellows Table"]::after,
-  [role="dialog"][aria-label="The Espresso Club"]::after,
-  [role="dialog"][aria-label="The Founders Club"]::after {
+  [role="dialog"][aria-label="Fellows Table"]::after,
+  [role="dialog"][aria-label="Espresso Club"]::after,
+  [role="dialog"][aria-label="Founders Club"]::after {
     font-size: 7.5px !important;
   }
 }
