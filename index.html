@@ -641,9 +641,9 @@ class Component extends DCLogic {
       openInquiry: () => { if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('sunday:open-inquiry')); },
       svcCols: n ? '1fr' : '1.05fr .95fr',
 
-      t0: n ? '44px' : 'clamp(43px,5vw,74px)',
-      t1: n ? '31px' : 'clamp(31px,4vw,58px)',
-      t2: n ? '31px' : 'clamp(31px,4vw,58px)',
+      t0: n ? '40px' : 'clamp(43px,5vw,74px)',
+      t1: n ? '29px' : 'clamp(31px,4vw,58px)',
+      t2: n ? '29px' : 'clamp(31px,4vw,58px)',
       resultsTitleSize: n ? 'clamp(24px,7.4vw,30px)' : 'clamp(32px,3.35vw,50px)',
       resultStampSize: n ? '82px' : '104px',
       resultStampText: n ? '7px' : '8px',
@@ -660,7 +660,7 @@ class Component extends DCLogic {
       // hovered sheet turns rose with cream type, per your original
       out['svcBg' + i] = on ? '#955851' : base[i];
       out['svcFg' + i] = on ? '#f5efe6' : baseFg[i];
-      out['svcH' + i] = on ? (n ? '400px' : '290px') : '122px';
+      out['svcH' + i] = on ? (n ? '370px' : '290px') : '122px';
       out['svcDetail' + i] = on ? 'grid' : 'none';
       out['svcStamp' + i] = on ? 'flex' : 'none';
       out['pickSvc' + i] = () => this.setState({ svc: i });
@@ -702,7 +702,7 @@ class Component extends DCLogic {
     // less overlap and more padding on a phone, so each card can breathe
     out.stackTop = n ? '10px' : '26px';
     out.cardLap = n ? '-12px' : '-22px';
-    out.cardPad = n ? '26px 22px 30px' : '23px 28px 27px';
+    out.cardPad = n ? '22px 20px 24px' : '23px 28px 27px';
     out.marqPad = n ? '8px' : '12px';
     out.marqSize = n ? '7.5px' : '9px';
     out.ground = this.props.groundTone || '#f5efe6';
