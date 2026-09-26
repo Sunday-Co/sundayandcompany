@@ -300,11 +300,23 @@ footer [style*="color:#ac746c"] {
     min-width:0 !important;
   }
   [aria-label="Project inquiry"] {
-    width:min(720px, calc(100vw - 56px)) !important;
-    max-width:min(720px, calc(100vw - 56px)) !important;
+    width:min(680px, calc(100vw - 72px)) !important;
+    max-width:min(680px, calc(100vw - 72px)) !important;
   }
   [aria-label="The Sunday Reservation"] {
-    width:min(620px, calc(100vw - 56px)) !important;
-    max-width:min(620px, calc(100vw - 56px)) !important;
+    width:min(600px, calc(100vw - 72px)) !important;
+    max-width:min(600px, calc(100vw - 72px)) !important;
+  }
+}
+
+
+/* MOBILE PROPORTION FOLLOW-THROUGH · 2026-09-26
+   This file loads after site.css, so keep late corrections from
+   re-enlarging the compact mobile menu and receipt surfaces. */
+@media (max-width:900px) {
+  aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
+    font-size:8px !important;
+    letter-spacing:.10em !important;
+    min-height:39px !important;
   }
 }
