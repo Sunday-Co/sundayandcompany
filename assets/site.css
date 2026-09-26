@@ -1155,7 +1155,6 @@ form[data-inq] [aria-haspopup="dialog"] {
   #dc-root footer nav:not([aria-label="Legal"]) a,
   #dc-root footer [data-footer-location] { font-size: 14px !important; }
   #dc-root footer a[href^="mailto:"] { font-size: 15px !important; }
-  #dc-root footer [data-footer-label] { font-size: 11px !important; }
 }
 @media (min-width: 901px) {
   #dc-root button[style*="text-transform:uppercase"],
