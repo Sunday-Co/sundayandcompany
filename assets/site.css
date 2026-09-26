@@ -1107,6 +1107,56 @@ form[data-inq] [aria-haspopup="dialog"] {
   #dc-root section#work > div:first-child { grid-template-columns: 1fr !important; gap: 16px !important; }
   #dc-root section#work > div:first-child > p[aria-hidden="true"] { display: none; }
 }
+/* ==========================================================
+   MENU SHEET + FOOTER: EDITORIAL SCALE AT EVERY WIDTH
+   ========================================================== */
+
+/* Legal row: one straight line wherever it fits */
+#dc-root footer nav[aria-label="Legal"] a { white-space: nowrap; }
+
+/* Laptop band that shows the Menu button (901–1240): calmer sheet, one-line legal row */
+@media (min-width: 901px) and (max-width: 1240px) {
+  #dc-root aside[aria-label="Sunday & Company navigation"] {
+    width: min(420px, 42vw) !important;
+    max-width: 420px !important;
+    padding: 30px 34px 30px !important;
+  }
+  #dc-root aside[aria-label="Sunday & Company navigation"] nav[aria-label="Mobile navigation"] > a {
+    font-size: 26px !important;
+    min-height: 58px !important;
+    padding: 10px 0 !important;
+  }
+  #dc-root aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] { min-height: 44px !important; }
+
+  #dc-root footer [data-footer-legal] { grid-template-columns: auto 1fr auto !important; align-items: center !important; }
+  #dc-root footer nav[aria-label="Legal"] {
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    gap: 16px !important;
+  }
+  #dc-root footer nav[aria-label="Legal"] a,
+  #dc-root footer [data-footer-legal] > span,
+  #dc-root footer [data-footer-legal] > a {
+    font-size: 9px !important;
+    letter-spacing: .12em !important;
+  }
+}
+
+/* iPad mini and iPad portrait (601–900): phone layout, but a quieter footer */
+@media (min-width: 601px) and (max-width: 900px) {
+  #dc-root footer nav[aria-label="Legal"] {
+    flex-wrap: nowrap !important;
+    gap: 16px !important;
+  }
+  #dc-root footer nav[aria-label="Legal"] a { font-size: 11px !important; letter-spacing: .1em !important; }
+  #dc-root footer [data-footer-legal] > span,
+  #dc-root footer [data-footer-legal] > a { font-size: 11px !important; letter-spacing: .1em !important; }
+  #dc-root footer [data-footer-ui],
+  #dc-root footer nav:not([aria-label="Legal"]) a,
+  #dc-root footer [data-footer-location] { font-size: 14px !important; }
+  #dc-root footer a[href^="mailto:"] { font-size: 15px !important; }
+  #dc-root footer [data-footer-label] { font-size: 11px !important; }
+}
 @media (min-width: 901px) {
   #dc-root button[style*="text-transform:uppercase"],
   #dc-root button[style*="text-transform: uppercase"],
