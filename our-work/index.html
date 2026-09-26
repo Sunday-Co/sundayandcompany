@@ -270,14 +270,9 @@ class Component extends DCLogic {
       this._syncW();
       if (this._mqW.addEventListener) this._mqW.addEventListener('change', this._syncW);
     }
-    if (typeof window !== "undefined" && window.matchMedia) {
-      this._mq = window.matchMedia("(max-width: 760px)");
-      this._syncIdx = () => this.setState({ narrow: this._mq.matches });
-      this._syncIdx();
-      if (this._mq.addEventListener) this._mq.addEventListener("change", this._syncIdx);
-    }
   }
   componentWillUnmount() {
+    if (this._mqW && this._mqW.removeEventListener && this._syncW) this._mqW.removeEventListener('change', this._syncW);
   }
   renderVals() {
     const nw = this.state.narrow;

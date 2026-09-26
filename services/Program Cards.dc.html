@@ -6,7 +6,7 @@
 <script src="/support.js"></script>
 <style>
   /* MOBILE FLIP CARDS: preserve the original editorial card interaction. */
-  @media (max-width: 720px) {
+  @media (max-width: 900px) {
     [data-program-cards] > article {
       height:340px !important;
       perspective:1200px !important;
@@ -242,8 +242,8 @@ class Component extends DCLogic {
   state = { flipped: null, dialog: null, narrow: false, tight: false };
   componentDidMount() {
     if (typeof window === 'undefined' || !window.matchMedia) return;
-    this._mq = window.matchMedia('(max-width: 1080px)');
-    this._mqTight = window.matchMedia('(max-width: 720px)');
+    this._mq = window.matchMedia('(max-width: 900px)');
+    this._mqTight = window.matchMedia('(max-width: 900px)');
     this._sync = () => this.setState({ narrow: this._mq.matches, tight: this._mqTight.matches });
     this._sync();
     if (this._mq.addEventListener) {
