@@ -114,7 +114,7 @@
         <div style="text-align:center">
           <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 12px;text-transform:uppercase">Sunday &amp; Company</p>
           <h2 style="font-size:30px;font-weight:400;letter-spacing:-.035em;line-height:1;margin:0;text-transform:uppercase">The Sunday Reservation</h2>
-          <p style="font-family:'Inter Tight',sans-serif;font-size:11.25px;font-weight:300;line-height:1.48;margin:13px auto 0;max-width:330px">Join our newsletter for thoughtful notes on branding, business and the work behind both.</p>
+          <p data-res-intro style="font-family:'Inter Tight',sans-serif;font-size:9.5px;font-weight:300;letter-spacing:.055em;line-height:1.45;margin:12px auto 0;max-width:320px;text-transform:uppercase">Join our newsletter for thoughtful notes on branding, business and the work behind both.</p>
         </div>
         <div aria-hidden="true" style="border-bottom:1px dashed #311d03;border-top:1px dashed #311d03;display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;gap:10px 7px;grid-template-columns:auto 1fr auto;letter-spacing:.08em;margin:24px 0 21px;padding:14px 0;text-transform:uppercase">
           <span>01</span><span>Stay In Touch With Sunday</span><span style="text-align:right">Notes From Sunday</span>
@@ -127,19 +127,19 @@
           <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#fffdf8;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:400;gap:9px;justify-content:center;letter-spacing:.10em;min-height:44px;text-transform:uppercase">{{ resLabel }} <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:12px;width:12px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
           <p role="alert" style="color:#8c2f22;font-size:11px;margin:0;display:{{ resErrorDisplay }}">{{ resError }}</p>
         </form>
-        <div style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:20px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
+        <div data-res-total style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:20px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
         <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.04em;line-height:1.42;margin:8px 0 0;opacity:.7;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
-        <button type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid currentColor;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:17px auto 0;padding:0 0 3px;text-transform:uppercase">Keep Browsing</button>
-        <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;margin-top:22px;text-align:center;text-transform:uppercase">Reservation No. 002026</p>
+        <button data-res-keep type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid currentColor;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:17px auto 0;padding:0 0 3px;text-transform:uppercase">Keep Browsing</button>
+        <p data-res-number style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;margin-top:22px;text-align:center;text-transform:uppercase">Reservation No. 002026</p>
       </div>
       <div style="display:{{ resDoneDisplay }};text-align:center">
         <div style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:0 0 12px;padding-bottom:11px;text-align:left;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="text-align:right;white-space:nowrap">Reservation No. 002026</span></div>
         <div style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:0 0 28px;padding-bottom:11px;text-align:left;text-transform:uppercase"><span>The Sunday Reservation</span><span style="text-align:right;white-space:nowrap">Status: Confirmed</span></div>
         <h2 style="font-size:30px;font-weight:400;letter-spacing:-.035em;line-height:1;margin:0;text-transform:uppercase">You’re On The List.</h2>
         <p style="font-size:11px;line-height:1.5;margin:13px auto 0;max-width:330px">Your email has been saved. We will keep your seat ready for thoughtful notes from Sunday.</p>
-        <div style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:28px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
+        <div data-res-total style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:28px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
         <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.04em;line-height:1.42;margin:8px 0 0;opacity:.7;text-align:left;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
-        <button type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid currentColor;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px auto 0;padding:0 0 3px;text-transform:uppercase">Keep Browsing</button>
+        <button data-res-keep type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid currentColor;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px auto 0;padding:0 0 3px;text-transform:uppercase">Keep Browsing</button>
       </div>
     </div>
   </div>
@@ -242,7 +242,7 @@ class Component extends DCLogic {
     window.addEventListener('keydown', this._onKey);
     if (window.matchMedia) {
       this._mq = window.matchMedia('(max-width: 1240px)');
-      this._mqTight = window.matchMedia('(max-width: 560px)');
+      this._mqTight = window.matchMedia('(max-width: 900px)');
       this._sync = () => this.setState({ narrow: this._mq.matches, tight: this._mqTight.matches, sheet: false });
       this._sync();
       if (this._mq.addEventListener) {
