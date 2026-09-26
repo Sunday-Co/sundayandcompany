@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){var d=document,m=d.querySelector('meta[name="viewport"]'),W=1280,a=screen.width,b=screen.height,s=Math.min(a,b),mq=window.matchMedia&&window.matchMedia.bind(window);function dev(){var l=mq&&mq('(orientation: landscape)').matches,w=l?Math.max(a,b):s,c;if(s<600){c="width="+Math.round(s/0.75)+", initial-scale=0.75, viewport-fit=cover";}else if(w<W){c="width="+W+", initial-scale="+(w/W).toFixed(4)+", viewport-fit=cover";}else{c="width=device-width, initial-scale=1, viewport-fit=cover";}if(m)m.setAttribute("content",c);}if(s<600||(mq&&mq('(pointer: coarse)').matches)){dev();addEventListener("orientationchange",function(){setTimeout(dev,150);});return;}var iw=innerWidth,band=function(w){return w<=700?0:w<W?1:2},b0=band(iw),t;if(b0===1&&mq){d.documentElement.style.zoom=iw/W;var re=/\((max|min)-width:\s*(\d+(?:\.\d+)?)px\)/g;window.matchMedia=function(q){if(q.replace(re,'').replace(/\band\b/g,'').trim()!=='')return mq(q);var ok=true;q.replace(re,function(_,k,n){n=+n;ok=ok&&(k==='max'?W<=n:W>=n);});var f=function(){};return{matches:ok,media:q,onchange:null,addListener:f,removeListener:f,addEventListener:f,removeEventListener:f,dispatchEvent:function(){return false}};};}addEventListener('resize',function(){clearTimeout(t);t=setTimeout(function(){var n=innerWidth;if(band(n)!==b0)location.reload();else if(b0===1)d.documentElement.style.zoom=n/W;},250);});})();</script>
+<script>(function(){var m=document.querySelector('meta[name="viewport"]');function set(){var s=Math.min(screen.width,screen.height);if(m&&s<600)m.setAttribute("content","width="+Math.round(s/0.75)+", initial-scale=0.75, viewport-fit=cover");}set();addEventListener("orientationchange",function(){setTimeout(set,150);});})();</script>
 <script src="/support.js"></script>
 </head>
 <body>
@@ -53,7 +53,7 @@
   a:hover { color: #ac746c; }
   button { color: inherit; font: inherit; }
   #map-mob { display: none; }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     #map-section { aspect-ratio: auto !important; padding: clamp(26px,5vw,36px) clamp(22px,6vw,30px) 6px !important; }
     #map-copy { height: auto !important; left: auto !important; padding: 0 !important; position: static !important; width: 100% !important; }
     #map-art { display: flex !important; height: auto !important; inset: auto !important; justify-content: flex-end !important; margin: 0 calc(-1 * clamp(22px,6vw,30px)) !important; overflow: hidden !important; position: static !important; }
@@ -93,7 +93,7 @@
   }
   [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
   [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
-  @media (max-width: 820px) {
+  @media (max-width: 900px) {
     input, textarea, select, button { font-size: 16px; }
     input, textarea, select { min-height: 46px; }
     textarea { min-height: 96px; }
@@ -101,7 +101,7 @@
 
 
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
-  @media (max-width: 820px) {
+  @media (max-width: 900px) {
     /* iOS force-zooms any field under 16px */
     input, textarea, select { font-size: 16px !important; min-height: 46px; }
     textarea { min-height: 100px; }
@@ -125,7 +125,7 @@
     }
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     /* masthead logo — same size on every page */
     header > a[aria-label] { width: 120px !important; }
     header > a[aria-label] > span { height: 44px !important; width: 116px !important; }
@@ -136,7 +136,7 @@
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     /* project inquiry form: one column and condensed, popup and Services page
        both, since they are the same component */
     form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
@@ -149,7 +149,7 @@
     /* Keep the receipt identity and status rows visible on mobile. */
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     /* inquiry becomes three short steps so nothing needs scrolling */
     form[data-inq] { grid-template-columns: 1fr !important; }
     form[data-inq][data-cur="1"] [data-step]:not([data-step="1"]) { display: none !important; }

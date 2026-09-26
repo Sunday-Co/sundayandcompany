@@ -242,7 +242,7 @@ class Component extends DCLogic {
     window.addEventListener('keydown', this._onKey);
     if (window.matchMedia) {
       this._mq = window.matchMedia('(max-width: 1240px)');
-      this._mqTight = window.matchMedia('(max-width: 700px)');
+      this._mqTight = window.matchMedia('(max-width: 900px)');
       this._sync = () => this.setState({ narrow: this._mq.matches, tight: this._mqTight.matches, sheet: false });
       this._sync();
       if (this._mq.addEventListener) {

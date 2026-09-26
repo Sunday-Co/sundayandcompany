@@ -36,7 +36,7 @@ aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
   min-height:44px !important;
 }
 
-@media (max-width:700px) {
+@media (max-width:900px) {
   [data-screen-label="Services"] [data-service-number],
   [data-screen-label="Services"] [data-service-meta],
   [data-screen-label="Services"] [data-service-included] { font-size:10.5px !important; }
@@ -139,7 +139,7 @@ aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
   width:max-content;
 }
 
-@media (max-width:720px) {
+@media (max-width:900px) {
   [role="dialog"][aria-label="Fellows Table"],
   [role="dialog"][aria-label="Espresso Club"],
   [role="dialog"][aria-label="Founders Club"] {
@@ -307,7 +307,7 @@ footer [style*="color:#ac746c"] {
    The fixed overlay owns the phone inset. The dialogs fill that content box instead
    of re-deriving their width from 100vw, so Safari focus/pan cannot create a second
    horizontal coordinate system for the modal. */
-@media (max-width:700px) {
+@media (max-width:900px) {
   [aria-label="Project inquiry"],
   [aria-label="The Sunday Reservation"] {
     box-sizing:border-box !important;
