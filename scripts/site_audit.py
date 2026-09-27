@@ -63,10 +63,13 @@ for rel in ("assets/site.css", "assets/rendered-corrections.css"):
         errors.append(f"{rel}: unbalanced CSS braces")
 
 home = (ROOT / "index.html").read_text(encoding="utf-8")
-if not re.search(r'max-width:\s*900px[\s\S]{0,700}Sunday and Company services[\s\S]{0,180}font-size:\s*7px', home, re.I):
-    errors.append("index.html: regular-mobile Home service marquee is not 7px")
-if not re.search(r'max-width:\s*599px[\s\S]{0,700}Sunday and Company services[\s\S]{0,180}font-size:\s*7\.75px', home, re.I):
-    errors.append("index.html: very-small-mobile Home service marquee is not 7.75px")
+
+if not re.search(r'aria-label="Sunday and Company services"[\s\S]{0,600}font-size:9px', home, re.I):
+    errors.append("index.html: desktop Home service marquee is not 9px")
+if not re.search(r'max-width:\s*900px[\s\S]{0,700}Sunday and Company services[\s\S]{0,180}font-size:\s*8px', home, re.I):
+    errors.append("index.html: regular-mobile Home service marquee is not 8px")
+if not re.search(r'max-width:\s*599px[\s\S]{0,700}Sunday and Company services[\s\S]{0,180}font-size:\s*8\.5px', home, re.I):
+    errors.append("index.html: very-small-mobile Home service marquee is not 8.5px")
 
 site_css = (ROOT / "assets/site.css").read_text(encoding="utf-8")
 if not re.search(r'data-news-blurb[\s\S]{0,500}white-space:\s*nowrap', site_css, re.I):
@@ -85,7 +88,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 # Cache/version guardrails for shared site assets and DC imports.
 ASSET_REVISION = "20260927-33"
-SUPPORT_REVISION = "20260927-34"
+SUPPORT_REVISION = "20260927-35"
 PUBLIC_ROUTES = (
     "404.html",
     "about/index.html",
@@ -132,6 +135,21 @@ if not re.search(r'data-news-blurb[\s\S]{0,350}color:#c88f87\s*!important[\s\S]{
     errors.append("Site Footer.dc.html: newsletter support-line mobile styling is incomplete")
 if not re.search(r'form \[role="alert"\]\s*\{\s*color:#f5efe6\s*!important', footer_text, re.I):
     errors.append("Site Footer.dc.html: dark newsletter validation text is not cream")
+
+
+# Popup/modal dismissal guardrails: backdrop clicks must not dismiss content popups.
+header_component = (ROOT / "Site Header.dc.html").read_text(encoding="utf-8")
+if 'role="presentation" onClick="{{ closeInquiry }}"' in header_component:
+    errors.append("Site Header.dc.html: Project Inquiry still closes on backdrop click")
+if 'role="presentation" onClick="{{ closeRes }}"' in header_component:
+    errors.append("Site Header.dc.html: Sunday Reservation still closes on backdrop click")
+if 'role="presentation" onClick="{{ closeSheet }}"' not in header_component:
+    errors.append("Site Header.dc.html: navigation drawer lost its intentional click-away behavior")
+program_component = (ROOT / "Program Cards.dc.html").read_text(encoding="utf-8")
+if 'role="presentation" onClick="{{ closeD }}"' in program_component:
+    errors.append("Program Cards.dc.html: Program Details still closes on backdrop click")
+if program_component.count('aria-label="Close"') < 3:
+    errors.append("Program Cards.dc.html: Program Details explicit close controls are incomplete")
 
 if errors:
     print("SITE AUDIT FAILED")
