@@ -88,7 +88,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 # Cache/version guardrails for shared site assets and DC imports.
 ASSET_REVISION = "20260927-33"
-SUPPORT_REVISION = "20260927-36"
+SUPPORT_REVISION = "20260927-37"
 PUBLIC_ROUTES = (
     "404.html",
     "about/index.html",
@@ -177,6 +177,22 @@ if 'TELL US WHAT YOU ARE BUILDING</h2>' not in services_text:
     errors.append("services/index.html: embedded inquiry title is not explicit uppercase copy")
 if 'font-size:clamp(25px,2.7vw,34px)' not in services_text:
     errors.append("services/index.html: embedded inquiry title sizing changed")
+
+
+# Global popup-card footer action guardrails.
+popup_keep_style = "color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:600"
+if header_component.count('data-popup-keep') < 2:
+    errors.append("Site Header.dc.html: Project Inquiry and Reservation need bottom KEEP BROWSING actions")
+if header_component.count('>KEEP BROWSING</button>') < 2:
+    errors.append("Site Header.dc.html: popup KEEP BROWSING labels are incomplete")
+if popup_keep_style not in header_component:
+    errors.append("Site Header.dc.html: global rose Inter Tight KEEP BROWSING treatment changed")
+if program_component.count('data-popup-keep') < 3:
+    errors.append("Program Cards.dc.html: all three Program Details cards need bottom KEEP BROWSING actions")
+if program_component.count('>KEEP BROWSING</button>') < 3:
+    errors.append("Program Cards.dc.html: Program Details KEEP BROWSING labels are incomplete")
+if popup_keep_style not in program_component:
+    errors.append("Program Cards.dc.html: global rose Inter Tight KEEP BROWSING treatment changed")
 
 if errors:
     print("SITE AUDIT FAILED")

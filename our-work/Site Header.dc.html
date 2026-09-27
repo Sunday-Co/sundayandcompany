@@ -137,6 +137,7 @@ form [role="alert"] {
         <p style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:300;letter-spacing:.02em;line-height:1.55;margin:12px auto 0;max-width:520px">Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>
       </div>
       <div data-inquiry-ledger aria-hidden="true" style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:9.5px;justify-content:space-between;letter-spacing:.15em;margin-top:17px;padding:10px 0;text-transform:uppercase"><span>Next Step</span><strong style="font-weight:400">Review And Reply</strong></div>
+      <button data-popup-keep type="button" onClick="{{ closeInquiry }}" style="background:transparent;border:0;border-bottom:1px solid #ac746c;color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:600;letter-spacing:.16em;margin:20px auto 0;padding:0 0 3px;text-align:center;text-transform:uppercase">KEEP BROWSING</button>
     </div>
   </div>
 </div>
@@ -165,7 +166,7 @@ form [role="alert"] {
         </form>
         <div data-res-total style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:20px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
         <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.04em;line-height:1.42;margin:8px 0 0;opacity:.7;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
-        <button data-res-keep type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid currentColor;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:17px auto 0;padding:0 0 3px;text-transform:uppercase">Keep Browsing</button>
+
         <p data-res-number style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;margin-top:22px;text-align:center;text-transform:uppercase">Reservation No. 002026</p>
       </div>
       <div style="display:{{ resDoneDisplay }};text-align:center">
@@ -175,8 +176,9 @@ form [role="alert"] {
         <p style="font-size:11px;line-height:1.5;margin:13px auto 0;max-width:330px">Your email has been saved. We will keep your seat ready for thoughtful notes from Sunday.</p>
         <div data-res-total style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:28px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
         <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.04em;line-height:1.42;margin:8px 0 0;opacity:.7;text-align:left;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
-        <button data-res-keep type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid currentColor;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px auto 0;padding:0 0 3px;text-transform:uppercase">Keep Browsing</button>
+
       </div>
+      <button data-popup-keep data-res-keep type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid #ac746c;color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:600;letter-spacing:.16em;margin:20px auto 0;padding:0 0 3px;text-align:center;text-transform:uppercase">KEEP BROWSING</button>
     </div>
   </div>
 </div>
