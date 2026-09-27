@@ -318,7 +318,7 @@ class Component extends DCLogic {
           .then(() => this.setState({ interestDone: true, sending: false }))
           .catch((err) => this.setState({ interestError: err.message, sending: false }));
       },
-      gc0: n ? '1fr' : 'minmax(300px,.78fr) minmax(0,1.22fr)',
+      gc0: n ? '1fr' : 'minmax(0,.78fr) minmax(0,1.22fr)',
       gc1: n ? '1fr 1fr' : '1.12fr .88fr',
       gc3: n ? '1fr' : '.75fr 1.25fr',
       gc5: n ? '1fr' : '1fr 1fr',

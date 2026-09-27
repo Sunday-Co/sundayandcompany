@@ -615,8 +615,8 @@ class Component extends DCLogic {
       led['hv' + i] = (sp.dp === 0 ? Math.round(val).toLocaleString('en-US') : val.toFixed(sp.dp)) + (sp.suf || '');
     });
     const grids = {
-      gc0: n ? '1fr' : 'minmax(330px,.94fr) minmax(430px,1.06fr)',
-      gc1: n ? '1fr' : 'minmax(0,1fr) minmax(420px,1.3fr) minmax(0,1fr)',
+      gc0: n ? '1fr' : 'minmax(0,.94fr) minmax(0,1.06fr)',
+      gc1: n ? '1fr' : 'minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)',
       gc2: n ? '1fr' : '.7fr 1.15fr .55fr',
       // gallery wall: 2-up on mobile with 4px gaps, per your globals.css rule · never stacked
       gc3: n ? 'repeat(2,1fr)' : 'repeat(3,1fr)',
