@@ -29,3 +29,6 @@
 - When a validation prompt is active, the field/control that caused it gets a subtle transparent Sunday rose fill and rose border treatment. Clear that state when the user edits the control.
 - Popup Project Inquiry intro matches the Services inquiry intro: no `A Seat At Our Table` kicker, a slight gap between `Tell Us What You Are Building` and `Share the essentials. We’ll take it from there.`, and shared title/support styling.
 - Join Our Team Program Of Interest options open above the trigger at every viewport, not below it.
+- Form validation invariant: all site forms use the same compact uppercase error treatment and the invalid control receives a subtle translucent rose fill/border while the error prompt is visible. Required-field copy must use the field label, never the placeholder (for example: `PLEASE ADD YOUR EMAIL ADDRESS.`).
+- Project Inquiry intro invariant: the popup and Services inquiry use the same title/support rhythm. The popup does not show `A Seat At Our Table`; keep a slight 6px title-to-support gap and a compact support-to-form/step gap at all viewports.
+- Join Our Team program picker invariant: the Fellows Table / Espresso Club / Founders Club listbox opens above its trigger at every viewport, not below it.
