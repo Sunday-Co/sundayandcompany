@@ -321,8 +321,8 @@ footer [style*="color:#ac746c"] {
    re-enlarging the compact mobile menu and receipt surfaces. */
 @media (max-width:900px) {
   aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
-    font-size:8px !important;
-    letter-spacing:.10em !important;
-    min-height:39px !important;
+    font-size:9px !important;
+    letter-spacing:.09em !important;
+    min-height:40px !important;
   }
 }
