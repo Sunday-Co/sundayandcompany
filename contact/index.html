@@ -276,7 +276,7 @@ form [role="alert"] {
         <p style="font-size:12px;line-height:1.55;margin:14px auto 0;max-width:400px">Thank you for writing to Sunday. We have received your message and will reply from hello@sundayandcompany.co.</p>
         <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:22px auto 0;padding-top:12px;text-transform:uppercase;width:min(300px,100%)">Status: Message Delivered</p>
       </div>
-      <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitNote }}" style="display:grid;gap:9px;display:{{ noteFormDisplay }}">
+      <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearNoteError }}" onSubmit="{{ submitNote }}" style="display:grid;gap:9px;display:{{ noteFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
         <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
         <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" /></label>
@@ -413,6 +413,14 @@ class Component extends DCLogic {
       noteErrorDisplay: this.state.noteError ? 'block' : 'none',
       noteDoneDisplay: this.state.noteDone ? 'block' : 'none',
       noteFormDisplay: this.state.noteDone ? 'none' : 'grid',
+      clearNoteError: (e) => {
+        const el = e && e.target;
+        if (el && el.removeAttribute) {
+          el.removeAttribute('data-form-error-field');
+          el.removeAttribute('aria-invalid');
+        }
+        if (this.state.noteError) this.setState({ noteError: '' });
+      },
       submitNote: (e) => {
         e.preventDefault();
         const bad = this.validate(e.target);
