@@ -288,3 +288,44 @@ footer[data-site-footer] [style*="color:#ac746c"] {
   outline: 2px solid #945650 !important;
   outline-offset: 3px !important;
 }
+
+
+/* GLOBAL MOBILE FORM INVARIANTS · 2026-09-27 */
+@media (max-width:900px) {
+  body form input:not([type="hidden"]),
+  body form textarea,
+  body form select,
+  body form [contenteditable="true"] {
+    font-size:16px !important;
+    line-height:1.25 !important;
+    touch-action:manipulation !important;
+    transform:none !important;
+  }
+
+  html[data-phone-viewport-scale="1"] body form input:not([type="hidden"]),
+  html[data-phone-viewport-scale="1"] body form textarea,
+  html[data-phone-viewport-scale="1"] body form select,
+  html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
+    font-size:20px !important;
+  }
+}
+
+body form [data-form-error-field="true"],
+body form [aria-invalid="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+}
+
+@media (max-width:900px) {
+  section[aria-label="Newsletter"] [data-news-blurb] {
+    color:#c88f87 !important;
+    font-family:'Inter Tight',sans-serif !important;
+    font-size:8.75px !important;
+    font-weight:400 !important;
+    letter-spacing:.035em !important;
+    line-height:1.35 !important;
+    text-transform:uppercase !important;
+    white-space:nowrap !important;
+  }
+}
