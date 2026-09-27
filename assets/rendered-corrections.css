@@ -40,11 +40,11 @@ aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
   [data-screen-label="Services"] [data-service-number],
   [data-screen-label="Services"] [data-service-meta],
   [data-screen-label="Services"] [data-service-included] {
-    font-size:7.75px !important;
+    font-size:8.25px !important;
     letter-spacing:.075em !important;
   }
   [data-screen-label="Services"] [data-service-price] {
-    font-size:8.75px !important;
+    font-size:9.25px !important;
     letter-spacing:.08em !important;
   }
 }
@@ -306,12 +306,12 @@ footer [style*="color:#ac746c"] {
     min-width:0 !important;
   }
   [aria-label="Project inquiry"] {
-    width:min(680px, calc(100vw - 72px)) !important;
-    max-width:min(680px, calc(100vw - 72px)) !important;
+    width:min(700px, calc(100vw - 60px)) !important;
+    max-width:min(700px, calc(100vw - 60px)) !important;
   }
   [aria-label="The Sunday Reservation"] {
-    width:min(600px, calc(100vw - 72px)) !important;
-    max-width:min(600px, calc(100vw - 72px)) !important;
+    width:min(610px, calc(100vw - 60px)) !important;
+    max-width:min(610px, calc(100vw - 60px)) !important;
   }
 }
 
