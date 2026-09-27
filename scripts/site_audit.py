@@ -88,7 +88,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 # Cache/version guardrails for shared site assets and DC imports.
 ASSET_REVISION = "20260927-33"
-SUPPORT_REVISION = "20260927-35"
+SUPPORT_REVISION = "20260927-36"
 PUBLIC_ROUTES = (
     "404.html",
     "about/index.html",
@@ -150,6 +150,33 @@ if 'role="presentation" onClick="{{ closeD }}"' in program_component:
     errors.append("Program Cards.dc.html: Program Details still closes on backdrop click")
 if program_component.count('aria-label="Close"') < 3:
     errors.append("Program Cards.dc.html: Program Details explicit close controls are incomplete")
+
+
+# Popup close-button visibility and adaptive-height guardrails.
+if 'background:#ac746c;border:1px solid #311d03;color:#f5efe6' not in header_component:
+    errors.append("Site Header.dc.html: cream-surface popup close button lost rose/cream treatment")
+if "resCloseBg: t ? '#f5efe6' : '#ac746c'" not in header_component or "resCloseColor: t ? '#ac746c' : '#f5efe6'" not in header_component:
+    errors.append("Site Header.dc.html: Reservation close button no longer reverses over photography")
+if "inqDialogMaxH:" not in header_component or "inqReceiptMinH: 'auto'" not in header_component:
+    errors.append("Site Header.dc.html: Project Inquiry no longer grows naturally to its viewport cap")
+if 'overflow-y:auto;padding:{{ inqOverlayPad }}' not in header_component:
+    errors.append("Site Header.dc.html: Project Inquiry overlay cannot scroll when content exceeds the viewport")
+if program_component.count('background:#ac746c;border:1px solid #311d03;color:#f5efe6') < 3:
+    errors.append("Program Cards.dc.html: Program Details close buttons are not consistently rose/cream")
+if "dialogMaxHeight: t ? 'calc(100svh - 24px)' : 'calc(100svh - 36px)'" not in program_component:
+    errors.append("Program Cards.dc.html: Program Details no longer grows to the intended viewport cap")
+
+
+# Inquiry title guardrails: uppercase copy and restrained sizing in popup + Services.
+if 'TELL US WHAT YOU ARE BUILDING</h2>' not in header_component:
+    errors.append("Site Header.dc.html: popup inquiry title is not explicit uppercase copy")
+if 'font-size:clamp(22px,2.2vw,28px)' not in header_component:
+    errors.append("Site Header.dc.html: popup inquiry title sizing changed")
+services_text = (ROOT / "services/index.html").read_text(encoding="utf-8")
+if 'TELL US WHAT YOU ARE BUILDING</h2>' not in services_text:
+    errors.append("services/index.html: embedded inquiry title is not explicit uppercase copy")
+if 'font-size:clamp(25px,2.7vw,34px)' not in services_text:
+    errors.append("services/index.html: embedded inquiry title sizing changed")
 
 if errors:
     print("SITE AUDIT FAILED")
