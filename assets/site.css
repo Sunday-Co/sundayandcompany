@@ -1627,6 +1627,15 @@ form[data-inq] [aria-haspopup="dialog"] {
   footer [data-footer-location] { font-size:13px !important; }
   footer [data-footer-tagline] { font-size:14.5px !important; }
   footer [data-footer-legal] { font-size:9.25px !important; }
+
+  /* Receipt/status rows are compact horizontal ledgers, not stacking flex groups. */
+  [aria-label="Project inquiry"] [data-inquiry-ledger],
+  [aria-label="The Sunday Reservation"] [data-res-total],
+  [aria-label="Newsletter"] [data-news-receipt] > div,
+  [data-screen-label="Services"] #inquiry > div > footer {
+    flex-wrap:nowrap !important;
+    row-gap:0 !important;
+  }
 }
 
 
