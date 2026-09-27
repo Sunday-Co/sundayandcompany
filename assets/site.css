@@ -1632,7 +1632,11 @@ form[data-inq] [aria-haspopup="dialog"] {
   [aria-label="Project inquiry"] [data-inquiry-ledger],
   [aria-label="The Sunday Reservation"] [data-res-total],
   [aria-label="Newsletter"] [data-news-receipt] > div,
-  [data-screen-label="Services"] #inquiry > div > footer {
+  [data-screen-label="Services"] #inquiry > div > footer,
+  [data-screen-label] main [data-receipt-meta][style*="display:flex"],
+  [data-work-receipt] [style*="display:flex"][style*="space-between"],
+  [data-program-cards] [style*="display:flex"][style*="space-between"],
+  [data-screen-label^="Case study"] main [style*="display:flex"][style*="space-between"][style*="text-transform:uppercase"] {
     flex-wrap:nowrap !important;
     row-gap:0 !important;
   }
