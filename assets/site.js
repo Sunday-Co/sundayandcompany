@@ -153,6 +153,7 @@
       if (name === 'customService') return 'PLEASE TELL US WHAT TAILORED SUPPORT YOU NEED.';
       if (type === 'email' || name === 'email') return 'PLEASE ADD YOUR EMAIL ADDRESS.';
       if (type === 'tel' || name === 'phone') return 'PLEASE ADD YOUR PHONE NUMBER.';
+      if (name === 'name') return 'PLEASE ADD YOUR NAME.';
       if (name === 'message_subject') return 'PLEASE ADD A SUBJECT.';
 
       var label = sundayFieldLabel(form, control);
