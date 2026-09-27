@@ -82,6 +82,34 @@ services = (ROOT / "services/index.html").read_text(encoding="utf-8")
 if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, re.I):
     errors.append("services/index.html: stale hidden inquiry kicker remains")
 
+
+# Mobile pages must use a real 1:1 viewport. Browser-level .84 scaling caused
+# iOS Safari to jump/zoom when editable fields received focus.
+PUBLIC_ROUTES = (
+    "404.html",
+    "about/index.html",
+    "accessibility/index.html",
+    "contact/index.html",
+    "cookie-policy/index.html",
+    "index.html",
+    "join-our-team/index.html",
+    "our-work/folake/index.html",
+    "our-work/index.html",
+    "our-work/luckys-cafe-bakery/index.html",
+    "our-work/petti-pathways/index.html",
+    "our-work/pizzeria-coco/index.html",
+    "privacy-policy/index.html",
+    "services/index.html",
+    "sunday-school/index.html",
+    "terms-and-conditions/index.html",
+)
+for rel in PUBLIC_ROUTES:
+    route_text = (ROOT / rel).read_text(encoding="utf-8")
+    if 'var s=0.84' in route_text or 'initial-scale="+s' in route_text:
+        errors.append(f"{rel}: legacy .84 mobile viewport scaling returned")
+    if not re.search(r'<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">', route_text):
+        errors.append(f"{rel}: mobile viewport is not fixed at initial-scale=1")
+
 if errors:
     print("SITE AUDIT FAILED")
     for item in errors:
