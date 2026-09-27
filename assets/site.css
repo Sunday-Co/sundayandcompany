@@ -2431,3 +2431,19 @@ section[aria-label="Newsletter"] h2 + p {
     font-size:8.5px !important;
   }
 }
+
+
+/* FOOTER LEGAL ROW · always one line */
+footer [data-footer-legal-nav] {
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  gap:8px 10px !important;
+  white-space:nowrap !important;
+  width:100% !important;
+}
+@media (max-width:900px) {
+  footer [data-footer-legal-nav] {
+    justify-content:space-between !important;
+    gap:6px 8px !important;
+  }
+}

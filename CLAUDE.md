@@ -19,3 +19,5 @@
 - Mobile footer and menu utility text may be smaller than body copy, but should not read as microscopic. Prefer modest reductions rather than pushing core navigation/footer text below comfortable readability.
 - Final mobile readability target: avoid microtype below about 8px for visible supporting copy. Project Inquiry and Sunday Reservation receipt/support text should generally land around 8.5–10px, footer/menu support text around 9–13px depending on hierarchy, while entered form text remains 16px. Add vertical breathing room before shrinking text.
 - Phone viewport scale is 0.84 below 600px. This is the site-wide sizing baseline for phones; do not reduce it back to 0.75. Use component spacing/type adjustments only after checking the global phone scale.
+- Footer legal links must always stay on one horizontal line at every width: Privacy Policy, Terms & Conditions, Cookie Policy and Accessibility never wrap or stack.
+- The Services inline inquiry footer must use "Next Step" / "Review And Reply"; do not use "Your Inquiry Is Ready."

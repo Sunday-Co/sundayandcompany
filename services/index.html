@@ -387,7 +387,7 @@ class Component extends DCLogic {
     const out = {
       narrowFlag: n,
       inquiryStatus: this.state.inquiryDone ? 'Status: Delivered' : 'Status: In Progress',
-      inquiryFooter: this.state.inquiryDone ? 'Review And Reply' : 'Your Inquiry Is Ready',
+      inquiryFooter: 'Review And Reply',
       inquiryIntroDisplay: this.state.inquiryDone ? 'none' : 'block',
       inquiryComplete: () => this.setState({ inquiryDone: true }),
       gc0: n ? '1fr' : '.35fr .9fr .75fr',
