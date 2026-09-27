@@ -394,7 +394,7 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   font-weight: 300 !important;
   letter-spacing: .065em !important;
   line-height: 1.45 !important;
-  margin-top: 9px !important;
+  margin-top: 6px !important;
   max-width: 520px !important;
   text-transform: uppercase !important;
 }
