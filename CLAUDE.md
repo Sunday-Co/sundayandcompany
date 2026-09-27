@@ -9,7 +9,7 @@
 - Editable mobile fields stay at 16px or larger.
 - Do not retain the modal entrance transform after animation.
 - iOS modal width comes from the padded fixed overlay: width:100% inside the overlay, not another 100vw calculation.
-- Services inline inquiry: decorative kicker is display:none; keep a real 26px gap after the intro; support copy must not touch the dashed step navigation.
+- Services inline inquiry: decorative kicker is display:none. Keep a slight 6px title-to-support gap and a 12px support-to-shared-form gap; support copy must never touch the dashed step navigation.
 - Services inline footer is always "Next Step" / "Review And Reply".
 - Sunday Reservation intro is uppercase.
 - Mobile drawer stays skinny; number and label columns stay separately left aligned.
@@ -17,7 +17,7 @@
 - Above 900px, desktop grids stay fluid at arbitrary widths; 901–1120 may reduce gaps/gutters without creating a third layout.
 - Review 390, 744, 820, 901, 1000, 1024, 1120, 1240 and 1280px before pushing responsive work.
 - Legal footer links are a permanent single-line row at every width: Privacy Policy, Terms & Conditions, Cookie Policy, Accessibility. Never allow that nav to wrap or stack.
-- Services inquiry spacing is structural: keep the Inquiry Form inside data-services-inquiry-form with a 28px top gap after the intro. Do not rely on custom-element margins for that separation.
+- Services inquiry spacing is structural: keep the Inquiry Form inside data-services-inquiry-form with a 12px top gap after the support copy. Do not rely on custom-element margins for that separation.
 - Visible page microtype floor on mobile: inline 6.5–7.5px utility text is raised to about 8.75px, and 8–8.5px utility text is raised to about 9.25px. Keep decorative hierarchy secondary, but do not allow visible mobile copy to become microscopic.
 - Services receipt auto-sizes to its content; do not reintroduce a fixed/minimum 640px height that creates dead white space. Its bottom line is permanently "Next Step" / "Review And Reply".
 - Shared chrome selectors are scoped: keep `data-site-header` on the shared site header and `data-site-footer` on the shared site footer. Never target bare `header` or `footer` globally because pages contain semantic section headers and receipt/ledger UI.
@@ -25,3 +25,10 @@
 - Mobile form-focus invariant: at `<=900px`, every editable `input` (except hidden), `textarea`, `select`, and contenteditable control must compute to at least 16px text so iOS Safari does not focus-zoom. Use `touch-action: manipulation` on form/custom controls to prevent double-tap zoom, and do not solve this by disabling user pinch-zoom with viewport `user-scalable=no` or `maximum-scale=1`.
 - Mobile phone scale invariant: preserve the established small-phone viewport treatment (`0.84` scale for physical screens under 600px) because it controls the approved overall mobile sizing. When that scale is active, editable form controls must compute to at least `19.25px` so their rendered size stays above the iOS Safari focus-zoom threshold. Do not replace this with document/CSS `zoom`, fake 1280px widths, or disabled pinch-zoom.
 - All-form focus-lock invariant: the mobile no-focus-zoom treatment applies to every form on the site, including Project Inquiry, Services Inquiry, Sunday Reservation, footer newsletter, Contact, Join Our Team, Sunday School, and any future form. Keep editable controls covered by the shared mobile form selectors; do not limit the rule to `data-inq` or `data-editorial-labels` forms only.
+- Validation prompts are a site-wide system at every viewport: uppercase, small secondary sans text, with concise field names such as `PLEASE ADD YOUR EMAIL ADDRESS.` Never build prompt copy from placeholders such as `hello@example.com`.
+- When a validation prompt is active, the field/control that caused it gets a subtle transparent Sunday rose fill and rose border treatment. Clear that state when the user edits the control.
+- Popup Project Inquiry intro matches the Services inquiry intro: no `A Seat At Our Table` kicker, a slight gap between `Tell Us What You Are Building` and `Share the essentials. We’ll take it from there.`, and shared title/support styling.
+- Join Our Team Program Of Interest options open above the trigger at every viewport, not below it.
+- Form validation invariant: all site forms use the same compact uppercase error treatment and the invalid control receives a subtle translucent rose fill/border while the error prompt is visible. Required-field copy must use the field label, never the placeholder (for example: `PLEASE ADD YOUR EMAIL ADDRESS.`).
+- Project Inquiry intro invariant: the popup and Services inquiry use the same title/support rhythm. The popup does not show `A Seat At Our Table`; keep a slight 6px title-to-support gap and a compact support-to-form/step gap at all viewports.
+- Join Our Team program picker invariant: the Fellows Table / Espresso Club / Founders Club listbox opens above its trigger at every viewport, not below it.

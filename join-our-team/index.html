@@ -165,9 +165,9 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
     font-weight: 300;
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260927-23" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260927-23" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260927-23"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260927-27" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260927-27" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260927-27"></script>
 </helmet>
 
 <div data-screen-label="Join Our Team" id="top" style="background:#f5efe6;color:#311d03;overflow:hidden">
@@ -223,15 +223,15 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
           <span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Program Of Interest *</span>
           <input name="program" type="hidden" value="{{ program }}" />
           <button type="button" aria-haspopup="listbox" aria-expanded="{{ selOpen }}" onClick="{{ toggleSel }}" style="align-items:center;background:#fffdf8;border:1px solid rgba(49,29,3,.52);border-radius:0;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:12.5px!important;font-weight:400;justify-content:space-between;min-height:44px;padding:7px 10px;text-align:left;width:100%;color:{{ programColor }}">{{ programLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:15px;transition:transform 200ms ease;width:15px;transform:{{ selRot }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-          <div role="listbox" aria-label="Program of interest" style="background:#fffdf8;border:1px solid #311d03;left:0;position:absolute;right:0;top:100%;z-index:20;display:{{ selDisplay }}">
+          <div data-program-listbox role="listbox" aria-label="Program of interest" style="background:#fffdf8;border:1px solid #311d03;bottom:calc(100% + 1px);left:0;position:absolute;right:0;top:auto;z-index:20;display:{{ selDisplay }}">
             <button type="button" role="option" onClick="{{ pickFellows }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Fellows Table</button>
             <button type="button" role="option" onClick="{{ pickEspresso }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Espresso Club</button>
             <button type="button" role="option" onClick="{{ pickFounders }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Founders Club</button>
           </div>
         </div>
         <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:400;gap:12px;grid-column:1 / -1;justify-content:center;letter-spacing:.10em;min-height:44px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ interestLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+        <p role="alert" style="color:#8c2f22;font-size:11px;grid-column:1 / -1;margin:0;display:{{ interestErrorDisplay }}">{{ interestError }}</p>
       </form>
-      <p role="alert" style="color:#8c2f22;font-size:11px;margin:12px 0 0;display:{{ interestErrorDisplay }}">{{ interestError }}</p>
       <div data-receipt-meta style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.13em;margin-top:20px;padding:10px 0;text-transform:uppercase"><span>Status</span><strong style="font-weight:400">Coming Soon</strong></div>
     </div>
   </section>
@@ -247,8 +247,9 @@ class Component extends DCLogic {
     const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required]'));
     const labelFor = (el) => {
       const wrap = el.closest('label');
-      const txt = wrap ? (wrap.querySelector('span') || {}).textContent : '';
-      return (txt || el.getAttribute('placeholder') || el.name || 'This field').replace(/\s*\*\s*$/, '').trim();
+      const external = el.id ? form.querySelector('label[for="' + el.id + '"]') : null;
+      const txt = wrap ? ((wrap.querySelector('span') || wrap).textContent || '') : (external ? external.textContent : '');
+      return (txt || el.getAttribute('aria-label') || el.name || 'This field').replace(/\s*\*\s*$/, '').trim();
     };
     for (const el of fields) {
       const v = (el.value || '').trim();
@@ -260,7 +261,7 @@ class Component extends DCLogic {
       }
       if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
         el.focus();
-        return 'That email address does not look right. Please check it.';
+        return 'Please enter a valid email address.';
       }
       if (el.type === 'tel' && v.replace(/[^0-9]/g, '').length < 7) {
         el.focus();

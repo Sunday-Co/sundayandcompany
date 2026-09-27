@@ -161,6 +161,28 @@ html {
 }
 
 
+/* Unified validation treatment for every site form, at every viewport. */
+form [role="alert"] {
+  color:#8c2f22 !important;
+  font-family:var(--sunday-sans) !important;
+  font-size:9.5px !important;
+  font-weight:400 !important;
+  letter-spacing:.065em !important;
+  line-height:1.35 !important;
+  text-transform:uppercase !important;
+}
+
+form [data-form-error-field="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12);
+}
+
+[data-program-listbox] {
+  bottom:calc(100% + 1px) !important;
+  top:auto !important;
+}
+
 form[data-inq] label > span:first-child,
 form[data-inq] fieldset > legend,
 form[data-editorial-labels] label > span:first-child,
@@ -232,8 +254,9 @@ form[data-editorial-labels] [role="alert"],
 [aria-label="Newsletter"] [role="alert"],
 [aria-label="The Sunday Reservation"] [role="alert"] {
   font-family: var(--sunday-sans) !important;
-  font-size: 10.5px !important;
+  font-size: 9.5px !important;
   line-height: 1.4 !important;
+  text-transform: uppercase !important;
 }
 
 form[data-inq] [data-stepnav] span,
@@ -357,17 +380,17 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   margin: 0 0 5px !important;
   text-transform: uppercase !important;
 }
-[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
-#inquiry [data-inquiry-kicker] + h2 {
+[aria-label="Project inquiry"] [data-inquiry-title],
+#inquiry [data-inquiry-title] {
   color: var(--sunday-espresso) !important;
   font-family: var(--sunday-serif) !important;
   font-size: 31px !important;
   font-style: normal !important;
   font-weight: 400 !important;
-  letter-spacing: -.02em !important;
-  line-height: .98 !important;
+  letter-spacing: -.045em !important;
+  line-height: .96 !important;
   margin: 0 !important;
-  text-transform: uppercase !important;
+  text-transform: none !important;
 }
 [aria-label="Project inquiry"] [data-inquiry-support],
 #inquiry [data-inquiry-support],
@@ -377,7 +400,7 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   font-weight: 300 !important;
   letter-spacing: .065em !important;
   line-height: 1.45 !important;
-  margin-top: 9px !important;
+  margin-top: 6px !important;
   max-width: 520px !important;
   text-transform: uppercase !important;
 }
@@ -428,8 +451,8 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     font-size: 9.5px !important;
     letter-spacing: .09em !important;
   }
-  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
-  #inquiry [data-inquiry-kicker] + h2 {
+  [aria-label="Project inquiry"] [data-inquiry-title],
+  #inquiry [data-inquiry-title] {
     font-size: 24px !important;
     line-height: 1 !important;
   }
@@ -1355,7 +1378,7 @@ form[data-inq] [aria-haspopup="dialog"] {
     letter-spacing:.07em !important;
     margin-bottom:4px !important;
   }
-  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2 {
+  [aria-label="Project inquiry"] [data-inquiry-title] {
     font-size:24px !important;
     line-height:1.03 !important;
   }
@@ -1494,7 +1517,7 @@ form[data-inq] [aria-haspopup="dialog"] {
   }
   [data-screen-label="Services"] #inquiry [data-inquiry-kicker] { display:none !important; }
   [data-screen-label="Services"] #inquiry [data-inquiry-support] {
-    font-size:10.5px !important;
+    font-size:10.25px !important;
     line-height:1.48 !important;
     margin:6px 0 0 !important;
   }
@@ -1577,4 +1600,42 @@ footer[data-site-footer] [data-footer-legal-nav] a {
   [data-screen-label] main [style*="font-size:8.5px"] {
     font-size:9.25px !important;
   }
+}
+
+
+/* FINAL ALL-FORMS VALIDATION + FOCUS LOCK · 2026-09-27 */
+/* Keep the approved 0.84 phone viewport treatment while ensuring every editable
+   form control still computes above iOS Safari's focus-zoom threshold. This
+   final rule intentionally comes after all route/modal typography overrides. */
+@media (max-width:900px) {
+  html[data-phone-viewport-scale="1"] body form input:not([type="hidden"]),
+  html[data-phone-viewport-scale="1"] body form textarea,
+  html[data-phone-viewport-scale="1"] body form select,
+  html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
+    font-size:19.25px !important;
+    line-height:1.25 !important;
+    transform:none !important;
+  }
+}
+
+/* Project Inquiry modal uses the same intro rhythm as the embedded Services form.
+   The modal does not show the old kicker. */
+[aria-label="Project inquiry"] [data-inquiry-kicker] {
+  display:none !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-title] {
+  margin:0 !important;
+}
+[aria-label="Project inquiry"] [data-inquiry-support] {
+  margin:6px 0 0 !important;
+}
+[aria-label="Project inquiry"] form[data-inq] {
+  margin-top:12px !important;
+}
+
+/* Unified invalid-state treatment for native and custom controls. */
+form [data-form-error-field="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
 }

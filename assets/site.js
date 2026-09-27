@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260914-18';
+    link.href = '/assets/rendered-corrections.css?v=20260927-27';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -84,6 +84,112 @@
 
   function sundayNormalizeText(value) {
     return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function sundayFieldLabel(form, control) {
+    if (!form || !control) return '';
+
+    var label = '';
+    var wrap = control.closest && control.closest('label');
+    if (wrap) {
+      var wrapText = wrap.querySelector('span');
+      label = sundayNormalizeText((wrapText || wrap).textContent);
+    }
+
+    if (!label && control.id) {
+      var external = form.querySelector('label[for="' + control.id.replace(/"/g, '\\"') + '"]');
+      if (external) label = sundayNormalizeText(external.textContent);
+    }
+
+    if (!label && control.getAttribute && control.getAttribute('aria-haspopup') === 'listbox') {
+      var holder = control.parentElement;
+      if (holder) {
+        var nearby = holder.querySelector(':scope > span:first-child');
+        if (nearby) label = sundayNormalizeText(nearby.textContent);
+      }
+      if (!label) label = sundayNormalizeText(control.getAttribute('aria-label'));
+      if (!label) label = 'Program Of Interest';
+    }
+
+    if (!label && control.getAttribute && control.getAttribute('role') === 'checkbox') {
+      label = 'Service';
+    }
+
+    if (!label && control.getAttribute) label = sundayNormalizeText(control.getAttribute('aria-label'));
+    if (!label && control.name) {
+      var names = {
+        email: 'Email Address',
+        phone: 'Phone Number',
+        name: 'Name',
+        message_subject: 'Subject',
+        message: 'Message',
+        business: 'Business Name',
+        customService: 'Tailored Support',
+        website: 'Website'
+      };
+      label = names[control.name] || String(control.name).replace(/[_-]+/g, ' ');
+    }
+
+    return sundayNormalizeText(label).replace(/\s*\*\s*$/, '');
+  }
+
+  function sundayValidationMessage(form, control, raw) {
+    var original = sundayNormalizeText(raw);
+    if (!original) return '';
+
+    var lower = original.toLowerCase();
+    var isMissing = lower.indexOf('please add') === 0 ||
+      lower.indexOf('please select') === 0 ||
+      lower.indexOf('required') !== -1;
+
+    if (control && isMissing) {
+      var role = control.getAttribute && control.getAttribute('role');
+      var popup = control.getAttribute && control.getAttribute('aria-haspopup');
+      var name = control.name || '';
+      var type = (control.type || '').toLowerCase();
+
+      if (popup === 'listbox') return 'PLEASE SELECT A PROGRAM.';
+      if (role === 'checkbox') return 'PLEASE SELECT AT LEAST ONE SERVICE.';
+      if (name === 'customService') return 'PLEASE TELL US WHAT TAILORED SUPPORT YOU NEED.';
+      if (type === 'email' || name === 'email') return 'PLEASE ADD YOUR EMAIL ADDRESS.';
+      if (type === 'tel' || name === 'phone') return 'PLEASE ADD YOUR PHONE NUMBER.';
+      if (name === 'name') return 'PLEASE ADD YOUR NAME.';
+      if (name === 'message_subject') return 'PLEASE ADD A SUBJECT.';
+
+      var label = sundayFieldLabel(form, control);
+      var clean = sundayNormalizeText(label).replace(/^your\s+/i, '');
+      if (/^subject$/i.test(clean)) return 'PLEASE ADD A SUBJECT.';
+      if (/^program( of interest)?$/i.test(clean)) return 'PLEASE SELECT A PROGRAM.';
+      if (/^service/i.test(clean)) return 'PLEASE SELECT AT LEAST ONE SERVICE.';
+      if (clean) return ('PLEASE ADD YOUR ' + clean + '.').toUpperCase();
+    }
+
+    if (lower.indexOf('valid email') !== -1) return 'PLEASE ENTER A VALID EMAIL ADDRESS.';
+    if (lower.indexOf('full phone') !== -1) return 'PLEASE ADD A FULL PHONE NUMBER.';
+    if (lower.indexOf('http://') !== -1 || lower.indexOf('https://') !== -1) {
+      return 'PLEASE ENTER THE FULL LINK BEGINNING WITH HTTP:// OR HTTPS://.';
+    }
+    if (lower.indexOf('tailored') !== -1) return 'PLEASE TELL US WHAT TAILORED SUPPORT YOU NEED.';
+    if (lower.indexOf('service') !== -1 && lower.indexOf('select') !== -1) return 'PLEASE SELECT AT LEAST ONE SERVICE.';
+    if (lower.indexOf('program') !== -1 && lower.indexOf('select') !== -1) return 'PLEASE SELECT A PROGRAM.';
+
+    return original.toUpperCase();
+  }
+
+  function sundayNormalizeFormAlerts() {
+    var forms = document.querySelectorAll('form');
+    for (var i = 0; i < forms.length; i++) {
+      var form = forms[i];
+      var alerts = form.querySelectorAll('[role="alert"]');
+      for (var a = 0; a < alerts.length; a++) {
+        var alert = alerts[a];
+        var raw = sundayNormalizeText(alert.textContent);
+        if (!raw) continue;
+        var control = sundayErrorControl(form);
+        var normalized = sundayValidationMessage(form, control, raw);
+        if (normalized && raw !== normalized) alert.textContent = normalized;
+      }
+    }
   }
 
   function sundayDescribeOpener(el) {
@@ -257,6 +363,142 @@
     });
   }
 
+  function sundayErrorControl(form) {
+    if (!form) return null;
+    var active = document.activeElement;
+    if (active && form.contains(active)) {
+      var focused = active.closest && active.closest('input:not([type="hidden"]),textarea,select,button[aria-haspopup="listbox"],button[aria-haspopup="dialog"],[role="checkbox"]');
+      if (focused) return focused;
+    }
+
+    var alert = form.querySelector('[role="alert"]');
+    var msg = sundayNormalizeText(alert && alert.textContent).toLowerCase();
+    if (!msg) return null;
+
+    if (msg.indexOf('email') !== -1) {
+      var email = form.querySelector('input[type="email"]');
+      if (email) {
+        var emailValue = sundayNormalizeText(email.value);
+        var emailInvalid = emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailValue);
+        if (!emailValue || emailInvalid) return email;
+        return null;
+      }
+    }
+    if (msg.indexOf('phone') !== -1) {
+      var phone = form.querySelector('input[type="tel"]');
+      if (phone) {
+        var phoneValue = sundayNormalizeText(phone.value);
+        if (!phoneValue || phoneValue.replace(/[^0-9]/g, '').length < 7) return phone;
+        return null;
+      }
+    }
+    if (msg.indexOf('subject') !== -1) {
+      var subject = form.querySelector('[name="message_subject"]');
+      return subject && !sundayNormalizeText(subject.value) ? subject : null;
+    }
+    if (msg.indexOf('business name') !== -1) {
+      var business = form.querySelector('[name="business"]');
+      return business && !sundayNormalizeText(business.value) ? business : null;
+    }
+    if (/(^|\s)name(\.|\s|$)/.test(msg)) {
+      var nameField = form.querySelector('[name="name"]');
+      return nameField && !sundayNormalizeText(nameField.value) ? nameField : null;
+    }
+    if (msg.indexOf('message') !== -1 && msg.indexOf('error message') === -1) {
+      var messageField = form.querySelector('[name="message"]');
+      return messageField && !sundayNormalizeText(messageField.value) ? messageField : null;
+    }
+    if (msg.indexOf('program') !== -1) {
+      var programValue = form.querySelector('input[name="program"]');
+      return (!programValue || !sundayNormalizeText(programValue.value)) ? form.querySelector('[aria-haspopup="listbox"]') : null;
+    }
+    if (msg.indexOf('service') !== -1 && msg.indexOf('tailored') === -1) {
+      var servicesValue = form.querySelector('input[name="services"]');
+      return (!servicesValue || !sundayNormalizeText(servicesValue.value)) ? form.querySelector('[role="checkbox"]') : null;
+    }
+    if (msg.indexOf('tailored') !== -1) {
+      var tailored = form.querySelector('[name="customService"]');
+      return tailored && !sundayNormalizeText(tailored.value) ? tailored : null;
+    }
+    if (msg.indexOf('link') !== -1 || msg.indexOf('http') !== -1) {
+      var urls = form.querySelectorAll('input[type="url"]');
+      for (var u = 0; u < urls.length; u++) {
+        var urlValue = sundayNormalizeText(urls[u].value);
+        if (urlValue && !/^https?:\/\/[^\s]+$/i.test(urlValue)) return urls[u];
+      }
+      return null;
+    }
+
+    var controls = form.querySelectorAll('input:not([type="hidden"]),textarea,select');
+    for (var i = 0; i < controls.length; i++) {
+      var el = controls[i];
+      var value = sundayNormalizeText(el.value);
+      if (el.required && !value) return el;
+      if (el.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) return el;
+      if (el.type === 'tel' && value && value.replace(/[^0-9]/g, '').length < 7) return el;
+    }
+    return null;
+  }
+
+  function syncFormErrorVisuals() {
+    var forms = document.querySelectorAll('form');
+    for (var i = 0; i < forms.length; i++) {
+      var form = forms[i];
+      var marked = form.querySelectorAll('[data-form-error-field="true"]');
+      for (var m = 0; m < marked.length; m++) {
+        marked[m].removeAttribute('data-form-error-field');
+        marked[m].removeAttribute('aria-invalid');
+      }
+
+      var alerts = form.querySelectorAll('[role="alert"]');
+      var hasError = false;
+      for (var a = 0; a < alerts.length; a++) {
+        if (sundayNormalizeText(alerts[a].textContent)) {
+          hasError = true;
+          break;
+        }
+      }
+      if (!hasError) continue;
+      var target = sundayErrorControl(form);
+      if (target) {
+        target.setAttribute('data-form-error-field', 'true');
+        target.setAttribute('aria-invalid', 'true');
+      }
+    }
+  }
+
+  function installFormErrorManagement() {
+    document.addEventListener('submit', function () {
+      window.setTimeout(syncFormErrorVisuals, 0);
+      window.setTimeout(syncFormErrorVisuals, 80);
+    }, true);
+
+    function clearTarget(event) {
+      var target = event.target && event.target.closest ? event.target.closest('[data-form-error-field="true"]') : null;
+      if (!target) return;
+      target.removeAttribute('data-form-error-field');
+      target.removeAttribute('aria-invalid');
+    }
+    document.addEventListener('input', clearTarget, true);
+    document.addEventListener('change', clearTarget, true);
+    document.addEventListener('click', function (event) {
+      var option = event.target && event.target.closest ? event.target.closest('[role="option"]') : null;
+      if (option) {
+        var form = option.closest('form');
+        var trigger = form && form.querySelector('[aria-haspopup="listbox"][data-form-error-field="true"]');
+        if (trigger) {
+          trigger.removeAttribute('data-form-error-field');
+          trigger.removeAttribute('aria-invalid');
+        }
+      }
+      var checkbox = event.target && event.target.closest ? event.target.closest('[role="checkbox"][data-form-error-field="true"]') : null;
+      if (checkbox) {
+        checkbox.removeAttribute('data-form-error-field');
+        checkbox.removeAttribute('aria-invalid');
+      }
+    }, true);
+  }
+
   function applyFormRenderCorrections() {
     var labels = document.querySelectorAll('[data-start-date-label]');
     for (var i = 0; i < labels.length; i++) {
@@ -275,12 +517,15 @@
   function sync() {
     ensureCorrectionStyles();
     applyFormRenderCorrections();
+    sundayNormalizeFormAlerts();
+    syncFormErrorVisuals();
     syncAccessibleSurface();
   }
 
   function boot() {
     ensureCorrectionStyles();
     installAccessibleSurfaceManagement();
+    installFormErrorManagement();
     sync();
 
     var mo = new MutationObserver(function (mutations) {
@@ -294,6 +539,10 @@
           shouldSync = true;
           break;
         }
+        if (mutations[i].type === 'characterData') {
+          shouldSync = true;
+          break;
+        }
       }
       if (shouldSync) window.requestAnimationFrame(sync);
     });
@@ -302,6 +551,7 @@
       childList: true,
       subtree: true,
       attributes: true,
+      characterData: true,
       attributeFilter: ['style', 'data-sheet-state', 'aria-hidden', 'aria-modal']
     });
     window.addEventListener('pageshow', sync);
