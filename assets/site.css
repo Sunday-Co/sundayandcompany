@@ -1976,7 +1976,8 @@ section[aria-label="Newsletter"] h2 + p {
     margin-top:0 !important;
   }
   [data-screen-label="Services"] #inquiry form[data-inq] {
-    margin-top:26px !important;
+    margin-top:0 !important;
+    padding-top:24px !important;
   }
   [data-screen-label="Services"] #inquiry header {
     margin-bottom:0 !important;
