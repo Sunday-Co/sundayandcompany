@@ -27,10 +27,21 @@
   font-weight:400 !important;
   letter-spacing:.09em !important;
 }
-aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
-    font-size:9.25px !important;
-    letter-spacing:.09em !important;
-    min-height:41px !important;
+aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
+[data-about-team-cta] {
+  font-family:var(--sc-sans) !important;
+  font-size:9.25px !important;
+  font-weight:400 !important;
+  letter-spacing:.09em !important;
+  min-height:41px !important;
+}
+
+@media (max-width:900px) {
+  [data-screen-label="Services"] [data-service-number],
+  [data-screen-label="Services"] [data-service-meta],
+  [data-screen-label="Services"] [data-service-included] {
+    font-size:8.25px !important;
+    letter-spacing:.075em !important;
   }
   [data-screen-label="Services"] [data-service-price] {
     font-size:9.25px !important;
@@ -310,8 +321,8 @@ footer [style*="color:#ac746c"] {
    re-enlarging the compact mobile menu and receipt surfaces. */
 @media (max-width:900px) {
   aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
-    font-size:9px !important;
+    font-size:9.25px !important;
     letter-spacing:.09em !important;
-    min-height:40px !important;
+    min-height:41px !important;
   }
 }
