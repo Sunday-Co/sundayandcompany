@@ -1,23 +1,18 @@
 ## Sunday & Company responsive rules
 
-- Use two layout systems only. At 900px wide and below, use the mobile structure. At 901px and above, use the desktop structure.
-- The header uses the compact Menu trigger through 1240px. Above 1240px, show the full desktop navigation.
-- Do not fake tablet or narrow-desktop responsiveness by forcing a 1280px viewport, rewriting matchMedia, or zooming the whole document.
-- The existing 75% phone viewport behavior below 600px may remain. Do not extend that scaling to tablets or desktop windows.
-- A 601–900px rule may adjust typography only. It must not introduce a third layout.
-- Project Inquiry and The Sunday Reservation are editorial receipt surfaces. Keep visible breathing room around them on mobile. Do not make them edge-to-edge or full-screen unless required by the device height.
-- Keep form inputs at 16px on iOS-facing mobile layouts to prevent focus zoom, but control visual weight through height, padding, labels, spacing, and surrounding microtype.
-- Utility/filler copy such as receipt metadata, fine print, next-step rows, keep-browsing text, and reservation numbers should stay subordinate to the main heading and form content.
-- The Sunday Reservation intro line beginning "Join our newsletter..." is always uppercase and intentionally smaller than the title.
-- Before merging responsive changes, review at 390px, 744px, 820px, 1000px, 1024px, and 1280px.
-- Mobile visual hierarchy should stay deliberately restrained: avoid enlarging utility labels, footer links, receipt metadata, service microcopy, menu labels, or filler text simply because the layout stacks.
-- The pullout mobile menu should remain a skinny editorial sheet. Keep menu numbers in a consistent left column and labels in a separate left-aligned column with visible gutter space.
-- Decorative and filler mobile copy should recede clearly behind headings and body copy. Receipt metadata, section labels, figcaptions, service metadata, filing labels, legal/fine print and similar utility text should generally live around 7.25–9.25px on the existing 75% phone viewport system, while entered form text stays 16px.
-- Above 900px, desktop grids must stay fluid at arbitrary browser widths. Avoid hard pixel minimums inside desktop grid columns when they can force overflow; prefer minmax(0,fr). A 901–1120px pressure-relief band may reduce gutters, gaps and type slightly while preserving the desktop structure.
-- Do not push receipt microtype below 8px on the phone treatment unless it is truly disposable metadata. For Project Inquiry and Sunday Reservation, keep supporting receipt text roughly 8–10px, field labels around 9px, and entered form text at 16px. If the forms feel too large, reduce whitespace before shrinking text into illegibility.
-- Inline inquiry intro copy must never touch or overlap the dashed step navigation. Keep the imported Inquiry Form as a block and apply the mobile top gap as padding-top directly to its rendered form[data-inq] (about 24–28px), so the spacing cannot collapse, not only to the dc-import host.
-- Mobile footer and menu utility text may be smaller than body copy, but should not read as microscopic. Prefer modest reductions rather than pushing core navigation/footer text below comfortable readability.
-- Final mobile readability target: avoid microtype below about 8px for visible supporting copy. Project Inquiry and Sunday Reservation receipt/support text should generally land around 8.5–10px, footer/menu support text around 9–13px depending on hierarchy, while entered form text remains 16px. Add vertical breathing room before shrinking text.
-- Phone viewport scale is 0.84 below 600px. This is the site-wide sizing baseline for phones; do not reduce it back to 0.75. Use component spacing/type adjustments only after checking the global phone scale.
-- Footer legal links must always stay on one horizontal line at every width: Privacy Policy, Terms & Conditions, Cookie Policy and Accessibility never wrap or stack.
-- The Services inline inquiry footer must use "Next Step" / "Review And Reply"; do not use "Your Inquiry Is Ready."
+- Two page layouts only: <=900px mobile, >=901px desktop.
+- Compact Menu through 1240px; full navigation at 1241px+.
+- Never fake responsiveness with document zoom, a forced 1280px viewport, or matchMedia rewriting.
+- Phones below 600px currently use the existing 0.84 viewport baseline.
+- Keep one consolidated mobile override block at the end of assets/site.css.
+- Project Inquiry and Sunday Reservation auto-size on normal phones and should not have an internal scrollbar in the normal/default state.
+- Editable mobile fields stay at 16px or larger.
+- Do not retain the modal entrance transform after animation.
+- iOS modal width comes from the padded fixed overlay: width:100% inside the overlay, not another 100vw calculation.
+- Services inline inquiry: decorative kicker is display:none; keep a real 26px gap after the intro; support copy must not touch the dashed step navigation.
+- Services inline footer is always "Next Step" / "Review And Reply".
+- Sunday Reservation intro is uppercase.
+- Mobile drawer stays skinny; number and label columns stay separately left aligned.
+- Footer/menu/support copy should be readable but secondary.
+- Above 900px, desktop grids stay fluid at arbitrary widths; 901–1120 may reduce gaps/gutters without creating a third layout.
+- Review 390, 744, 820, 901, 1000, 1024, 1120, 1240 and 1280px before pushing responsive work.
