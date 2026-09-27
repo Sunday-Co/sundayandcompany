@@ -161,6 +161,28 @@ html {
 }
 
 
+/* Unified validation treatment for every site form, at every viewport. */
+form [role="alert"] {
+  color:#8c2f22 !important;
+  font-family:var(--sunday-sans) !important;
+  font-size:8.75px !important;
+  font-weight:400 !important;
+  letter-spacing:.065em !important;
+  line-height:1.35 !important;
+  text-transform:uppercase !important;
+}
+
+form [data-form-error-field="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12);
+}
+
+[data-program-listbox] {
+  bottom:calc(100% + 1px) !important;
+  top:auto !important;
+}
+
 form[data-inq] label > span:first-child,
 form[data-inq] fieldset > legend,
 form[data-editorial-labels] label > span:first-child,
