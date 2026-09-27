@@ -351,9 +351,6 @@ body form [aria-invalid="true"] {
     font-size:20px !important;
   }
 }
-body form[data-validation-attempted="true"] input:not([type="hidden"]):invalid,
-body form[data-validation-attempted="true"] textarea:invalid,
-body form[data-validation-attempted="true"] select:invalid,
 body form [data-form-error-field="true"],
 body form [aria-invalid="true"] {
   background:rgba(172,116,108,.12) !important;
