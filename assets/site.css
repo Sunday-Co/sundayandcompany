@@ -110,6 +110,43 @@ a[style*="font-family:'Inter Tight'"],
    One owner for repeated utility typography.
    ========================================================== */
 
+/* Mobile form focus stability.
+   iOS Safari zooms focused form controls when their computed text size is below 16px.
+   Keep editable controls at 16px without disabling user pinch-zoom, and prevent
+   double-tap zoom on form interactions. */
+html {
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+
+@media (max-width:900px) {
+  input:not([type="hidden"]),
+  textarea,
+  select,
+  [contenteditable="true"] {
+    font-size:16px !important;
+    line-height:1.25;
+    touch-action:manipulation;
+  }
+
+  input:not([type="hidden"]):focus,
+  textarea:focus,
+  select:focus,
+  [contenteditable="true"]:focus {
+    transform:none !important;
+  }
+
+  form button,
+  form input,
+  form textarea,
+  form select,
+  [aria-haspopup="dialog"],
+  [aria-haspopup="listbox"] {
+    touch-action:manipulation;
+  }
+}
+
+
 form[data-inq] label > span:first-child,
 form[data-inq] fieldset > legend,
 form[data-editorial-labels] label > span:first-child,
