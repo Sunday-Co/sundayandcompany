@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260914-18';
+    link.href = '/assets/rendered-corrections.css?v=20260927-27';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -257,6 +257,64 @@
     });
   }
 
+  function sundayErrorControl(form) {
+    if (!form) return null;
+    var active = document.activeElement;
+    if (active && form.contains(active)) {
+      var focused = active.closest && active.closest('input:not([type="hidden"]),textarea,select,button[aria-haspopup="listbox"],button[aria-haspopup="dialog"],[role="checkbox"]');
+      if (focused) return focused;
+    }
+
+    var alert = form.querySelector('[role="alert"]');
+    var msg = sundayNormalizeText(alert && alert.textContent).toLowerCase();
+    if (!msg) return null;
+
+    if (msg.indexOf('email') !== -1) return form.querySelector('input[type="email"]');
+    if (msg.indexOf('phone') !== -1) return form.querySelector('input[type="tel"]');
+    if (msg.indexOf('subject') !== -1) return form.querySelector('[name="message_subject"]');
+    if (msg.indexOf('program') !== -1) return form.querySelector('[aria-haspopup="listbox"]');
+    if (msg.indexOf('service') !== -1) return form.querySelector('[role="checkbox"]');
+    if (msg.indexOf('tailored') !== -1) return form.querySelector('[name="customService"]');
+
+    var controls = form.querySelectorAll('input:not([type="hidden"]),textarea,select');
+    for (var i = 0; i < controls.length; i++) {
+      var el = controls[i];
+      var value = sundayNormalizeText(el.value);
+      if (el.required && !value) return el;
+      if (el.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) return el;
+      if (el.type === 'tel' && value && value.replace(/[^0-9]/g, '').length < 7) return el;
+    }
+    return null;
+  }
+
+  function syncFormErrorVisuals() {
+    var forms = document.querySelectorAll('form');
+    for (var i = 0; i < forms.length; i++) {
+      var form = forms[i];
+      var marked = form.querySelectorAll('[data-form-error-field="true"]');
+      for (var m = 0; m < marked.length; m++) marked[m].removeAttribute('data-form-error-field');
+
+      var alerts = form.querySelectorAll('[role="alert"]');
+      var hasError = false;
+      for (var a = 0; a < alerts.length; a++) {
+        if (sundayNormalizeText(alerts[a].textContent)) {
+          hasError = true;
+          break;
+        }
+      }
+      if (!hasError) continue;
+      var target = sundayErrorControl(form);
+      if (target) target.setAttribute('data-form-error-field', 'true');
+    }
+  }
+
+  function installFormErrorManagement() {
+    document.addEventListener('submit', function () {
+      window.setTimeout(syncFormErrorVisuals, 0);
+      window.setTimeout(syncFormErrorVisuals, 80);
+    }, true);
+  }
+
   function applyFormRenderCorrections() {
     var labels = document.querySelectorAll('[data-start-date-label]');
     for (var i = 0; i < labels.length; i++) {
@@ -275,12 +333,14 @@
   function sync() {
     ensureCorrectionStyles();
     applyFormRenderCorrections();
+    syncFormErrorVisuals();
     syncAccessibleSurface();
   }
 
   function boot() {
     ensureCorrectionStyles();
     installAccessibleSurfaceManagement();
+    installFormErrorManagement();
     sync();
 
     var mo = new MutationObserver(function (mutations) {
@@ -294,6 +354,10 @@
           shouldSync = true;
           break;
         }
+        if (mutations[i].type === 'characterData') {
+          shouldSync = true;
+          break;
+        }
       }
       if (shouldSync) window.requestAnimationFrame(sync);
     });
@@ -302,6 +366,7 @@
       childList: true,
       subtree: true,
       attributes: true,
+      characterData: true,
       attributeFilter: ['style', 'data-sheet-state', 'aria-hidden', 'aria-modal']
     });
     window.addEventListener('pageshow', sync);
