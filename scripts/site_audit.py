@@ -85,6 +85,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 # Cache/version guardrails for shared site assets and DC imports.
 ASSET_REVISION = "20260927-33"
+SUPPORT_REVISION = "20260927-34"
 PUBLIC_ROUTES = (
     "404.html",
     "about/index.html",
@@ -109,13 +110,13 @@ for rel in PUBLIC_ROUTES:
         expected = f"/assets/{asset}?v={ASSET_REVISION}"
         if expected not in route_text:
             errors.append(f"{rel}: {asset} is not on cache revision {ASSET_REVISION}")
-    if f'/support.js?v={ASSET_REVISION}' not in route_text:
-        errors.append(f"{rel}: support.js is not on cache revision {ASSET_REVISION}")
+    if f'/support.js?v={SUPPORT_REVISION}' not in route_text:
+        errors.append(f"{rel}: support.js is not on cache revision {SUPPORT_REVISION}")
     if 'var s=0.84' not in route_text:
         errors.append(f"{rel}: established 0.84 mobile visual scale changed")
 
 support_text = (ROOT / "support.js").read_text(encoding="utf-8")
-if f'?v={ASSET_REVISION}' not in support_text or "requestUrl" not in support_text:
+if f'?v={SUPPORT_REVISION}' not in support_text or "requestUrl" not in support_text:
     errors.append("support.js: shared DC component fetches are not cache-busted")
 
 site_js_text = (ROOT / "assets/site.js").read_text(encoding="utf-8")

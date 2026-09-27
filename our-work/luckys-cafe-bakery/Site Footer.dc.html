@@ -54,17 +54,15 @@ form [role="alert"] {
 
 <style>
 /* FOOTER NEWSLETTER SUPPORT LINE · GLOBAL COMPONENT RULE */
-@media (max-width:900px) {
-  section[aria-label="Newsletter"] [data-news-blurb] {
-    color:#c88f87 !important;
-    font-family:'Inter Tight',sans-serif !important;
-    font-size:8.75px !important;
-    font-weight:400 !important;
-    letter-spacing:.035em !important;
-    line-height:1.35 !important;
-    text-transform:uppercase !important;
-    white-space:nowrap !important;
-  }
+section[aria-label="Newsletter"] [data-news-blurb] {
+  color:#c88f87 !important;
+  font-family:'Inter Tight',sans-serif !important;
+  font-size:8.75px !important;
+  font-weight:400 !important;
+  letter-spacing:.035em !important;
+  line-height:1.35 !important;
+  text-transform:uppercase !important;
+  white-space:nowrap !important;
 }
 </style>
 </head>
@@ -75,7 +73,7 @@ form [role="alert"] {
     <div>
       <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0 0 5px;text-transform:uppercase;visibility:hidden" aria-hidden="true">Stay In Touch</p>
       <h2 style="font-size:clamp(21px,2.1vw,30px);font-weight:400;letter-spacing:-.055em;line-height:1;margin:0">Join The Sunday Reservation</h2>
-      <p data-news-blurb style="font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:300;line-height:1.35;margin-top:5px;text-transform:uppercase;letter-spacing:.03em">Thoughtful notes on branding, business and the work behind both.</p>
+      <p data-news-blurb style="color:#c88f87;font-family:'Inter Tight',sans-serif;font-size:8.75px;font-weight:400;line-height:1.35;margin-top:5px;text-transform:uppercase;letter-spacing:.035em;white-space:nowrap">Thoughtful notes on branding, business and the work behind both.</p>
       <p data-news-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.25px;font-weight:300;letter-spacing:.035em;line-height:1.45;margin-top:7px;opacity:.78;text-transform:uppercase">By subscribing you agree to receive notes from Sunday &amp; Company. Unsubscribe any time. See our <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
     </div>
     <form noValidate="{{ true }}" onInput="{{ clearNewsError }}" onSubmit="{{ submitNews }}" style="align-items:stretch;column-gap:18px;display:{{ newsFormDisplay }};row-gap:{{ nlRowGap }};grid-template-columns:{{ nlForm }};margin-top:{{ nlFormTop }}">
