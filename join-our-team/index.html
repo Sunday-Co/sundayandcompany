@@ -246,7 +246,7 @@ form [role="alert"] {
         <p style="font-size:12px;line-height:1.55;margin:14px auto 0;max-width:380px">We have your details on file and will reach out when Sunday opens the next opportunity.</p>
         <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px auto 0;padding-top:12px;text-transform:uppercase;width:min(280px,100%)">Status: Interest Saved</p>
       </div>
-      <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitInterest }}" style="display:grid;gap:13px 16px;grid-template-columns:{{ gc5 }};padding-top:18px;display:{{ interestFormDisplay }}">
+      <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearInterestError }}" onSubmit="{{ submitInterest }}" style="display:grid;gap:13px 16px;grid-template-columns:{{ gc5 }};padding-top:18px;display:{{ interestFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
         <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" maxlength="120" /></label>
         <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
@@ -332,7 +332,7 @@ class Component extends DCLogic {
     const mod = await import('./web3forms.js');
     return mod.submitToWeb3Forms(form, mod.WEB3FORM_KEYS[keyName], subject, extra || {});
   }
-  pick(v) { return () => this.setState({ program: v, selOpen: false }); }
+  pick(v) { return () => this.setState({ program: v, selOpen: false, interestError: '' }); }
   renderVals() {
     const n = this.state.narrow;
     const p = this.state.program;
@@ -343,6 +343,14 @@ class Component extends DCLogic {
       interestErrorDisplay: this.state.interestError ? 'block' : 'none',
       interestDoneDisplay: this.state.interestDone ? 'block' : 'none',
       interestFormDisplay: this.state.interestDone ? 'none' : 'grid',
+      clearInterestError: (e) => {
+        const el = e && e.target;
+        if (el && el.removeAttribute) {
+          el.removeAttribute('data-form-error-field');
+          el.removeAttribute('aria-invalid');
+        }
+        if (this.state.interestError) this.setState({ interestError: '' });
+      },
       submitInterest: (e) => {
         e.preventDefault();
         const bad = this.validate(e.target);
