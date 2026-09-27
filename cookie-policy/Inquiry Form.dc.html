@@ -92,13 +92,11 @@ form[data-inq] textarea::-webkit-input-placeholder {
     transform:none !important;
   }
 }
-@media (max-width:599px) {
-  form[data-inq] input:not([type="hidden"]),
-  form[data-inq] textarea,
-  form[data-inq] select,
-  form[data-inq] [contenteditable="true"] {
-    font-size:20px !important;
-  }
+html[data-phone-viewport-scale="1"] form[data-inq] input:not([type="hidden"]),
+html[data-phone-viewport-scale="1"] form[data-inq] textarea,
+html[data-phone-viewport-scale="1"] form[data-inq] select,
+html[data-phone-viewport-scale="1"] form[data-inq] [contenteditable="true"] {
+  font-size:20px !important;
 }
 form[data-inq] [data-form-error-field="true"],
 form[data-inq] [aria-invalid="true"] {
