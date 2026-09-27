@@ -298,8 +298,23 @@ footer [style*="color:#ac746c"] {
   [aria-label="The Sunday Reservation"] {
     box-sizing:border-box !important;
     min-width:0 !important;
-    width:100% !important;
   }
-  [aria-label="Project inquiry"] { max-width:720px !important; }
-  [aria-label="The Sunday Reservation"] { max-width:620px !important; }
+  [aria-label="Project inquiry"] {
+    width:min(710px, calc(100vw - 52px)) !important;
+    max-width:min(710px, calc(100vw - 52px)) !important;
+  }
+  [aria-label="The Sunday Reservation"] {
+    width:min(620px, calc(100vw - 52px)) !important;
+    max-width:min(620px, calc(100vw - 52px)) !important;
+  }
+}
+
+footer [data-footer-legal-nav] {
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  white-space:nowrap !important;
+}
+footer [data-footer-legal-nav] a {
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
 }
