@@ -348,7 +348,7 @@ class Component extends DCLogic {
         const bad = this.validate(e.target);
         if (bad) { this.setState({ interestError: bad }); return; }
         const form = e.target;
-        if (!p) { this.setState({ interestError: 'Please select a program.' }); return; }
+        if (!p) { this.setState({ interestError: 'PLEASE SELECT A PROGRAM.' }); return; }
         this.setState({ interestError: '', sending: true });
         this.send(form, 'contact', 'Join Our Team | ' + p, { program: p })
           .then(() => this.setState({ interestDone: true, sending: false }))
