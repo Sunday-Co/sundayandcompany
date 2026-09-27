@@ -78,6 +78,38 @@ form[data-inq] textarea::-webkit-input-placeholder {
   letter-spacing:.01em !important;
 }
 </style>
+<style>
+/* COMPONENT LOCAL PHONE FOCUS LOCK · 2026-09-27
+   This component is imported into both modal and embedded inquiry surfaces. */
+@media (max-width:900px) {
+  form[data-inq] input:not([type="hidden"]),
+  form[data-inq] textarea,
+  form[data-inq] select,
+  form[data-inq] [contenteditable="true"] {
+    font-size:16px !important;
+    line-height:1.25 !important;
+    touch-action:manipulation !important;
+    transform:none !important;
+  }
+}
+@media (max-width:599px) {
+  form[data-inq] input:not([type="hidden"]),
+  form[data-inq] textarea,
+  form[data-inq] select,
+  form[data-inq] [contenteditable="true"] {
+    font-size:20px !important;
+  }
+}
+form[data-inq][data-validation-attempted="true"] input:not([type="hidden"]):invalid,
+form[data-inq][data-validation-attempted="true"] textarea:invalid,
+form[data-inq][data-validation-attempted="true"] select:invalid,
+form[data-inq] [data-form-error-field="true"],
+form[data-inq] [aria-invalid="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+}
+</style>
 </head>
 <body>
 <x-dc>
@@ -100,7 +132,7 @@ form[data-inq] textarea::-webkit-input-placeholder {
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
     <label data-step-panel data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" maxlength="120" /></label>
     <label data-step-panel data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
-    <label data-step-panel data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" maxlength="30" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
+    <label data-step-panel data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" minlength="7" maxlength="30" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
     <label data-step-panel data-step="1" style="display:{{ step1Display }};gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase">Business Name *</span><input autocomplete="organization" name="business" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" maxlength="120" /></label>
     <label data-step-panel data-step="2" style="display:{{ step2Display }};gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase">Current Website</span><input autocomplete="url" name="website" placeholder="https://" type="url" maxlength="200" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
     <label data-step-panel data-step="2" style="display:{{ step2Display }};gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.055em;text-transform:uppercase">Social Media Profile</span><input autocomplete="url" name="social_profile" placeholder="https://" type="url" maxlength="200" style="background:transparent;border:1px solid rgba(49,29,3,.48);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:36px;min-width:0;padding:5px 10px;width:100%" style-focus="border-color:#ac746c;box-shadow:0 0 0 1px #ac746c;outline:0" /></label>
@@ -141,7 +173,33 @@ form[data-inq] textarea::-webkit-input-placeholder {
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":620,"height":620},"narrow":{"editor":"boolean","default":false,"tsType":"boolean"},"onDone":{"editor":null,"tsType":"() =&gt; void"}}'>
 class Component extends DCLogic {
+  clearInvalid(form) {
+    if (!form) return;
+    const marked = form.querySelectorAll('[data-form-error-field="true"],[aria-invalid="true"]');
+    marked.forEach((el) => {
+      el.removeAttribute('data-form-error-field');
+      el.removeAttribute('aria-invalid');
+    });
+  }
+  markInvalid(form, el) {
+    if (!form || !el) return;
+    form.setAttribute('data-validation-attempted', 'true');
+    el.setAttribute('data-form-error-field', 'true');
+    el.setAttribute('aria-invalid', 'true');
+    try { el.focus({ preventScroll: true }); } catch (_) { el.focus(); }
+  }
+  missingMessage(el, label) {
+    const name = (el && el.name) || '';
+    const clean = String(label || '').replace(/^your\s+/i, '').trim();
+    if (name === 'name') return 'PLEASE ADD YOUR NAME.';
+    if (name === 'email' || el.type === 'email') return 'PLEASE ADD YOUR EMAIL ADDRESS.';
+    if (name === 'phone' || el.type === 'tel') return 'PLEASE ADD YOUR PHONE NUMBER.';
+    if (name === 'business') return 'PLEASE ADD YOUR BUSINESS NAME.';
+    if (name === 'budget') return 'PLEASE ADD YOUR ESTIMATED BUDGET.';
+    return clean ? ('PLEASE ADD YOUR ' + clean + '.').toUpperCase() : 'PLEASE COMPLETE THIS FIELD.';
+  }
   validate(form, stepOnly) {
+    this.clearInvalid(form);
     const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required], input[type="email"], input[type="tel"], input[type="url"]')).filter((el) => {
       if (!stepOnly) return true;
       const owner = el.closest('[data-step]');
@@ -156,40 +214,36 @@ class Component extends DCLogic {
     for (const el of fields) {
       const v = (el.value || '').trim();
       if (!v && el.required) {
-        el.focus();
-        const label = labelFor(el).toLowerCase();
-        if (/^subject/.test(label)) return 'Please add a subject.';
-        return /^your\b/.test(label) ? 'Please add ' + label + '.' : 'Please add your ' + label + '.';
+        this.markInvalid(form, el);
+        return this.missingMessage(el, labelFor(el));
       }
-      if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
-        el.focus();
-        return 'Please enter a valid email address.';
+      if (el.type === 'email' && v && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+        this.markInvalid(form, el);
+        return 'PLEASE ENTER A VALID EMAIL ADDRESS.';
       }
-      if (el.type === 'tel' && v.replace(/[^0-9]/g, '').length < 7) {
-        el.focus();
-        return 'Please add a full phone number.';
+      if (el.type === 'tel' && v && v.replace(/[^0-9]/g, '').length < 7) {
+        this.markInvalid(form, el);
+        return 'PLEASE ADD A FULL PHONE NUMBER.';
       }
       if (el.type === 'url' && v && !/^https?:\/\/[^\s]+$/i.test(v)) {
-        el.focus();
-        return 'Please enter the full link beginning with http:// or https://.';
+        this.markInvalid(form, el);
+        return 'PLEASE ENTER THE FULL LINK BEGINNING WITH HTTP:// OR HTTPS://.';
       }
     }
-    // the services fieldset is custom toggles behind a hidden input, so it must be
-    // read from state — focusing a hidden input is a no-op. Checked last because
-    // the fieldset sits below the text fields.
     const anyService = Object.keys(this.state.picked || {}).some((k) => this.state.picked[k]);
     if ((!stepOnly || Number(stepOnly) === 3) && !anyService) {
       const first = form.querySelector('[role="checkbox"]');
-      if (first) first.focus();
-      return 'Please select at least one service.';
+      this.markInvalid(form, first);
+      return 'PLEASE SELECT AT LEAST ONE SERVICE.';
     }
     if ((!stepOnly || Number(stepOnly) === 3) && this.state.picked.iqOther) {
       const custom = form.querySelector('[name="customService"]');
       if (custom && !(custom.value || '').trim()) {
-        custom.focus();
-        return 'Please tell us what tailored support you need.';
+        this.markInvalid(form, custom);
+        return 'PLEASE TELL US WHAT TAILORED SUPPORT YOU NEED.';
       }
     }
+    form.removeAttribute('data-validation-attempted');
     return '';
   }
   state = { picked: {}, dateOpen: false, startDate: '', viewMonth: null, sending: false, done: false, error: '', budget: '', step: 1 };
@@ -332,12 +386,12 @@ class Component extends DCLogic {
       const bad = this.validate(e.target);
       if (bad) { this.setState({ error: bad }); return; }
       const form = e.target;
-      if (!chosen.length) { this.setState({ error: 'Please select at least one service.' }); return; }
+      if (!chosen.length) { this.setState({ error: 'PLEASE SELECT AT LEAST ONE SERVICE.' }); return; }
       this.setState({ error: '', sending: true });
       const who = (form.business && form.business.value) || (form.name && form.name.value) || '';
       this.send(form, 'New Project Inquiry | ' + who, { services: chosen.join(', ') })
         .then(() => { this.setState({ done: true, sending: false }); if (this.props.onDone) this.props.onDone(); })
-        .catch((err) => this.setState({ error: err.message, sending: false }));
+        .catch(() => this.setState({ error: 'WE COULD NOT SEND YOUR INQUIRY JUST YET. PLEASE TRY AGAIN.', sending: false }));
     };
     return out;
   }
