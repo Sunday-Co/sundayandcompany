@@ -95,16 +95,8 @@
     input, textarea, select { font-size: 16px !important; min-height: 46px; }
     textarea { min-height: 100px; }
     button { font-size: inherit; }
-    /* CTA rows: heading and button stack instead of the button running off screen.
-       Only flex containers, so grids are untouched. */
-    /* any flex row that pushes items apart wraps instead of clipping */
-    [style*="display:flex"][style*="space-between"],
-    [style*="display: flex"][style*="space-between"] {
-      flex-wrap: wrap !important;
-      row-gap: 20px !important;
-    }
-    [style*="display:flex"][style*="space-between"] > *,
-    [style*="display: flex"][style*="space-between"] > * { min-width: 0 !important; }
+    /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
+       Compact receipt/status rows stay horizontal. */
     /* service sheet interiors: title above copy, never beside it.
        keyed on align-items:start so the card's header row is untouched. */
     button > span[style*="align-items: start"][style*="grid-template-columns"],
@@ -116,9 +108,9 @@
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header > a[aria-label] { width: 120px !important; }
-    header > a[aria-label] > span { height: 44px !important; width: 116px !important; }
-    header > a[aria-label] > span > img {
+    header[data-site-header] > a[aria-label] { width: 120px !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] > span > img {
       height: 164px !important; width: 164px !important;
       left: -24px !important; top: -57px !important;
     }
@@ -149,9 +141,9 @@
     form[data-inq] fieldset[data-step="3"] { grid-template-columns: 1fr !important; }
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260926-17" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260926-17" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260926-17"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260926-18" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260926-18" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260926-18"></script>
 </helmet>
 
 <div data-screen-label="Services" style="background:#f5efe6;color:#311d03;overflow:visible;">
@@ -349,9 +341,9 @@
         <span>03</span><span>Scope Review</span><span style="text-align:right">On The House</span>
       </div>
       <div data-services-inquiry-form style="display:block;margin-top:28px"><dc-import name="/Inquiry Form" narrow="{{ narrowFlag }}" onDone="{{ inquiryComplete }}" hint-size="100%,520px" style="display:block"></dc-import></div>
-      <footer style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.12em;margin-top:16px;padding:9px 0;text-transform:uppercase">
+      <div data-services-inquiry-ledger style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.12em;margin-top:16px;padding:9px 0;text-transform:uppercase">
         <span>Next Step</span><strong style="font-weight:400">Review And Reply</strong>
-      </footer>
+      </div>
       <a href="mailto:hello@sundayandcompany.co" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:14px;justify-content:center;letter-spacing:.15em;margin:12px auto 0;padding-bottom:5px;text-transform:uppercase;white-space:nowrap;width:max-content">Prefer Email? Write To Us <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>
   </section>

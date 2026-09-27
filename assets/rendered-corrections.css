@@ -273,7 +273,7 @@ html[data-sunday-sign-fallback="1"] [data-sign] > div[style*="transform-origin"]
 [style*="background: #311d03"] [style*="color:#ac746c"][style*="font-size:10px"],
 [style*="background: #311d03"] [style*="color:#ac746c"][style*="font-size:11.5px"],
 #results [style*="color:#ac746c"],
-footer [style*="color:#ac746c"] {
+footer[data-site-footer] [style*="color:#ac746c"] {
   color: var(--sc-rose-utility-dark) !important;
 }
 
@@ -287,33 +287,4 @@ footer [style*="color:#ac746c"] {
 [data-scroll-region]:focus-visible {
   outline: 2px solid #945650 !important;
   outline-offset: 3px !important;
-}
-
-/* iOS FORM FOCUS GEOMETRY · 2026-09-14
-   The fixed overlay owns the phone inset. The dialogs fill that content box instead
-   of re-deriving their width from 100vw, so Safari focus/pan cannot create a second
-   horizontal coordinate system for the modal. */
-@media (max-width:900px) {
-  [aria-label="Project inquiry"],
-  [aria-label="The Sunday Reservation"] {
-    box-sizing:border-box !important;
-    min-width:0 !important;
-    width:100% !important;
-  }
-  [aria-label="Project inquiry"] {
-    max-width:710px !important;
-  }
-  [aria-label="The Sunday Reservation"] {
-    max-width:620px !important;
-  }
-}
-
-footer [data-footer-legal-nav] {
-  display:flex !important;
-  flex-wrap:nowrap !important;
-  white-space:nowrap !important;
-}
-footer [data-footer-legal-nav] a {
-  flex:0 0 auto !important;
-  white-space:nowrap !important;
 }

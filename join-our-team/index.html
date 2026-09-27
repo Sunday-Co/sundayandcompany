@@ -104,16 +104,8 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
     input, textarea, select { font-size: 16px !important; min-height: 46px; }
     textarea { min-height: 100px; }
     button { font-size: inherit; }
-    /* CTA rows: heading and button stack instead of the button running off screen.
-       Only flex containers, so grids are untouched. */
-    /* any flex row that pushes items apart wraps instead of clipping */
-    [style*="display:flex"][style*="space-between"],
-    [style*="display: flex"][style*="space-between"] {
-      flex-wrap: wrap !important;
-      row-gap: 20px !important;
-    }
-    [style*="display:flex"][style*="space-between"] > *,
-    [style*="display: flex"][style*="space-between"] > * { min-width: 0 !important; }
+    /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
+       Compact receipt/status rows stay horizontal. */
     /* service sheet interiors: title above copy, never beside it.
        keyed on align-items:start so the card's header row is untouched. */
     button > span[style*="align-items: start"][style*="grid-template-columns"],
@@ -125,9 +117,9 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header > a[aria-label] { width: 120px !important; }
-    header > a[aria-label] > span { height: 44px !important; width: 116px !important; }
-    header > a[aria-label] > span > img {
+    header[data-site-header] > a[aria-label] { width: 120px !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] > span > img {
       height: 164px !important; width: 164px !important;
       left: -24px !important; top: -57px !important;
     }
@@ -173,9 +165,9 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
     font-weight: 300;
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260926-17" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260926-17" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260926-17"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260926-18" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260926-18" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260926-18"></script>
 </helmet>
 
 <div data-screen-label="Join Our Team" id="top" style="background:#f5efe6;color:#311d03;overflow:hidden">
