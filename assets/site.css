@@ -1442,7 +1442,7 @@ form[data-inq] [aria-haspopup="dialog"] {
   [data-screen-label="Services"] #inquiry [data-services-inquiry-form] form[data-inq] {
     margin-top:0 !important;
   }
-  [data-screen-label="Services"] #inquiry > div > footer,
+  [data-screen-label="Services"] #inquiry [data-services-inquiry-ledger],
   [data-screen-label="Services"] #inquiry > div > a[href^="mailto:"] {
     font-size:9.5px !important;
   }
@@ -1468,7 +1468,7 @@ form[data-inq] [aria-haspopup="dialog"] {
   [aria-label="Project inquiry"] [data-inquiry-ledger],
   [aria-label="The Sunday Reservation"] [data-res-total],
   [aria-label="Newsletter"] [data-news-receipt] > div,
-  [data-screen-label="Services"] #inquiry > div > footer,
+  [data-screen-label="Services"] #inquiry [data-services-inquiry-ledger],
   [data-screen-label] main [data-receipt-meta][style*="display:flex"],
   [data-work-receipt] [style*="display:flex"][style*="space-between"],
   [data-program-cards] [style*="display:flex"][style*="space-between"],
