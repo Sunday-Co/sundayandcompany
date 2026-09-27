@@ -1644,9 +1644,10 @@
       if (r.fetched) return;
       r.fetched = true;
       const url = COMPONENT_DIR + "/" + encodeURIComponent(name) + ".dc.html";
+      const requestUrl = url + "?v=20260927-33";
       const res = window.__resources;
-      const pre = res ? res[url] : void 0;
-      const target = typeof pre === "string" && pre ? pre : url;
+      const pre = res ? (res[url] || res[requestUrl]) : void 0;
+      const target = typeof pre === "string" && pre ? pre : requestUrl;
       const blob = bundledBlob(target);
       (blob ? blob.text() : fetch(target).then((res2) => {
         if (!res2.ok) {
