@@ -288,3 +288,26 @@ footer[data-site-footer] [style*="color:#ac746c"] {
   outline: 2px solid #945650 !important;
   outline-offset: 3px !important;
 }
+
+
+/* LAST-LOADED MOBILE FORM FOCUS LOCK · 2026-09-27 */
+@media (max-width:900px) {
+  body form input:not([type="hidden"]),
+  body form textarea,
+  body form select,
+  body form [contenteditable="true"] {
+    font-size:16px !important;
+    line-height:1.25 !important;
+    -webkit-text-size-adjust:100% !important;
+    text-size-adjust:100% !important;
+    touch-action:manipulation !important;
+    transform:none !important;
+  }
+
+  html[data-phone-viewport-scale="1"] body form input:not([type="hidden"]),
+  html[data-phone-viewport-scale="1"] body form textarea,
+  html[data-phone-viewport-scale="1"] body form select,
+  html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
+    font-size:20px !important;
+  }
+}
