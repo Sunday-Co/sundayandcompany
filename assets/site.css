@@ -1602,3 +1602,88 @@ form[data-inq] [aria-haspopup="dialog"] {
     line-height: 1.5 !important;
   }
 }
+
+
+/* ==========================================================
+   MOBILE MICROTYPE HIERARCHY · 2026-09-26
+   Decorative/filler copy should recede on mobile. Preserve
+   primary body copy, headings, links and entered form text.
+   ========================================================== */
+@media (max-width:900px) {
+  /* Page section labels and small uppercase editorial notes. */
+  [data-screen-label] main p[style*="font-family:'Inter Tight'"][style*="text-transform:uppercase"] {
+    font-size:7.5px !important;
+    letter-spacing:.13em !important;
+    line-height:1.5 !important;
+  }
+
+  /* Case-study captions and gallery labels are reference copy, not headlines. */
+  [data-screen-label] main figcaption[style*="font-family:'Inter Tight'"] {
+    font-size:7px !important;
+    letter-spacing:.12em !important;
+    line-height:1.45 !important;
+    margin-top:7px !important;
+  }
+
+  /* Receipt-style rows and tiny inline labels. */
+  [data-screen-label] main div[style*="font-family:'Inter Tight'"][style*="text-transform:uppercase"][style*="font-size:8px"],
+  [data-screen-label] main div[style*="font-family:'Inter Tight'"][style*="text-transform:uppercase"][style*="font-size:7px"],
+  [data-screen-label] main span[style*="font-family:'Inter Tight'"][style*="text-transform:uppercase"][style*="font-size:8px"],
+  [data-screen-label] main span[style*="font-family:'Inter Tight'"][style*="text-transform:uppercase"][style*="font-size:9px"] {
+    font-size:7.25px !important;
+    letter-spacing:.12em !important;
+  }
+
+  /* Services page metadata was previously being enlarged on mobile. */
+  [data-screen-label="Services"] [data-service-number],
+  [data-screen-label="Services"] [data-service-meta],
+  [data-screen-label="Services"] [data-service-included] {
+    font-size:7.75px !important;
+    letter-spacing:.075em !important;
+    line-height:1.45 !important;
+  }
+  [data-screen-label="Services"] [data-service-price] {
+    font-size:8.75px !important;
+    letter-spacing:.08em !important;
+  }
+
+  /* Work receipts and supporting data should read like annotations. */
+  [data-work-receipt] [style*="font-family:'Inter Tight'"] {
+    font-size:6.75px !important;
+    letter-spacing:.11em !important;
+    line-height:1.45 !important;
+  }
+
+  /* Shared receipt/status/fine-print roles. */
+  [data-receipt-meta],
+  [data-inquiry-receipt-meta],
+  [data-inquiry-ledger],
+  [data-form-privacy],
+  [data-news-fineprint],
+  [data-res-fineprint],
+  [data-res-total],
+  [data-res-keep],
+  [data-res-number] {
+    font-size:6.75px !important;
+    letter-spacing:.08em !important;
+    line-height:1.45 !important;
+  }
+
+  /* About/location note is supporting context, not body copy. */
+  #map-note {
+    font-size:7.5px !important;
+    letter-spacing:.10em !important;
+    line-height:1.5 !important;
+  }
+
+  /* Homepage service-sheet filing labels and metadata. */
+  [data-screen-label="Home"] #services button > span:first-child,
+  [data-screen-label="Home"] #services button > span:last-child {
+    font-size:6.75px !important;
+    letter-spacing:.12em !important;
+  }
+  [data-screen-label="Home"] #services button em {
+    font-size:6.75px !important;
+    letter-spacing:.11em !important;
+  }
+}

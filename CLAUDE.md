@@ -12,3 +12,4 @@
 - Before merging responsive changes, review at 390px, 744px, 820px, 1000px, 1024px, and 1280px.
 - Mobile visual hierarchy should stay deliberately restrained: avoid enlarging utility labels, footer links, receipt metadata, service microcopy, menu labels, or filler text simply because the layout stacks.
 - The pullout mobile menu should remain a skinny editorial sheet. Keep menu numbers in a consistent left column and labels in a separate left-aligned column with visible gutter space.
+- Decorative and filler mobile copy should recede clearly behind headings and body copy. Receipt metadata, section labels, figcaptions, service metadata, filing labels, legal/fine print and similar utility text should generally live around 6.75–8.75px on the existing 75% phone viewport system, while entered form text stays 16px.
