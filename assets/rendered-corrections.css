@@ -306,12 +306,12 @@ footer [style*="color:#ac746c"] {
     min-width:0 !important;
   }
   [aria-label="Project inquiry"] {
-    width:min(700px, calc(100vw - 60px)) !important;
-    max-width:min(700px, calc(100vw - 60px)) !important;
+    width:min(710px, calc(100vw - 52px)) !important;
+    max-width:min(710px, calc(100vw - 52px)) !important;
   }
   [aria-label="The Sunday Reservation"] {
-    width:min(610px, calc(100vw - 60px)) !important;
-    max-width:min(610px, calc(100vw - 60px)) !important;
+    width:min(620px, calc(100vw - 52px)) !important;
+    max-width:min(620px, calc(100vw - 52px)) !important;
   }
 }
 

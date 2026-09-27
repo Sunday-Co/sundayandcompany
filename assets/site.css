@@ -1843,3 +1843,121 @@ section[aria-label="Newsletter"] h2 + p {
     text-align:left !important;
   }
 }
+
+
+/* ==========================================================
+   MOBILE FORM REBALANCE · 2026-09-26
+   Restore readable receipt microtype and slightly more form
+   height without returning to the earlier chunky proportions.
+   ========================================================== */
+@media (max-width:900px) {
+  div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
+    padding:22px 16px calc(22px + env(safe-area-inset-bottom)) !important;
+  }
+  [aria-label="Project inquiry"] {
+    width:min(710px, calc(100vw - 52px)) !important;
+    max-width:min(710px, calc(100vw - 52px)) !important;
+  }
+  [aria-label="Project inquiry"] > div {
+    padding:22px 22px 26px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-receipt-meta] {
+    font-size:8.25px !important;
+    letter-spacing:.085em !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-kicker] {
+    font-size:9px !important;
+    letter-spacing:.065em !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-support] {
+    font-size:9.25px !important;
+    letter-spacing:.035em !important;
+    line-height:1.45 !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] {
+    gap:10px 12px !important;
+    margin-top:14px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] [data-stepnav] {
+    margin-bottom:12px !important;
+    padding:8px 0 !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] [data-stepnav] span {
+    font-size:8.75px !important;
+    letter-spacing:.025em !important;
+    line-height:1.2 !important;
+    padding:8px 5px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] label > span:first-child,
+  [aria-label="Project inquiry"] form[data-inq] fieldset > legend,
+  [aria-label="Project inquiry"] form[data-inq] [data-start-date-label] {
+    font-size:9.25px !important;
+    letter-spacing:.035em !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] input,
+  [aria-label="Project inquiry"] form[data-inq] select {
+    min-height:44px !important;
+    font-size:16px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] textarea {
+    min-height:88px !important;
+    font-size:16px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] [data-stepbtns] button,
+  [aria-label="Project inquiry"] form[data-inq] > button[type="submit"] {
+    min-height:44px !important;
+    font-size:8.75px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-ledger] {
+    font-size:8.25px !important;
+    letter-spacing:.085em !important;
+    margin-top:15px !important;
+    padding:9px 0 !important;
+  }
+
+  [aria-label="The Sunday Reservation"] {
+    width:min(620px, calc(100vw - 52px)) !important;
+    max-width:min(620px, calc(100vw - 52px)) !important;
+  }
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] {
+    height:160px !important;
+    min-height:160px !important;
+    max-height:160px !important;
+  }
+  [aria-label="The Sunday Reservation"] > div:last-child {
+    padding:21px 22px 21px !important;
+  }
+  [aria-label="The Sunday Reservation"] h2 {
+    font-size:27px !important;
+  }
+  [aria-label="The Sunday Reservation"] [data-res-intro] {
+    font-size:9.75px !important;
+    letter-spacing:.035em !important;
+    line-height:1.45 !important;
+    max-width:330px !important;
+  }
+  [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden][style*="grid-template-columns:auto 1fr auto"] {
+    font-size:8.5px !important;
+    letter-spacing:.07em !important;
+  }
+  [aria-label="The Sunday Reservation"] label {
+    font-size:9.25px !important;
+    letter-spacing:.045em !important;
+  }
+  [aria-label="The Sunday Reservation"] input {
+    min-height:44px !important;
+    font-size:16px !important;
+  }
+  [aria-label="The Sunday Reservation"] form button[type="submit"] {
+    min-height:44px !important;
+    font-size:8.75px !important;
+  }
+  [aria-label="The Sunday Reservation"] [data-res-total],
+  [aria-label="The Sunday Reservation"] [data-res-fineprint],
+  [aria-label="The Sunday Reservation"] [data-res-keep],
+  [aria-label="The Sunday Reservation"] [data-res-number] {
+    font-size:8px !important;
+    letter-spacing:.075em !important;
+    line-height:1.45 !important;
+  }
+}
