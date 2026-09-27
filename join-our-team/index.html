@@ -22,8 +22,11 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
     font-size:16px !important; line-height:1.25 !important; touch-action:manipulation !important; transform:none !important;
   }
 }
-@media (max-width:599px) {
-  form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] { font-size:20px !important; }
+html[data-phone-viewport-scale="1"] form input:not([type="hidden"]),
+html[data-phone-viewport-scale="1"] form textarea,
+html[data-phone-viewport-scale="1"] form select,
+html[data-phone-viewport-scale="1"] form [contenteditable="true"] {
+  font-size:20px !important;
 }
 form [data-form-error-field="true"],
 form [aria-invalid="true"] {

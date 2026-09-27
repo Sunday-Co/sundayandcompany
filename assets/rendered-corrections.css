@@ -343,13 +343,11 @@ body form [aria-invalid="true"] {
     transform:none !important;
   }
 }
-@media (max-width:599px) {
-  body form input:not([type="hidden"]),
-  body form textarea,
-  body form select,
-  body form [contenteditable="true"] {
-    font-size:20px !important;
-  }
+html[data-phone-viewport-scale="1"] body form input:not([type="hidden"]),
+html[data-phone-viewport-scale="1"] body form textarea,
+html[data-phone-viewport-scale="1"] body form select,
+html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
+  font-size:20px !important;
 }
 body form [data-form-error-field="true"],
 body form [aria-invalid="true"] {

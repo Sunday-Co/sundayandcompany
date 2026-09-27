@@ -501,11 +501,9 @@
         target.removeAttribute('data-form-error-field');
         target.removeAttribute('aria-invalid');
       }
-      /* Component state can keep the exact same error string after a user
-         deletes a previously valid answer and presses Next again. Re-check on
-         every edit so the rose fill always follows the current invalid field,
-         even when no alert text node is re-rendered. */
-      scheduleFormErrorSync();
+      /* Editing clears the stale field state immediately. Validation is
+         re-run by the form's own Next/submit action, avoiding a stale alert
+         briefly re-painting the field while the user is correcting it. */
     }
     document.addEventListener('input', clearTarget, true);
     document.addEventListener('change', clearTarget, true);
