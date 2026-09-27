@@ -129,6 +129,16 @@ html {
     touch-action:manipulation;
   }
 
+  /* Phones intentionally render the site at the established 0.84 viewport scale.
+     19.25px remains just over 16 rendered px at that scale, preventing iOS
+     focus-zoom without making the rest of the site larger. */
+  html[data-phone-viewport-scale="1"] input:not([type="hidden"]),
+  html[data-phone-viewport-scale="1"] textarea,
+  html[data-phone-viewport-scale="1"] select,
+  html[data-phone-viewport-scale="1"] [contenteditable="true"] {
+    font-size:19.25px !important;
+  }
+
   input:not([type="hidden"]):focus,
   textarea:focus,
   select:focus,
