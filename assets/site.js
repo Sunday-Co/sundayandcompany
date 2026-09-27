@@ -320,12 +320,6 @@
       window.setTimeout(syncFormErrorVisuals, 80);
     }, true);
 
-    function clearTarget(event) {
-      var target = event.target && event.target.closest ? event.target.closest('[data-form-error-field="true"]') : null;
-      if (target) target.removeAttribute('data-form-error-field');
-    }
-    document.addEventListener('input', clearTarget, true);
-    document.addEventListener('change', clearTarget, true);
   }
 
   function applyFormRenderCorrections() {
