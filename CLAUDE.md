@@ -20,3 +20,5 @@
 - Services inquiry spacing is structural: keep the Inquiry Form inside data-services-inquiry-form with a 28px top gap after the intro. Do not rely on custom-element margins for that separation.
 - Visible page microtype floor on mobile: inline 6.5–7.5px utility text is raised to about 8.75px, and 8–8.5px utility text is raised to about 9.25px. Keep decorative hierarchy secondary, but do not allow visible mobile copy to become microscopic.
 - Services receipt auto-sizes to its content; do not reintroduce a fixed/minimum 640px height that creates dead white space. Its bottom line is permanently "Next Step" / "Review And Reply".
+- Shared chrome selectors are scoped: keep `data-site-header` on the shared site header and `data-site-footer` on the shared site footer. Never target bare `header` or `footer` globally because pages contain semantic section headers and receipt/ledger UI.
+- Mobile flex wrapping is opt-in through `data-mobile-wrap-row`. Never reintroduce a generic selector that wraps every inline `display:flex; justify-content:space-between` row; receipt/status/card rows must remain compact and horizontal.
