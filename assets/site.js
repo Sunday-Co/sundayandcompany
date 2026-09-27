@@ -374,17 +374,46 @@
     var msg = sundayNormalizeText(alert && alert.textContent).toLowerCase();
     if (!msg) return null;
 
-    if (msg.indexOf('email') !== -1) return form.querySelector('input[type="email"]');
-    if (msg.indexOf('phone') !== -1) return form.querySelector('input[type="tel"]');
-    if (msg.indexOf('subject') !== -1) return form.querySelector('[name="message_subject"]');
-    if (msg.indexOf('program') !== -1) return form.querySelector('[aria-haspopup="listbox"]');
-    if (msg.indexOf('service') !== -1) return form.querySelector('[role="checkbox"]');
-    if (msg.indexOf('tailored') !== -1) return form.querySelector('[name="customService"]');
+    if (msg.indexOf('email') !== -1) {
+      var email = form.querySelector('input[type="email"]');
+      if (email) {
+        var emailValue = sundayNormalizeText(email.value);
+        var emailInvalid = emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailValue);
+        if (!emailValue || emailInvalid) return email;
+        return null;
+      }
+    }
+    if (msg.indexOf('phone') !== -1) {
+      var phone = form.querySelector('input[type="tel"]');
+      if (phone) {
+        var phoneValue = sundayNormalizeText(phone.value);
+        if (!phoneValue || phoneValue.replace(/[^0-9]/g, '').length < 7) return phone;
+        return null;
+      }
+    }
+    if (msg.indexOf('subject') !== -1) {
+      var subject = form.querySelector('[name="message_subject"]');
+      return subject && !sundayNormalizeText(subject.value) ? subject : null;
+    }
+    if (msg.indexOf('program') !== -1) {
+      var programValue = form.querySelector('input[name="program"]');
+      return (!programValue || !sundayNormalizeText(programValue.value)) ? form.querySelector('[aria-haspopup="listbox"]') : null;
+    }
+    if (msg.indexOf('service') !== -1 && msg.indexOf('tailored') === -1) {
+      var servicesValue = form.querySelector('input[name="services"]');
+      return (!servicesValue || !sundayNormalizeText(servicesValue.value)) ? form.querySelector('[role="checkbox"]') : null;
+    }
+    if (msg.indexOf('tailored') !== -1) {
+      var tailored = form.querySelector('[name="customService"]');
+      return tailored && !sundayNormalizeText(tailored.value) ? tailored : null;
+    }
     if (msg.indexOf('link') !== -1 || msg.indexOf('http') !== -1) {
       var urls = form.querySelectorAll('input[type="url"]');
       for (var u = 0; u < urls.length; u++) {
-        if (sundayNormalizeText(urls[u].value)) return urls[u];
+        var urlValue = sundayNormalizeText(urls[u].value);
+        if (urlValue && !/^https?:\/\/[^\s]+$/i.test(urlValue)) return urls[u];
       }
+      return null;
     }
 
     var controls = form.querySelectorAll('input:not([type="hidden"]),textarea,select');
