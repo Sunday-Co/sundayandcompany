@@ -315,7 +315,7 @@ class Component extends DCLogic {
       }
       if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
         el.focus();
-        return 'That email address does not look right. Please check it.';
+        return 'Please enter a valid email address.';
       }
       if (el.type === 'tel' && v.replace(/[^0-9]/g, '').length < 7) {
         el.focus();
