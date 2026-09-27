@@ -18,3 +18,5 @@
 - Review 390, 744, 820, 901, 1000, 1024, 1120, 1240 and 1280px before pushing responsive work.
 - Legal footer links are a permanent single-line row at every width: Privacy Policy, Terms & Conditions, Cookie Policy, Accessibility. Never allow that nav to wrap or stack.
 - Services inquiry spacing is structural: keep the Inquiry Form inside data-services-inquiry-form with a 28px top gap after the intro. Do not rely on custom-element margins for that separation.
+- Visible page microtype floor on mobile: inline 6.5–7.5px utility text is raised to about 8.75px, and 8–8.5px utility text is raised to about 9.25px. Keep decorative hierarchy secondary, but do not allow visible mobile copy to become microscopic.
+- Services receipt auto-sizes to its content; do not reintroduce a fixed/minimum 640px height that creates dead white space. Its bottom line is permanently "Next Step" / "Review And Reply".

@@ -1638,3 +1638,20 @@ footer [data-footer-legal-nav] a {
   flex:0 0 auto !important;
   white-space:nowrap !important;
 }
+
+
+/* SITE-WIDE MOBILE MICROTYPE FLOOR · 2026-09-26
+   Keep decorative/utility copy secondary, but never microscopic. */
+@media (max-width:900px) {
+  [data-screen-label] main [style*="font-size:6.5px"],
+  [data-screen-label] main [style*="font-size:7px"],
+  [data-screen-label] main [style*="font-size:7.5px"] {
+    font-size:8.75px !important;
+  }
+
+  [data-screen-label] main [style*="font-size:8px"],
+  [data-screen-label] main [style*="font-size:8.25px"],
+  [data-screen-label] main [style*="font-size:8.5px"] {
+    font-size:9.25px !important;
+  }
+}

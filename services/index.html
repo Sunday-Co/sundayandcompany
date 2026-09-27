@@ -335,7 +335,7 @@
   </section>
 
   <section id="inquiry" aria-labelledby="services-inquiry-title" style="scroll-margin-top:92px;background:#f5efe6;color:#311d03;padding:clamp(34px,4vw,56px) clamp(22px,6vw,84px)">
-    <div style="background:#fffdf8;border:1px solid #311d03;margin:0 auto;max-width:1080px;min-height:640px;padding:clamp(30px,3.5vw,48px)">
+    <div style="background:#fffdf8;border:1px solid #311d03;margin:0 auto;max-width:1080px;min-height:0;padding:clamp(30px,3.5vw,48px)">
       <div data-inquiry-receipt-meta="identity" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin-bottom:11px;padding-bottom:10px;text-transform:uppercase"><span style="min-width:0">Sunday &amp; Company</span><span style="text-align:right;white-space:nowrap">Receipt No. 001</span></div>
       <div data-inquiry-receipt-meta="status" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin-bottom:18px;padding-bottom:10px;text-transform:uppercase"><span style="min-width:0">Project Inquiry</span><span style="text-align:right;white-space:nowrap">{{ inquiryStatus }}</span></div>
       <header style="max-width:520px;text-align:left;display:{{ inquiryIntroDisplay }};margin-bottom:0">
@@ -350,7 +350,7 @@
       </div>
       <div data-services-inquiry-form style="display:block;margin-top:28px"><dc-import name="/Inquiry Form" narrow="{{ narrowFlag }}" onDone="{{ inquiryComplete }}" hint-size="100%,520px" style="display:block"></dc-import></div>
       <footer style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.12em;margin-top:16px;padding:9px 0;text-transform:uppercase">
-        <span>Next Step</span><strong style="font-weight:400">{{ inquiryFooter }}</strong>
+        <span>Next Step</span><strong style="font-weight:400">Review And Reply</strong>
       </footer>
       <a href="mailto:hello@sundayandcompany.co" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:14px;justify-content:center;letter-spacing:.15em;margin:12px auto 0;padding-bottom:5px;text-transform:uppercase;white-space:nowrap;width:max-content">Prefer Email? Write To Us <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:13px;width:13px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>

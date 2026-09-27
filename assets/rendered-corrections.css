@@ -149,15 +149,15 @@ aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
   [role="dialog"][aria-label="Fellows Table"] > div:nth-child(2)::before,
   [role="dialog"][aria-label="Espresso Club"] > div:nth-child(2)::before,
   [role="dialog"][aria-label="Founders Club"] > div:nth-child(2)::before {
-    font-size:7.5px;
-    letter-spacing:.125em;
+    font-size:8.5px;
+    letter-spacing:.12em;
     line-height:1.65;
     padding:7px 0;
   }
   [role="dialog"][aria-label="Fellows Table"]::after,
   [role="dialog"][aria-label="Espresso Club"]::after,
   [role="dialog"][aria-label="Founders Club"]::after {
-    font-size:7px;
+    font-size:8.25px;
     margin-top:16px;
   }
 }
