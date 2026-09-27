@@ -15,6 +15,26 @@ form[data-editorial-labels] > div > span:first-child {
 }
 form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !important; }
 </style>
+<style>
+/* COMPONENT LOCAL PHONE FOCUS LOCK · 2026-09-27 */
+@media (max-width:900px) {
+  form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
+    font-size:16px !important; line-height:1.25 !important; touch-action:manipulation !important; transform:none !important;
+  }
+}
+@media (max-width:599px) {
+  form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] { font-size:20px !important; }
+}
+form[data-validation-attempted="true"] input:not([type="hidden"]):invalid,
+form[data-validation-attempted="true"] textarea:invalid,
+form[data-validation-attempted="true"] select:invalid,
+form [data-form-error-field="true"],
+form [aria-invalid="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+}
+</style>
 </head>
 <body>
 <x-dc>
@@ -218,7 +238,7 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
         <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" maxlength="120" /></label>
         <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
-        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
+        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" minlength="7" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
         <div style="display:grid;gap:7px;position:relative">
           <span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Program Of Interest *</span>
           <input name="program" type="hidden" value="{{ program }}" />
@@ -243,37 +263,48 @@ form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !import
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
+  clearInvalid(form) {
+    if (!form) return;
+    const marked = form.querySelectorAll('[data-form-error-field="true"],[aria-invalid="true"]');
+    marked.forEach((el) => {
+      el.removeAttribute('data-form-error-field');
+      el.removeAttribute('aria-invalid');
+    });
+  }
+  markInvalid(form, el) {
+    if (!form || !el) return;
+    form.setAttribute('data-validation-attempted', 'true');
+    el.setAttribute('data-form-error-field', 'true');
+    el.setAttribute('aria-invalid', 'true');
+    try { el.focus({ preventScroll: true }); } catch (_) { el.focus(); }
+  }
   validate(form) {
+    this.clearInvalid(form);
     const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required]'));
-    const labelFor = (el) => {
-      const wrap = el.closest('label');
-      const external = el.id ? form.querySelector('label[for="' + el.id + '"]') : null;
-      const txt = wrap ? ((wrap.querySelector('span') || wrap).textContent || '') : (external ? external.textContent : '');
-      return (txt || el.getAttribute('aria-label') || el.name || 'This field').replace(/\s*\*\s*$/, '').trim();
-    };
     for (const el of fields) {
       const v = (el.value || '').trim();
       if (!v) {
-        el.focus();
-        const label = labelFor(el).toLowerCase();
-        if (/^subject/.test(label)) return 'Please add a subject.';
-        return /^your\b/.test(label) ? 'Please add ' + label + '.' : 'Please add your ' + label + '.';
+        this.markInvalid(form, el);
+        if (el.name === 'name') return 'PLEASE ADD YOUR NAME.';
+        if (el.name === 'email') return 'PLEASE ADD YOUR EMAIL ADDRESS.';
+        if (el.name === 'phone') return 'PLEASE ADD YOUR PHONE NUMBER.';
+        return 'PLEASE COMPLETE THIS FIELD.';
       }
       if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
-        el.focus();
-        return 'Please enter a valid email address.';
+        this.markInvalid(form, el);
+        return 'PLEASE ENTER A VALID EMAIL ADDRESS.';
       }
       if (el.type === 'tel' && v.replace(/[^0-9]/g, '').length < 7) {
-        el.focus();
-        return 'Please add a full phone number.';
+        this.markInvalid(form, el);
+        return 'PLEASE ADD A FULL PHONE NUMBER.';
       }
     }
-    // program is a custom listbox behind a hidden input; read state, focus the trigger
     if (!(this.state.program || '').trim()) {
       const trigger = form.querySelector('[aria-haspopup="listbox"]');
-      if (trigger) trigger.focus();
-      return 'Please select a program.';
+      this.markInvalid(form, trigger);
+      return 'PLEASE SELECT A PROGRAM.';
     }
+    form.removeAttribute('data-validation-attempted');
     return '';
   }
   componentDidMount() {
@@ -309,7 +340,7 @@ class Component extends DCLogic {
         this.setState({ interestError: '', sending: true });
         this.send(form, 'contact', 'Join Our Team | ' + p, { program: p })
           .then(() => this.setState({ interestDone: true, sending: false }))
-          .catch((err) => this.setState({ interestError: err.message, sending: false }));
+          .catch(() => this.setState({ interestError: 'WE COULD NOT SAVE YOUR INTEREST JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
       gc0: n ? '1fr' : 'minmax(0,.78fr) minmax(0,1.22fr)',
       gc1: n ? '1fr 1fr' : '1.12fr .88fr',
