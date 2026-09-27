@@ -395,6 +395,18 @@
       var subject = form.querySelector('[name="message_subject"]');
       return subject && !sundayNormalizeText(subject.value) ? subject : null;
     }
+    if (msg.indexOf('business name') !== -1) {
+      var business = form.querySelector('[name="business"]');
+      return business && !sundayNormalizeText(business.value) ? business : null;
+    }
+    if (/(^|\s)name(\.|\s|$)/.test(msg)) {
+      var nameField = form.querySelector('[name="name"]');
+      return nameField && !sundayNormalizeText(nameField.value) ? nameField : null;
+    }
+    if (msg.indexOf('message') !== -1 && msg.indexOf('error message') === -1) {
+      var messageField = form.querySelector('[name="message"]');
+      return messageField && !sundayNormalizeText(messageField.value) ? messageField : null;
+    }
     if (msg.indexOf('program') !== -1) {
       var programValue = form.querySelector('input[name="program"]');
       return (!programValue || !sundayNormalizeText(programValue.value)) ? form.querySelector('[aria-haspopup="listbox"]') : null;
