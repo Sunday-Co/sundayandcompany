@@ -16,3 +16,5 @@
 - Footer/menu/support copy should be readable but secondary.
 - Above 900px, desktop grids stay fluid at arbitrary widths; 901–1120 may reduce gaps/gutters without creating a third layout.
 - Review 390, 744, 820, 901, 1000, 1024, 1120, 1240 and 1280px before pushing responsive work.
+- Legal footer links are a permanent single-line row at every width: Privacy Policy, Terms & Conditions, Cookie Policy, Accessibility. Never allow that nav to wrap or stack.
+- Services inquiry spacing is structural: keep the Inquiry Form inside data-services-inquiry-form with a 28px top gap after the intro. Do not rely on custom-element margins for that separation.
