@@ -1657,3 +1657,68 @@ form [data-form-error-field="true"] {
     font-size:9.25px !important;
   }
 }
+
+
+/* GLOBAL MOBILE FORM + FOOTER/TICKER INVARIANTS · 2026-09-27 */
+/* All mobile forms, every route and every step: never let iOS focus-zoom.
+   Phones use the approved 0.84 viewport treatment, so editable text gets a
+   small safety margin above the effective 16px Safari threshold. */
+@media (max-width:900px) {
+  body form input:not([type="hidden"]),
+  body form textarea,
+  body form select,
+  body form [contenteditable="true"] {
+    font-size:16px !important;
+    line-height:1.25 !important;
+    -webkit-text-size-adjust:100% !important;
+    text-size-adjust:100% !important;
+    touch-action:manipulation !important;
+    transform:none !important;
+  }
+
+  html[data-phone-viewport-scale="1"] body form input:not([type="hidden"]),
+  html[data-phone-viewport-scale="1"] body form textarea,
+  html[data-phone-viewport-scale="1"] body form select,
+  html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
+    font-size:20px !important;
+  }
+
+  body form input:not([type="hidden"]):focus,
+  body form textarea:focus,
+  body form select:focus,
+  body form [contenteditable="true"]:focus {
+    font-size:inherit;
+    transform:none !important;
+  }
+
+  section[aria-label="Newsletter"] [data-news-blurb] {
+    color:#c88f87 !important;
+    font-family:var(--sunday-sans) !important;
+    font-size:9.25px !important;
+    font-weight:400 !important;
+    letter-spacing:.04em !important;
+    line-height:1.35 !important;
+    white-space:nowrap !important;
+  }
+
+  [data-screen-label="Home"] [aria-label="Sunday and Company services"] span {
+    font-size:8.5px !important;
+    letter-spacing:.19em !important;
+  }
+}
+
+@media (max-width:520px) {
+  [data-screen-label="Home"] [aria-label="Sunday and Company services"] span {
+    font-size:9.25px !important;
+    letter-spacing:.18em !important;
+  }
+}
+
+/* Invalid controls always carry the dusty-rose cue alongside the message.
+   aria-invalid is included so the visual survives component rerenders. */
+form [data-form-error-field="true"],
+form [aria-invalid="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+}
