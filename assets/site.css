@@ -1755,22 +1755,7 @@ body form [role="alert"] {
 }
 
 
-/* FINAL GLOBAL MOBILE FORM FOCUS LOCK · REV 31
-   The site uses a 0.84 phone viewport scale. Keep every editable control at
-   20px on mobile so iOS Safari never focus-zooms individual fields. */
-@media (max-width:900px) {
-  html body form input:not([type="hidden"]),
-  html body form textarea,
-  html body form select,
-  html body form [contenteditable="true"] {
-    font-size:20px !important;
-    line-height:1.25 !important;
-    touch-action:manipulation !important;
-    transform:none !important;
-  }
-}
-
-/* Validation on espresso/brown newsletter surfaces stays cream for contrast. */
+/* Dark newsletter validation contrast */
 footer[data-site-footer] form [role="alert"],
 [aria-label="Newsletter"] form [role="alert"] {
   color:#f5efe6 !important;
