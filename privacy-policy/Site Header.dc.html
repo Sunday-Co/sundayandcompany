@@ -445,11 +445,11 @@ class Component extends DCLogic {
       submitInquiry: (e) => {
         e.preventDefault();
         const form = e.target;
-        if (!chosen.length) { this.setState({ inquiryError: 'Please select at least one service.' }); return; }
+        if (!chosen.length) { this.setState({ inquiryError: 'PLEASE SELECT AT LEAST ONE SERVICE.' }); return; }
         this.setState({ inquiryError: '', sending: true });
         this.send(form, 'inquiry', 'New Project Inquiry | ' + (form.business && form.business.value || form.name && form.name.value || ''), { services: chosen.join(', ') })
           .then(() => this.setState({ inquiryDone: true, sending: false }))
-          .catch((err) => this.setState({ inquiryError: err.message, sending: false }));
+          .catch(() => this.setState({ inquiryError: 'WE COULD NOT SEND YOUR INQUIRY JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
       resDisplay: this.state.res ? 'flex' : 'none',
       resDialogMaxW: t ? '620px' : 'min(900px, calc(100vw - 28px))',
