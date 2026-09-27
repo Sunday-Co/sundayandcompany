@@ -298,7 +298,10 @@
     for (var i = 0; i < forms.length; i++) {
       var form = forms[i];
       var marked = form.querySelectorAll('[data-form-error-field="true"]');
-      for (var m = 0; m < marked.length; m++) marked[m].removeAttribute('data-form-error-field');
+      for (var m = 0; m < marked.length; m++) {
+        marked[m].removeAttribute('data-form-error-field');
+        marked[m].removeAttribute('aria-invalid');
+      }
 
       var alerts = form.querySelectorAll('[role="alert"]');
       var hasError = false;
@@ -310,7 +313,10 @@
       }
       if (!hasError) continue;
       var target = sundayErrorControl(form);
-      if (target) target.setAttribute('data-form-error-field', 'true');
+      if (target) {
+        target.setAttribute('data-form-error-field', 'true');
+        target.setAttribute('aria-invalid', 'true');
+      }
     }
   }
 
@@ -320,6 +326,14 @@
       window.setTimeout(syncFormErrorVisuals, 80);
     }, true);
 
+    function clearTarget(event) {
+      var target = event.target && event.target.closest ? event.target.closest('[data-form-error-field="true"]') : null;
+      if (!target) return;
+      target.removeAttribute('data-form-error-field');
+      target.removeAttribute('aria-invalid');
+    }
+    document.addEventListener('input', clearTarget, true);
+    document.addEventListener('change', clearTarget, true);
   }
 
   function applyFormRenderCorrections() {
