@@ -1689,7 +1689,6 @@ form [data-form-error-field="true"] {
   body form textarea:focus,
   body form select:focus,
   body form [contenteditable="true"]:focus {
-    font-size:inherit;
     transform:none !important;
   }
 }
