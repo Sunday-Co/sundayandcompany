@@ -2237,3 +2237,197 @@ section[aria-label="Newsletter"] h2 + p {
     font-size:8px !important;
   }
 }
+
+
+/* ==========================================================
+   SYSTEMATIC MOBILE SCALE PASS · 2026-09-26
+   Use one consistent mobile type rhythm instead of shrinking
+   individual components into microtype.
+   ========================================================== */
+@media (max-width:900px) {
+  /* Closed header menu trigger */
+  header > button[aria-label="Open menu"] {
+    font-size:11px !important;
+    letter-spacing:.12em !important;
+    gap:8px !important;
+  }
+  header > button[aria-label="Open menu"] svg {
+    width:21px !important;
+    height:21px !important;
+  }
+
+  /* Keep the open drawer slim, but comfortably readable. */
+  aside[aria-label="Sunday & Company navigation"] {
+    width:min(80vw,315px) !important;
+    max-width:315px !important;
+  }
+  aside[aria-label="Sunday & Company navigation"] nav > a {
+    font-size:19px !important;
+    grid-template-columns:36px minmax(0,1fr) !important;
+    column-gap:12px !important;
+    min-height:50px !important;
+    padding:12px 0 !important;
+  }
+  aside[aria-label="Sunday & Company navigation"] nav > a > span {
+    font-size:8px !important;
+  }
+  aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
+    font-size:9.25px !important;
+    min-height:41px !important;
+  }
+  aside[aria-label="Sunday & Company navigation"] a[href^="mailto:"] {
+    font-size:11.75px !important;
+  }
+
+  /* Project Inquiry: more vertical room and less cramped text. */
+  [aria-label="Project inquiry"] > div {
+    min-height:min(820px, calc(100dvh - 36px)) !important;
+    padding:30px 26px 38px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-receipt-meta] {
+    font-size:9.25px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-kicker] {
+    font-size:10px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2 {
+    font-size:24px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-support] {
+    font-size:10.5px !important;
+    line-height:1.5 !important;
+    margin-top:10px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] {
+    gap:13px 12px !important;
+    margin-top:18px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] [data-stepnav] {
+    margin-bottom:15px !important;
+    padding:10px 0 !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] [data-stepnav] span {
+    font-size:9.5px !important;
+    padding:10px 5px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] label > span:first-child,
+  [aria-label="Project inquiry"] form[data-inq] fieldset > legend,
+  [aria-label="Project inquiry"] form[data-inq] [data-start-date-label] {
+    font-size:10.25px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] input,
+  [aria-label="Project inquiry"] form[data-inq] select {
+    min-height:48px !important;
+    font-size:16px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] textarea {
+    min-height:96px !important;
+    font-size:16px !important;
+  }
+  [aria-label="Project inquiry"] form[data-inq] [data-stepbtns] button,
+  [aria-label="Project inquiry"] form[data-inq] > button[type="submit"] {
+    min-height:48px !important;
+    font-size:9.5px !important;
+  }
+  [aria-label="Project inquiry"] [data-inquiry-ledger] {
+    font-size:9.25px !important;
+    margin-top:20px !important;
+    padding:11px 0 !important;
+  }
+
+  /* Sunday Reservation: slightly longer receipt with readable utility copy. */
+  [aria-label="The Sunday Reservation"] {
+    min-height:min(750px, calc(100dvh - 34px)) !important;
+  }
+  [aria-label="The Sunday Reservation"] > div[aria-hidden] {
+    height:180px !important;
+    min-height:180px !important;
+    max-height:180px !important;
+  }
+  [aria-label="The Sunday Reservation"] > div:last-child {
+    padding:27px 25px 30px !important;
+  }
+  [aria-label="The Sunday Reservation"] h2 {
+    font-size:29px !important;
+  }
+  [aria-label="The Sunday Reservation"] [data-res-intro] {
+    font-size:10.75px !important;
+    line-height:1.5 !important;
+    max-width:360px !important;
+  }
+  [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden][style*="grid-template-columns:auto 1fr auto"] {
+    font-size:9.5px !important;
+    row-gap:9px !important;
+    margin-top:25px !important;
+    margin-bottom:22px !important;
+    padding:12px 0 !important;
+  }
+  [aria-label="The Sunday Reservation"] label {
+    font-size:10px !important;
+  }
+  [aria-label="The Sunday Reservation"] input {
+    min-height:48px !important;
+    font-size:16px !important;
+  }
+  [aria-label="The Sunday Reservation"] form button[type="submit"] {
+    min-height:48px !important;
+    font-size:9.5px !important;
+  }
+  [aria-label="The Sunday Reservation"] [data-res-total],
+  [aria-label="The Sunday Reservation"] [data-res-fineprint],
+  [aria-label="The Sunday Reservation"] [data-res-keep],
+  [aria-label="The Sunday Reservation"] [data-res-number] {
+    font-size:9px !important;
+    line-height:1.5 !important;
+  }
+
+  /* Site-wide mobile support type */
+  section[aria-label="Newsletter"] h2 + p {
+    font-size:11px !important;
+  }
+  section[aria-label="Newsletter"] [data-news-fineprint] {
+    font-size:9px !important;
+  }
+  footer p[style*="color:#c88f87"] {
+    font-size:9.5px !important;
+  }
+  footer [data-footer-ui] {
+    font-size:13.5px !important;
+  }
+  footer a[data-footer-ui][href^="mailto:"],
+  footer a[href^="mailto:"] {
+    font-size:13.75px !important;
+  }
+  footer [data-footer-location] {
+    font-size:12.75px !important;
+  }
+  footer [data-footer-tagline] {
+    font-size:14.5px !important;
+  }
+  footer [data-footer-legal] {
+    font-size:9px !important;
+  }
+
+  [data-screen-label="Home"] #services button > span:first-child {
+    font-size:8.5px !important;
+  }
+  [data-screen-label="Home"] #services button > span:nth-child(2) > span > span:first-child {
+    font-size:12px !important;
+  }
+  [data-screen-label="Home"] #services button > span:nth-child(2) > span > span:nth-child(2) em {
+    font-size:9px !important;
+  }
+  [data-screen-label="Home"] #services button > span:last-child {
+    font-size:8.25px !important;
+  }
+
+  [data-screen-label] main p[style*="font-family:'Inter Tight'"][style*="text-transform:uppercase"] {
+    font-size:9px !important;
+  }
+  [data-screen-label] main figcaption[style*="font-family:'Inter Tight'"] {
+    font-size:8.5px !important;
+  }
+  [data-work-receipt] [style*="font-family:'Inter Tight'"] {
+    font-size:8.5px !important;
+  }
+}

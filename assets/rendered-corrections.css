@@ -27,21 +27,10 @@
   font-weight:400 !important;
   letter-spacing:.09em !important;
 }
-aside[aria-label="Sunday & Company navigation"] [data-sheet-cta],
-[data-about-team-cta] {
-  font-family:var(--sc-sans) !important;
-  font-size:8.5px !important;
-  font-weight:400 !important;
-  letter-spacing:.09em !important;
-  min-height:40px !important;
-}
-
-@media (max-width:900px) {
-  [data-screen-label="Services"] [data-service-number],
-  [data-screen-label="Services"] [data-service-meta],
-  [data-screen-label="Services"] [data-service-included] {
-    font-size:8.25px !important;
-    letter-spacing:.075em !important;
+aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
+    font-size:9.25px !important;
+    letter-spacing:.09em !important;
+    min-height:41px !important;
   }
   [data-screen-label="Services"] [data-service-price] {
     font-size:9.25px !important;
