@@ -374,8 +374,8 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   margin: 0 0 5px !important;
   text-transform: uppercase !important;
 }
-[aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
-#inquiry [data-inquiry-kicker] + h2 {
+[aria-label="Project inquiry"] [data-inquiry-title],
+#inquiry [data-inquiry-title] {
   color: var(--sunday-espresso) !important;
   font-family: var(--sunday-serif) !important;
   font-size: 31px !important;
@@ -445,8 +445,8 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     font-size: 9.5px !important;
     letter-spacing: .09em !important;
   }
-  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2,
-  #inquiry [data-inquiry-kicker] + h2 {
+  [aria-label="Project inquiry"] [data-inquiry-title],
+  #inquiry [data-inquiry-title] {
     font-size: 24px !important;
     line-height: 1 !important;
   }
@@ -1372,7 +1372,7 @@ form[data-inq] [aria-haspopup="dialog"] {
     letter-spacing:.07em !important;
     margin-bottom:4px !important;
   }
-  [aria-label="Project inquiry"] [data-inquiry-kicker] + h2 {
+  [aria-label="Project inquiry"] [data-inquiry-title] {
     font-size:24px !important;
     line-height:1.03 !important;
   }
@@ -1511,7 +1511,7 @@ form[data-inq] [aria-haspopup="dialog"] {
   }
   [data-screen-label="Services"] #inquiry [data-inquiry-kicker] { display:none !important; }
   [data-screen-label="Services"] #inquiry [data-inquiry-support] {
-    font-size:10.5px !important;
+    font-size:10.25px !important;
     line-height:1.48 !important;
     margin:6px 0 0 !important;
   }
