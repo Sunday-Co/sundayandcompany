@@ -82,6 +82,56 @@ services = (ROOT / "services/index.html").read_text(encoding="utf-8")
 if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, re.I):
     errors.append("services/index.html: stale hidden inquiry kicker remains")
 
+
+# Cache/version guardrails for shared site assets and DC imports.
+ASSET_REVISION = "20260927-33"
+PUBLIC_ROUTES = (
+    "404.html",
+    "about/index.html",
+    "accessibility/index.html",
+    "contact/index.html",
+    "cookie-policy/index.html",
+    "index.html",
+    "join-our-team/index.html",
+    "our-work/folake/index.html",
+    "our-work/index.html",
+    "our-work/luckys-cafe-bakery/index.html",
+    "our-work/petti-pathways/index.html",
+    "our-work/pizzeria-coco/index.html",
+    "privacy-policy/index.html",
+    "services/index.html",
+    "sunday-school/index.html",
+    "terms-and-conditions/index.html",
+)
+for rel in PUBLIC_ROUTES:
+    route_text = (ROOT / rel).read_text(encoding="utf-8")
+    for asset in ("site.css", "rendered-corrections.css", "site.js"):
+        expected = f"/assets/{asset}?v={ASSET_REVISION}"
+        if expected not in route_text:
+            errors.append(f"{rel}: {asset} is not on cache revision {ASSET_REVISION}")
+    if f'/support.js?v={ASSET_REVISION}' not in route_text:
+        errors.append(f"{rel}: support.js is not on cache revision {ASSET_REVISION}")
+    if 'var s=0.84' not in route_text:
+        errors.append(f"{rel}: established 0.84 mobile visual scale changed")
+
+support_text = (ROOT / "support.js").read_text(encoding="utf-8")
+if f'?v={ASSET_REVISION}' not in support_text or "requestUrl" not in support_text:
+    errors.append("support.js: shared DC component fetches are not cache-busted")
+
+site_js_text = (ROOT / "assets/site.js").read_text(encoding="utf-8")
+if "sundayInstallIOSFormFocusZoomLock" not in site_js_text:
+    errors.append("assets/site.js: iOS form focus-zoom lock is missing")
+if f"rendered-corrections.css?v={ASSET_REVISION}" not in site_js_text:
+    errors.append("assets/site.js: fallback corrections stylesheet uses a stale revision")
+
+footer_text = (ROOT / "Site Footer.dc.html").read_text(encoding="utf-8")
+if "FOOTER NEWSLETTER SUPPORT LINE · GLOBAL COMPONENT RULE" not in footer_text:
+    errors.append("Site Footer.dc.html: newsletter support-line styling is not owned by the shared Footer")
+if not re.search(r'data-news-blurb[\s\S]{0,350}color:#c88f87\s*!important[\s\S]{0,350}font-size:8\.75px\s*!important[\s\S]{0,350}white-space:nowrap\s*!important', footer_text, re.I):
+    errors.append("Site Footer.dc.html: newsletter support-line mobile styling is incomplete")
+if not re.search(r'form \[role="alert"\]\s*\{\s*color:#f5efe6\s*!important', footer_text, re.I):
+    errors.append("Site Footer.dc.html: dark newsletter validation text is not cream")
+
 if errors:
     print("SITE AUDIT FAILED")
     for item in errors:
