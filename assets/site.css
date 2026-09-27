@@ -1105,6 +1105,18 @@ form[data-inq] [aria-haspopup="dialog"] {
    Header keeps the compact Menu trigger through 1240px.
    ========================================================== */
 
+/* Services inquiry spacing is owned here at every viewport so the intro,
+   support line, and shared step navigation stay visually connected. */
+[data-screen-label="Services"] #inquiry [data-inquiry-support] {
+  margin-top:6px !important;
+}
+[data-screen-label="Services"] #inquiry [data-services-inquiry-form] {
+  margin-top:12px !important;
+}
+[data-screen-label="Services"] #inquiry [data-services-inquiry-form] form[data-inq] {
+  margin-top:0 !important;
+}
+
 /* Site-wide mobile structure helpers through the single 900px switch. */
 @media (max-width: 900px) {
   [data-mobile-wrap-row] {
@@ -1337,11 +1349,11 @@ form[data-inq] [aria-haspopup="dialog"] {
     font-size:10.25px !important;
     letter-spacing:.035em !important;
     line-height:1.48 !important;
-    margin-top:8px !important;
+    margin-top:6px !important;
   }
   [aria-label="Project inquiry"] form[data-inq] {
     gap:12px 12px !important;
-    margin-top:16px !important;
+    margin-top:12px !important;
   }
   [aria-label="Project inquiry"] form[data-inq] [data-stepnav] {
     margin-bottom:14px !important;
@@ -1470,11 +1482,11 @@ form[data-inq] [aria-haspopup="dialog"] {
   [data-screen-label="Services"] #inquiry [data-inquiry-support] {
     font-size:10.5px !important;
     line-height:1.48 !important;
-    margin:8px 0 0 !important;
+    margin:6px 0 0 !important;
   }
   [data-screen-label="Services"] #inquiry [data-services-inquiry-form] {
     display:block !important;
-    margin-top:28px !important;
+    margin-top:12px !important;
   }
   [data-screen-label="Services"] #inquiry [data-services-inquiry-form] form[data-inq] {
     margin-top:0 !important;
