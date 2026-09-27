@@ -150,8 +150,9 @@ class Component extends DCLogic {
     const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required]'));
     const labelFor = (el) => {
       const wrap = el.closest('label');
-      const txt = wrap ? (wrap.querySelector('span') || {}).textContent : '';
-      return (txt || el.getAttribute('placeholder') || el.name || 'This field').replace(/\s*\*\s*$/, '').trim();
+      const external = el.id ? form.querySelector('label[for="' + el.id + '"]') : null;
+      const txt = wrap ? ((wrap.querySelector('span') || wrap).textContent || '') : (external ? external.textContent : '');
+      return (txt || el.getAttribute('aria-label') || el.name || 'This field').replace(/\s*\*\s*$/, '').trim();
     };
     for (const el of fields) {
       const v = (el.value || '').trim();
