@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260927-25';
+    link.href = '/assets/rendered-corrections.css?v=20260927-27';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -84,6 +84,111 @@
 
   function sundayNormalizeText(value) {
     return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function sundayFieldLabel(form, control) {
+    if (!form || !control) return '';
+
+    var label = '';
+    var wrap = control.closest && control.closest('label');
+    if (wrap) {
+      var wrapText = wrap.querySelector('span');
+      label = sundayNormalizeText((wrapText || wrap).textContent);
+    }
+
+    if (!label && control.id) {
+      var external = form.querySelector('label[for="' + control.id.replace(/"/g, '\\"') + '"]');
+      if (external) label = sundayNormalizeText(external.textContent);
+    }
+
+    if (!label && control.getAttribute && control.getAttribute('aria-haspopup') === 'listbox') {
+      var holder = control.parentElement;
+      if (holder) {
+        var nearby = holder.querySelector(':scope > span:first-child');
+        if (nearby) label = sundayNormalizeText(nearby.textContent);
+      }
+      if (!label) label = sundayNormalizeText(control.getAttribute('aria-label'));
+      if (!label) label = 'Program Of Interest';
+    }
+
+    if (!label && control.getAttribute && control.getAttribute('role') === 'checkbox') {
+      label = 'Service';
+    }
+
+    if (!label && control.getAttribute) label = sundayNormalizeText(control.getAttribute('aria-label'));
+    if (!label && control.name) {
+      var names = {
+        email: 'Email Address',
+        phone: 'Phone Number',
+        name: 'Name',
+        message_subject: 'Subject',
+        message: 'Message',
+        business: 'Business Name',
+        customService: 'Tailored Support',
+        website: 'Website'
+      };
+      label = names[control.name] || String(control.name).replace(/[_-]+/g, ' ');
+    }
+
+    return sundayNormalizeText(label).replace(/\s*\*\s*$/, '');
+  }
+
+  function sundayValidationMessage(form, control, raw) {
+    var original = sundayNormalizeText(raw);
+    if (!original) return '';
+
+    var lower = original.toLowerCase();
+    var isMissing = lower.indexOf('please add') === 0 ||
+      lower.indexOf('please select') === 0 ||
+      lower.indexOf('required') !== -1;
+
+    if (control && isMissing) {
+      var role = control.getAttribute && control.getAttribute('role');
+      var popup = control.getAttribute && control.getAttribute('aria-haspopup');
+      var name = control.name || '';
+      var type = (control.type || '').toLowerCase();
+
+      if (popup === 'listbox') return 'PLEASE SELECT A PROGRAM.';
+      if (role === 'checkbox') return 'PLEASE SELECT AT LEAST ONE SERVICE.';
+      if (name === 'customService') return 'PLEASE TELL US WHAT TAILORED SUPPORT YOU NEED.';
+      if (type === 'email' || name === 'email') return 'PLEASE ADD YOUR EMAIL ADDRESS.';
+      if (type === 'tel' || name === 'phone') return 'PLEASE ADD YOUR PHONE NUMBER.';
+      if (name === 'message_subject') return 'PLEASE ADD A SUBJECT.';
+
+      var label = sundayFieldLabel(form, control);
+      var clean = sundayNormalizeText(label).replace(/^your\s+/i, '');
+      if (/^subject$/i.test(clean)) return 'PLEASE ADD A SUBJECT.';
+      if (/^program( of interest)?$/i.test(clean)) return 'PLEASE SELECT A PROGRAM.';
+      if (/^service/i.test(clean)) return 'PLEASE SELECT AT LEAST ONE SERVICE.';
+      if (clean) return ('PLEASE ADD YOUR ' + clean + '.').toUpperCase();
+    }
+
+    if (lower.indexOf('valid email') !== -1) return 'PLEASE ENTER A VALID EMAIL ADDRESS.';
+    if (lower.indexOf('full phone') !== -1) return 'PLEASE ADD A FULL PHONE NUMBER.';
+    if (lower.indexOf('http://') !== -1 || lower.indexOf('https://') !== -1) {
+      return 'PLEASE ENTER THE FULL LINK BEGINNING WITH HTTP:// OR HTTPS://.';
+    }
+    if (lower.indexOf('tailored') !== -1) return 'PLEASE TELL US WHAT TAILORED SUPPORT YOU NEED.';
+    if (lower.indexOf('service') !== -1 && lower.indexOf('select') !== -1) return 'PLEASE SELECT AT LEAST ONE SERVICE.';
+    if (lower.indexOf('program') !== -1 && lower.indexOf('select') !== -1) return 'PLEASE SELECT A PROGRAM.';
+
+    return original.toUpperCase();
+  }
+
+  function sundayNormalizeFormAlerts() {
+    var forms = document.querySelectorAll('form');
+    for (var i = 0; i < forms.length; i++) {
+      var form = forms[i];
+      var alerts = form.querySelectorAll('[role="alert"]');
+      for (var a = 0; a < alerts.length; a++) {
+        var alert = alerts[a];
+        var raw = sundayNormalizeText(alert.textContent);
+        if (!raw) continue;
+        var control = sundayErrorControl(form);
+        var normalized = sundayValidationMessage(form, control, raw);
+        if (normalized && raw !== normalized) alert.textContent = normalized;
+      }
+    }
   }
 
   function sundayDescribeOpener(el) {
@@ -334,6 +439,22 @@
     }
     document.addEventListener('input', clearTarget, true);
     document.addEventListener('change', clearTarget, true);
+    document.addEventListener('click', function (event) {
+      var option = event.target && event.target.closest ? event.target.closest('[role="option"]') : null;
+      if (option) {
+        var form = option.closest('form');
+        var trigger = form && form.querySelector('[aria-haspopup="listbox"][data-form-error-field="true"]');
+        if (trigger) {
+          trigger.removeAttribute('data-form-error-field');
+          trigger.removeAttribute('aria-invalid');
+        }
+      }
+      var checkbox = event.target && event.target.closest ? event.target.closest('[role="checkbox"][data-form-error-field="true"]') : null;
+      if (checkbox) {
+        checkbox.removeAttribute('data-form-error-field');
+        checkbox.removeAttribute('aria-invalid');
+      }
+    }, true);
   }
 
   function applyFormRenderCorrections() {
@@ -354,6 +475,7 @@
   function sync() {
     ensureCorrectionStyles();
     applyFormRenderCorrections();
+    sundayNormalizeFormAlerts();
     syncFormErrorVisuals();
     syncAccessibleSurface();
   }
