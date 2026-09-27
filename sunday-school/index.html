@@ -15,6 +15,42 @@
   letter-spacing:.01em !important;
 }
 </style>
+<style>
+/* COMPONENT LOCAL PHONE FOCUS LOCK · 2026-09-27
+   Mirrors the sitewide rule inside the component/route boundary so Safari
+   never sees a focused editable control below 16px after the 0.84 phone scale. */
+@media (max-width:900px) {
+  form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
+    font-size:16px !important;
+    line-height:1.25 !important;
+    touch-action:manipulation !important;
+    transform:none !important;
+  }
+}
+@media (max-width:599px) {
+  form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
+    font-size:20px !important;
+  }
+}
+form [data-form-error-field="true"],
+form [aria-invalid="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+}
+</style>
+<style>
+/* LOCAL VALIDATION PROMPT MICROTYPE · 2026-09-27 */
+form [role="alert"] {
+  color:#8c2f22 !important;
+  font-family:'Inter Tight',sans-serif !important;
+  font-size:9.5px !important;
+  font-weight:400 !important;
+  letter-spacing:.065em !important;
+  line-height:1.4 !important;
+  text-transform:uppercase !important;
+}
+</style>
 </head>
 <body>
 <x-dc>
@@ -177,9 +213,9 @@
     font-weight: 300;
   }
 </style>
-<link rel="stylesheet" href="/assets/site.css?v=20260927-29" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260927-29" />
-<script defer data-sunday-site-js src="/assets/site.js?v=20260927-29"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20260927-30" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260927-30" />
+<script defer data-sunday-site-js src="/assets/site.js?v=20260927-30"></script>
 </helmet>
 
 <div data-screen-label="Sunday School" id="top" style="background:#f5efe6;color:#311d03;overflow:hidden">
@@ -211,7 +247,7 @@
       <p style="font-size:12.5px;line-height:1.6;margin:14px 0 0;max-width:420px">Your seat is saved. New templates, free resources and course openings will reach you first.</p>
       <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
     </div>
-    <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
+    <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearNotesError }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
       <label for="school-notes-email" style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Email Address</label>
       <div style="align-items:center;display:grid;gap:18px;grid-template-columns:{{ gc4 }};margin-top:8px">
@@ -310,7 +346,35 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
+  clearInvalid(form) {
+    if (!form) return;
+    const marked = form.querySelectorAll('[data-form-error-field="true"],[aria-invalid="true"]');
+    marked.forEach((el) => {
+      el.removeAttribute('data-form-error-field');
+      el.removeAttribute('aria-invalid');
+    });
+  }
+  markInvalid(form, el) {
+    if (!form || !el) return;
+    form.setAttribute('data-validation-attempted', 'true');
+    el.setAttribute('data-form-error-field', 'true');
+    el.setAttribute('aria-invalid', 'true');
+    try { el.focus({ preventScroll: true }); } catch (_) { el.focus(); }
+  }
+  missingMessage(el, label) {
+    const name = (el && el.name) || '';
+    const type = (el && el.type) || '';
+    const clean = String(label || '').replace(/^your\s+/i, '').trim();
+    if (type === 'email' || name === 'email') return 'PLEASE ADD YOUR EMAIL ADDRESS.';
+    if (type === 'tel' || name === 'phone') return 'PLEASE ADD YOUR PHONE NUMBER.';
+    if (name === 'name') return 'PLEASE ADD YOUR NAME.';
+    if (name === 'message_subject' || /^subject$/i.test(clean)) return 'PLEASE ADD A SUBJECT.';
+    if (name === 'message') return 'PLEASE ADD YOUR MESSAGE.';
+    if (name === 'business') return 'PLEASE ADD YOUR BUSINESS NAME.';
+    return clean ? ('PLEASE ADD YOUR ' + clean + '.').toUpperCase() : 'PLEASE COMPLETE THIS FIELD.';
+  }
   validate(form) {
+    this.clearInvalid(form);
     const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required]'));
     const labelFor = (el) => {
       const wrap = el.closest('label');
@@ -321,20 +385,19 @@ class Component extends DCLogic {
     for (const el of fields) {
       const v = (el.value || '').trim();
       if (!v) {
-        el.focus();
-        const label = labelFor(el).toLowerCase();
-        if (/^subject/.test(label)) return 'Please add a subject.';
-        return /^your\b/.test(label) ? 'Please add ' + label + '.' : 'Please add your ' + label + '.';
+        this.markInvalid(form, el);
+        return this.missingMessage(el, labelFor(el));
       }
       if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
-        el.focus();
-        return 'Please enter a valid email address.';
+        this.markInvalid(form, el);
+        return 'PLEASE ENTER A VALID EMAIL ADDRESS.';
       }
       if (el.type === 'tel' && v.replace(/[^0-9]/g, '').length < 7) {
-        el.focus();
-        return 'Please add a full phone number.';
+        this.markInvalid(form, el);
+        return 'PLEASE ADD A FULL PHONE NUMBER.';
       }
     }
+    form.removeAttribute('data-validation-attempted');
     return '';
   }
   state = { narrow: false, sending: false, notesDone: false, notesError: '' };
@@ -361,6 +424,14 @@ class Component extends DCLogic {
       notesError: this.state.notesError,
       notesDoneDisplay: this.state.notesDone ? 'block' : 'none',
       notesFormDisplay: this.state.notesDone ? 'none' : 'block',
+      clearNotesError: (e) => {
+        const el = e && e.target;
+        if (el && el.removeAttribute) {
+          el.removeAttribute('data-form-error-field');
+          el.removeAttribute('aria-invalid');
+        }
+        if (this.state.notesError) this.setState({ notesError: '' });
+      },
       submitNotes: (e) => {
         e.preventDefault();
         const bad = this.validate(e.target);
@@ -369,7 +440,7 @@ class Component extends DCLogic {
         this.setState({ notesError: '', sending: true });
         this.send(form, 'reservation', 'Sunday School | Class Notes Signup')
           .then(() => this.setState({ notesDone: true, sending: false }))
-          .catch((err) => this.setState({ notesError: err.message, sending: false }));
+          .catch(() => this.setState({ notesError: 'WE COULD NOT SAVE YOUR SEAT JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
       rowCols: n ? '1fr' : 'minmax(0,.76fr) minmax(0,1.3fr) 74px 52px 104px',
       descPad: '16px',
