@@ -1333,7 +1333,7 @@ form[data-inq] [aria-haspopup="dialog"] {
   [data-program-cards] > article { height:330px !important; }
   [data-program-cards] > article > div > button > span:first-child,
   [data-program-cards] > article > div > div:nth-child(2) > span:first-child {
-    font-size:7.25px !important;
+    font-size:8.5px !important;
     letter-spacing:.11em !important;
     padding-left:13px !important;
     padding-right:13px !important;
@@ -1343,7 +1343,7 @@ form[data-inq] [aria-haspopup="dialog"] {
     padding-right:13px !important;
   }
   [data-program-cards] [data-program-action] {
-    font-size:7.75px !important;
+    font-size:8.75px !important;
     letter-spacing:.10em !important;
   }
 
@@ -1374,11 +1374,11 @@ form[data-inq] [aria-haspopup="dialog"] {
   }
   footer > div:first-child > * { min-width:0 !important; }
   footer img[src*="monogram"] { width:82px !important; }
-  footer [data-footer-ui] { font-size:10.75px !important; }
+  footer [data-footer-ui] { font-size:11.5px !important; }
   footer a[data-footer-ui][href^="mailto:"],
-  footer a[href^="mailto:"] { font-size:11.25px !important; }
+  footer a[href^="mailto:"] { font-size:12px !important; }
   footer [data-footer-location] {
-    font-size:10.5px !important;
+    font-size:11.25px !important;
     line-height:1.4 !important;
   }
   footer p[style*="color:#c88f87"] {
@@ -1387,8 +1387,8 @@ form[data-inq] [aria-haspopup="dialog"] {
   }
   footer [data-footer-tagline] { font-size:13px !important; }
   footer [data-footer-legal] {
-    column-gap:14px !important;
-    font-size:7.25px !important;
+    column-gap:12px !important;
+    font-size:8.25px !important;
     grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr) auto !important;
     letter-spacing:.09em !important;
   }
@@ -1421,13 +1421,13 @@ form[data-inq] [aria-haspopup="dialog"] {
    ========================================================== */
 @media (max-width:900px) {
   header > button[aria-label="Open menu"] {
-    font-size:11.5px !important;
-    letter-spacing:.12em !important;
-    gap:8px !important;
+    font-size:12px !important;
+    letter-spacing:.11em !important;
+    gap:9px !important;
   }
   header > button[aria-label="Open menu"] svg {
-    width:22px !important;
-    height:22px !important;
+    width:23px !important;
+    height:23px !important;
   }
 
   aside[aria-label="Sunday & Company navigation"] {
@@ -1445,16 +1445,16 @@ form[data-inq] [aria-haspopup="dialog"] {
     text-align:left !important;
   }
   aside[aria-label="Sunday & Company navigation"] nav > a > span {
-    font-size:8px !important;
+    font-size:9px !important;
     justify-self:start !important;
     text-align:left !important;
   }
   aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
-    font-size:9.25px !important;
-    min-height:41px !important;
+    font-size:9.5px !important;
+    min-height:42px !important;
   }
   aside[aria-label="Sunday & Company navigation"] a[href^="mailto:"] {
-    font-size:11.5px !important;
+    font-size:12px !important;
   }
 
   div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
@@ -1465,12 +1465,15 @@ form[data-inq] [aria-haspopup="dialog"] {
     padding:20px 16px calc(20px + env(safe-area-inset-bottom)) !important;
   }
   [aria-label="Project inquiry"] {
+    box-sizing:border-box !important;
     margin:auto !important;
+    width:100% !important;
+    max-width:710px !important;
     max-height:none !important;
     overflow:hidden !important;
   }
   [aria-label="Project inquiry"] > div {
-    min-height:min(800px, calc(100dvh - 36px)) !important;
+    min-height:min(660px, calc(100dvh - 40px)) !important;
     max-height:none !important;
     overflow:hidden !important;
     padding:28px 24px 32px !important;
@@ -1540,8 +1543,11 @@ form[data-inq] [aria-haspopup="dialog"] {
     padding:20px 16px calc(20px + env(safe-area-inset-bottom)) !important;
   }
   [aria-label="The Sunday Reservation"] {
+    box-sizing:border-box !important;
+    width:100% !important;
+    max-width:620px !important;
     height:auto !important;
-    min-height:min(720px, calc(100dvh - 34px)) !important;
+    min-height:min(640px, calc(100dvh - 40px)) !important;
     max-height:none !important;
     overflow:hidden !important;
     grid-template-columns:1fr !important;
@@ -1620,7 +1626,20 @@ form[data-inq] [aria-haspopup="dialog"] {
   footer a[href^="mailto:"] { font-size:14px !important; }
   footer [data-footer-location] { font-size:13px !important; }
   footer [data-footer-tagline] { font-size:14.5px !important; }
-  footer [data-footer-legal] { font-size:8.5px !important; }
+  footer [data-footer-legal] { font-size:9.25px !important; }
+
+  /* Receipt/status rows are compact horizontal ledgers, not stacking flex groups. */
+  [aria-label="Project inquiry"] [data-inquiry-ledger],
+  [aria-label="The Sunday Reservation"] [data-res-total],
+  [aria-label="Newsletter"] [data-news-receipt] > div,
+  [data-screen-label="Services"] #inquiry > div > footer,
+  [data-screen-label] main [data-receipt-meta][style*="display:flex"],
+  [data-work-receipt] [style*="display:flex"][style*="space-between"],
+  [data-program-cards] [style*="display:flex"][style*="space-between"],
+  [data-screen-label^="Case study"] main [style*="display:flex"][style*="space-between"][style*="text-transform:uppercase"] {
+    flex-wrap:nowrap !important;
+    row-gap:0 !important;
+  }
 }
 
 
@@ -1629,7 +1648,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 footer [data-footer-legal-nav] {
   display:flex !important;
   flex-wrap:nowrap !important;
-  gap:8px clamp(7px,1.5vw,12px) !important;
+  gap:0 clamp(6px,1.25vw,10px) !important;
   min-width:0 !important;
   white-space:nowrap !important;
   width:100% !important;

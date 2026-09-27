@@ -298,14 +298,13 @@ footer [style*="color:#ac746c"] {
   [aria-label="The Sunday Reservation"] {
     box-sizing:border-box !important;
     min-width:0 !important;
+    width:100% !important;
   }
   [aria-label="Project inquiry"] {
-    width:min(710px, calc(100vw - 52px)) !important;
-    max-width:min(710px, calc(100vw - 52px)) !important;
+    max-width:710px !important;
   }
   [aria-label="The Sunday Reservation"] {
-    width:min(620px, calc(100vw - 52px)) !important;
-    max-width:min(620px, calc(100vw - 52px)) !important;
+    max-width:620px !important;
   }
 }
 
