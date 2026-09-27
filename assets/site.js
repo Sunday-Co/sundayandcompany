@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260927-28';
+    link.href = '/assets/rendered-corrections.css?v=20260927-29';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -365,12 +365,6 @@
 
   function sundayErrorControl(form) {
     if (!form) return null;
-    var active = document.activeElement;
-    if (active && form.contains(active)) {
-      var focused = active.closest && active.closest('input:not([type="hidden"]),textarea,select,button[aria-haspopup="listbox"],button[aria-haspopup="dialog"],[role="checkbox"]');
-      if (focused) return focused;
-    }
-
     var alert = form.querySelector('[role="alert"]');
     var msg = sundayNormalizeText(alert && alert.textContent).toLowerCase();
     if (!msg) return null;
@@ -468,34 +462,40 @@
   }
 
   function installFormErrorManagement() {
-    document.addEventListener('submit', function () {
-      window.setTimeout(syncFormErrorVisuals, 0);
-      window.setTimeout(syncFormErrorVisuals, 80);
+    function refreshErrors() {
+      window.setTimeout(function () {
+        sundayNormalizeFormAlerts();
+        syncFormErrorVisuals();
+      }, 0);
+      window.setTimeout(function () {
+        sundayNormalizeFormAlerts();
+        syncFormErrorVisuals();
+      }, 80);
+    }
+
+    /* Submit covers ordinary forms. Click also covers multi-step "Next" buttons
+       and custom controls that validate without firing a submit event. */
+    document.addEventListener('submit', refreshErrors, true);
+    document.addEventListener('click', function (event) {
+      var form = event.target && event.target.closest ? event.target.closest('form') : null;
+      if (!form) return;
+      if (event.target.closest('button,[role="option"],[role="checkbox"],[aria-haspopup="listbox"],[aria-haspopup="dialog"]')) {
+        refreshErrors();
+      }
     }, true);
 
-    function clearTarget(event) {
-      var target = event.target && event.target.closest ? event.target.closest('[data-form-error-field="true"]') : null;
-      if (!target) return;
-      target.removeAttribute('data-form-error-field');
-      target.removeAttribute('aria-invalid');
-    }
-    document.addEventListener('input', clearTarget, true);
-    document.addEventListener('change', clearTarget, true);
-    document.addEventListener('click', function (event) {
-      var option = event.target && event.target.closest ? event.target.closest('[role="option"]') : null;
-      if (option) {
-        var form = option.closest('form');
-        var trigger = form && form.querySelector('[aria-haspopup="listbox"][data-form-error-field="true"]');
-        if (trigger) {
-          trigger.removeAttribute('data-form-error-field');
-          trigger.removeAttribute('aria-invalid');
-        }
-      }
-      var checkbox = event.target && event.target.closest ? event.target.closest('[role="checkbox"][data-form-error-field="true"]') : null;
-      if (checkbox) {
-        checkbox.removeAttribute('data-form-error-field');
-        checkbox.removeAttribute('aria-invalid');
-      }
+    /* Re-evaluate instead of blindly clearing the rose state. If the user is
+       still invalid (including deleting a previously valid answer), the field
+       remains rose. Once corrected, sundayErrorControl returns null and the
+       visual clears. */
+    document.addEventListener('input', function (event) {
+      if (event.target && event.target.closest && event.target.closest('form')) refreshErrors();
+    }, true);
+    document.addEventListener('change', function (event) {
+      if (event.target && event.target.closest && event.target.closest('form')) refreshErrors();
+    }, true);
+    document.addEventListener('focusout', function (event) {
+      if (event.target && event.target.closest && event.target.closest('form')) refreshErrors();
     }, true);
   }
 
