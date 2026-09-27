@@ -1535,8 +1535,9 @@ form[data-inq] [aria-haspopup="dialog"] {
   div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     align-items:center !important;
     justify-content:center !important;
-    overflow:hidden !important;
-    padding:18px 16px calc(18px + env(safe-area-inset-bottom)) !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    padding:20px 16px calc(20px + env(safe-area-inset-bottom)) !important;
   }
   [aria-label="The Sunday Reservation"] {
     height:auto !important;
@@ -1569,12 +1570,12 @@ form[data-inq] [aria-haspopup="dialog"] {
   }
   [aria-label="The Sunday Reservation"] label { font-size:10px !important; }
   [aria-label="The Sunday Reservation"] input {
-    min-height:44px !important;
+    min-height:46px !important;
     font-size:16px !important;
   }
   [aria-label="The Sunday Reservation"] form button[type="submit"] {
-    min-height:44px !important;
-    font-size:9px !important;
+    min-height:46px !important;
+    font-size:9.5px !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-total],
   [aria-label="The Sunday Reservation"] [data-res-fineprint],
