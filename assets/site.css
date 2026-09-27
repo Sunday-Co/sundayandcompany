@@ -1973,7 +1973,10 @@ section[aria-label="Newsletter"] h2 + p {
      its dashed step navigation cannot rise into the intro copy. */
   [data-screen-label="Services"] #inquiry dc-import[name="/Inquiry Form"] {
     display:block !important;
-    margin-top:22px !important;
+    margin-top:0 !important;
+  }
+  [data-screen-label="Services"] #inquiry form[data-inq] {
+    margin-top:26px !important;
   }
   [data-screen-label="Services"] #inquiry header {
     margin-bottom:0 !important;
