@@ -250,7 +250,7 @@ form [role="alert"] {
       <p style="font-size:12.5px;line-height:1.6;margin:14px 0 0;max-width:420px">Your seat is saved. New templates, free resources and course openings will reach you first.</p>
       <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
     </div>
-    <form data-editorial-labels noValidate="{{ true }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
+    <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearNotesError }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
     <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
       <label for="school-notes-email" style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Email Address</label>
       <div style="align-items:center;display:grid;gap:18px;grid-template-columns:{{ gc4 }};margin-top:8px">
@@ -427,6 +427,14 @@ class Component extends DCLogic {
       notesError: this.state.notesError,
       notesDoneDisplay: this.state.notesDone ? 'block' : 'none',
       notesFormDisplay: this.state.notesDone ? 'none' : 'block',
+      clearNotesError: (e) => {
+        const el = e && e.target;
+        if (el && el.removeAttribute) {
+          el.removeAttribute('data-form-error-field');
+          el.removeAttribute('aria-invalid');
+        }
+        if (this.state.notesError) this.setState({ notesError: '' });
+      },
       submitNotes: (e) => {
         e.preventDefault();
         const bad = this.validate(e.target);
