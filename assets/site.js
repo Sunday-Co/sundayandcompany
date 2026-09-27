@@ -365,18 +365,16 @@
 
   function sundayErrorControl(form) {
     if (!form) return null;
-    var active = document.activeElement;
-    if (active && form.contains(active)) {
-      var focused = active.closest && active.closest('input:not([type="hidden"]),textarea,select,button[aria-haspopup="listbox"],button[aria-haspopup="dialog"],[role="checkbox"]');
-      if (focused) return focused;
-    }
 
     var alert = form.querySelector('[role="alert"]');
     var msg = sundayNormalizeText(alert && alert.textContent).toLowerCase();
     if (!msg) return null;
 
+    /* Delivery/network errors are form-level, not field-level. */
+    if (msg.indexOf('we could not') === 0 || msg.indexOf('something went wrong') !== -1) return null;
+
     if (msg.indexOf('email') !== -1) {
-      var email = form.querySelector('input[type="email"]');
+      var email = form.querySelector('input[type="email"],input[name="email"]');
       if (email) {
         var emailValue = sundayNormalizeText(email.value);
         var emailInvalid = emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailValue);
@@ -385,7 +383,7 @@
       }
     }
     if (msg.indexOf('phone') !== -1) {
-      var phone = form.querySelector('input[type="tel"]');
+      var phone = form.querySelector('input[type="tel"],input[name="phone"]');
       if (phone) {
         var phoneValue = sundayNormalizeText(phone.value);
         if (!phoneValue || phoneValue.replace(/[^0-9]/g, '').length < 7) return phone;
@@ -400,11 +398,15 @@
       var business = form.querySelector('[name="business"]');
       return business && !sundayNormalizeText(business.value) ? business : null;
     }
-    if (/(^|\s)name(\.|\s|$)/.test(msg)) {
+    if (msg.indexOf('estimated budget') !== -1 || msg.indexOf('budget') !== -1) {
+      var budget = form.querySelector('[name="budget"]');
+      return budget && !sundayNormalizeText(budget.value) ? budget : null;
+    }
+    if (/(^|\s)name(\.|\s|$)/.test(msg) && msg.indexOf('business name') === -1) {
       var nameField = form.querySelector('[name="name"]');
       return nameField && !sundayNormalizeText(nameField.value) ? nameField : null;
     }
-    if (msg.indexOf('message') !== -1 && msg.indexOf('error message') === -1) {
+    if (msg.indexOf('your message') !== -1 || (msg.indexOf('message') !== -1 && msg.indexOf('error message') === -1)) {
       var messageField = form.querySelector('[name="message"]');
       return messageField && !sundayNormalizeText(messageField.value) ? messageField : null;
     }
@@ -429,14 +431,29 @@
       return null;
     }
 
-    var controls = form.querySelectorAll('input:not([type="hidden"]),textarea,select');
-    for (var i = 0; i < controls.length; i++) {
-      var el = controls[i];
-      var value = sundayNormalizeText(el.value);
-      if (el.required && !value) return el;
-      if (el.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) return el;
-      if (el.type === 'tel' && value && value.replace(/[^0-9]/g, '').length < 7) return el;
+    /* Generic missing-field copy resolves against the actual label, never the
+       placeholder, so a stale alert cannot jump the rose state to the field
+       the user happens to be typing in. */
+    var missing = msg.match(/^please (?:add|complete)(?: your)?\s+(.+?)[.!]?$/i);
+    if (missing) {
+      var wanted = sundayNormalizeText(missing[1]).replace(/[.!]+$/, '').replace(/^your\s+/i, '').toLowerCase();
+      var candidates = form.querySelectorAll('input:not([type="hidden"]),textarea,select');
+      for (var c = 0; c < candidates.length; c++) {
+        var candidate = candidates[c];
+        var label = sundayFieldLabel(form, candidate).replace(/^your\s+/i, '').toLowerCase();
+        if (label === wanted) return candidate;
+      }
     }
+
+    if (msg.indexOf('complete this field') !== -1) {
+      var controls = form.querySelectorAll('input:not([type="hidden"]),textarea,select');
+      for (var i = 0; i < controls.length; i++) {
+        var el = controls[i];
+        var value = sundayNormalizeText(el.value);
+        if (el.required && !value) return el;
+      }
+    }
+
     return null;
   }
 
@@ -444,7 +461,7 @@
     var forms = document.querySelectorAll('form');
     for (var i = 0; i < forms.length; i++) {
       var form = forms[i];
-      var marked = form.querySelectorAll('[data-form-error-field="true"]');
+      var marked = form.querySelectorAll('[data-form-error-field="true"],[aria-invalid="true"]');
       for (var m = 0; m < marked.length; m++) {
         marked[m].removeAttribute('data-form-error-field');
         marked[m].removeAttribute('aria-invalid');
