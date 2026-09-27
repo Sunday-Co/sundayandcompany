@@ -129,6 +129,13 @@ html {
     touch-action:manipulation;
   }
 
+  input:not([type="hidden"]):focus,
+  textarea:focus,
+  select:focus,
+  [contenteditable="true"]:focus {
+    transform:none !important;
+  }
+
   form button,
   form input,
   form textarea,
