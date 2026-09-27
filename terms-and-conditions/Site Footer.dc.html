@@ -14,6 +14,45 @@
   letter-spacing:.01em !important;
 }
 </style>
+<style>
+/* COMPONENT LOCAL PHONE FOCUS LOCK · 2026-09-27
+   Mirrors the sitewide rule inside the component/route boundary so Safari
+   never sees a focused editable control below 16px after the 0.84 phone scale. */
+@media (max-width:900px) {
+  form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
+    font-size:16px !important;
+    line-height:1.25 !important;
+    touch-action:manipulation !important;
+    transform:none !important;
+  }
+}
+@media (max-width:599px) {
+  form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
+    font-size:20px !important;
+  }
+}
+form[data-validation-attempted="true"] input:not([type="hidden"]):invalid,
+form[data-validation-attempted="true"] textarea:invalid,
+form[data-validation-attempted="true"] select:invalid,
+form [data-form-error-field="true"],
+form [aria-invalid="true"] {
+  background:rgba(172,116,108,.12) !important;
+  border-color:rgba(172,116,108,.72) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+}
+</style>
+<style>
+/* LOCAL VALIDATION PROMPT MICROTYPE · 2026-09-27 */
+form [role="alert"] {
+  color:#8c2f22 !important;
+  font-family:'Inter Tight',sans-serif !important;
+  font-size:9.5px !important;
+  font-weight:400 !important;
+  letter-spacing:.065em !important;
+  line-height:1.4 !important;
+  text-transform:uppercase !important;
+}
+</style>
 </head>
 <body>
 <x-dc>
@@ -79,7 +118,35 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:420}}">
 class Component extends DCLogic {
+  clearInvalid(form) {
+    if (!form) return;
+    const marked = form.querySelectorAll('[data-form-error-field="true"],[aria-invalid="true"]');
+    marked.forEach((el) => {
+      el.removeAttribute('data-form-error-field');
+      el.removeAttribute('aria-invalid');
+    });
+  }
+  markInvalid(form, el) {
+    if (!form || !el) return;
+    form.setAttribute('data-validation-attempted', 'true');
+    el.setAttribute('data-form-error-field', 'true');
+    el.setAttribute('aria-invalid', 'true');
+    try { el.focus({ preventScroll: true }); } catch (_) { el.focus(); }
+  }
+  missingMessage(el, label) {
+    const name = (el && el.name) || '';
+    const type = (el && el.type) || '';
+    const clean = String(label || '').replace(/^your\s+/i, '').trim();
+    if (type === 'email' || name === 'email') return 'PLEASE ADD YOUR EMAIL ADDRESS.';
+    if (type === 'tel' || name === 'phone') return 'PLEASE ADD YOUR PHONE NUMBER.';
+    if (name === 'name') return 'PLEASE ADD YOUR NAME.';
+    if (name === 'message_subject' || /^subject$/i.test(clean)) return 'PLEASE ADD A SUBJECT.';
+    if (name === 'message') return 'PLEASE ADD YOUR MESSAGE.';
+    if (name === 'business') return 'PLEASE ADD YOUR BUSINESS NAME.';
+    return clean ? ('PLEASE ADD YOUR ' + clean + '.').toUpperCase() : 'PLEASE COMPLETE THIS FIELD.';
+  }
   validate(form) {
+    this.clearInvalid(form);
     const fields = Array.from(form.querySelectorAll('input[required], textarea[required], select[required]'));
     const labelFor = (el) => {
       const wrap = el.closest('label');
@@ -90,20 +157,19 @@ class Component extends DCLogic {
     for (const el of fields) {
       const v = (el.value || '').trim();
       if (!v) {
-        el.focus();
-        const label = labelFor(el).toLowerCase();
-        if (/^subject/.test(label)) return 'Please add a subject.';
-        return /^your\b/.test(label) ? 'Please add ' + label + '.' : 'Please add your ' + label + '.';
+        this.markInvalid(form, el);
+        return this.missingMessage(el, labelFor(el));
       }
       if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
-        el.focus();
-        return 'Please enter a valid email address.';
+        this.markInvalid(form, el);
+        return 'PLEASE ENTER A VALID EMAIL ADDRESS.';
       }
       if (el.type === 'tel' && v.replace(/[^0-9]/g, '').length < 7) {
-        el.focus();
-        return 'Please add a full phone number.';
+        this.markInvalid(form, el);
+        return 'PLEASE ADD A FULL PHONE NUMBER.';
       }
     }
+    form.removeAttribute('data-validation-attempted');
     return '';
   }
   state = { narrow: false, tight: false, sending: false, newsError: '', newsDone: false };
@@ -146,7 +212,7 @@ class Component extends DCLogic {
         this.setState({ newsError: '', sending: true });
         this.send(form, 'reservation', 'New Sunday Reservation Signup')
           .then(() => { form.reset(); this.setState({ newsDone: true, sending: false }); })
-          .catch((err) => this.setState({ newsError: err.message, sending: false }));
+          .catch(() => this.setState({ newsError: 'WE COULD NOT SAVE YOUR SEAT JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
       // newsletter: source @900 turns the grid into a block, form to one column
       nlDisplay: n ? 'block' : 'grid',
