@@ -120,29 +120,32 @@ html {
 }
 
 @media (max-width:900px) {
-  input:not([type="hidden"]),
-  textarea,
-  select,
-  [contenteditable="true"] {
+  /* ALL site forms use the same iOS focus-lock rules:
+     Project Inquiry, Services Inquiry, Sunday Reservation, footer newsletter,
+     Contact, Join Our Team, Sunday School, and future forms. */
+  form input:not([type="hidden"]),
+  form textarea,
+  form select,
+  form [contenteditable="true"] {
     font-size:16px !important;
     line-height:1.25;
     touch-action:manipulation;
   }
 
   /* Phones intentionally render the site at the established 0.84 viewport scale.
-     19.25px remains just over 16 rendered px at that scale, preventing iOS
-     focus-zoom without making the rest of the site larger. */
-  html[data-phone-viewport-scale="1"] input:not([type="hidden"]),
-  html[data-phone-viewport-scale="1"] textarea,
-  html[data-phone-viewport-scale="1"] select,
-  html[data-phone-viewport-scale="1"] [contenteditable="true"] {
+     19.25px keeps form text above the iOS focus-zoom threshold at that scale
+     without making the rest of the site larger. */
+  html[data-phone-viewport-scale="1"] form input:not([type="hidden"]),
+  html[data-phone-viewport-scale="1"] form textarea,
+  html[data-phone-viewport-scale="1"] form select,
+  html[data-phone-viewport-scale="1"] form [contenteditable="true"] {
     font-size:19.25px !important;
   }
 
-  input:not([type="hidden"]):focus,
-  textarea:focus,
-  select:focus,
-  [contenteditable="true"]:focus {
+  form input:not([type="hidden"]):focus,
+  form textarea:focus,
+  form select:focus,
+  form [contenteditable="true"]:focus {
     transform:none !important;
   }
 
@@ -150,8 +153,9 @@ html {
   form input,
   form textarea,
   form select,
-  [aria-haspopup="dialog"],
-  [aria-haspopup="listbox"] {
+  form [contenteditable="true"],
+  form [aria-haspopup="dialog"],
+  form [aria-haspopup="listbox"] {
     touch-action:manipulation;
   }
 }
