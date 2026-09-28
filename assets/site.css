@@ -1767,64 +1767,66 @@ footer[data-site-footer] form [role="alert"],
    The vw coefficient stays the same: 0.84 × 7vw of (width / 0.84) = 7vw.
    Editable fields keep their separate 16px minimum to avoid focus zoom. */
 @media (max-width:599px) {
-  h1[style*="font-size:clamp(48px,6.2vw,84px)"] { font-size:clamp(40.32px,6.2vw,70.56px) !important; }
-  h1[style*="font-size:clamp(50px,5.8vw,82px)"] { font-size:clamp(42.00px,5.8vw,68.88px) !important; }
-  h1[style*="font-size:clamp(52px,6.4vw,96px)"] { font-size:clamp(43.68px,6.4vw,80.64px) !important; }
-  h1[style*="font-size:clamp(53px,7.2vw,112px)"] { font-size:clamp(44.52px,7.2vw,94.08px) !important; }
-  h1[style*="font-size:clamp(56px,6.8vw,100px)"] { font-size:clamp(47.04px,6.8vw,84.00px) !important; }
-  h1[style*="font-size:clamp(58px,7.4vw,102px)"] { font-size:clamp(48.72px,7.4vw,85.68px) !important; }
-  h1[style*="font-size:clamp(58px,7vw,108px)"] { font-size:clamp(48.72px,7vw,90.72px) !important; }
-  h1[style*="font-size:clamp(62px,8.5vw,126px)"] { font-size:clamp(52.08px,8.5vw,105.84px) !important; }
-  h2[style*="font-size:clamp(17px,1.7vw,22px)"] { font-size:clamp(14.28px,1.7vw,18.48px) !important; }
-  h2[style*="font-size:clamp(18px,2.2vw,24px)"] { font-size:clamp(15.12px,2.2vw,20.16px) !important; }
-  h2[style*="font-size:clamp(21px,2vw,29px)"] { font-size:clamp(17.64px,2vw,24.36px) !important; }
-  h2[style*="font-size:clamp(22px,2.2vw,28px)"] { font-size:clamp(18.48px,2.2vw,23.52px) !important; }
-  h2[style*="font-size:clamp(24px,2.4vw,36px)"] { font-size:clamp(20.16px,2.4vw,30.24px) !important; }
-  h2[style*="font-size:clamp(25px,2.7vw,34px)"] { font-size:clamp(21.00px,2.7vw,28.56px) !important; }
-  h2[style*="font-size:clamp(28px,2.8vw,40px)"] { font-size:clamp(23.52px,2.8vw,33.60px) !important; }
-  h2[style*="font-size:clamp(34px,3.5vw,54px)"] { font-size:clamp(28.56px,3.5vw,45.36px) !important; }
-  h2[style*="font-size:clamp(34px,3.6vw,52px)"] { font-size:clamp(28.56px,3.6vw,43.68px) !important; }
-  h2[style*="font-size:clamp(34px,4vw,56px)"] { font-size:clamp(28.56px,4vw,47.04px) !important; }
-  h2[style*="font-size:clamp(36px,4vw,60px)"] { font-size:clamp(30.24px,4vw,50.40px) !important; }
-  h2[style*="font-size:clamp(38px,4.2vw,56px)"] { font-size:clamp(31.92px,4.2vw,47.04px) !important; }
-  h2[style*="font-size:clamp(38px,4.2vw,60px)"] { font-size:clamp(31.92px,4.2vw,50.40px) !important; }
-  h2[style*="font-size:clamp(38px,4.5vw,58px)"] { font-size:clamp(31.92px,4.5vw,48.72px) !important; }
-  h2[style*="font-size:clamp(38px,4.5vw,64px)"] { font-size:clamp(31.92px,4.5vw,53.76px) !important; }
-  h2[style*="font-size:clamp(38px,4.5vw,66px)"] { font-size:clamp(31.92px,4.5vw,55.44px) !important; }
-  h2[style*="font-size:clamp(38px,4vw,56px)"] { font-size:clamp(31.92px,4vw,47.04px) !important; }
-  h2[style*="font-size:clamp(38px,4vw,58px)"] { font-size:clamp(31.92px,4vw,48.72px) !important; }
-  h2[style*="font-size:clamp(38px,4vw,60px)"] { font-size:clamp(31.92px,4vw,50.40px) !important; }
-  h2[style*="font-size:clamp(42px,4.8vw,72px)"] { font-size:clamp(35.28px,4.8vw,60.48px) !important; }
-  h2[style*="font-size:clamp(44px,5vw,62px)"] { font-size:clamp(36.96px,5vw,52.08px) !important; }
-  h3[style*="font-size:clamp(26px,2.8vw,36px)"] { font-size:clamp(21.84px,2.8vw,30.24px) !important; }
-  h3[style*="font-size:clamp(26px,2.8vw,38px)"] { font-size:clamp(21.84px,2.8vw,31.92px) !important; }
-  h3[style*="font-size:clamp(28px,3vw,40px)"] { font-size:clamp(23.52px,3vw,33.60px) !important; }
-  p[style*="font-size:clamp(17px,1.35vw,20px)"] { font-size:clamp(14.28px,1.35vw,16.80px) !important; }
-  p[style*="font-size:clamp(18px,1.8vw,25px)"] { font-size:clamp(15.12px,1.8vw,21.00px) !important; }
-  p[style*="font-size:clamp(26px,3vw,36px)"] { font-size:clamp(21.84px,3vw,30.24px) !important; }
-  p[style*="font-size:clamp(58px,8vw,116px)"] { font-size:clamp(48.72px,8vw,97.44px) !important; }
-  #about-hero-title { font-size:clamp(21.84px,7.4vw,30.24px) !important; }
-  #results-title { font-size:clamp(20.16px,7.4vw,25.20px) !important; }
-  p[style*="font-size:15px"] { font-size:13px !important; }
-  p[style*="font-size:16px"] { font-size:13.5px !important; }
-  #vision [data-vision-quote] { font-size:clamp(14.28px,1.35vw,16.80px) !important; }
-  #vision [data-vision-body] { font-size:13px !important; }
-  header[data-site-header] { height:54px !important; padding-left:15px !important; padding-right:15px !important; }
-  header[data-site-header] > a[aria-label] { width:101px !important; }
-  header[data-site-header] > a[aria-label] > span { width:97px !important; height:37px !important; }
-  header[data-site-header] > a[aria-label] > span > img { width:138px !important; height:138px !important; left:-20px !important; top:-48px !important; }
-  header[data-site-header] > button[aria-label="Open menu"] { font-size:10px !important; gap:8px !important; }
-  header[data-site-header] > button[aria-label="Open menu"] svg { width:19px !important; height:19px !important; }
-  aside[aria-label="Sunday & Company navigation"] { width:min(82vw,273px) !important; max-width:273px !important; padding:16px !important; }
-  aside[aria-label="Sunday & Company navigation"] nav > a { font-size:16px !important; min-height:40px !important; padding:9px 0 !important; }
-  body [aria-label="The Sunday Reservation"] { min-height:min(538px, calc(100svh - 34px)) !important; }
-  [aria-label="The Sunday Reservation"] > div[aria-hidden="true"] { min-height:139px !important; max-height:139px !important; }
-  [aria-label="The Sunday Reservation"] > div:not([aria-hidden]) { padding:20px 20px 22px !important; }
-  [aria-label="The Sunday Reservation"] h2 { font-size:25px !important; }
-  [aria-label="The Sunday Reservation"] [data-res-intro] { font-size:9px !important; }
-  footer[data-site-footer] [data-footer-ui] { font-size:11.5px !important; }
+  h1[style*="font-size:clamp(48px,6.2vw,84px)"] { font-size:clamp(37.09px,5.704vw,64.92px) !important; }
+  h1[style*="font-size:clamp(50px,5.8vw,82px)"] { font-size:clamp(38.64px,5.336vw,63.37px) !important; }
+  h1[style*="font-size:clamp(52px,6.4vw,96px)"] { font-size:clamp(40.19px,5.888vw,74.19px) !important; }
+  h1[style*="font-size:clamp(53px,7.2vw,112px)"] { font-size:clamp(40.96px,6.624vw,86.55px) !important; }
+  h1[style*="font-size:clamp(56px,6.8vw,100px)"] { font-size:clamp(43.28px,6.256vw,77.28px) !important; }
+  h1[style*="font-size:clamp(58px,7.4vw,102px)"] { font-size:clamp(44.82px,6.808vw,78.83px) !important; }
+  h1[style*="font-size:clamp(58px,7vw,108px)"] { font-size:clamp(44.82px,6.440vw,83.46px) !important; }
+  h1[style*="font-size:clamp(62px,8.5vw,126px)"] { font-size:clamp(47.91px,7.820vw,97.37px) !important; }
+  h2[style*="font-size:clamp(17px,1.7vw,22px)"] { font-size:clamp(13.14px,1.564vw,17.00px) !important; }
+  h2[style*="font-size:clamp(18px,2.2vw,24px)"] { font-size:clamp(13.91px,2.024vw,18.55px) !important; }
+  h2[style*="font-size:clamp(21px,2vw,29px)"] { font-size:clamp(16.23px,1.840vw,22.41px) !important; }
+  h2[style*="font-size:clamp(22px,2.2vw,28px)"] { font-size:clamp(17.00px,2.024vw,21.64px) !important; }
+  h2[style*="font-size:clamp(24px,2.4vw,36px)"] { font-size:clamp(18.55px,2.208vw,27.82px) !important; }
+  h2[style*="font-size:clamp(25px,2.7vw,34px)"] { font-size:clamp(19.32px,2.484vw,26.28px) !important; }
+  h2[style*="font-size:clamp(28px,2.8vw,40px)"] { font-size:clamp(21.64px,2.576vw,30.91px) !important; }
+  h2[style*="font-size:clamp(34px,3.5vw,54px)"] { font-size:clamp(26.28px,3.220vw,41.73px) !important; }
+  h2[style*="font-size:clamp(34px,3.6vw,52px)"] { font-size:clamp(26.28px,3.312vw,40.19px) !important; }
+  h2[style*="font-size:clamp(34px,4vw,56px)"] { font-size:clamp(26.28px,3.680vw,43.28px) !important; }
+  h2[style*="font-size:clamp(36px,4vw,60px)"] { font-size:clamp(27.82px,3.680vw,46.37px) !important; }
+  h2[style*="font-size:clamp(38px,4.2vw,56px)"] { font-size:clamp(29.37px,3.864vw,43.28px) !important; }
+  h2[style*="font-size:clamp(38px,4.2vw,60px)"] { font-size:clamp(29.37px,3.864vw,46.37px) !important; }
+  h2[style*="font-size:clamp(38px,4.5vw,58px)"] { font-size:clamp(29.37px,4.140vw,44.82px) !important; }
+  h2[style*="font-size:clamp(38px,4.5vw,64px)"] { font-size:clamp(29.37px,4.140vw,49.46px) !important; }
+  h2[style*="font-size:clamp(38px,4.5vw,66px)"] { font-size:clamp(29.37px,4.140vw,51.00px) !important; }
+  h2[style*="font-size:clamp(38px,4vw,56px)"] { font-size:clamp(29.37px,3.680vw,43.28px) !important; }
+  h2[style*="font-size:clamp(38px,4vw,58px)"] { font-size:clamp(29.37px,3.680vw,44.82px) !important; }
+  h2[style*="font-size:clamp(38px,4vw,60px)"] { font-size:clamp(29.37px,3.680vw,46.37px) !important; }
+  h2[style*="font-size:clamp(42px,4.8vw,72px)"] { font-size:clamp(32.46px,4.416vw,55.64px) !important; }
+  h2[style*="font-size:clamp(44px,5vw,62px)"] { font-size:clamp(34.00px,4.600vw,47.91px) !important; }
+  h3[style*="font-size:clamp(26px,2.8vw,36px)"] { font-size:clamp(20.09px,2.576vw,27.82px) !important; }
+  h3[style*="font-size:clamp(26px,2.8vw,38px)"] { font-size:clamp(20.09px,2.576vw,29.37px) !important; }
+  h3[style*="font-size:clamp(28px,3vw,40px)"] { font-size:clamp(21.64px,2.760vw,30.91px) !important; }
+  p[style*="font-size:clamp(17px,1.35vw,20px)"] { font-size:clamp(13.14px,1.242vw,15.46px) !important; }
+  p[style*="font-size:clamp(18px,1.8vw,25px)"] { font-size:clamp(13.91px,1.656vw,19.32px) !important; }
+  p[style*="font-size:clamp(26px,3vw,36px)"] { font-size:clamp(20.09px,2.760vw,27.82px) !important; }
+  p[style*="font-size:clamp(58px,8vw,116px)"] { font-size:clamp(44.82px,7.360vw,89.64px) !important; }
+  #about-hero-title { font-size:clamp(20.09px,6.808vw,27.82px) !important; }
+  #results-title { font-size:clamp(18.55px,6.808vw,23.18px) !important; }
+  p[style*="font-size:15px"] { font-size:12px !important; }
+  p[style*="font-size:16px"] { font-size:12.5px !important; }
+  #vision [data-vision-quote] { font-size:clamp(13.14px,1.242vw,15.46px) !important; }
+  #vision [data-vision-body] { font-size:12px !important; }
+  header[data-site-header] { height:51px !important; padding-left:14px !important; padding-right:14px !important; }
+  header[data-site-header] > a[aria-label] { width:94px !important; }
+  header[data-site-header] > a[aria-label] > span { width:91px !important; height:35px !important; }
+  header[data-site-header] > a[aria-label] > span > img { width:129px !important; height:129px !important; left:-19px !important; top:-45px !important; }
+  header[data-site-header] > button[aria-label="Open menu"] { font-size:9.5px !important; gap:7px !important; }
+  header[data-site-header] > button[aria-label="Open menu"] svg { width:18px !important; height:18px !important; }
+  aside[aria-label="Sunday & Company navigation"] { width:min(82vw,255px) !important; max-width:255px !important; padding:15px !important; }
+  aside[aria-label="Sunday & Company navigation"] nav > a { font-size:15px !important; min-height:38px !important; padding:8px 0 !important; }
+  [aria-label="Project inquiry"] [data-inquiry-title] { font-size:22px !important; }
+  [aria-label="Project inquiry"] [data-inquiry-support] { font-size:9.5px !important; }
+  body [aria-label="The Sunday Reservation"] { min-height:min(520px, calc(100svh - 34px)) !important; }
+  [aria-label="The Sunday Reservation"] > div[aria-hidden="true"] { min-height:132px !important; max-height:132px !important; }
+  [aria-label="The Sunday Reservation"] > div:not([aria-hidden]) { padding:18px 18px 20px !important; }
+  [aria-label="The Sunday Reservation"] h2 { font-size:23px !important; }
+  [aria-label="The Sunday Reservation"] [data-res-intro] { font-size:8.75px !important; }
+  footer[data-site-footer] [data-footer-ui] { font-size:10.75px !important; }
   footer[data-site-footer] a[data-footer-ui][href^="mailto:"],
-  footer[data-site-footer] a[href^="mailto:"] { font-size:12px !important; }
-  footer[data-site-footer] [data-footer-location] { font-size:11px !important; }
-  footer[data-site-footer] [data-footer-tagline] { font-size:12.25px !important; }
+  footer[data-site-footer] a[href^="mailto:"] { font-size:11.25px !important; }
+  footer[data-site-footer] [data-footer-location] { font-size:10.25px !important; }
+  footer[data-site-footer] [data-footer-tagline] { font-size:11.25px !important; }
 }
