@@ -87,7 +87,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 
 # Cache/version guardrails for shared site assets and DC imports.
-ASSET_REVISION = "20260928-01"
+ASSET_REVISION = "20260928-02"
 SUPPORT_REVISION = "20260927-37"
 PUBLIC_ROUTES = (
     "404.html",
@@ -131,10 +131,14 @@ if f'?v={SUPPORT_REVISION}' not in support_text or "requestUrl" not in support_t
 corrections_text = (ROOT / "assets/rendered-corrections.css").read_text(encoding="utf-8")
 if "sunday-reservation-phone-in" not in corrections_text:
     errors.append("assets/rendered-corrections.css: phone reservation entrance can regain zoom motion")
+if "min-height:min(640px, calc(100svh - 40px))" not in corrections_text:
+    errors.append("assets/rendered-corrections.css: phone reservation height can follow dynamic toolbar changes")
 
 site_js_text = (ROOT / "assets/site.js").read_text(encoding="utf-8")
 if "sundayInstallIOSFormFocusZoomLock" not in site_js_text:
     errors.append("assets/site.js: iOS form focus-zoom lock is missing")
+if 'surface.matches(\'[aria-label="The Sunday Reservation"]\')' not in site_js_text:
+    errors.append("assets/site.js: phone auto-open reservation may force focus and pan the viewport")
 if f"rendered-corrections.css?v={ASSET_REVISION}" not in site_js_text:
     errors.append("assets/site.js: fallback corrections stylesheet uses a stale revision")
 

@@ -382,5 +382,8 @@ footer[data-site-footer] form [role="alert"],
   [aria-label="The Sunday Reservation"] {
     animation:sunday-reservation-phone-in 220ms ease-out !important;
     transform:none !important;
+    /* Stable small viewport height prevents toolbar changes from resizing
+       the auto-open card while its fixed overlay appears. */
+    min-height:min(640px, calc(100svh - 40px)) !important;
   }
 }

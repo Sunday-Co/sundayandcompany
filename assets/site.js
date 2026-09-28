@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260928-01';
+    link.href = '/assets/rendered-corrections.css?v=20260928-02';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -249,6 +249,12 @@
   function sundayFocusSurface(surface) {
     if (!surface || surface !== activeSurface) return;
     if (surface.contains(document.activeElement)) return;
+    // This reservation opens on its own for a first-time visitor. On phones,
+    // moving focus to its close button can pan Safari's visual viewport.
+    // Leave focus in place until the visitor interacts; Tab is still trapped
+    // inside the open dialog by the keyboard handler below.
+    if (surface.matches('[aria-label="The Sunday Reservation"]') &&
+        window.matchMedia && window.matchMedia('(max-width: 900px)').matches) return;
     var items = sundayFocusable(surface);
     var close = surface.querySelector('button[aria-label="Close"], button[aria-label="Close menu"]');
     var target = close && sundayVisible(close) ? close : items[0];
