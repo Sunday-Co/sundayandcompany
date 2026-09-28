@@ -121,6 +121,11 @@ for rel in PUBLIC_ROUTES:
         errors.append(f"{rel}: viewport starts at 1 before phone scale is assigned")
     if 'document.head.appendChild(m)' not in route_text:
         errors.append(f"{rel}: viewport is not set before the page renders")
+    head_markup = route_text.split("</head>", 1)[0]
+    for critical in ("/assets/site.css", "/assets/rendered-corrections.css",
+                     "/assets/site.js", "fonts.googleapis.com/css2"):
+        if critical not in head_markup:
+            errors.append(f"{rel}: {critical} must load from the real head before rendering")
 
     # Catch broken route assets before they reach production.
     for local_url in re.findall(r"""(?:src|href|poster)\s*=\s*['"](/[^'"?#]+)""", route_text):
