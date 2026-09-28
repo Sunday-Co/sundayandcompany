@@ -118,9 +118,19 @@ for rel in PUBLIC_ROUTES:
     if 'var s=0.84' not in route_text:
         errors.append(f"{rel}: established 0.84 mobile visual scale changed")
 
+    # Catch broken route assets before they reach production.
+    for local_url in re.findall(r"""(?:src|href|poster)\s*=\s*['"](/[^'"?#]+)""", route_text):
+        local_path = ROOT / local_url.lstrip("/")
+        if not local_path.is_file() and not (local_path / "index.html").is_file():
+            errors.append(f"{rel}: missing local asset or route {local_url}")
+
 support_text = (ROOT / "support.js").read_text(encoding="utf-8")
 if f'?v={SUPPORT_REVISION}' not in support_text or "requestUrl" not in support_text:
     errors.append("support.js: shared DC component fetches are not cache-busted")
+
+corrections_text = (ROOT / "assets/rendered-corrections.css").read_text(encoding="utf-8")
+if "sunday-reservation-phone-in" not in corrections_text:
+    errors.append("assets/rendered-corrections.css: phone reservation entrance can regain zoom motion")
 
 site_js_text = (ROOT / "assets/site.js").read_text(encoding="utf-8")
 if "sundayInstallIOSFormFocusZoomLock" not in site_js_text:
