@@ -117,6 +117,10 @@ for rel in PUBLIC_ROUTES:
         errors.append(f"{rel}: support.js is not on cache revision {SUPPORT_REVISION}")
     if 'var s=0.84' not in route_text:
         errors.append(f"{rel}: established 0.84 mobile visual scale changed")
+    if '<meta name="viewport" content="width=device-width, initial-scale=1">' in route_text:
+        errors.append(f"{rel}: viewport starts at 1 before phone scale is assigned")
+    if 'document.head.appendChild(m)' not in route_text:
+        errors.append(f"{rel}: viewport is not set before the page renders")
 
     # Catch broken route assets before they reach production.
     for local_url in re.findall(r"""(?:src|href|poster)\s*=\s*['"](/[^'"?#]+)""", route_text):

@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){var w=Math.min(screen.width,screen.height);if(w<600){var s=0.84,m=document.querySelector('meta[name="viewport"]');document.documentElement.setAttribute("data-phone-viewport-scale","1");if(m)m.setAttribute("content","width="+Math.round(w/s)+", initial-scale="+s+", viewport-fit=cover");}})();</script>
+<script>(function(){var w=Math.min(screen.width,screen.height),m=document.createElement("meta");m.name="viewport";if(w<600){var s=0.84;document.documentElement.setAttribute("data-phone-viewport-scale","1");m.content="width="+Math.round(w/s)+", initial-scale="+s+", viewport-fit=cover";}else{m.content="width=device-width, initial-scale=1";}document.head.appendChild(m);})();</script>
 <script src="/support.js?v=20260927-37"></script>
 <style>
 /* COMPONENT FORM GUIDANCE MICROTYPE · 2026-09-13 */
