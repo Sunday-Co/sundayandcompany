@@ -101,7 +101,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 
 # Cache/version guardrails for shared site assets and DC imports.
-ASSET_REVISION = "20260928-07"
+ASSET_REVISION = "20260928-08"
 SUPPORT_REVISION = "20260927-37"
 PUBLIC_ROUTES = (
     "404.html",
@@ -152,6 +152,7 @@ if f'?v={SUPPORT_REVISION}' not in support_text or "requestUrl" not in support_t
 corrections_text = (ROOT / "assets/rendered-corrections.css").read_text(encoding="utf-8")
 focus_guard = corrections_text.rsplit("/* iOS form controls:", 1)[-1]
 if ('#inquiry form[data-inq] input' not in focus_guard or
+        '--sc-pos16:16px;' not in focus_guard or
         'font-size:16px !important' not in focus_guard or
         '@media (max-width:599px)' not in focus_guard):
     errors.append("assets/rendered-corrections.css: phone editable fields can regain focus zoom")

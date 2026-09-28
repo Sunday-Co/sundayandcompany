@@ -389,9 +389,9 @@ footer[data-site-footer] form [role="alert"],
 }
 
 
-/* iOS form controls: preserve the approved focus-safe font size.
-   The phone size tokens shrink other UI, but must never shrink editable text.
-   Explicitly include #inquiry because its existing rule has ID specificity. */
+/* iOS form controls: restore the unscaled font token on each editable field.
+   More specific route and modal rules use --sc-pos16 with !important, so a
+   competing font-size rule alone cannot keep every field above 16px. */
 @media (max-width:599px) {
   html body form input:not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
   html body form textarea,
@@ -400,6 +400,7 @@ footer[data-site-footer] form [role="alert"],
   html body #inquiry form[data-inq] input:not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
   html body #inquiry form[data-inq] textarea,
   html body #inquiry form[data-inq] select {
+    --sc-pos16:16px;
     font-size:16px !important;
     -webkit-text-size-adjust:100% !important;
   }
