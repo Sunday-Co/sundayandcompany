@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260928-02';
+    link.href = '/assets/rendered-corrections.css?v=20260928-03';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -609,61 +609,5 @@
     boot();
   }
 
-  function sundayInstallIOSFormFocusZoomLock() {
-    var isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    if (!isiOS) return;
-
-    var meta = document.querySelector('meta[name="viewport"]');
-    if (!meta) return;
-
-    var restoreTimer = 0;
-
-    function isEditable(target) {
-      return !!(target && target.matches &&
-        target.matches('input:not([type="hidden"]), textarea, select, [contenteditable="true"]'));
-    }
-
-    function baseViewport() {
-      return String(meta.getAttribute('content') || '')
-        .replace(/,?\s*maximum-scale\s*=\s*[^,]+/ig, '')
-        .replace(/,?\s*user-scalable\s*=\s*[^,]+/ig, '')
-        .replace(/\s*,\s*,/g, ',')
-        .trim();
-    }
-
-    function lockViewport() {
-      if (restoreTimer) window.clearTimeout(restoreTimer);
-      var base = baseViewport();
-      var match = base.match(/initial-scale\s*=\s*([0-9.]+)/i);
-      var scale = match ? match[1] : '1';
-      meta.setAttribute('content', base + ', maximum-scale=' + scale);
-    }
-
-    function releaseViewport() {
-      if (restoreTimer) window.clearTimeout(restoreTimer);
-      restoreTimer = window.setTimeout(function () {
-        var active = document.activeElement;
-        if (isEditable(active)) return;
-        meta.setAttribute('content', baseViewport());
-      }, 450);
-    }
-
-    document.addEventListener('touchstart', function (event) {
-      if (isEditable(event.target)) lockViewport();
-    }, true);
-    document.addEventListener('focusin', function (event) {
-      if (isEditable(event.target)) lockViewport();
-    }, true);
-    document.addEventListener('focusout', function (event) {
-      if (isEditable(event.target)) releaseViewport();
-    }, true);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', sundayInstallIOSFormFocusZoomLock);
-  } else {
-    sundayInstallIOSFormFocusZoomLock();
-  }
 
 })();

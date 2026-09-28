@@ -74,7 +74,7 @@ if not re.search(r'max-width:\s*599px[\s\S]{0,700}Sunday and Company services[\s
 site_css = (ROOT / "assets/site.css").read_text(encoding="utf-8")
 if not re.search(r'data-news-blurb[\s\S]{0,500}white-space:\s*nowrap', site_css, re.I):
     errors.append("assets/site.css: footer newsletter support line lost nowrap")
-if "font-size:16px !important" not in site_css or "font-size:20px !important" not in site_css:
+if "font-size:16px !important" not in site_css:
     errors.append("assets/site.css: global mobile focus-size protection is incomplete")
 
 join = (ROOT / "join-our-team/index.html").read_text(encoding="utf-8")
@@ -87,7 +87,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 
 # Cache/version guardrails for shared site assets and DC imports.
-ASSET_REVISION = "20260928-02"
+ASSET_REVISION = "20260928-03"
 SUPPORT_REVISION = "20260927-37"
 PUBLIC_ROUTES = (
     "404.html",
@@ -115,12 +115,10 @@ for rel in PUBLIC_ROUTES:
             errors.append(f"{rel}: {asset} is not on cache revision {ASSET_REVISION}")
     if f'/support.js?v={SUPPORT_REVISION}' not in route_text:
         errors.append(f"{rel}: support.js is not on cache revision {SUPPORT_REVISION}")
-    if 'var s=0.84' not in route_text:
-        errors.append(f"{rel}: established 0.84 mobile visual scale changed")
-    if '<meta name="viewport" content="width=device-width, initial-scale=1">' in route_text:
-        errors.append(f"{rel}: viewport starts at 1 before phone scale is assigned")
-    if 'document.head.appendChild(m)' not in route_text:
-        errors.append(f"{rel}: viewport is not set before the page renders")
+    if route_text.count('<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">') != 1:
+        errors.append(f"{rel}: expected one native-width viewport in the real head")
+    if "setAttribute(\"data-phone-viewport-scale\"" in route_text or "Math.round(w/s)" in route_text:
+        errors.append(f"{rel}: legacy phone viewport scaling remains")
     head_markup = route_text.split("</head>", 1)[0]
     for critical in ("/assets/site.css", "/assets/rendered-corrections.css",
                      "/assets/site.js", "fonts.googleapis.com/css2"):
@@ -144,8 +142,8 @@ if "min-height:min(640px, calc(100svh - 40px))" not in corrections_text:
     errors.append("assets/rendered-corrections.css: phone reservation height can follow dynamic toolbar changes")
 
 site_js_text = (ROOT / "assets/site.js").read_text(encoding="utf-8")
-if "sundayInstallIOSFormFocusZoomLock" not in site_js_text:
-    errors.append("assets/site.js: iOS form focus-zoom lock is missing")
+if "sundayInstallIOSFormFocusZoomLock" in site_js_text or "maximum-scale=" in site_js_text:
+    errors.append("assets/site.js: runtime viewport zoom restriction remains")
 if 'surface.matches(\'[aria-label="The Sunday Reservation"]\')' not in site_js_text:
     errors.append("assets/site.js: phone auto-open reservation may force focus and pan the viewport")
 if f"rendered-corrections.css?v={ASSET_REVISION}" not in site_js_text:

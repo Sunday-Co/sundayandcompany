@@ -3,7 +3,7 @@
 - Two page layouts only: <=900px mobile, >=901px desktop.
 - Compact Menu through 1240px; full navigation at 1241px+.
 - Never fake responsiveness with document zoom, a forced 1280px viewport, or matchMedia rewriting.
-- Phones below 600px currently use the existing 0.84 viewport baseline.
+- All pages use a static `width=device-width, initial-scale=1, viewport-fit=cover` meta tag in the real head. Keep the viewport unchanged on focus.
 - Keep one consolidated mobile override block at the end of assets/site.css.
 - Project Inquiry and Sunday Reservation auto-size on normal phones and should not have an internal scrollbar in the normal/default state.
 - Editable mobile fields stay at 16px or larger.
@@ -23,7 +23,7 @@
 - Shared chrome selectors are scoped: keep `data-site-header` on the shared site header and `data-site-footer` on the shared site footer. Never target bare `header` or `footer` globally because pages contain semantic section headers and receipt/ledger UI.
 - Mobile flex wrapping is opt-in through `data-mobile-wrap-row`. Never reintroduce a generic selector that wraps every inline `display:flex; justify-content:space-between` row; receipt/status/card rows must remain compact and horizontal.
 - Mobile form-focus invariant: at `<=900px`, every editable `input` (except hidden), `textarea`, `select`, and contenteditable control must compute to at least 16px text so iOS Safari does not focus-zoom. Use `touch-action: manipulation` on form/custom controls to prevent double-tap zoom, and do not solve this by disabling user pinch-zoom with viewport `user-scalable=no` or `maximum-scale=1`.
-- Mobile phone scale invariant: preserve the established small-phone viewport treatment (`0.84` scale for physical screens under 600px) because it controls the approved overall mobile sizing. When that scale is active, editable form controls must compute to at least `19.25px` so their rendered size stays above the iOS Safari focus-zoom threshold. Do not replace this with document/CSS `zoom`, fake 1280px widths, or disabled pinch-zoom.
+- Mobile form controls must compute to at least 16px at native device width. Do not force document scale to fit the layout.
 - All-form focus-lock invariant: the mobile no-focus-zoom treatment applies to every form on the site, including Project Inquiry, Services Inquiry, Sunday Reservation, footer newsletter, Contact, Join Our Team, Sunday School, and any future form. Keep editable controls covered by the shared mobile form selectors; do not limit the rule to `data-inq` or `data-editorial-labels` forms only.
 - Validation prompts are a site-wide system at every viewport: uppercase, small secondary sans text, with concise field names such as `PLEASE ADD YOUR EMAIL ADDRESS.` Never build prompt copy from placeholders such as `hello@example.com`.
 - When a validation prompt is active, the field/control that caused it gets a subtle transparent Sunday rose fill and rose border treatment. Clear that state when the user edits the control.
