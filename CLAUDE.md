@@ -8,6 +8,7 @@
 - Keep one consolidated mobile override block at the end of assets/site.css.
 - Project Inquiry and Sunday Reservation auto-size on normal phones and should not have an internal scrollbar in the normal/default state.
 - Editable mobile fields stay at 16px or larger.
+- On phones below 600px, every editable form control uses a static 20px computed font size after the compact-size tokens resolve. Include the Services `#inquiry` form, whose ID selector would otherwise override a generic form rule.
 - Do not retain the modal entrance transform after animation.
 - iOS modal width comes from the padded fixed overlay: width:100% inside the overlay, not another 100vw calculation.
 - Services inline inquiry: decorative kicker is display:none. Keep a slight 6px title-to-support gap and a 12px support-to-shared-form gap; support copy must never touch the dashed step navigation.
@@ -23,7 +24,7 @@
 - Services receipt auto-sizes to its content; do not reintroduce a fixed/minimum 640px height that creates dead white space. Its bottom line is permanently "Next Step" / "Review And Reply".
 - Shared chrome selectors are scoped: keep `data-site-header` on the shared site header and `data-site-footer` on the shared site footer. Never target bare `header` or `footer` globally because pages contain semantic section headers and receipt/ledger UI.
 - Mobile flex wrapping is opt-in through `data-mobile-wrap-row`. Never reintroduce a generic selector that wraps every inline `display:flex; justify-content:space-between` row; receipt/status/card rows must remain compact and horizontal.
-- Mobile form-focus invariant: at `<=900px`, every editable `input` (except hidden), `textarea`, `select`, and contenteditable control must compute to at least 16px text so iOS Safari does not focus-zoom. Use `touch-action: manipulation` on form/custom controls to prevent double-tap zoom, and do not solve this by disabling user pinch-zoom with viewport `user-scalable=no` or `maximum-scale=1`.
+- Mobile form-focus invariant: at `<=900px`, every editable `input` (except hidden), `textarea`, `select`, and contenteditable control must compute to at least 16px text so iOS Safari does not focus-zoom. Keep the unscaled 16px override for Services `#inquiry form[data-inq]` because its ID-specific tokenized rule otherwise wins at phone widths. Use `touch-action: manipulation` on form/custom controls to prevent double-tap zoom, and do not solve this by disabling user pinch-zoom with viewport `user-scalable=no` or `maximum-scale=1`.
 - Mobile form controls must compute to at least 16px at native device width. Do not force document scale to fit the layout.
 - All-form focus-lock invariant: the mobile no-focus-zoom treatment applies to every form on the site, including Project Inquiry, Services Inquiry, Sunday Reservation, footer newsletter, Contact, Join Our Team, Sunday School, and any future form. Keep editable controls covered by the shared mobile form selectors; do not limit the rule to `data-inq` or `data-editorial-labels` forms only.
 - Validation prompts are a site-wide system at every viewport: uppercase, small secondary sans text, with concise field names such as `PLEASE ADD YOUR EMAIL ADDRESS.` Never build prompt copy from placeholders such as `hello@example.com`.

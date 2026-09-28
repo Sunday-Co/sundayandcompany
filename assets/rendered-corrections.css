@@ -389,12 +389,18 @@ footer[data-site-footer] form [role="alert"],
 }
 
 
-/* iOS form controls remain readable and do not trigger focus zoom. */
+/* iOS form controls: preserve the approved focus-safe font size.
+   The phone size tokens shrink other UI, but must never shrink editable text.
+   Explicitly include #inquiry because its existing rule has ID specificity. */
 @media (max-width:599px) {
-  html body form input:not([type="hidden"]),
+  html body form input:not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
   html body form textarea,
   html body form select,
-  html body form [contenteditable="true"] {
+  html body form [contenteditable="true"],
+  html body #inquiry form[data-inq] input:not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+  html body #inquiry form[data-inq] textarea,
+  html body #inquiry form[data-inq] select {
     font-size:16px !important;
+    -webkit-text-size-adjust:100% !important;
   }
 }

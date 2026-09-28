@@ -101,7 +101,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 
 # Cache/version guardrails for shared site assets and DC imports.
-ASSET_REVISION = "20260928-06"
+ASSET_REVISION = "20260928-07"
 SUPPORT_REVISION = "20260927-37"
 PUBLIC_ROUTES = (
     "404.html",
@@ -150,6 +150,11 @@ if f'?v={SUPPORT_REVISION}' not in support_text or "requestUrl" not in support_t
     errors.append("support.js: shared DC component fetches are not cache-busted")
 
 corrections_text = (ROOT / "assets/rendered-corrections.css").read_text(encoding="utf-8")
+focus_guard = corrections_text.rsplit("/* iOS form controls:", 1)[-1]
+if ('#inquiry form[data-inq] input' not in focus_guard or
+        'font-size:16px !important' not in focus_guard or
+        '@media (max-width:599px)' not in focus_guard):
+    errors.append("assets/rendered-corrections.css: phone editable fields can regain focus zoom")
 if "sunday-reservation-phone-in" not in corrections_text:
     errors.append("assets/rendered-corrections.css: phone reservation entrance can regain zoom motion")
 if "min-height:min(640px, calc(100svh - 40px))" not in corrections_text:
