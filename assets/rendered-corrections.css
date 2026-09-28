@@ -371,3 +371,16 @@ footer[data-site-footer] form [role="alert"],
 [aria-label="Newsletter"] form [role="alert"] {
   color:#f5efe6 !important;
 }
+
+/* Phone first-visit reservation: fade in without scale or travel.
+   The previous entrance motion looked like a viewport zoom when the popup appeared. */
+@keyframes sunday-reservation-phone-in {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+@media (max-width:900px) {
+  [aria-label="The Sunday Reservation"] {
+    animation:sunday-reservation-phone-in 220ms ease-out !important;
+    transform:none !important;
+  }
+}
