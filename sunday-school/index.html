@@ -6,16 +6,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/site.css?v=20260928-05" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-05" />
+<link rel="stylesheet" href="/assets/site.css?v=20260928-06" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-06" />
 <script src="/support.js?v=20260927-37"></script>
-<script defer data-sunday-site-js src="/assets/site.js?v=20260928-05"></script>
+<script defer data-sunday-site-js src="/assets/site.js?v=20260928-06"></script>
 <style>
 /* COMPONENT FORM GUIDANCE MICROTYPE · 2026-09-13 */
 #school-notes-email::placeholder,
 #school-notes-email::-webkit-input-placeholder {
   font-family:'Inter Tight',sans-serif !important;
-  font-size:12px !important;
+  font-size:12px !important;  font-size:var(--sc-pos12,12px) !important;
   font-weight:300 !important;
   letter-spacing:.01em !important;
 }
@@ -26,7 +26,7 @@
    never sees a focused editable control below 16px after the 0.84 phone scale. */
 @media (max-width:900px) {
   form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
-    font-size:16px !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
     line-height:1.25 !important;
     touch-action:manipulation !important;
     transform:none !important;
@@ -36,13 +36,13 @@ html[data-phone-viewport-scale="1"] form input:not([type="hidden"]),
 html[data-phone-viewport-scale="1"] form textarea,
 html[data-phone-viewport-scale="1"] form select,
 html[data-phone-viewport-scale="1"] form [contenteditable="true"] {
-  font-size:20px !important;
+  font-size:20px !important;  font-size:var(--sc-pos20,20px) !important;
 }
 form [data-form-error-field="true"],
 form [aria-invalid="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12) !important;
 }
 </style>
 <style>
@@ -50,7 +50,7 @@ form [aria-invalid="true"] {
 form [role="alert"] {
   color:#8c2f22 !important;
   font-family:'Inter Tight',sans-serif !important;
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.065em !important;
   line-height:1.4 !important;
@@ -89,10 +89,10 @@ form [role="alert"] {
 <style>
   :root { accent-color: #ac746c; }
   *:focus { outline-color: #ac746c; }
-  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
     border-color: #ac746c !important;
-    box-shadow: 0 0 0 1px #ac746c !important;
+    box-shadow: 0 0 0 1px #ac746c !important;    box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c !important;
     outline: none !important;
   }
   *, *::before, *::after { box-sizing: border-box; }
@@ -106,25 +106,25 @@ form [role="alert"] {
   @media (max-width: 900px) {
     /* the 5-column table head collapses to a label list · drop it and rebuild rows as card entries */
     #syl-head { display: none !important; }
-    #syl-rows > div { gap: 9px 14px !important; grid-template-columns: auto auto 1fr !important; padding: 15px 16px !important; }
+    #syl-rows > div { gap: 9px 14px !important; gap: var(--sc-pos9,9px) var(--sc-pos14,14px) !important; grid-template-columns: auto auto 1fr !important; padding: 15px 16px !important; padding: var(--sc-pos15,15px) var(--sc-pos16,16px) !important; }
     /* the 5-column table head collapses to a label list · drop it and rebuild rows as card entries */
     #syl-head { display: none !important; }
-    #syl-rows > div { gap: 9px 14px !important; grid-template-columns: auto auto 1fr !important; padding: 15px 16px !important; }
+    #syl-rows > div { gap: 9px 14px !important; gap: var(--sc-pos9,9px) var(--sc-pos14,14px) !important; grid-template-columns: auto auto 1fr !important; padding: 15px 16px !important; padding: var(--sc-pos15,15px) var(--sc-pos16,16px) !important; }
     #syl-rows > div > span:nth-child(1) { grid-column: 1 / -1 !important; }
     #syl-rows > div > span:nth-child(2) { border-left: 0 !important; grid-column: 1 / -1 !important; padding-left: 0 !important; }
-    #syl-rows > div > span:nth-child(3) { border-top: 1px dotted rgba(49,29,3,.4) !important; grid-column: 1 !important; padding-top: 9px !important; }
-    #syl-rows > div > span:nth-child(4) { border-top: 1px dotted rgba(49,29,3,.4) !important; grid-column: 2 !important; padding-top: 9px !important; }
-    #syl-rows > div > span:nth-child(5) { border-top: 1px dotted rgba(49,29,3,.4) !important; grid-column: 3 !important; justify-self: end !important; margin-top: 9px !important; }
+    #syl-rows > div > span:nth-child(3) { border-top: 1px dotted rgba(49,29,3,.4) !important; border-top: var(--sc-pos1,1px) dotted rgba(49,29,3,.4) !important; grid-column: 1 !important; padding-top: 9px !important; padding-top: var(--sc-pos9,9px) !important; }
+    #syl-rows > div > span:nth-child(4) { border-top: 1px dotted rgba(49,29,3,.4) !important; border-top: var(--sc-pos1,1px) dotted rgba(49,29,3,.4) !important; grid-column: 2 !important; padding-top: 9px !important; padding-top: var(--sc-pos9,9px) !important; }
+    #syl-rows > div > span:nth-child(5) { border-top: 1px dotted rgba(49,29,3,.4) !important; border-top: var(--sc-pos1,1px) dotted rgba(49,29,3,.4) !important; grid-column: 3 !important; justify-self: end !important; margin-top: 9px !important; margin-top: var(--sc-pos9,9px) !important; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
     html { scroll-behavior: auto !important; }
   }
-  :focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  :focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
 
   input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
   textarea:-webkit-autofill, select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #fffdf8 inset !important;
     -webkit-text-fill-color: #311d03 !important;
     caret-color: #311d03;
     transition: background-color 9999s ease-out 0s;
@@ -133,31 +133,31 @@ form [role="alert"] {
   input::placeholder, textarea::placeholder { color: rgba(49,29,3,.5); opacity: 1; }
   input:focus, textarea:focus, select:focus, button:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 1px solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c;
+    outline: 1px solid #ac746c;    outline: var(--sc-pos1,1px) solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c; box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c;
   }
   input:invalid, textarea:invalid { box-shadow: none; }
 
   [aria-label="Newsletter"] input:-webkit-autofill,
   [aria-label="Newsletter"] input:-webkit-autofill:hover,
   [aria-label="Newsletter"] input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #311d03 inset !important;
     -webkit-text-fill-color: #f5efe6 !important;
     caret-color: #f5efe6;
   }
   [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
-  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
+  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; box-shadow: 0 var(--sc-pos1,1px) 0 0 #ac746c; }
   @media (max-width: 900px) {
-    input, textarea, select, button { font-size: 16px; }
-    input, textarea, select { min-height: 46px; }
-    textarea { min-height: 96px; }
+    input, textarea, select, button { font-size: 16px; font-size: var(--sc-pos16,16px); }
+    input, textarea, select { min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 96px; min-height: var(--sc-pos96,96px); }
   }
 
 
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
   @media (max-width: 900px) {
     /* iOS force-zooms any field under 16px */
-    input, textarea, select { font-size: 16px !important; min-height: 46px; }
-    textarea { min-height: 100px; }
+    input, textarea, select { font-size: 16px !important; font-size: var(--sc-pos16,16px) !important; min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 100px; min-height: var(--sc-pos100,100px); }
     button { font-size: inherit; }
     /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
        Compact receipt/status rows stay horizontal. */
@@ -166,17 +166,17 @@ form [role="alert"] {
     button > span[style*="align-items: start"][style*="grid-template-columns"],
     button > span[style*="align-items:start"][style*="grid-template-columns"] {
       grid-template-columns: 1fr !important;
-      row-gap: 14px !important;
+      row-gap: 14px !important;      row-gap: var(--sc-pos14,14px) !important;
     }
   }
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header[data-site-header] > a[aria-label] { width: 120px !important; }
-    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] { width: 120px !important; width: var(--sc-pos120,120px) !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; height: var(--sc-pos44,44px) !important; width: 116px !important; width: var(--sc-pos116,116px) !important; }
     header[data-site-header] > a[aria-label] > span > img {
-      height: 164px !important; width: 164px !important;
-      left: -24px !important; top: -57px !important;
+      height: 164px !important;      height: var(--sc-pos164,164px) !important; width: 164px !important; width: var(--sc-pos164,164px) !important;
+      left: -24px !important;      left: var(--sc-neg24,-24px) !important; top: -57px !important; top: var(--sc-neg57,-57px) !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
   }
@@ -184,13 +184,13 @@ form [role="alert"] {
   @media (max-width: 900px) {
     /* project inquiry form: one column and condensed, popup and Services page
        both, since they are the same component */
-    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
+    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; gap: var(--sc-pos7,7px) !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 9.5px !important; }
-    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
-    form[data-inq] textarea { min-height: 74px !important; }
-    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; font-size: var(--sc-pos9_5,9.5px) !important; }
+    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; min-height: var(--sc-pos42,42px) !important; }
+    form[data-inq] textarea { min-height: 74px !important; min-height: var(--sc-pos74,74px) !important; }
+    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; margin-top: var(--sc-pos2,2px) !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
   }
 
@@ -206,7 +206,7 @@ form [role="alert"] {
   }
   form[data-editorial-labels] > label[for] {
     font-family: 'Inter Tight', sans-serif !important;
-    font-size: 9.5px !important;
+    font-size: 9.5px !important;    font-size: var(--sc-pos9_5,9.5px) !important;
     font-weight: 300 !important;
     letter-spacing: .12em !important;
     text-transform: uppercase;
@@ -230,118 +230,118 @@ form [role="alert"] {
 
   <main id="main-content" tabindex="-1">
 
-  <section data-screen-hero="image" aria-labelledby="school-title" style="align-items:end;background:#311d03 url('/assets/sunday-school-hero.jpg') center / cover no-repeat;color:#f5efe6;display:grid;isolation:isolate;min-height:68svh;overflow:hidden;padding:118px max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) 58px;position:relative">
+  <section data-screen-hero="image" aria-labelledby="school-title" style="align-items:end;background:#311d03 url('/assets/sunday-school-hero.jpg') center / cover no-repeat;color:#f5efe6;display:grid;isolation:isolate;min-height:68svh;overflow:hidden;padding:118px max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) 58px;padding:var(--sc-pos118,118px) max(clamp(var(--sc-pos22,22px),7vw,var(--sc-pos110,110px)), calc((100vw - var(--sc-pos1240,1240px)) / 2)) var(--sc-pos58,58px);position:relative">
     <div style="inset:0;overflow:hidden;position:absolute;z-index:-2"><img src="/assets/sunday-school-hero.jpg" alt="Laptop, keyboard, glasses and coffee arranged on a Sunday School workspace" style="height:100%;object-fit:cover;object-position:center;width:100%" /></div>
     <div aria-hidden="true" style="background:linear-gradient(90deg, rgba(34,18,2,.84) 0%, rgba(34,18,2,.65) 46%, rgba(34,18,2,.38) 100%);inset:0;position:absolute;z-index:-1"></div>
-    <div style="max-width:680px">
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Coming Soon</p>
-      <h1 id="school-title" style="font-size:clamp(58px,7.4vw,102px);font-weight:400;letter-spacing:-.065em;line-height:.86;margin:15px 0 24px">Almost <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">In Session</em></h1>
-      <p style="font-size:14px;line-height:1.67;max-width:570px">Templates, tools and guided courses for founders, freelancers and creative teams.</p>
-      <a href="#class-notes" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;gap:35px;letter-spacing:.13em;margin-top:25px;padding-bottom:6px;text-transform:uppercase">Stay Close <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+    <div style="max-width:680px;max-width:var(--sc-pos680,680px)">
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase">Coming Soon</p>
+      <h1 id="school-title" style="font-size:clamp(58px,7.4vw,102px);font-size:clamp(var(--sc-pos58,58px),7.4vw,var(--sc-pos102,102px));font-weight:400;letter-spacing:-.065em;line-height:.86;margin:15px 0 24px;margin:var(--sc-pos15,15px) 0 var(--sc-pos24,24px)">Almost <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">In Session</em></h1>
+      <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.67;max-width:570px;max-width:var(--sc-pos570,570px)">Templates, tools and guided courses for founders, freelancers and creative teams.</p>
+      <a href="#class-notes" style="align-items:center;border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);gap:35px;gap:var(--sc-pos35,35px);letter-spacing:.13em;margin-top:25px;margin-top:var(--sc-pos25,25px);padding-bottom:6px;padding-bottom:var(--sc-pos6,6px);text-transform:uppercase">Stay Close <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;height:var(--sc-pos14,14px);width:14px;width:var(--sc-pos14,14px)"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>
   </section>
 
-  <section id="class-notes" aria-labelledby="class-notes-title" style="scroll-margin-top:92px;align-items:center;background:#fffdf8;display:grid;gap:clamp(36px,6vw,88px);grid-template-columns:{{ gc0 }};padding:clamp(36px,4vw,52px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2))">
+  <section id="class-notes" aria-labelledby="class-notes-title" style="scroll-margin-top:92px;scroll-margin-top:var(--sc-pos92,92px);align-items:center;background:#fffdf8;display:grid;gap:clamp(36px,6vw,88px);gap:clamp(var(--sc-pos36,36px),6vw,var(--sc-pos88,88px));grid-template-columns:{{ gc0 }};padding:clamp(36px,4vw,52px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2));padding:clamp(var(--sc-pos36,36px),4vw,var(--sc-pos52,52px)) max(clamp(var(--sc-pos22,22px),7vw,var(--sc-pos110,110px)), calc((100vw - var(--sc-pos1240,1240px)) / 2))">
     <div>
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Class Notes</p>
-      <h2 id="class-notes-title" style="font-size:clamp(38px,4.5vw,58px);font-weight:400;letter-spacing:-.05em;line-height:.95;margin:13px 0 18px">For Curious Minds And <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">Good Ideas.</em></h2>
-      <p style="font-size:13.5px;line-height:1.62;max-width:500px">New templates, free resources, course waitlists and opening details will reach The Sunday Reservation first.</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Class Notes</p>
+      <h2 id="class-notes-title" style="font-size:clamp(38px,4.5vw,58px);font-size:clamp(var(--sc-pos38,38px),4.5vw,var(--sc-pos58,58px));font-weight:400;letter-spacing:-.05em;line-height:.95;margin:13px 0 18px;margin:var(--sc-pos13,13px) 0 var(--sc-pos18,18px)">For Curious Minds And <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">Good Ideas.</em></h2>
+      <p style="font-size:13.5px;font-size:var(--sc-pos13_5,13.5px);line-height:1.62;max-width:500px;max-width:var(--sc-pos500,500px)">New templates, free resources, course waitlists and opening details will reach The Sunday Reservation first.</p>
     </div>
     <div style="display:{{ notesDoneDisplay }}">
-      <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">The Sunday Reservation</p>
-      <h3 style="font-size:clamp(26px,2.8vw,38px);font-weight:400;letter-spacing:-.05em;line-height:.96;margin:0">You’re On <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">The List.</em></h3>
-      <p style="font-size:12.5px;line-height:1.6;margin:14px 0 0;max-width:420px">Your seat is saved. New templates, free resources and course openings will reach you first.</p>
-      <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px 0 0;max-width:280px;padding-top:12px;text-transform:uppercase">Status: Your Seat Is Saved</p>
+      <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.16em;margin:0 0 10px;margin:0 0 var(--sc-pos10,10px);text-transform:uppercase">The Sunday Reservation</p>
+      <h3 style="font-size:clamp(26px,2.8vw,38px);font-size:clamp(var(--sc-pos26,26px),2.8vw,var(--sc-pos38,38px));font-weight:400;letter-spacing:-.05em;line-height:.96;margin:0">You’re On <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">The List.</em></h3>
+      <p style="font-size:12.5px;font-size:var(--sc-pos12_5,12.5px);line-height:1.6;margin:14px 0 0;margin:var(--sc-pos14,14px) 0 0;max-width:420px;max-width:var(--sc-pos420,420px)">Your seat is saved. New templates, free resources and course openings will reach you first.</p>
+      <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.16em;margin:20px 0 0;margin:var(--sc-pos20,20px) 0 0;max-width:280px;max-width:var(--sc-pos280,280px);padding-top:12px;padding-top:var(--sc-pos12,12px);text-transform:uppercase">Status: Your Seat Is Saved</p>
     </div>
     <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearNotesError }}" onSubmit="{{ submitNotes }}" style="padding-bottom:0;display:{{ notesFormDisplay }}">
-    <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-      <label for="school-notes-email" style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Email Address</label>
-      <div style="align-items:center;display:grid;gap:18px;grid-template-columns:{{ gc4 }};margin-top:8px">
-        <input autocomplete="email" id="school-notes-email" name="email" placeholder="hello@example.com" required="required" type="email" maxlength="120" style="background:transparent;border:0;border-bottom:1px solid #311d03;border-radius:0;color:#311d03;font-family:inherit;font-size:20px;min-width:0;outline:0;padding:8px 0" />
-        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border-radius:0;color:#f5efe6;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:18px;letter-spacing:.14em;padding:12px 15px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ notesLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+    <div aria-hidden="true" style="height:0;left:-9999px;left:var(--sc-neg9999,-9999px);overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
+      <label for="school-notes-email" style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.14em;text-transform:uppercase">Email Address</label>
+      <div style="align-items:center;display:grid;gap:18px;gap:var(--sc-pos18,18px);grid-template-columns:{{ gc4 }};margin-top:8px;margin-top:var(--sc-pos8,8px)">
+        <input autocomplete="email" id="school-notes-email" name="email" placeholder="hello@example.com" required="required" type="email" maxlength="120" style="background:transparent;border:0;border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;border-radius:0;color:#311d03;font-family:inherit;font-size:20px;font-size:var(--sc-pos20,20px);min-width:0;outline:0;padding:8px 0;padding:var(--sc-pos8,8px) 0" />
+        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;border-radius:0;color:#f5efe6;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);gap:18px;gap:var(--sc-pos18,18px);letter-spacing:.14em;padding:12px 15px;padding:var(--sc-pos12,12px) var(--sc-pos15,15px);text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ notesLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;height:var(--sc-pos14,14px);width:14px;width:var(--sc-pos14,14px)"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
       </div>
-      <p role="alert" style="color:#8c2f22;font-size:11px;min-height:18px;padding-top:6px">{{ notesError }}</p>
+      <p role="alert" style="color:#8c2f22;font-size:11px;font-size:var(--sc-pos11,11px);min-height:18px;min-height:var(--sc-pos18,18px);padding-top:6px;padding-top:var(--sc-pos6,6px)">{{ notesError }}</p>
     </form>
   </section>
 
-  <section aria-labelledby="syllabus-title" style="margin:0 auto;max-width:1080px;padding:clamp(42px,5vw,64px) clamp(22px,5vw,54px)">
-    <header style="display:grid;gap:14px clamp(34px,6vw,74px);grid-template-columns:{{ gc1 }};margin-bottom:24px">
-      <h2 id="syllabus-title" style="font-size:clamp(44px,5vw,62px);font-weight:400;grid-column:1;letter-spacing:-.055em;line-height:.94;margin:0">The <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">Syllabus</em></h2>
-      <p style="align-self:end;font-size:15px;grid-column:2;line-height:1.62;margin:0;max-width:480px">A preview of the templates, systems and courses being prepared for Sunday School.</p>
+  <section aria-labelledby="syllabus-title" style="margin:0 auto;max-width:1080px;max-width:var(--sc-pos1080,1080px);padding:clamp(42px,5vw,64px) clamp(22px,5vw,54px);padding:clamp(var(--sc-pos42,42px),5vw,var(--sc-pos64,64px)) clamp(var(--sc-pos22,22px),5vw,var(--sc-pos54,54px))">
+    <header style="display:grid;gap:14px clamp(34px,6vw,74px);gap:var(--sc-pos14,14px) clamp(var(--sc-pos34,34px),6vw,var(--sc-pos74,74px));grid-template-columns:{{ gc1 }};margin-bottom:24px;margin-bottom:var(--sc-pos24,24px)">
+      <h2 id="syllabus-title" style="font-size:clamp(44px,5vw,62px);font-size:clamp(var(--sc-pos44,44px),5vw,var(--sc-pos62,62px));font-weight:400;grid-column:1;letter-spacing:-.055em;line-height:.94;margin:0">The <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">Syllabus</em></h2>
+      <p style="align-self:end;font-size:15px;font-size:var(--sc-pos15,15px);grid-column:2;line-height:1.62;margin:0;max-width:480px;max-width:var(--sc-pos480,480px)">A preview of the templates, systems and courses being prepared for Sunday School.</p>
     </header>
-    <div id="syl-table" style="border:1px solid #311d03">
-      <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 16px;text-transform:uppercase"><span>Sunday School</span><span>Card No. 01 · 2026</span></div>
-      <div id="syl-head" style="display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;gap:14px;grid-template-columns:{{ rowCols }};letter-spacing:.15em;opacity:.72;padding:9px 16px;text-transform:uppercase">
+    <div id="syl-table" style="border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03">
+      <div style="align-items:center;border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.18em;padding:9px 16px;padding:var(--sc-pos9,9px) var(--sc-pos16,16px);text-transform:uppercase"><span>Sunday School</span><span>Card No. 01 · 2026</span></div>
+      <div id="syl-head" style="display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);gap:14px;gap:var(--sc-pos14,14px);grid-template-columns:{{ rowCols }};letter-spacing:.15em;opacity:.72;padding:9px 16px;padding:var(--sc-pos9,9px) var(--sc-pos16,16px);text-transform:uppercase">
         <span>Course</span><span style="padding-left:{{ descPad }}">Description</span><span>Format</span><span>Price</span><span style="justify-self:{{ stampJustify }}">Status</span>
       </div>
       <div id="syl-rows">
-        <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
-          <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">01</span>
+        <div style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:grid;gap:14px;gap:var(--sc-pos14,14px);grid-template-columns:{{ rowCols }};padding:14px 16px;padding:var(--sc-pos14,14px) var(--sc-pos16,16px)">
+          <span style="align-items:baseline;display:flex;gap:11px;gap:var(--sc-pos11,11px)">
+            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);letter-spacing:.1em;opacity:.7">01</span>
             <span style="display:block">
-              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Brand &amp; Strategy</span>
-              <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">The Foundation</span>
+              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.15em;opacity:.7;text-transform:uppercase">Brand &amp; Strategy</span>
+              <span style="display:block;font-size:20px;font-size:var(--sc-pos20,20px);letter-spacing:-.035em;line-height:1.05;margin-top:4px;margin-top:var(--sc-pos4,4px)">The Foundation</span>
             </span>
           </span>
-          <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Strategy decks, creative briefs and workbooks for building a clear, cohesive brand.</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Workbook</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
+          <span style="border-left:1px solid rgba(49,29,3,.3);border-left:var(--sc-pos1,1px) solid rgba(49,29,3,.3);font-size:12.5px;font-size:var(--sc-pos12_5,12.5px);line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Strategy decks, creative briefs and workbooks for building a clear, cohesive brand.</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;opacity:.8;text-transform:uppercase">Workbook</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);border:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;font-size:var(--sc-pos6_5,6.5px);height:22px;height:var(--sc-pos22,22px);justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;padding:0 var(--sc-pos8,8px);text-transform:uppercase;white-space:nowrap">In Preparation</span>
         </div>
-        <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
-          <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">02</span>
+        <div style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:grid;gap:14px;gap:var(--sc-pos14,14px);grid-template-columns:{{ rowCols }};padding:14px 16px;padding:var(--sc-pos14,14px) var(--sc-pos16,16px)">
+          <span style="align-items:baseline;display:flex;gap:11px;gap:var(--sc-pos11,11px)">
+            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);letter-spacing:.1em;opacity:.7">02</span>
             <span style="display:block">
-              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Client Systems</span>
-              <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">Front Of House</span>
+              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.15em;opacity:.7;text-transform:uppercase">Client Systems</span>
+              <span style="display:block;font-size:20px;font-size:var(--sc-pos20,20px);letter-spacing:-.035em;line-height:1.05;margin-top:4px;margin-top:var(--sc-pos4,4px)">Front Of House</span>
             </span>
           </span>
-          <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Proposals, onboarding documents, agreements and trackers for running organized client projects.</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
+          <span style="border-left:1px solid rgba(49,29,3,.3);border-left:var(--sc-pos1,1px) solid rgba(49,29,3,.3);font-size:12.5px;font-size:var(--sc-pos12_5,12.5px);line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Proposals, onboarding documents, agreements and trackers for running organized client projects.</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);border:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;font-size:var(--sc-pos6_5,6.5px);height:22px;height:var(--sc-pos22,22px);justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;padding:0 var(--sc-pos8,8px);text-transform:uppercase;white-space:nowrap">In Preparation</span>
         </div>
-        <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
-          <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">03</span>
+        <div style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:grid;gap:14px;gap:var(--sc-pos14,14px);grid-template-columns:{{ rowCols }};padding:14px 16px;padding:var(--sc-pos14,14px) var(--sc-pos16,16px)">
+          <span style="align-items:baseline;display:flex;gap:11px;gap:var(--sc-pos11,11px)">
+            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);letter-spacing:.1em;opacity:.7">03</span>
             <span style="display:block">
-              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Marketing &amp; Content</span>
-              <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">The Spread</span>
+              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.15em;opacity:.7;text-transform:uppercase">Marketing &amp; Content</span>
+              <span style="display:block;font-size:20px;font-size:var(--sc-pos20,20px);letter-spacing:-.035em;line-height:1.05;margin-top:4px;margin-top:var(--sc-pos4,4px)">The Spread</span>
             </span>
           </span>
-          <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Planning, audit and reporting tools for creating, managing and measuring marketing work.</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Preparation</span>
+          <span style="border-left:1px solid rgba(49,29,3,.3);border-left:var(--sc-pos1,1px) solid rgba(49,29,3,.3);font-size:12.5px;font-size:var(--sc-pos12_5,12.5px);line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Planning, audit and reporting tools for creating, managing and measuring marketing work.</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;opacity:.8;text-transform:uppercase">Template</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);border:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;font-size:var(--sc-pos6_5,6.5px);height:22px;height:var(--sc-pos22,22px);justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;padding:0 var(--sc-pos8,8px);text-transform:uppercase;white-space:nowrap">In Preparation</span>
         </div>
-        <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
-          <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">04</span>
+        <div style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:grid;gap:14px;gap:var(--sc-pos14,14px);grid-template-columns:{{ rowCols }};padding:14px 16px;padding:var(--sc-pos14,14px) var(--sc-pos16,16px)">
+          <span style="align-items:baseline;display:flex;gap:11px;gap:var(--sc-pos11,11px)">
+            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);letter-spacing:.1em;opacity:.7">04</span>
             <span style="display:block">
-              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Free Resources</span>
-              <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">On The House</span>
+              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.15em;opacity:.7;text-transform:uppercase">Free Resources</span>
+              <span style="display:block;font-size:20px;font-size:var(--sc-pos20,20px);letter-spacing:-.035em;line-height:1.05;margin-top:4px;margin-top:var(--sc-pos4,4px)">On The House</span>
             </span>
           </span>
-          <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Useful downloads designed to help you begin without starting from a blank page.</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Download</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#ac746c;opacity:1">Free</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">Coming First</span>
+          <span style="border-left:1px solid rgba(49,29,3,.3);border-left:var(--sc-pos1,1px) solid rgba(49,29,3,.3);font-size:12.5px;font-size:var(--sc-pos12_5,12.5px);line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">Useful downloads designed to help you begin without starting from a blank page.</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;opacity:.8;text-transform:uppercase">Download</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;text-transform:uppercase;color:#ac746c;opacity:1">Free</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);border:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;font-size:var(--sc-pos6_5,6.5px);height:22px;height:var(--sc-pos22,22px);justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;padding:0 var(--sc-pos8,8px);text-transform:uppercase;white-space:nowrap">Coming First</span>
         </div>
-        <div style="border-top:1px solid rgba(49,29,3,.3);display:grid;gap:14px;grid-template-columns:{{ rowCols }};padding:14px 16px">
-          <span style="align-items:baseline;display:flex;gap:11px">
-            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;letter-spacing:.1em;opacity:.7">05</span>
+        <div style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:grid;gap:14px;gap:var(--sc-pos14,14px);grid-template-columns:{{ rowCols }};padding:14px 16px;padding:var(--sc-pos14,14px) var(--sc-pos16,16px)">
+          <span style="align-items:baseline;display:flex;gap:11px;gap:var(--sc-pos11,11px)">
+            <span style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);letter-spacing:.1em;opacity:.7">05</span>
             <span style="display:block">
-              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.15em;opacity:.7;text-transform:uppercase">Guided Learning</span>
-              <span style="display:block;font-size:20px;letter-spacing:-.035em;line-height:1.05;margin-top:4px">The Courses</span>
+              <span style="display:block;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.15em;opacity:.7;text-transform:uppercase">Guided Learning</span>
+              <span style="display:block;font-size:20px;font-size:var(--sc-pos20,20px);letter-spacing:-.035em;line-height:1.05;margin-top:4px;margin-top:var(--sc-pos4,4px)">The Courses</span>
             </span>
           </span>
-          <span style="border-left:1px solid rgba(49,29,3,.3);font-size:12.5px;line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">The Freelance Table for emerging creatives, The Brand Table for founders clarifying their positioning.</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;opacity:.8;text-transform:uppercase">Course</span>
-          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
-          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;height:22px;justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;text-transform:uppercase;white-space:nowrap">In Development</span>
+          <span style="border-left:1px solid rgba(49,29,3,.3);border-left:var(--sc-pos1,1px) solid rgba(49,29,3,.3);font-size:12.5px;font-size:var(--sc-pos12_5,12.5px);line-height:1.55;border-left-width:{{ descBorder }};padding-left:{{ descPad }}">The Freelance Table for emerging creatives, The Brand Table for founders clarifying their positioning.</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;opacity:.8;text-transform:uppercase">Course</span>
+          <span style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.1em;text-transform:uppercase;color:inherit;opacity:.8">Paid</span>
+          <span style="align-items:center;border:1px solid rgba(49,29,3,.3);border:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;font-size:var(--sc-pos6_5,6.5px);height:22px;height:var(--sc-pos22,22px);justify-content:center;justify-self:{{ stampJustify }};letter-spacing:.12em;opacity:.75;padding:0 8px;padding:0 var(--sc-pos8,8px);text-transform:uppercase;white-space:nowrap">In Development</span>
         </div>
       </div>
-      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;justify-content:space-between;letter-spacing:.15em;opacity:.7;padding:8px 16px;text-transform:uppercase"><span>Not Yet In Circulation</span><span>Keep This Card</span></div>
+      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;font-size:var(--sc-pos6_5,6.5px);justify-content:space-between;letter-spacing:.15em;opacity:.7;padding:8px 16px;padding:var(--sc-pos8,8px) var(--sc-pos16,16px);text-transform:uppercase"><span>Not Yet In Circulation</span><span>Keep This Card</span></div>
     </div>
   </section>
 
@@ -448,15 +448,15 @@ class Component extends DCLogic {
           .then(() => this.setState({ notesDone: true, sending: false }))
           .catch(() => this.setState({ notesError: 'WE COULD NOT SAVE YOUR SEAT JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
-      rowCols: n ? '1fr' : 'minmax(0,.76fr) minmax(0,1.3fr) 74px 52px 104px',
-      descPad: '16px',
-      descBorder: '1px',
+      rowCols: n ? '1fr' : 'minmax(0,.76fr) minmax(0,1.3fr) var(--sc-pos74,74px) var(--sc-pos52,52px) var(--sc-pos104,104px)',
+      descPad: 'var(--sc-pos16,16px)',
+      descBorder: 'var(--sc-pos1,1px)',
       stampJustify: 'end',
       statusAlign: n ? 'left' : 'right',
       courseCols: n ? '1fr' : '1fr 1fr',
       gc0: n ? '1fr' : '.85fr 1.15fr',
       gc1: n ? '1fr' : '.88fr 1.12fr',
-      gc2: n ? '1fr' : '36px minmax(0,.68fr) minmax(0,1.32fr)',
+      gc2: n ? '1fr' : 'var(--sc-pos36,36px) minmax(0,.68fr) minmax(0,1.32fr)',
       gc3: n ? '1fr' : '1fr 1fr',
       gc4: n ? '1fr' : '1fr auto',
     };
@@ -465,3 +465,4 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
+

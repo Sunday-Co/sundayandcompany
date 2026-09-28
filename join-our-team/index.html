@@ -6,38 +6,38 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/site.css?v=20260928-05" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-05" />
+<link rel="stylesheet" href="/assets/site.css?v=20260928-06" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-06" />
 <script src="/support.js?v=20260927-37"></script>
-<script defer data-sunday-site-js src="/assets/site.js?v=20260928-05"></script>
+<script defer data-sunday-site-js src="/assets/site.js?v=20260928-06"></script>
 <style>
 /* COMPONENT FORM GUIDANCE MICROTYPE · 2026-09-13 */
 form[data-editorial-labels] label > span:first-child,
 form[data-editorial-labels] > div > span:first-child {
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.05em !important;
 }
-form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !important; }
+form[data-editorial-labels] [aria-haspopup="listbox"] { font-size:12.5px !important; font-size:var(--sc-pos12_5,12.5px) !important; }
 </style>
 <style>
 /* COMPONENT LOCAL PHONE FOCUS LOCK · 2026-09-27 */
 @media (max-width:900px) {
   form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
-    font-size:16px !important; line-height:1.25 !important; touch-action:manipulation !important; transform:none !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important; line-height:1.25 !important; touch-action:manipulation !important; transform:none !important;
   }
 }
 html[data-phone-viewport-scale="1"] form input:not([type="hidden"]),
 html[data-phone-viewport-scale="1"] form textarea,
 html[data-phone-viewport-scale="1"] form select,
 html[data-phone-viewport-scale="1"] form [contenteditable="true"] {
-  font-size:20px !important;
+  font-size:20px !important;  font-size:var(--sc-pos20,20px) !important;
 }
 form [data-form-error-field="true"],
 form [aria-invalid="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12) !important;
 }
 </style>
 <style>
@@ -45,7 +45,7 @@ form [aria-invalid="true"] {
 form [role="alert"] {
   color:#8c2f22 !important;
   font-family:'Inter Tight',sans-serif !important;
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.065em !important;
   line-height:1.4 !important;
@@ -84,10 +84,10 @@ form [role="alert"] {
 <style>
   :root { accent-color: #ac746c; }
   *:focus { outline-color: #ac746c; }
-  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
     border-color: #ac746c !important;
-    box-shadow: 0 0 0 1px #ac746c !important;
+    box-shadow: 0 0 0 1px #ac746c !important;    box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c !important;
     outline: none !important;
   }
   *, *::before, *::after { box-sizing: border-box; }
@@ -102,11 +102,11 @@ form [role="alert"] {
     *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
     html { scroll-behavior: auto !important; }
   }
-  :focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  :focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
 
   input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
   textarea:-webkit-autofill, select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #fffdf8 inset !important;
     -webkit-text-fill-color: #311d03 !important;
     caret-color: #311d03;
     transition: background-color 9999s ease-out 0s;
@@ -115,31 +115,31 @@ form [role="alert"] {
   input::placeholder, textarea::placeholder { color: rgba(49,29,3,.5); opacity: 1; }
   input:focus, textarea:focus, select:focus, button:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 1px solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c;
+    outline: 1px solid #ac746c;    outline: var(--sc-pos1,1px) solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c; box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c;
   }
   input:invalid, textarea:invalid { box-shadow: none; }
 
   [aria-label="Newsletter"] input:-webkit-autofill,
   [aria-label="Newsletter"] input:-webkit-autofill:hover,
   [aria-label="Newsletter"] input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #311d03 inset !important;
     -webkit-text-fill-color: #f5efe6 !important;
     caret-color: #f5efe6;
   }
   [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
-  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
+  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; box-shadow: 0 var(--sc-pos1,1px) 0 0 #ac746c; }
   @media (max-width: 900px) {
-    input, textarea, select, button { font-size: 16px; }
-    input, textarea, select { min-height: 46px; }
-    textarea { min-height: 96px; }
+    input, textarea, select, button { font-size: 16px; font-size: var(--sc-pos16,16px); }
+    input, textarea, select { min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 96px; min-height: var(--sc-pos96,96px); }
   }
 
 
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
   @media (max-width: 900px) {
     /* iOS force-zooms any field under 16px */
-    input, textarea, select { font-size: 16px !important; min-height: 46px; }
-    textarea { min-height: 100px; }
+    input, textarea, select { font-size: 16px !important; font-size: var(--sc-pos16,16px) !important; min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 100px; min-height: var(--sc-pos100,100px); }
     button { font-size: inherit; }
     /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
        Compact receipt/status rows stay horizontal. */
@@ -148,17 +148,17 @@ form [role="alert"] {
     button > span[style*="align-items: start"][style*="grid-template-columns"],
     button > span[style*="align-items:start"][style*="grid-template-columns"] {
       grid-template-columns: 1fr !important;
-      row-gap: 14px !important;
+      row-gap: 14px !important;      row-gap: var(--sc-pos14,14px) !important;
     }
   }
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header[data-site-header] > a[aria-label] { width: 120px !important; }
-    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] { width: 120px !important; width: var(--sc-pos120,120px) !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; height: var(--sc-pos44,44px) !important; width: 116px !important; width: var(--sc-pos116,116px) !important; }
     header[data-site-header] > a[aria-label] > span > img {
-      height: 164px !important; width: 164px !important;
-      left: -24px !important; top: -57px !important;
+      height: 164px !important;      height: var(--sc-pos164,164px) !important; width: 164px !important; width: var(--sc-pos164,164px) !important;
+      left: -24px !important;      left: var(--sc-neg24,-24px) !important; top: -57px !important; top: var(--sc-neg57,-57px) !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
   }
@@ -166,13 +166,13 @@ form [role="alert"] {
   @media (max-width: 900px) {
     /* project inquiry form: one column and condensed, popup and Services page
        both, since they are the same component */
-    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
+    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; gap: var(--sc-pos7,7px) !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 9.5px !important; }
-    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
-    form[data-inq] textarea { min-height: 74px !important; }
-    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; font-size: var(--sc-pos9_5,9.5px) !important; }
+    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; min-height: var(--sc-pos42,42px) !important; }
+    form[data-inq] textarea { min-height: 74px !important; min-height: var(--sc-pos74,74px) !important; }
+    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; margin-top: var(--sc-pos2,2px) !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
   }
 
@@ -189,7 +189,7 @@ form [role="alert"] {
   form[data-editorial-labels] label > span:first-child,
   form[data-editorial-labels] > div > span:first-child {
     font-family: 'Inter Tight', sans-serif !important;
-    font-size: 9.5px !important;
+    font-size: 9.5px !important;    font-size: var(--sc-pos9_5,9.5px) !important;
     font-weight: 300 !important;
     letter-spacing: .12em !important;
     text-transform: uppercase;
@@ -213,63 +213,63 @@ form [role="alert"] {
 
   <main id="main-content" tabindex="-1">
 
-  <section aria-labelledby="join-title" style="align-items:center;background:#f5efe6;display:grid;gap:clamp(36px,6vw,92px);grid-template-columns:{{ gc0 }};min-height:76svh;overflow:hidden;padding:clamp(125px,13vw,170px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(48px,6vw,76px)">
-    <div style="max-width:520px">
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Join Our Team</p>
-      <h1 id="join-title" style="font-size:clamp(50px,5.8vw,82px);font-weight:400;letter-spacing:-.06em;line-height:.88;margin:16px 0 25px">Our Table Is Still <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">Taking Shape</em></h1>
-      <p style="font-size:14px;line-height:1.65;max-width:475px">Applications are not currently open. Leave your details and tell us which program you want to hear about. When the next opportunity opens, we will be in touch.</p>
-      <a href="#program-interest" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;gap:35px;letter-spacing:.13em;margin-top:25px;padding-bottom:6px;text-transform:uppercase">Save Your Interest <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;width:14px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+  <section aria-labelledby="join-title" style="align-items:center;background:#f5efe6;display:grid;gap:clamp(36px,6vw,92px);gap:clamp(var(--sc-pos36,36px),6vw,var(--sc-pos92,92px));grid-template-columns:{{ gc0 }};min-height:76svh;overflow:hidden;padding:clamp(125px,13vw,170px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(48px,6vw,76px);padding:clamp(var(--sc-pos125,125px),13vw,var(--sc-pos170,170px)) max(clamp(var(--sc-pos22,22px),7vw,var(--sc-pos110,110px)), calc((100vw - var(--sc-pos1240,1240px)) / 2)) clamp(var(--sc-pos48,48px),6vw,var(--sc-pos76,76px))">
+    <div style="max-width:520px;max-width:var(--sc-pos520,520px)">
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Join Our Team</p>
+      <h1 id="join-title" style="font-size:clamp(50px,5.8vw,82px);font-size:clamp(var(--sc-pos50,50px),5.8vw,var(--sc-pos82,82px));font-weight:400;letter-spacing:-.06em;line-height:.88;margin:16px 0 25px;margin:var(--sc-pos16,16px) 0 var(--sc-pos25,25px)">Our Table Is Still <em style="color:#ac746c;font-family:'Playfair Display',Georgia,serif;font-size:.94em;font-style:italic;font-weight:400">Taking Shape</em></h1>
+      <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:475px;max-width:var(--sc-pos475,475px)">Applications are not currently open. Leave your details and tell us which program you want to hear about. When the next opportunity opens, we will be in touch.</p>
+      <a href="#program-interest" style="align-items:center;border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);gap:35px;gap:var(--sc-pos35,35px);letter-spacing:.13em;margin-top:25px;margin-top:var(--sc-pos25,25px);padding-bottom:6px;padding-bottom:var(--sc-pos6,6px);text-transform:uppercase">Save Your Interest <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:14px;height:var(--sc-pos14,14px);width:14px;width:var(--sc-pos14,14px)"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
     </div>
-    <div aria-label="Sunday and Company work and gathering details" style="align-self:center;aspect-ratio:1.16 / 1;display:grid;gap:7px;grid-template-columns:{{ gc1 }};grid-template-rows:minmax(0,1fr) minmax(0,1fr);max-height:620px;overflow:hidden;width:100%">
+    <div aria-label="Sunday and Company work and gathering details" style="align-self:center;aspect-ratio:1.16 / 1;display:grid;gap:7px;gap:var(--sc-pos7,7px);grid-template-columns:{{ gc1 }};grid-template-rows:minmax(0,1fr) minmax(0,1fr);max-height:620px;max-height:var(--sc-pos620,620px);overflow:hidden;width:100%">
       <img src="/assets/join-team-table.jpg" alt="Coffee, books and a guest check on a work table" style="display:block;grid-row:1 / 3;height:100%;min-height:0;object-fit:cover;width:100%" />
       <img src="/assets/join-team-reserved.jpg" alt="Reserved sign and candle on a gathering table" style="display:block;height:100%;min-height:0;object-fit:cover;width:100%" />
       <img src="/assets/join-team-laptop.jpg" alt="Laptop on a bright table beside a cane chair" style="display:block;height:100%;min-height:0;object-fit:cover;width:100%" />
     </div>
   </section>
 
-  <section aria-labelledby="join-programs-title" style="background:#311d03;color:#f5efe6;padding:clamp(50px,6vw,76px) clamp(22px,6vw,88px)">
-    <div style="margin:0 auto 35px;max-width:700px;text-align:center">
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">More Ways To Join</p>
-      <h2 id="join-programs-title" style="font-size:clamp(38px,4.5vw,58px);font-weight:400;letter-spacing:-.05em;margin:10px 0 14px">Find Your <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.12em;font-style:normal;font-weight:400">Seat</em></h2>
-      <p style="font-size:13px;line-height:1.6;margin-inline:auto;max-width:560px">Explore each program now, then leave your interest below. These programs are not currently accepting applications.</p>
+  <section aria-labelledby="join-programs-title" style="background:#311d03;color:#f5efe6;padding:clamp(50px,6vw,76px) clamp(22px,6vw,88px);padding:clamp(var(--sc-pos50,50px),6vw,var(--sc-pos76,76px)) clamp(var(--sc-pos22,22px),6vw,var(--sc-pos88,88px))">
+    <div style="margin:0 auto 35px;margin:0 auto var(--sc-pos35,35px);max-width:700px;max-width:var(--sc-pos700,700px);text-align:center">
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">More Ways To Join</p>
+      <h2 id="join-programs-title" style="font-size:clamp(38px,4.5vw,58px);font-size:clamp(var(--sc-pos38,38px),4.5vw,var(--sc-pos58,58px));font-weight:400;letter-spacing:-.05em;margin:10px 0 14px;margin:var(--sc-pos10,10px) 0 var(--sc-pos14,14px)">Find Your <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.12em;font-style:normal;font-weight:400">Seat</em></h2>
+      <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.6;margin-inline:auto;max-width:560px;max-width:var(--sc-pos560,560px)">Explore each program now, then leave your interest below. These programs are not currently accepting applications.</p>
     </div>
 
     <dc-import name="/Program Cards" hint-size="100%,420px"></dc-import>
   </section>
 
-  <section id="program-interest" aria-labelledby="join-interest-title" style="scroll-margin-top:92px;align-items:start;display:grid;gap:clamp(42px,7vw,110px);grid-template-columns:{{ gc3 }};margin:0 auto;max-width:1180px;padding:clamp(52px,7vw,90px) clamp(22px,5vw,60px)">
+  <section id="program-interest" aria-labelledby="join-interest-title" style="scroll-margin-top:92px;scroll-margin-top:var(--sc-pos92,92px);align-items:start;display:grid;gap:clamp(42px,7vw,110px);gap:clamp(var(--sc-pos42,42px),7vw,var(--sc-pos110,110px));grid-template-columns:{{ gc3 }};margin:0 auto;max-width:1180px;max-width:var(--sc-pos1180,1180px);padding:clamp(52px,7vw,90px) clamp(22px,5vw,60px);padding:clamp(var(--sc-pos52,52px),7vw,var(--sc-pos90,90px)) clamp(var(--sc-pos22,22px),5vw,var(--sc-pos60,60px))">
     <div>
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Stay Close</p>
-      <h2 id="join-interest-title" style="font-size:clamp(38px,4.2vw,56px);font-weight:400;letter-spacing:-.05em;line-height:.96;margin:13px 0 20px">Save Your <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-style:normal;font-weight:400">Interest</em></h2>
-      <p style="font-size:14px;line-height:1.65">Tell us where you would like to join. We will keep your information on hand and reach out when Sunday is ready to open the next opportunity.</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Stay Close</p>
+      <h2 id="join-interest-title" style="font-size:clamp(38px,4.2vw,56px);font-size:clamp(var(--sc-pos38,38px),4.2vw,var(--sc-pos56,56px));font-weight:400;letter-spacing:-.05em;line-height:.96;margin:13px 0 20px;margin:var(--sc-pos13,13px) 0 var(--sc-pos20,20px)">Save Your <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-style:normal;font-weight:400">Interest</em></h2>
+      <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65">Tell us where you would like to join. We will keep your information on hand and reach out when Sunday is ready to open the next opportunity.</p>
     </div>
-    <div style="background:#fffdf8;border:1px solid #311d03;padding:clamp(22px,3vw,32px)">
-      <div data-receipt-meta style="border-bottom:1px dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.13em;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Program Interest</span></div>
-      <div style="padding:30px 0 22px;text-align:center;display:{{ interestDoneDisplay }}">
-        <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">Sunday &amp; Company</p>
-        <h3 style="font-size:clamp(26px,2.8vw,36px);font-weight:400;letter-spacing:-.05em;line-height:.96;margin:0">Your Interest Is <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Saved.</em></h3>
-        <p style="font-size:12px;line-height:1.55;margin:14px auto 0;max-width:380px">We have your details on file and will reach out when Sunday opens the next opportunity.</p>
-        <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:20px auto 0;padding-top:12px;text-transform:uppercase;width:min(280px,100%)">Status: Interest Saved</p>
+    <div style="background:#fffdf8;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;padding:clamp(22px,3vw,32px);padding:clamp(var(--sc-pos22,22px),3vw,var(--sc-pos32,32px))">
+      <div data-receipt-meta style="border-bottom:1px dashed rgba(49,29,3,.5);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.13em;padding-bottom:11px;padding-bottom:var(--sc-pos11,11px);text-transform:uppercase"><span>Sunday &amp; Company</span><span>Program Interest</span></div>
+      <div style="padding:30px 0 22px;padding:var(--sc-pos30,30px) 0 var(--sc-pos22,22px);text-align:center;display:{{ interestDoneDisplay }}">
+        <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.16em;margin:0 0 10px;margin:0 0 var(--sc-pos10,10px);text-transform:uppercase">Sunday &amp; Company</p>
+        <h3 style="font-size:clamp(26px,2.8vw,36px);font-size:clamp(var(--sc-pos26,26px),2.8vw,var(--sc-pos36,36px));font-weight:400;letter-spacing:-.05em;line-height:.96;margin:0">Your Interest Is <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Saved.</em></h3>
+        <p style="font-size:12px;font-size:var(--sc-pos12,12px);line-height:1.55;margin:14px auto 0;margin:var(--sc-pos14,14px) auto 0;max-width:380px;max-width:var(--sc-pos380,380px)">We have your details on file and will reach out when Sunday opens the next opportunity.</p>
+        <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.16em;margin:20px auto 0;margin:var(--sc-pos20,20px) auto 0;padding-top:12px;padding-top:var(--sc-pos12,12px);text-transform:uppercase;width:min(280px,100%);width:min(var(--sc-pos280,280px),100%)">Status: Interest Saved</p>
       </div>
-      <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearInterestError }}" onSubmit="{{ submitInterest }}" style="display:grid;gap:13px 16px;grid-template-columns:{{ gc5 }};padding-top:18px;display:{{ interestFormDisplay }}">
-    <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" maxlength="120" /></label>
-        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
-        <label style="display:grid;gap:7px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" minlength="7" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;min-height:44px;padding:7px 10px;width:100%" /></label>
-        <div style="display:grid;gap:7px;position:relative">
-          <span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Program Of Interest *</span>
+      <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearInterestError }}" onSubmit="{{ submitInterest }}" style="display:grid;gap:13px 16px;gap:var(--sc-pos13,13px) var(--sc-pos16,16px);grid-template-columns:{{ gc5 }};padding-top:18px;padding-top:var(--sc-pos18,18px);display:{{ interestFormDisplay }}">
+    <div aria-hidden="true" style="height:0;left:-9999px;left:var(--sc-neg9999,-9999px);overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
+        <label style="display:grid;gap:7px;gap:var(--sc-pos7,7px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border:var(--sc-pos1,1px) solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);min-height:44px;min-height:var(--sc-pos44,44px);padding:7px 10px;padding:var(--sc-pos7,7px) var(--sc-pos10,10px);width:100%" maxlength="120" /></label>
+        <label style="display:grid;gap:7px;gap:var(--sc-pos7,7px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border:var(--sc-pos1,1px) solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);min-height:44px;min-height:var(--sc-pos44,44px);padding:7px 10px;padding:var(--sc-pos7,7px) var(--sc-pos10,10px);width:100%" /></label>
+        <label style="display:grid;gap:7px;gap:var(--sc-pos7,7px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Phone Number *</span><input autocomplete="tel" name="phone" required="required" type="tel" minlength="7" maxlength="30" style="appearance:none;background:transparent;border:1px solid rgba(49,29,3,.52);border:var(--sc-pos1,1px) solid rgba(49,29,3,.52);border-radius:0;color:#311d03;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);min-height:44px;min-height:var(--sc-pos44,44px);padding:7px 10px;padding:var(--sc-pos7,7px) var(--sc-pos10,10px);width:100%" /></label>
+        <div style="display:grid;gap:7px;gap:var(--sc-pos7,7px);position:relative">
+          <span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Program Of Interest *</span>
           <input name="program" type="hidden" value="{{ program }}" />
-          <button type="button" aria-haspopup="listbox" aria-expanded="{{ selOpen }}" onClick="{{ toggleSel }}" style="align-items:center;background:#fffdf8;border:1px solid rgba(49,29,3,.52);border-radius:0;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:12.5px!important;font-weight:400;justify-content:space-between;min-height:44px;padding:7px 10px;text-align:left;width:100%;color:{{ programColor }}">{{ programLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:15px;transition:transform 200ms ease;width:15px;transform:{{ selRot }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-          <div data-program-listbox role="listbox" aria-label="Program of interest" style="background:#fffdf8;border:1px solid #311d03;bottom:calc(100% + 1px);left:0;position:absolute;right:0;top:auto;z-index:20;display:{{ selDisplay }}">
-            <button type="button" role="option" onClick="{{ pickFellows }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Fellows Table</button>
-            <button type="button" role="option" onClick="{{ pickEspresso }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Espresso Club</button>
-            <button type="button" role="option" onClick="{{ pickFounders }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:400;padding:9px 10px;text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Founders Club</button>
+          <button type="button" aria-haspopup="listbox" aria-expanded="{{ selOpen }}" onClick="{{ toggleSel }}" style="align-items:center;background:#fffdf8;border:1px solid rgba(49,29,3,.52);border:var(--sc-pos1,1px) solid rgba(49,29,3,.52);border-radius:0;cursor:pointer;display:flex;font-family:'Inter Tight',sans-serif;font-size:12.5px!important;font-size:var(--sc-pos12_5,12.5px)!important;font-weight:400;justify-content:space-between;min-height:44px;min-height:var(--sc-pos44,44px);padding:7px 10px;padding:var(--sc-pos7,7px) var(--sc-pos10,10px);text-align:left;width:100%;color:{{ programColor }}">{{ programLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="height:15px;height:var(--sc-pos15,15px);transition:transform 200ms ease;width:15px;width:var(--sc-pos15,15px);transform:{{ selRot }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+          <div data-program-listbox role="listbox" aria-label="Program of interest" style="background:#fffdf8;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;bottom:calc(100% + 1px);bottom:calc(100% + var(--sc-pos1,1px));left:0;position:absolute;right:0;top:auto;z-index:20;display:{{ selDisplay }}">
+            <button type="button" role="option" onClick="{{ pickFellows }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-size:var(--sc-pos14,14px);font-weight:400;padding:9px 10px;padding:var(--sc-pos9,9px) var(--sc-pos10,10px);text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Fellows Table</button>
+            <button type="button" role="option" onClick="{{ pickEspresso }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-size:var(--sc-pos14,14px);font-weight:400;padding:9px 10px;padding:var(--sc-pos9,9px) var(--sc-pos10,10px);text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Espresso Club</button>
+            <button type="button" role="option" onClick="{{ pickFounders }}" style="background:transparent;border:0;color:#311d03;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:14px;font-size:var(--sc-pos14,14px);font-weight:400;padding:9px 10px;padding:var(--sc-pos9,9px) var(--sc-pos10,10px);text-align:left;width:100%" style-hover="background:rgba(172,116,108,.16)">Founders Club</button>
           </div>
         </div>
-        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:400;gap:12px;grid-column:1 / -1;justify-content:center;letter-spacing:.10em;min-height:44px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ interestLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
-        <p role="alert" style="color:#8c2f22;font-size:11px;grid-column:1 / -1;margin:0;display:{{ interestErrorDisplay }}">{{ interestError }}</p>
+        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:10px;font-size:var(--sc-pos10,10px);font-weight:400;gap:12px;gap:var(--sc-pos12,12px);grid-column:1 / -1;justify-content:center;letter-spacing:.10em;min-height:44px;min-height:var(--sc-pos44,44px);padding:0 19px;padding:0 var(--sc-pos19,19px);text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ interestLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;height:var(--sc-pos15,15px);width:15px;width:var(--sc-pos15,15px)"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+        <p role="alert" style="color:#8c2f22;font-size:11px;font-size:var(--sc-pos11,11px);grid-column:1 / -1;margin:0;display:{{ interestErrorDisplay }}">{{ interestError }}</p>
       </form>
-      <div data-receipt-meta style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.13em;margin-top:20px;padding:10px 0;text-transform:uppercase"><span>Status</span><strong style="font-weight:400">Coming Soon</strong></div>
+      <div data-receipt-meta style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.13em;margin-top:20px;margin-top:var(--sc-pos20,20px);padding:10px 0;padding:var(--sc-pos10,10px) 0;text-transform:uppercase"><span>Status</span><strong style="font-weight:400">Coming Soon</strong></div>
     </div>
   </section>
 
@@ -387,3 +387,4 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
+

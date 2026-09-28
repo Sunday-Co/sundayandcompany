@@ -6,10 +6,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/site.css?v=20260928-05" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-05" />
+<link rel="stylesheet" href="/assets/site.css?v=20260928-06" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-06" />
 <script src="/support.js?v=20260927-37"></script>
-<script defer data-sunday-site-js src="/assets/site.js?v=20260928-05"></script>
+<script defer data-sunday-site-js src="/assets/site.js?v=20260928-06"></script>
 </head>
 <body>
 <x-dc>
@@ -42,10 +42,10 @@
 <style>
   :root { accent-color: #ac746c; }
   *:focus { outline-color: #ac746c; }
-  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
     border-color: #ac746c !important;
-    box-shadow: 0 0 0 1px #ac746c !important;
+    box-shadow: 0 0 0 1px #ac746c !important;    box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c !important;
     outline: none !important;
   }
   *, *::before, *::after { box-sizing: border-box; }
@@ -61,11 +61,11 @@
     *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
     html { scroll-behavior: auto !important; }
   }
-  :focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  :focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
 
   input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
   textarea:-webkit-autofill, select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #fffdf8 inset !important;
     -webkit-text-fill-color: #311d03 !important;
     caret-color: #311d03;
     transition: background-color 9999s ease-out 0s;
@@ -74,31 +74,31 @@
   input::placeholder, textarea::placeholder { color: rgba(49,29,3,.5); opacity: 1; }
   input:focus, textarea:focus, select:focus, button:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 1px solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c;
+    outline: 1px solid #ac746c;    outline: var(--sc-pos1,1px) solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c; box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c;
   }
   input:invalid, textarea:invalid { box-shadow: none; }
 
   [aria-label="Newsletter"] input:-webkit-autofill,
   [aria-label="Newsletter"] input:-webkit-autofill:hover,
   [aria-label="Newsletter"] input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #311d03 inset !important;
     -webkit-text-fill-color: #f5efe6 !important;
     caret-color: #f5efe6;
   }
   [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
-  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
+  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; box-shadow: 0 var(--sc-pos1,1px) 0 0 #ac746c; }
   @media (max-width: 900px) {
-    input, textarea, select, button { font-size: 16px; }
-    input, textarea, select { min-height: 46px; }
-    textarea { min-height: 96px; }
+    input, textarea, select, button { font-size: 16px; font-size: var(--sc-pos16,16px); }
+    input, textarea, select { min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 96px; min-height: var(--sc-pos96,96px); }
   }
 
 
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
   @media (max-width: 900px) {
     /* iOS force-zooms any field under 16px */
-    input, textarea, select { font-size: 16px !important; min-height: 46px; }
-    textarea { min-height: 100px; }
+    input, textarea, select { font-size: 16px !important; font-size: var(--sc-pos16,16px) !important; min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 100px; min-height: var(--sc-pos100,100px); }
     button { font-size: inherit; }
     /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
        Compact receipt/status rows stay horizontal. */
@@ -107,17 +107,17 @@
     button > span[style*="align-items: start"][style*="grid-template-columns"],
     button > span[style*="align-items:start"][style*="grid-template-columns"] {
       grid-template-columns: 1fr !important;
-      row-gap: 14px !important;
+      row-gap: 14px !important;      row-gap: var(--sc-pos14,14px) !important;
     }
   }
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header[data-site-header] > a[aria-label] { width: 120px !important; }
-    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] { width: 120px !important; width: var(--sc-pos120,120px) !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; height: var(--sc-pos44,44px) !important; width: 116px !important; width: var(--sc-pos116,116px) !important; }
     header[data-site-header] > a[aria-label] > span > img {
-      height: 164px !important; width: 164px !important;
-      left: -24px !important; top: -57px !important;
+      height: 164px !important;      height: var(--sc-pos164,164px) !important; width: 164px !important; width: var(--sc-pos164,164px) !important;
+      left: -24px !important;      left: var(--sc-neg24,-24px) !important; top: -57px !important; top: var(--sc-neg57,-57px) !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
   }
@@ -125,13 +125,13 @@
   @media (max-width: 900px) {
     /* project inquiry form: one column and condensed, popup and Services page
        both, since they are the same component */
-    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
+    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; gap: var(--sc-pos7,7px) !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 9.5px !important; }
-    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
-    form[data-inq] textarea { min-height: 74px !important; }
-    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; font-size: var(--sc-pos9_5,9.5px) !important; }
+    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; min-height: var(--sc-pos42,42px) !important; }
+    form[data-inq] textarea { min-height: 74px !important; min-height: var(--sc-pos74,74px) !important; }
+    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; margin-top: var(--sc-pos2,2px) !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
   }
 
@@ -157,59 +157,59 @@
 
   <main id="main-content" tabindex="-1">
 
-  <header style="background:#fffdf8;border-bottom:1px solid rgba(49,29,3,.34);padding:clamp(132px,14vw,174px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(42px,5vw,60px)">
-    <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:17px;text-transform:uppercase">Website Terms</p>
-    <h1 style="font-size:clamp(48px,6.2vw,84px);font-weight:400;letter-spacing:-.06em;line-height:.9;margin:0">Terms &amp; Conditions</h1>
-    <p style="font-size:13.5px;line-height:1.7;margin-top:22px;max-width:650px">These terms govern your use of the Sunday &amp; Company website and explain how website information relates to our client services.</p>
-    <div style="border-top:1px solid rgba(49,29,3,.3);display:flex;flex-wrap:wrap;font-family:'Inter Tight',sans-serif;font-size:7px;gap:12px 34px;justify-content:space-between;letter-spacing:.13em;margin-top:27px;padding-top:12px;text-transform:uppercase">
+  <header style="background:#fffdf8;border-bottom:1px solid rgba(49,29,3,.34);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.34);padding:clamp(132px,14vw,174px) max(clamp(22px,7vw,110px), calc((100vw - 1240px) / 2)) clamp(42px,5vw,60px);padding:clamp(var(--sc-pos132,132px),14vw,var(--sc-pos174,174px)) max(clamp(var(--sc-pos22,22px),7vw,var(--sc-pos110,110px)), calc((100vw - var(--sc-pos1240,1240px)) / 2)) clamp(var(--sc-pos42,42px),5vw,var(--sc-pos60,60px))">
+    <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;margin-bottom:17px;margin-bottom:var(--sc-pos17,17px);text-transform:uppercase">Website Terms</p>
+    <h1 style="font-size:clamp(48px,6.2vw,84px);font-size:clamp(var(--sc-pos48,48px),6.2vw,var(--sc-pos84,84px));font-weight:400;letter-spacing:-.06em;line-height:.9;margin:0">Terms &amp; Conditions</h1>
+    <p style="font-size:13.5px;font-size:var(--sc-pos13_5,13.5px);line-height:1.7;margin-top:22px;margin-top:var(--sc-pos22,22px);max-width:650px;max-width:var(--sc-pos650,650px)">These terms govern your use of the Sunday &amp; Company website and explain how website information relates to our client services.</p>
+    <div style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:flex;flex-wrap:wrap;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);gap:12px 34px;gap:var(--sc-pos12,12px) var(--sc-pos34,34px);justify-content:space-between;letter-spacing:.13em;margin-top:27px;margin-top:var(--sc-pos27,27px);padding-top:12px;padding-top:var(--sc-pos12,12px);text-transform:uppercase">
       <span>Effective August 30, 2026</span>
       <span>Last Updated August 30, 2026</span>
     </div>
   </header>
 
-  <section style="display:grid;gap:clamp(46px,6vw,82px);margin:0 auto;max-width:1240px;padding:clamp(42px,5vw,64px) clamp(22px,4vw,52px) clamp(68px,7vw,96px);grid-template-columns:{{ layoutCols }}">
+  <section style="display:grid;gap:clamp(46px,6vw,82px);gap:clamp(var(--sc-pos46,46px),6vw,var(--sc-pos82,82px));margin:0 auto;max-width:1240px;max-width:var(--sc-pos1240,1240px);padding:clamp(42px,5vw,64px) clamp(22px,4vw,52px) clamp(68px,7vw,96px);padding:clamp(var(--sc-pos42,42px),5vw,var(--sc-pos64,64px)) clamp(var(--sc-pos22,22px),4vw,var(--sc-pos52,52px)) clamp(var(--sc-pos68,68px),7vw,var(--sc-pos96,96px));grid-template-columns:{{ layoutCols }}">
     <aside style="min-width:0">
-      <nav aria-label="Terms & Conditions sections" style="position:sticky;top:116px;display:{{ sideDesktop }}">
-        <p style="color:#ac746c;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">On This Page</p>
-        <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">02</span>Website Purpose</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">05</span>Client Agreements</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">06</span>Fees And Payments</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">10</span>Acceptable Use</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">12</span>Disclaimers</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">14</span>General Terms And Contact</a></li>
+      <nav aria-label="Terms & Conditions sections" style="position:sticky;top:116px;top:var(--sc-pos116,116px);display:{{ sideDesktop }}">
+        <p style="color:#ac746c;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.15em;margin-bottom:15px;margin-bottom:var(--sc-pos15,15px);text-transform:uppercase">On This Page</p>
+        <ol style="border-top:1px solid rgba(49,29,3,.38);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">02</span>Website Purpose</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">05</span>Client Agreements</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">06</span>Fees And Payments</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">10</span>Acceptable Use</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">12</span>Disclaimers</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">14</span>General Terms And Contact</a></li>
         </ol>
-        <div style="border-top:1px solid #311d03;margin-top:28px;padding-top:16px">
-          <span style="color:#ac746c;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.15em;margin-bottom:15px;text-transform:uppercase">Questions</span>
-          <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor;font-size:13px">hello@sundayandcompany.co</a>
+        <div style="border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03;margin-top:28px;margin-top:var(--sc-pos28,28px);padding-top:16px;padding-top:var(--sc-pos16,16px)">
+          <span style="color:#ac746c;display:block;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.15em;margin-bottom:15px;margin-bottom:var(--sc-pos15,15px);text-transform:uppercase">Questions</span>
+          <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;font-size:13px;font-size:var(--sc-pos13,13px)">hello@sundayandcompany.co</a>
         </div>
       </nav>
-      <details style="border-bottom:1px solid rgba(49,29,3,.38);border-top:1px solid rgba(49,29,3,.38);display:{{ sideMobile }}">
-        <summary style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.15em;padding:14px 0;text-transform:uppercase">Jump To A Section <span aria-hidden="true" style="color:#ac746c">+</span></summary>
-        <nav aria-label="Terms & Conditions mobile sections" style="padding-bottom:12px">
-          <ol style="border-top:1px solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">02</span>Website Purpose</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">05</span>Client Agreements</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">06</span>Fees And Payments</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">10</span>Acceptable Use</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">12</span>Disclaimers</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
-          <li style="border-bottom:1px solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;gap:12px;grid-template-columns:22px 1fr;line-height:1.35;padding:11px 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.1em">14</span>General Terms And Contact</a></li>
+      <details style="border-bottom:1px solid rgba(49,29,3,.38);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.38);border-top:1px solid rgba(49,29,3,.38);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.38);display:{{ sideMobile }}">
+        <summary style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);justify-content:space-between;letter-spacing:.15em;padding:14px 0;padding:var(--sc-pos14,14px) 0;text-transform:uppercase">Jump To A Section <span aria-hidden="true" style="color:#ac746c">+</span></summary>
+        <nav aria-label="Terms & Conditions mobile sections" style="padding-bottom:12px;padding-bottom:var(--sc-pos12,12px)">
+          <ol style="border-top:1px solid rgba(49,29,3,.38);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.38);list-style:none;margin:0;padding:0">
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#acceptance" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">01</span>Acceptance Of These Terms</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#website-purpose" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">02</span>Website Purpose</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#service-information" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">03</span>Services And Starting Prices</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#inquiries" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">04</span>Inquiries And Proposals</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#client-agreements" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">05</span>Client Agreements</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#payments" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">06</span>Fees And Payments</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#client-materials" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">07</span>Client-Provided Materials</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#intellectual-property" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">08</span>Website Content And Intellectual Property</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#portfolio-use" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">09</span>Portfolio And Case Studies</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#acceptable-use" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">10</span>Acceptable Use</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#third-parties" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">11</span>Third-Party Services And Links</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#disclaimers" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">12</span>Disclaimers</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#liability" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">13</span>Limitation Of Liability</a></li>
+          <li style="border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28)"><a href="#general-terms" style="align-items:baseline;display:grid;font-size:13px;font-size:var(--sc-pos13,13px);gap:12px;gap:var(--sc-pos12,12px);grid-template-columns:22px 1fr;grid-template-columns:var(--sc-pos22,22px) 1fr;line-height:1.35;padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.1em">14</span>General Terms And Contact</a></li>
           </ol>
         </nav>
       </details>
@@ -217,157 +217,157 @@
 
     <article style="min-width:0">
 
-      <section id="acceptance" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">01</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Acceptance Of These Terms</h2>
+      <section id="acceptance" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">01</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Acceptance Of These Terms</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">By using this website, you agree to these Terms &amp; Conditions and our Privacy Policy. If you do not agree, please do not use the site or submit information through its forms.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">By using this website, you agree to these Terms &amp; Conditions and our Privacy Policy. If you do not agree, please do not use the site or submit information through its forms.</p>
         </div>
       </section>
 
-      <section id="website-purpose" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">02</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Website Purpose</h2>
+      <section id="website-purpose" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">02</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Website Purpose</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">This website provides information about Sunday &amp; Company, our services and ways to contact us. Website content is general information. It is not a proposal, guarantee, professional advice or a binding offer to perform services.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">This website provides information about Sunday &amp; Company, our services and ways to contact us. Website content is general information. It is not a proposal, guarantee, professional advice or a binding offer to perform services.</p>
         </div>
       </section>
 
-      <section id="service-information" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">03</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Services And Starting Prices</h2>
+      <section id="service-information" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">03</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Services And Starting Prices</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">Sunday provides branding, website design and digital marketing services. Descriptions, timelines and starting prices shown on this site are examples and entry points. They may change as our offerings develop.</p>
-          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">Your actual scope, timing and fee depend on the needs identified during review. No service is reserved and no price is guaranteed until both parties sign a written agreement.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">Sunday provides branding, website design and digital marketing services. Descriptions, timelines and starting prices shown on this site are examples and entry points. They may change as our offerings develop.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:17px 0 0;margin:var(--sc-pos17,17px) 0 0">Your actual scope, timing and fee depend on the needs identified during review. No service is reserved and no price is guaranteed until both parties sign a written agreement.</p>
         </div>
       </section>
 
-      <section id="inquiries" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">04</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Inquiries And Proposals</h2>
+      <section id="inquiries" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">04</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Inquiries And Proposals</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">Submitting an inquiry does not create a client relationship, reserve availability or require Sunday to accept a project. We may decline an inquiry or recommend a different scope based on fit, timing and capacity.</p>
-          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">A proposal remains subject to its stated expiration date and terms. Project work begins only after the required agreement, payment and requested materials have been received.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">Submitting an inquiry does not create a client relationship, reserve availability or require Sunday to accept a project. We may decline an inquiry or recommend a different scope based on fit, timing and capacity.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:17px 0 0;margin:var(--sc-pos17,17px) 0 0">A proposal remains subject to its stated expiration date and terms. Project work begins only after the required agreement, payment and requested materials have been received.</p>
         </div>
       </section>
 
-      <section id="client-agreements" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">05</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Client Agreements</h2>
+      <section id="client-agreements" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">05</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Client Agreements</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">Client projects are governed by a separate written agreement. That agreement controls the project scope, deliverables, schedule, payment terms, revision limits, cancellation rights and ownership terms. If a client agreement conflicts with these website terms, the client agreement controls for that project.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">Client projects are governed by a separate written agreement. That agreement controls the project scope, deliverables, schedule, payment terms, revision limits, cancellation rights and ownership terms. If a client agreement conflicts with these website terms, the client agreement controls for that project.</p>
         </div>
       </section>
 
-      <section id="payments" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">06</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Fees And Payments</h2>
+      <section id="payments" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">06</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Fees And Payments</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">This website does not currently collect project payments. Payment schedules, deposits, late fees, expenses and refund terms are stated in the applicable proposal or client agreement. Fees paid for completed work or reserved project time may be nonrefundable when the written agreement says so.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">This website does not currently collect project payments. Payment schedules, deposits, late fees, expenses and refund terms are stated in the applicable proposal or client agreement. Fees paid for completed work or reserved project time may be nonrefundable when the written agreement says so.</p>
         </div>
       </section>
 
-      <section id="client-materials" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">07</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Client-Provided Materials</h2>
+      <section id="client-materials" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">07</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Client-Provided Materials</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">If you provide names, copy, photography, logos, data or other materials, you represent that you have the right to share and use them for the requested work. You remain responsible for their accuracy, legality and required permissions.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">If you provide names, copy, photography, logos, data or other materials, you represent that you have the right to share and use them for the requested work. You remain responsible for their accuracy, legality and required permissions.</p>
         </div>
       </section>
 
-      <section id="intellectual-property" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">08</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Website Content And Intellectual Property</h2>
+      <section id="intellectual-property" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">08</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Website Content And Intellectual Property</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">The website and its original text, graphics, layouts, logos, marks and design elements are owned by or licensed to Sunday &amp; Company. They are protected by copyright, trademark and other applicable laws.</p>
-          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">You may view the site for personal or internal business reference. You may not reproduce, publish, sell, scrape, modify or distribute its content without prior written permission. Ownership of client deliverables is addressed only in the applicable client agreement.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">The website and its original text, graphics, layouts, logos, marks and design elements are owned by or licensed to Sunday &amp; Company. They are protected by copyright, trademark and other applicable laws.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:17px 0 0;margin:var(--sc-pos17,17px) 0 0">You may view the site for personal or internal business reference. You may not reproduce, publish, sell, scrape, modify or distribute its content without prior written permission. Ownership of client deliverables is addressed only in the applicable client agreement.</p>
         </div>
       </section>
 
-      <section id="portfolio-use" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">09</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Portfolio And Case Studies</h2>
+      <section id="portfolio-use" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">09</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Portfolio And Case Studies</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">Any client work displayed on this website is shown in accordance with the applicable agreement or permission. Display does not transfer ownership of a client’s marks or materials. Project examples may describe selected parts of a broader engagement and are not promises of identical results.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">Any client work displayed on this website is shown in accordance with the applicable agreement or permission. Display does not transfer ownership of a client’s marks or materials. Project examples may describe selected parts of a broader engagement and are not promises of identical results.</p>
         </div>
       </section>
 
-      <section id="acceptable-use" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">10</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Acceptable Use</h2>
+      <section id="acceptable-use" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">10</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Acceptable Use</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">You may not use the website to submit unlawful, abusive, misleading or harmful material. You may not interfere with site security, attempt unauthorized access, introduce malicious code, impersonate another person or use automated methods to overwhelm or copy the site.</p>
-          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">We may restrict access, disregard submissions or take other reasonable action when use of the site threatens its operation or violates these terms.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">You may not use the website to submit unlawful, abusive, misleading or harmful material. You may not interfere with site security, attempt unauthorized access, introduce malicious code, impersonate another person or use automated methods to overwhelm or copy the site.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:17px 0 0;margin:var(--sc-pos17,17px) 0 0">We may restrict access, disregard submissions or take other reasonable action when use of the site threatens its operation or violates these terms.</p>
         </div>
       </section>
 
-      <section id="third-parties" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">11</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Third-Party Services And Links</h2>
+      <section id="third-parties" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">11</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Third-Party Services And Links</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">The site may use or link to third-party services, including form processors and social platforms. We do not control those services and are not responsible for their availability, content or practices. Your use of a third-party service is governed by its own terms.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">The site may use or link to third-party services, including form processors and social platforms. We do not control those services and are not responsible for their availability, content or practices. Your use of a third-party service is governed by its own terms.</p>
         </div>
       </section>
 
-      <section id="disclaimers" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">12</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Disclaimers</h2>
+      <section id="disclaimers" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">12</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Disclaimers</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">The website is provided on an as-available basis. We make reasonable efforts to keep information accurate and the site operational, but we do not warrant uninterrupted access or error-free content.</p>
-          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">Examples, testimonials and portfolio work do not guarantee a particular business, marketing or financial result. You remain responsible for business decisions made using information from the site.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">The website is provided on an as-available basis. We make reasonable efforts to keep information accurate and the site operational, but we do not warrant uninterrupted access or error-free content.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:17px 0 0;margin:var(--sc-pos17,17px) 0 0">Examples, testimonials and portfolio work do not guarantee a particular business, marketing or financial result. You remain responsible for business decisions made using information from the site.</p>
         </div>
       </section>
 
-      <section id="liability" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">13</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Limitation Of Liability</h2>
+      <section id="liability" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">13</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">Limitation Of Liability</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">To the fullest extent permitted by law, Sunday &amp; Company will not be liable for indirect, incidental, special, consequential or punitive damages arising from use of this website. Any liability that cannot legally be excluded will be limited to the extent permitted by applicable law. Project-specific liability is governed by the signed client agreement.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">To the fullest extent permitted by law, Sunday &amp; Company will not be liable for indirect, incidental, special, consequential or punitive damages arising from use of this website. Any liability that cannot legally be excluded will be limited to the extent permitted by applicable law. Project-specific liability is governed by the signed client agreement.</p>
         </div>
       </section>
 
-      <section id="general-terms" style="border-top:1px solid rgba(49,29,3,.45);display:grid;gap:26px;padding:23px 0 32px;scroll-margin-top:120px;grid-template-columns:{{ sectionCols }}">
-        <div style="display:grid;gap:11px;grid-template-columns:24px 1fr">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;padding-top:7px">14</span>
-          <h2 style="font-size:clamp(21px,2vw,29px);font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">General Terms And Contact</h2>
+      <section id="general-terms" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;gap:26px;gap:var(--sc-pos26,26px);padding:23px 0 32px;padding:var(--sc-pos23,23px) 0 var(--sc-pos32,32px);scroll-margin-top:120px;scroll-margin-top:var(--sc-pos120,120px);grid-template-columns:{{ sectionCols }}">
+        <div style="display:grid;gap:11px;gap:var(--sc-pos11,11px);grid-template-columns:24px 1fr;grid-template-columns:var(--sc-pos24,24px) 1fr">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;padding-top:7px;padding-top:var(--sc-pos7,7px)">14</span>
+          <h2 style="font-size:clamp(21px,2vw,29px);font-size:clamp(var(--sc-pos21,21px),2vw,var(--sc-pos29,29px));font-weight:400;letter-spacing:-.03em;line-height:1.08;margin:0">General Terms And Contact</h2>
         </div>
         <div style="min-width:0">
-          <p style="font-size:13px;line-height:1.72;margin:0">If any part of these terms is found unenforceable, the remaining terms will continue in effect. A delay in enforcing a right does not waive that right. Governing law and venue for client work are stated in the applicable written agreement. Otherwise, applicable law controls.</p>
-          <p style="font-size:13px;line-height:1.72;margin:17px 0 0">We may update these terms as the site or our services change. Questions may be sent to <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor">hello@sundayandcompany.co</a>.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:0">If any part of these terms is found unenforceable, the remaining terms will continue in effect. A delay in enforcing a right does not waive that right. Governing law and venue for client work are stated in the applicable written agreement. Otherwise, applicable law controls.</p>
+          <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.72;margin:17px 0 0;margin:var(--sc-pos17,17px) 0 0">We may update these terms as the site or our services change. Questions may be sent to <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor">hello@sundayandcompany.co</a>.</p>
         </div>
       </section>
 
-      <div style="align-items:center;background:#311d03;color:#f5efe6;display:grid;gap:12px clamp(16px,2.5vw,34px);margin:24px 0 0;padding:14px 18px;width:100%;grid-template-columns:{{ cardCols }}">
-        <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">Questions</p>
-        <h2 style="font-size:clamp(17px,1.7vw,22px);font-weight:400;margin:0;white-space:{{ cardNowrap }}">Contact Sunday &amp; Company</h2>
-        <p style="font-size:13px;line-height:1.6;margin:0">Questions about this page can be sent to <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor">hello@sundayandcompany.co</a>. We aim to respond to privacy and data requests within 30 days.</p>
-        <p style="border-top:1px solid rgba(245,239,230,.35);font-family:'Inter Tight',sans-serif;font-size:8px;grid-column:1 / -1;letter-spacing:.13em;line-height:1.7;margin:4px 0 0;opacity:.82;padding-top:12px;text-transform:uppercase">Sunday &amp; Company Marketing LLC is registered in the Commonwealth of Virginia.</p>
+      <div style="align-items:center;background:#311d03;color:#f5efe6;display:grid;gap:12px clamp(16px,2.5vw,34px);gap:var(--sc-pos12,12px) clamp(var(--sc-pos16,16px),2.5vw,var(--sc-pos34,34px));margin:24px 0 0;margin:var(--sc-pos24,24px) 0 0;padding:14px 18px;padding:var(--sc-pos14,14px) var(--sc-pos18,18px);width:100%;grid-template-columns:{{ cardCols }}">
+        <p style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase">Questions</p>
+        <h2 style="font-size:clamp(17px,1.7vw,22px);font-size:clamp(var(--sc-pos17,17px),1.7vw,var(--sc-pos22,22px));font-weight:400;margin:0;white-space:{{ cardNowrap }}">Contact Sunday &amp; Company</h2>
+        <p style="font-size:13px;font-size:var(--sc-pos13,13px);line-height:1.6;margin:0">Questions about this page can be sent to <a href="mailto:hello@sundayandcompany.co" style="border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor">hello@sundayandcompany.co</a>. We aim to respond to privacy and data requests within 30 days.</p>
+        <p style="border-top:1px solid rgba(245,239,230,.35);border-top:var(--sc-pos1,1px) solid rgba(245,239,230,.35);font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);grid-column:1 / -1;letter-spacing:.13em;line-height:1.7;margin:4px 0 0;margin:var(--sc-pos4,4px) 0 0;opacity:.82;padding-top:12px;padding-top:var(--sc-pos12,12px);text-transform:uppercase">Sunday &amp; Company Marketing LLC is registered in the Commonwealth of Virginia.</p>
       </div>
     </article>
   </section>
@@ -393,10 +393,10 @@ class Component extends DCLogic {
   renderVals() {
     const n = this.state.narrow;
     return {
-      layoutCols: n ? '1fr' : 'minmax(200px, .32fr) minmax(0, 1fr)',
+      layoutCols: n ? '1fr' : 'minmax(var(--sc-pos200,200px), .32fr) minmax(0, 1fr)',
       sideDesktop: n ? 'none' : 'block',
       sideMobile: n ? 'block' : 'none',
-      sectionCols: n ? '1fr' : 'minmax(170px, .46fr) minmax(0, 1fr)',
+      sectionCols: n ? '1fr' : 'minmax(var(--sc-pos170,170px), .46fr) minmax(0, 1fr)',
       cardCols: n ? '1fr' : 'auto auto minmax(0, 1fr)',
       cardNowrap: n ? 'normal' : 'nowrap',
     };
@@ -405,3 +405,4 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
+

@@ -9,7 +9,7 @@
 [aria-label="The Sunday Reservation"] input::placeholder,
 [aria-label="The Sunday Reservation"] input::-webkit-input-placeholder {
   font-family:'Inter Tight',sans-serif !important;
-  font-size:12px !important;
+  font-size:12px !important;  font-size:var(--sc-pos12,12px) !important;
   font-weight:300 !important;
   letter-spacing:.01em !important;
 }
@@ -20,7 +20,7 @@
    never sees a focused editable control below 16px after the 0.84 phone scale. */
 @media (max-width:900px) {
   form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
-    font-size:16px !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
     line-height:1.25 !important;
     touch-action:manipulation !important;
     transform:none !important;
@@ -30,13 +30,13 @@ html[data-phone-viewport-scale="1"] form input:not([type="hidden"]),
 html[data-phone-viewport-scale="1"] form textarea,
 html[data-phone-viewport-scale="1"] form select,
 html[data-phone-viewport-scale="1"] form [contenteditable="true"] {
-  font-size:20px !important;
+  font-size:20px !important;  font-size:var(--sc-pos20,20px) !important;
 }
 form [data-form-error-field="true"],
 form [aria-invalid="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12) !important;
 }
 </style>
 <style>
@@ -44,7 +44,7 @@ form [aria-invalid="true"] {
 form [role="alert"] {
   color:#8c2f22 !important;
   font-family:'Inter Tight',sans-serif !important;
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.065em !important;
   line-height:1.4 !important;
@@ -54,52 +54,52 @@ form [role="alert"] {
 </head>
 <body>
 <x-dc>
-<a href="#main-content" style="background:#311d03;color:#f5efe6;font-family:'Inter Tight',sans-serif;font-size:9px;left:8px;letter-spacing:.16em;padding:10px 14px;position:fixed;text-transform:uppercase;top:-60px;transition:top 160ms ease;z-index:90" style-focus="top:8px">Skip To Content</a>
-<header data-site-header style="align-items:center;display:grid;grid-template-columns:{{ hdrCols }};height:70px;left:0;padding:0 clamp(18px,2.7vw,46px);position:fixed;right:0;top:0;transition:background 240ms ease, border-color 240ms ease;z-index:30;background:{{ hdrBg }};border-bottom:1px solid {{ hdrBorder }};color:{{ hdrFg }}">
+<a href="#main-content" style="background:#311d03;color:#f5efe6;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);left:8px;left:var(--sc-pos8,8px);letter-spacing:.16em;padding:10px 14px;padding:var(--sc-pos10,10px) var(--sc-pos14,14px);position:fixed;text-transform:uppercase;top:-60px;top:var(--sc-neg60,-60px);transition:top 160ms ease;z-index:90" style-focus="top:8px">Skip To Content</a>
+<header data-site-header style="align-items:center;display:grid;grid-template-columns:{{ hdrCols }};height:70px;height:var(--sc-pos70,70px);left:0;padding:0 clamp(18px,2.7vw,46px);padding:0 clamp(var(--sc-pos18,18px),2.7vw,var(--sc-pos46,46px));position:fixed;right:0;top:0;transition:background 240ms ease, border-color 240ms ease;z-index:30;background:{{ hdrBg }};border-bottom:1px solid {{ hdrBorder }};border-bottom:var(--sc-pos1,1px) solid {{ hdrBorder }};color:{{ hdrFg }}">
   <a href="/" aria-label="Sunday &amp; Company home" style="align-items:center;display:flex;height:100%;width:{{ logoBox }}">
     <span style="display:block;overflow:hidden;position:relative;height:{{ logoH }};width:{{ logoW }}">
       <img src="/assets/logo-header.svg" alt="Sunday &amp; Company" style="max-width:none;position:absolute;height:{{ logoImg }};width:{{ logoImg }};left:{{ logoL }};top:{{ logoT }};filter:{{ logoFilter }}" />
     </span>
   </a>
-  <nav aria-label="Primary navigation" style="align-items:center;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;gap:clamp(14px,1.6vw,26px);justify-content:center;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;display:{{ navDisplay }}">
-    <a href="/about" style="padding:4px 0;white-space:nowrap">About Us</a>
-    <a href="/services" style="padding:4px 0;white-space:nowrap">Services</a>
-    <a href="/our-work" style="padding:4px 0;white-space:nowrap">Our Work</a>
-    <a href="/join-our-team" style="padding:4px 0;white-space:nowrap">Join Our Team</a>
-    <a href="/sunday-school" style="padding:4px 0;white-space:nowrap">Sunday School</a>
+  <nav aria-label="Primary navigation" style="align-items:center;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;gap:clamp(14px,1.6vw,26px);gap:clamp(var(--sc-pos14,14px),1.6vw,var(--sc-pos26,26px));justify-content:center;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;display:{{ navDisplay }}">
+    <a href="/about" style="padding:4px 0;padding:var(--sc-pos4,4px) 0;white-space:nowrap">About Us</a>
+    <a href="/services" style="padding:4px 0;padding:var(--sc-pos4,4px) 0;white-space:nowrap">Services</a>
+    <a href="/our-work" style="padding:4px 0;padding:var(--sc-pos4,4px) 0;white-space:nowrap">Our Work</a>
+    <a href="/join-our-team" style="padding:4px 0;padding:var(--sc-pos4,4px) 0;white-space:nowrap">Join Our Team</a>
+    <a href="/sunday-school" style="padding:4px 0;padding:var(--sc-pos4,4px) 0;white-space:nowrap">Sunday School</a>
   </nav>
-  <div style="align-items:center;gap:12px;display:{{ actionsDisplay }}">
-    <div style="align-items:center;display:flex;gap:13px">
-      <a aria-label="Instagram" href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:21px;width:21px"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"></circle><circle cx="17.6" cy="6.6" r="1" fill="currentColor"></circle></svg></a>
-      <a aria-label="TikTok" href="https://www.tiktok.com/@sundayand_co" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:21px;width:21px"><path d="M14.35 3v10.06a4.05 4.05 0 1 1-3.5-4.01v2.3a1.8 1.8 0 1 0 1.25 1.71V3h2.25Zm0 0c.24 1.88 1.32 3.2 3.15 3.93v2.39a6.65 6.65 0 0 1-3.15-1.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55"></path></svg></a>
-      <a aria-label="LinkedIn" href="https://www.linkedin.com/company/sundayand-co/" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:21px;width:21px"><rect x="3.5" y="3.5" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5"></rect><circle cx="8" cy="8.2" r="1.1" fill="currentColor"></circle><path d="M7 10.6v6.4M11 17v-6.4m0 2.1c.65-1.36 1.75-2.15 3.15-2.15 1.95 0 2.85 1.26 2.85 3.45v3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path></svg></a>
+  <div style="align-items:center;gap:12px;gap:var(--sc-pos12,12px);display:{{ actionsDisplay }}">
+    <div style="align-items:center;display:flex;gap:13px;gap:var(--sc-pos13,13px)">
+      <a aria-label="Instagram" href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:21px;height:var(--sc-pos21,21px);width:21px;width:var(--sc-pos21,21px)"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"></circle><circle cx="17.6" cy="6.6" r="1" fill="currentColor"></circle></svg></a>
+      <a aria-label="TikTok" href="https://www.tiktok.com/@sundayand_co" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:21px;height:var(--sc-pos21,21px);width:21px;width:var(--sc-pos21,21px)"><path d="M14.35 3v10.06a4.05 4.05 0 1 1-3.5-4.01v2.3a1.8 1.8 0 1 0 1.25 1.71V3h2.25Zm0 0c.24 1.88 1.32 3.2 3.15 3.93v2.39a6.65 6.65 0 0 1-3.15-1.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.55"></path></svg></a>
+      <a aria-label="LinkedIn" href="https://www.linkedin.com/company/sundayand-co/" rel="noreferrer" target="_blank" style="align-items:center;display:inline-flex"><svg aria-hidden="true" viewBox="0 0 24 24" style="height:21px;height:var(--sc-pos21,21px);width:21px;width:var(--sc-pos21,21px)"><rect x="3.5" y="3.5" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5"></rect><circle cx="8" cy="8.2" r="1.1" fill="currentColor"></circle><path d="M7 10.6v6.4M11 17v-6.4m0 2.1c.65-1.36 1.75-2.15 3.15-2.15 1.95 0 2.85 1.26 2.85 3.45v3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path></svg></a>
     </div>
-    <button type="button" onClick="{{ openInquiry }}" style="align-items:center;border-radius:0;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:center;letter-spacing:.18em;min-height:39px;padding:0 17px;text-transform:uppercase;transition:background 240ms ease,color 240ms ease;white-space:nowrap;background:{{ primaryBg }};border:1px solid {{ primaryBg }};color:{{ primaryFg }}">Reserve Your Seat<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
-    <a href="/contact" style="align-items:center;background:transparent;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:center;letter-spacing:.18em;min-height:39px;padding:0 17px;text-transform:uppercase;transition:background 240ms ease,color 240ms ease;white-space:nowrap;border:1px solid {{ contactBorder }};color:{{ hdrFg }}">Contact</a>
+    <button type="button" onClick="{{ openInquiry }}" style="align-items:center;border-radius:0;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);font-weight:500;gap:10px;gap:var(--sc-pos10,10px);justify-content:center;letter-spacing:.18em;min-height:39px;min-height:var(--sc-pos39,39px);padding:0 17px;padding:0 var(--sc-pos17,17px);text-transform:uppercase;transition:background 240ms ease,color 240ms ease;white-space:nowrap;background:{{ primaryBg }};border:1px solid {{ primaryBg }};border:var(--sc-pos1,1px) solid {{ primaryBg }};color:{{ primaryFg }}">Reserve Your Seat<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);width:16px;width:var(--sc-pos16,16px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+    <a href="/contact" style="align-items:center;background:transparent;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);font-weight:500;gap:10px;gap:var(--sc-pos10,10px);justify-content:center;letter-spacing:.18em;min-height:39px;min-height:var(--sc-pos39,39px);padding:0 17px;padding:0 var(--sc-pos17,17px);text-transform:uppercase;transition:background 240ms ease,color 240ms ease;white-space:nowrap;border:1px solid {{ contactBorder }};border:var(--sc-pos1,1px) solid {{ contactBorder }};color:{{ hdrFg }}">Contact</a>
   </div>
-  <button type="button" aria-label="Open menu" onClick="{{ openSheet }}" style="align-items:center;justify-self:end;background:transparent;border:0;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;gap:9px;letter-spacing:.2em;padding:8px 0;text-transform:uppercase;color:inherit;display:{{ menuDisplay }}">
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" style="height:22px;width:22px"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Menu
+  <button type="button" aria-label="Open menu" onClick="{{ openSheet }}" style="align-items:center;justify-self:end;background:transparent;border:0;cursor:pointer;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;gap:9px;gap:var(--sc-pos9,9px);letter-spacing:.2em;padding:8px 0;padding:var(--sc-pos8,8px) 0;text-transform:uppercase;color:inherit;display:{{ menuDisplay }}">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" style="height:22px;height:var(--sc-pos22,22px);width:22px;width:var(--sc-pos22,22px)"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Menu
   </button>
 </header>
 
-<div role="presentation" onClick="{{ closeSheet }}" style="backdrop-filter:blur(5px);background:rgba(27,15,3,.66);inset:0;position:fixed;transition:opacity 260ms ease;z-index:60;display:{{ sheetOverlay }};opacity:{{ sheetOpacity }}"></div>
-<aside data-sheet-state="{{ sheetState }}" aria-label="Sunday &amp; Company navigation" style="background:#f5efe6;border-left:1px solid #311d03;bottom:0;color:#311d03;display:flex;flex-direction:column;overflow-y:auto;position:fixed;right:0;top:0;transition:transform 340ms cubic-bezier(.32,.72,0,1), visibility 340ms;z-index:61;max-width:{{ sheetMax }};padding:{{ sheetPad }};transform:{{ sheetTransform }};visibility:{{ sheetVis }};width:{{ sheetWidth }}">
-  <button type="button" aria-label="Close menu" onClick="{{ closeSheet }}" style="align-items:center;background:transparent;border:1px solid rgba(172,116,108,.72);color:#311d03;cursor:pointer;display:inline-flex;height:32px;justify-content:center;position:absolute;right:18px;top:18px;width:32px;z-index:2">
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:17px;width:17px"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+<div role="presentation" onClick="{{ closeSheet }}" style="backdrop-filter:blur(5px);backdrop-filter:blur(var(--sc-pos5,5px));background:rgba(27,15,3,.66);inset:0;position:fixed;transition:opacity 260ms ease;z-index:60;display:{{ sheetOverlay }};opacity:{{ sheetOpacity }}"></div>
+<aside data-sheet-state="{{ sheetState }}" aria-label="Sunday &amp; Company navigation" style="background:#f5efe6;border-left:1px solid #311d03;border-left:var(--sc-pos1,1px) solid #311d03;bottom:0;color:#311d03;display:flex;flex-direction:column;overflow-y:auto;position:fixed;right:0;top:0;transition:transform 340ms cubic-bezier(.32,.72,0,1), visibility 340ms;z-index:61;max-width:{{ sheetMax }};padding:{{ sheetPad }};transform:{{ sheetTransform }};visibility:{{ sheetVis }};width:{{ sheetWidth }}">
+  <button type="button" aria-label="Close menu" onClick="{{ closeSheet }}" style="align-items:center;background:transparent;border:1px solid rgba(172,116,108,.72);border:var(--sc-pos1,1px) solid rgba(172,116,108,.72);color:#311d03;cursor:pointer;display:inline-flex;height:32px;height:var(--sc-pos32,32px);justify-content:center;position:absolute;right:18px;right:var(--sc-pos18,18px);top:18px;top:var(--sc-pos18,18px);width:32px;width:var(--sc-pos32,32px);z-index:2">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:17px;height:var(--sc-pos17,17px);width:17px;width:var(--sc-pos17,17px)"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
   </button>
   <a href="/" onClick="{{ closeSheet }}" aria-label="Sunday &amp; Company home" style="display:inline-flex;flex:0 0 auto;height:{{ sheetLogoH }}">
     <span style="display:block;overflow:hidden;position:relative;height:{{ sheetLogoH }};width:{{ sheetLogoW }}"><img src="/assets/logo-header.svg" alt="Sunday &amp; Company" style="max-width:none;position:absolute;height:{{ sheetLogoImg }};left:{{ sheetLogoL }};top:{{ sheetLogoT }};width:{{ sheetLogoImg }}" /></span>
   </a>
-  <nav aria-label="Mobile navigation" style="border-top:1px solid rgba(49,29,3,.45);display:grid;margin-top:{{ sheetNavTop }}">
-    <a href="/about" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">01</span>About Us</a>
-    <a href="/services" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">02</span>Services</a>
-    <a href="/our-work" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">03</span>Our Work</a>
-    <a href="/join-our-team" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">04</span>Join Our Team</a>
-    <a href="/sunday-school" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">05</span>Sunday School</a>
+  <nav aria-label="Mobile navigation" style="border-top:1px solid rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;margin-top:{{ sheetNavTop }}">
+    <a href="/about" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">01</span>About Us</a>
+    <a href="/services" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">02</span>Services</a>
+    <a href="/our-work" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">03</span>Our Work</a>
+    <a href="/join-our-team" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">04</span>Join Our Team</a>
+    <a href="/sunday-school" onClick="{{ closeSheet }}" style="align-items:center;border-bottom:1px solid rgba(49,29,3,.45);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.45);display:grid;line-height:1.12;font-size:{{ sheetNavSize }};grid-template-columns:{{ sheetNavCols }};min-height:{{ sheetNavMinH }};padding:{{ sheetNavPad }}"><span style="font-family:'Inter Tight',sans-serif;letter-spacing:.15em;font-size:{{ sheetNumSize }}">05</span>Sunday School</a>
   </nav>
-  <div style="display:grid;gap:10px;margin-top:{{ sheetActionsTop }}">
-    <button data-sheet-cta type="button" onClick="{{ openInquiryFromSheet }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:space-between;letter-spacing:.18em;min-height:42px;padding:0 15px;text-transform:uppercase;width:100%">Reserve Your Seat<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
-    <a data-sheet-cta href="/contact" onClick="{{ closeSheet }}" style="align-items:center;background:transparent;border:1px solid #311d03;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-weight:500;gap:10px;justify-content:space-between;letter-spacing:.18em;min-height:42px;padding:0 15px;text-transform:uppercase;width:100%">Contact<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+  <div style="display:grid;gap:10px;gap:var(--sc-pos10,10px);margin-top:{{ sheetActionsTop }}">
+    <button data-sheet-cta type="button" onClick="{{ openInquiryFromSheet }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);font-weight:500;gap:10px;gap:var(--sc-pos10,10px);justify-content:space-between;letter-spacing:.18em;min-height:42px;min-height:var(--sc-pos42,42px);padding:0 15px;padding:0 var(--sc-pos15,15px);text-transform:uppercase;width:100%">Reserve Your Seat<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);width:16px;width:var(--sc-pos16,16px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+    <a data-sheet-cta href="/contact" onClick="{{ closeSheet }}" style="align-items:center;background:transparent;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);font-weight:500;gap:10px;gap:var(--sc-pos10,10px);justify-content:space-between;letter-spacing:.18em;min-height:42px;min-height:var(--sc-pos42,42px);padding:0 15px;padding:0 var(--sc-pos15,15px);text-transform:uppercase;width:100%">Contact<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);width:16px;width:var(--sc-pos16,16px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
   </div>
   <div style="display:grid;margin-top:auto;gap:{{ sheetFooterGap }};padding:{{ sheetFooterPad }}">
     <div style="align-items:center;display:flex;gap:{{ sheetSocialGap }}">
@@ -111,19 +111,19 @@ form [role="alert"] {
   </div>
 </aside>
 
-<div role="presentation" style="align-items:{{ inqAlign }};backdrop-filter:blur(5px);background:rgba(27,15,3,.66);inset:0;justify-content:center;overflow-y:auto;padding:{{ inqOverlayPad }};position:fixed;z-index:70;display:{{ inqDisplay }}">
+<div role="presentation" style="align-items:{{ inqAlign }};backdrop-filter:blur(5px);backdrop-filter:blur(var(--sc-pos5,5px));background:rgba(27,15,3,.66);inset:0;justify-content:center;overflow-y:auto;padding:{{ inqOverlayPad }};position:fixed;z-index:70;display:{{ inqDisplay }}">
   <div role="dialog" aria-modal="true" aria-label="Project inquiry" onClick="{{ stop }}" style="margin:{{ inqMargin }};max-height:{{ inqDialogMaxH }};max-width:{{ inqDialogMax }};overflow-y:auto;padding:{{ inqDialogPad }};position:relative;width:100%">
-    <div style="background:#fffdf8;border:1px solid #311d03;box-shadow:0 24px 60px rgba(24,13,2,.28);margin:{{ inqReceiptMargin }};min-height:{{ inqReceiptMinH }};padding:{{ inqReceiptPad }};position:relative">
-      <div style="display:grid;justify-items:end;margin:0 0 10px">
-        <button type="button" aria-label="Close" onClick="{{ closeInquiry }}" style="align-items:center;background:#ac746c;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;height:34px;justify-content:center;width:34px"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:16px;width:16px"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+    <div style="background:#fffdf8;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;box-shadow:0 24px 60px rgba(24,13,2,.28);box-shadow:0 var(--sc-pos24,24px) var(--sc-pos60,60px) rgba(24,13,2,.28);margin:{{ inqReceiptMargin }};min-height:{{ inqReceiptMinH }};padding:{{ inqReceiptPad }};position:relative">
+      <div style="display:grid;justify-items:end;margin:0 0 10px;margin:0 0 var(--sc-pos10,10px)">
+        <button type="button" aria-label="Close" onClick="{{ closeInquiry }}" style="align-items:center;background:#ac746c;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;height:34px;height:var(--sc-pos34,34px);justify-content:center;width:34px;width:var(--sc-pos34,34px)"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);width:16px;width:var(--sc-pos16,16px)"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
       </div>
-      <div data-inquiry-receipt-meta="identity" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin-bottom:17px;padding-bottom:11px;text-transform:uppercase"><span style="min-width:0">Sunday &amp; Company</span><span style="text-align:right;white-space:nowrap">Receipt No. 001</span></div>
+      <div data-inquiry-receipt-meta="identity" style="border-bottom:1px dashed rgba(49,29,3,.5);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);grid-template-columns:minmax(0,1fr) auto;column-gap:18px;column-gap:var(--sc-pos18,18px);letter-spacing:.15em;margin-bottom:17px;margin-bottom:var(--sc-pos17,17px);padding-bottom:11px;padding-bottom:var(--sc-pos11,11px);text-transform:uppercase"><span style="min-width:0">Sunday &amp; Company</span><span style="text-align:right;white-space:nowrap">Receipt No. 001</span></div>
       <div style="display:{{ inqFormDisplay }};text-align:left">
-        <div data-inquiry-receipt-meta="status" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:-6px 0 18px;padding-bottom:10px;text-transform:uppercase"><span style="min-width:0">Project Inquiry</span><span style="text-align:right;white-space:nowrap">Status: In Progress</span></div>
-        <h2 data-inquiry-title style="font-size:clamp(22px,2.2vw,28px);font-weight:400;letter-spacing:-.02em;line-height:.98;margin:0;text-transform:uppercase">TELL US WHAT YOU ARE BUILDING</h2>
-        <p data-inquiry-support style="font-family:'Inter Tight',sans-serif;font-size:9.75px;font-weight:300;letter-spacing:.065em;line-height:1.45;margin:6px 0 0;max-width:520px;text-transform:uppercase">Share the essentials. We’ll take it from there.</p>
+        <div data-inquiry-receipt-meta="status" style="border-bottom:1px dashed rgba(49,29,3,.5);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);grid-template-columns:minmax(0,1fr) auto;column-gap:18px;column-gap:var(--sc-pos18,18px);letter-spacing:.15em;margin:-6px 0 18px;margin:var(--sc-neg6,-6px) 0 var(--sc-pos18,18px);padding-bottom:10px;padding-bottom:var(--sc-pos10,10px);text-transform:uppercase"><span style="min-width:0">Project Inquiry</span><span style="text-align:right;white-space:nowrap">Status: In Progress</span></div>
+        <h2 data-inquiry-title style="font-size:clamp(22px,2.2vw,28px);font-size:clamp(var(--sc-pos22,22px),2.2vw,var(--sc-pos28,28px));font-weight:400;letter-spacing:-.02em;line-height:.98;margin:0;text-transform:uppercase">TELL US WHAT YOU ARE BUILDING</h2>
+        <p data-inquiry-support style="font-family:'Inter Tight',sans-serif;font-size:9.75px;font-size:var(--sc-pos9_75,9.75px);font-weight:300;letter-spacing:.065em;line-height:1.45;margin:6px 0 0;margin:var(--sc-pos6,6px) 0 0;max-width:520px;max-width:var(--sc-pos520,520px);text-transform:uppercase">Share the essentials. We’ll take it from there.</p>
       </div>
-      <div aria-hidden="true" style="border-bottom:1px dashed rgba(49,29,3,.55);border-top:1px dashed rgba(49,29,3,.55);font-family:'Inter Tight',sans-serif;font-size:7px;gap:7px 10px;grid-template-columns:auto 1fr auto;letter-spacing:.12em;margin-top:16px;padding:11px 0;text-transform:uppercase;display:none">
+      <div aria-hidden="true" style="border-bottom:1px dashed rgba(49,29,3,.55);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.55);border-top:1px dashed rgba(49,29,3,.55);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.55);font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);gap:7px 10px;gap:var(--sc-pos7,7px) var(--sc-pos10,10px);grid-template-columns:auto 1fr auto;letter-spacing:.12em;margin-top:16px;margin-top:var(--sc-pos16,16px);padding:11px 0;padding:var(--sc-pos11,11px) 0;text-transform:uppercase;display:none">
         <span>01</span><span>Project Details</span><span style="text-align:right">Required</span>
         <span>02</span><span>Service Selection</span><span style="text-align:right">Your Choice</span>
         <span>03</span><span>Scope Review</span><span style="text-align:right">On The House</span>
@@ -131,54 +131,54 @@ form [role="alert"] {
       <div style="display:{{ inqFormDisplay }}">
         <dc-import name="/Inquiry Form" narrow="{{ inqNarrow }}" onDone="{{ inquiryComplete }}" hint-size="100%,520px"></dc-import>
       </div>
-      <div role="status" aria-live="polite" style="display:{{ inqDoneDisplay }};padding:0 0 4px;text-align:center">
-        <div data-inquiry-receipt-meta="status" style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:-6px 0 28px;padding-bottom:10px;text-align:left;text-transform:uppercase"><span style="min-width:0">Project Inquiry</span><span style="text-align:right;white-space:nowrap">Status: Delivered</span></div>
-        <h2 style="font-family:'Inter Tight',sans-serif;font-size:clamp(18px,2.2vw,24px);font-weight:500;letter-spacing:.12em;line-height:1.15;margin:0;text-transform:uppercase">YOUR INQUIRY IS IN.</h2>
-        <p style="font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:300;letter-spacing:.02em;line-height:1.55;margin:12px auto 0;max-width:520px">Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>
+      <div role="status" aria-live="polite" style="display:{{ inqDoneDisplay }};padding:0 0 4px;padding:0 0 var(--sc-pos4,4px);text-align:center">
+        <div data-inquiry-receipt-meta="status" style="border-bottom:1px dashed rgba(49,29,3,.5);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);grid-template-columns:minmax(0,1fr) auto;column-gap:18px;column-gap:var(--sc-pos18,18px);letter-spacing:.15em;margin:-6px 0 28px;margin:var(--sc-neg6,-6px) 0 var(--sc-pos28,28px);padding-bottom:10px;padding-bottom:var(--sc-pos10,10px);text-align:left;text-transform:uppercase"><span style="min-width:0">Project Inquiry</span><span style="text-align:right;white-space:nowrap">Status: Delivered</span></div>
+        <h2 style="font-family:'Inter Tight',sans-serif;font-size:clamp(18px,2.2vw,24px);font-size:clamp(var(--sc-pos18,18px),2.2vw,var(--sc-pos24,24px));font-weight:500;letter-spacing:.12em;line-height:1.15;margin:0;text-transform:uppercase">YOUR INQUIRY IS IN.</h2>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:11px;font-size:var(--sc-pos11,11px);font-weight:300;letter-spacing:.02em;line-height:1.55;margin:12px auto 0;margin:var(--sc-pos12,12px) auto 0;max-width:520px;max-width:var(--sc-pos520,520px)">Thank you for sharing the details. We have received your inquiry and will review it before following up.</p>
       </div>
-      <div data-inquiry-ledger aria-hidden="true" style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:9.5px;justify-content:space-between;letter-spacing:.15em;margin-top:17px;padding:10px 0;text-transform:uppercase"><span>Next Step</span><strong style="font-weight:400">Review And Reply</strong></div>
-      <button data-popup-keep type="button" onClick="{{ closeInquiry }}" style="background:transparent;border:0;border-bottom:1px solid #ac746c;color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:600;letter-spacing:.16em;margin:20px auto 0;padding:0 0 3px;text-align:center;text-transform:uppercase">KEEP BROWSING</button>
+      <div data-inquiry-ledger aria-hidden="true" style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:9.5px;font-size:var(--sc-pos9_5,9.5px);justify-content:space-between;letter-spacing:.15em;margin-top:17px;margin-top:var(--sc-pos17,17px);padding:10px 0;padding:var(--sc-pos10,10px) 0;text-transform:uppercase"><span>Next Step</span><strong style="font-weight:400">Review And Reply</strong></div>
+      <button data-popup-keep type="button" onClick="{{ closeInquiry }}" style="background:transparent;border:0;border-bottom:1px solid #ac746c;border-bottom:var(--sc-pos1,1px) solid #ac746c;color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-size:var(--sc-pos8_5,8.5px);font-weight:600;letter-spacing:.16em;margin:20px auto 0;margin:var(--sc-pos20,20px) auto 0;padding:0 0 3px;padding:0 0 var(--sc-pos3,3px);text-align:center;text-transform:uppercase">KEEP BROWSING</button>
     </div>
   </div>
 </div>
 
-<div role="presentation" style="align-items:center;backdrop-filter:blur(5px);background:rgba(27,15,3,.66);inset:0;justify-content:center;overflow-y:auto;padding:14px;position:fixed;z-index:75;display:{{ resDisplay }}">
-  <div role="dialog" aria-modal="true" aria-label="The Sunday Reservation" onClick="{{ stop }}" style="background:#fffdf8;box-shadow:0 20px 55px rgba(24,13,2,.24);display:grid;margin:auto;max-height:{{ resDialogMaxH }};max-width:{{ resDialogMaxW }};min-height:{{ resDialogMinH }};overflow-x:hidden;overflow-y:hidden;padding:0;position:relative;width:100%;grid-template-columns:{{ resCols }}">
-    <button type="button" aria-label="Close" onClick="{{ closeRes }}" style="align-items:center;background:{{ resCloseBg }};border:1px solid {{ resCloseBorder }};color:{{ resCloseColor }};cursor:pointer;display:inline-flex;height:34px;justify-content:center;position:absolute;right:12px;top:12px;width:34px;z-index:5"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:17px;width:17px"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+<div role="presentation" style="align-items:center;backdrop-filter:blur(5px);backdrop-filter:blur(var(--sc-pos5,5px));background:rgba(27,15,3,.66);inset:0;justify-content:center;overflow-y:auto;padding:14px;padding:var(--sc-pos14,14px);position:fixed;z-index:75;display:{{ resDisplay }}">
+  <div role="dialog" aria-modal="true" aria-label="The Sunday Reservation" onClick="{{ stop }}" style="background:#fffdf8;box-shadow:0 20px 55px rgba(24,13,2,.24);box-shadow:0 var(--sc-pos20,20px) var(--sc-pos55,55px) rgba(24,13,2,.24);display:grid;margin:auto;max-height:{{ resDialogMaxH }};max-width:{{ resDialogMaxW }};min-height:{{ resDialogMinH }};overflow-x:hidden;overflow-y:hidden;padding:0;position:relative;width:100%;grid-template-columns:{{ resCols }}">
+    <button type="button" aria-label="Close" onClick="{{ closeRes }}" style="align-items:center;background:{{ resCloseBg }};border:1px solid {{ resCloseBorder }};border:var(--sc-pos1,1px) solid {{ resCloseBorder }};color:{{ resCloseColor }};cursor:pointer;display:inline-flex;height:34px;height:var(--sc-pos34,34px);justify-content:center;position:absolute;right:12px;right:var(--sc-pos12,12px);top:12px;top:var(--sc-pos12,12px);width:34px;width:var(--sc-pos34,34px);z-index:5"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:17px;height:var(--sc-pos17,17px);width:17px;width:var(--sc-pos17,17px)"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
     <div aria-hidden="true" style="min-height:{{ resPhotoMin }};overflow:hidden;display:{{ resPhotoDisplay }};max-height:{{ resPhotoMax }}"><img src="/assets/reservation-table.jpg" alt="" style="height:100%;object-fit:cover;width:100%" /></div>
     <div style="background:#fffdf8;display:flex;flex-direction:column;justify-content:center;min-height:{{ resContentMinH }};padding:{{ resContentPad }}">
       <div style="display:{{ resFormDisplay }}">
         <div style="text-align:center">
-          <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 12px;text-transform:uppercase">Sunday &amp; Company</p>
-          <h2 style="font-size:30px;font-weight:400;letter-spacing:-.035em;line-height:1;margin:0;text-transform:uppercase">The Sunday Reservation</h2>
-          <p data-res-intro style="font-family:'Inter Tight',sans-serif;font-size:9.5px;font-weight:300;letter-spacing:.055em;line-height:1.45;margin:12px auto 0;max-width:320px;text-transform:uppercase">Join our newsletter for thoughtful notes on branding, business and the work behind both.</p>
+          <p style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.16em;margin:0 0 12px;margin:0 0 var(--sc-pos12,12px);text-transform:uppercase">Sunday &amp; Company</p>
+          <h2 style="font-size:30px;font-size:var(--sc-pos30,30px);font-weight:400;letter-spacing:-.035em;line-height:1;margin:0;text-transform:uppercase">The Sunday Reservation</h2>
+          <p data-res-intro style="font-family:'Inter Tight',sans-serif;font-size:9.5px;font-size:var(--sc-pos9_5,9.5px);font-weight:300;letter-spacing:.055em;line-height:1.45;margin:12px auto 0;margin:var(--sc-pos12,12px) auto 0;max-width:320px;max-width:var(--sc-pos320,320px);text-transform:uppercase">Join our newsletter for thoughtful notes on branding, business and the work behind both.</p>
         </div>
-        <div aria-hidden="true" style="border-bottom:1px dashed #311d03;border-top:1px dashed #311d03;display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;gap:10px 7px;grid-template-columns:auto 1fr auto;letter-spacing:.08em;margin:24px 0 21px;padding:14px 0;text-transform:uppercase">
+        <div aria-hidden="true" style="border-bottom:1px dashed #311d03;border-bottom:var(--sc-pos1,1px) dashed #311d03;border-top:1px dashed #311d03;border-top:var(--sc-pos1,1px) dashed #311d03;display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);gap:10px 7px;gap:var(--sc-pos10,10px) var(--sc-pos7,7px);grid-template-columns:auto 1fr auto;letter-spacing:.08em;margin:24px 0 21px;margin:var(--sc-pos24,24px) 0 var(--sc-pos21,21px);padding:14px 0;padding:var(--sc-pos14,14px) 0;text-transform:uppercase">
           <span>01</span><span>Stay In Touch With Sunday</span><span style="text-align:right">Notes From Sunday</span>
           <span>02</span><span>A Seat At Our Table</span><span style="text-align:right">Complimentary</span>
         </div>
-        <form noValidate="{{ true }}" onInput="{{ clearResError }}" onSubmit="{{ submitRes }}" style="display:grid;gap:7px">
-    <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-          <label for="reservationEmail" style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address</label>
-          <input autocomplete="email" id="reservationEmail" name="email" placeholder="you@example.com" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid #311d03;border-radius:0;color:#311d03;font-family:'Inter Tight',sans-serif;font-size:16px;font-weight:300;min-height:45px;min-width:0;padding:0 11px;width:100%" />
-          <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#fffdf8;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:400;gap:9px;justify-content:center;letter-spacing:.10em;min-height:44px;text-transform:uppercase">{{ resLabel }} <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:12px;width:12px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
-          <p role="alert" style="color:#8c2f22;font-size:11px;margin:0;display:{{ resErrorDisplay }}">{{ resError }}</p>
+        <form noValidate="{{ true }}" onInput="{{ clearResError }}" onSubmit="{{ submitRes }}" style="display:grid;gap:7px;gap:var(--sc-pos7,7px)">
+    <div aria-hidden="true" style="height:0;left:-9999px;left:var(--sc-neg9999,-9999px);overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
+          <label for="reservationEmail" style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address</label>
+          <input autocomplete="email" id="reservationEmail" name="email" placeholder="you@example.com" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;border-radius:0;color:#311d03;font-family:'Inter Tight',sans-serif;font-size:16px;font-size:var(--sc-pos16,16px);font-weight:300;min-height:45px;min-height:var(--sc-pos45,45px);min-width:0;padding:0 11px;padding:0 var(--sc-pos11,11px);width:100%" />
+          <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;color:#fffdf8;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:10px;font-size:var(--sc-pos10,10px);font-weight:400;gap:9px;gap:var(--sc-pos9,9px);justify-content:center;letter-spacing:.10em;min-height:44px;min-height:var(--sc-pos44,44px);text-transform:uppercase">{{ resLabel }} <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:12px;height:var(--sc-pos12,12px);width:12px;width:var(--sc-pos12,12px)"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+          <p role="alert" style="color:#8c2f22;font-size:11px;font-size:var(--sc-pos11,11px);margin:0;display:{{ resErrorDisplay }}">{{ resError }}</p>
         </form>
-        <div data-res-total style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:20px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
-        <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.04em;line-height:1.42;margin:8px 0 0;opacity:.7;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
+        <div data-res-total style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);justify-content:space-between;letter-spacing:.16em;margin-top:20px;margin-top:var(--sc-pos20,20px);padding:12px 0;padding:var(--sc-pos12,12px) 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
+        <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;font-size:var(--sc-pos8_5,8.5px);letter-spacing:.04em;line-height:1.42;margin:8px 0 0;margin:var(--sc-pos8,8px) 0 0;opacity:.7;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor">Privacy Policy</a>.</p>
 
-        <p data-res-number style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em;margin-top:22px;text-align:center;text-transform:uppercase">Reservation No. 002026</p>
+        <p data-res-number style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em;margin-top:22px;margin-top:var(--sc-pos22,22px);text-align:center;text-transform:uppercase">Reservation No. 002026</p>
       </div>
       <div style="display:{{ resDoneDisplay }};text-align:center">
-        <div style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:0 0 12px;padding-bottom:11px;text-align:left;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="text-align:right;white-space:nowrap">Reservation No. 002026</span></div>
-        <div style="border-bottom:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;letter-spacing:.15em;margin:0 0 28px;padding-bottom:11px;text-align:left;text-transform:uppercase"><span>The Sunday Reservation</span><span style="text-align:right;white-space:nowrap">Status: Confirmed</span></div>
-        <h2 style="font-size:30px;font-weight:400;letter-spacing:-.035em;line-height:1;margin:0;text-transform:uppercase">You’re On The List.</h2>
-        <p style="font-size:11px;line-height:1.5;margin:13px auto 0;max-width:330px">Your email has been saved. We will keep your seat ready for thoughtful notes from Sunday.</p>
-        <div data-res-total style="border-bottom:1px solid #311d03;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;justify-content:space-between;letter-spacing:.16em;margin-top:28px;padding:12px 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
-        <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;letter-spacing:.04em;line-height:1.42;margin:8px 0 0;opacity:.7;text-align:left;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor">Privacy Policy</a>.</p>
+        <div style="border-bottom:1px dashed rgba(49,29,3,.5);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);grid-template-columns:minmax(0,1fr) auto;column-gap:18px;column-gap:var(--sc-pos18,18px);letter-spacing:.15em;margin:0 0 12px;margin:0 0 var(--sc-pos12,12px);padding-bottom:11px;padding-bottom:var(--sc-pos11,11px);text-align:left;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="text-align:right;white-space:nowrap">Reservation No. 002026</span></div>
+        <div style="border-bottom:1px dashed rgba(49,29,3,.5);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);grid-template-columns:minmax(0,1fr) auto;column-gap:18px;column-gap:var(--sc-pos18,18px);letter-spacing:.15em;margin:0 0 28px;margin:0 0 var(--sc-pos28,28px);padding-bottom:11px;padding-bottom:var(--sc-pos11,11px);text-align:left;text-transform:uppercase"><span>The Sunday Reservation</span><span style="text-align:right;white-space:nowrap">Status: Confirmed</span></div>
+        <h2 style="font-size:30px;font-size:var(--sc-pos30,30px);font-weight:400;letter-spacing:-.035em;line-height:1;margin:0;text-transform:uppercase">You’re On The List.</h2>
+        <p style="font-size:11px;font-size:var(--sc-pos11,11px);line-height:1.5;margin:13px auto 0;margin:var(--sc-pos13,13px) auto 0;max-width:330px;max-width:var(--sc-pos330,330px)">Your email has been saved. We will keep your seat ready for thoughtful notes from Sunday.</p>
+        <div data-res-total style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);justify-content:space-between;letter-spacing:.16em;margin-top:28px;margin-top:var(--sc-pos28,28px);padding:12px 0;padding:var(--sc-pos12,12px) 0;text-transform:uppercase"><span>Total</span><strong style="font-weight:400">A Seat Saved</strong></div>
+        <p data-res-fineprint style="font-family:'Inter Tight',sans-serif;font-size:8.5px;font-size:var(--sc-pos8_5,8.5px);letter-spacing:.04em;line-height:1.42;margin:8px 0 0;margin:var(--sc-pos8,8px) 0 0;opacity:.7;text-align:left;text-transform:uppercase">Unsubscribe anytime. <a href="/privacy-policy" style="border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor">Privacy Policy</a>.</p>
 
       </div>
-      <button data-popup-keep data-res-keep type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid #ac746c;color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:600;letter-spacing:.16em;margin:20px auto 0;padding:0 0 3px;text-align:center;text-transform:uppercase">KEEP BROWSING</button>
+      <button data-popup-keep data-res-keep type="button" onClick="{{ closeRes }}" style="background:transparent;border:0;border-bottom:1px solid #ac746c;border-bottom:var(--sc-pos1,1px) solid #ac746c;color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-size:var(--sc-pos8_5,8.5px);font-weight:600;letter-spacing:.16em;margin:20px auto 0;margin:var(--sc-pos20,20px) auto 0;padding:0 0 3px;padding:0 0 var(--sc-pos3,3px);text-align:center;text-transform:uppercase">KEEP BROWSING</button>
     </div>
   </div>
 </div>
@@ -273,13 +273,13 @@ class Component extends DCLogic {
         onClick: () => this.setState({ startDate: iso, dateOpen: false }),
         style: {
           background: on ? '#ac746c' : 'transparent',
-          border: '1px solid ' + (on ? '#ac746c' : 'rgba(49,29,3,.2)'),
+          border: 'var(--sc-pos1,1px) solid ' + (on ? '#ac746c' : 'rgba(49,29,3,.2)'),
           color: on ? '#fffdf8' : '#311d03',
           cursor: 'pointer',
           fontFamily: "'Inter Tight', sans-serif",
-          fontSize: '10px',
-          minHeight: '26px',
-          padding: '2px',
+          fontSize: 'var(--sc-pos10,10px)',
+          minHeight: 'var(--sc-pos26,26px)',
+          padding: 'var(--sc-pos2,2px)',
         },
       }, String(d)));
     }
@@ -388,52 +388,52 @@ class Component extends DCLogic {
       navDisplay: n ? 'none' : 'flex',
       actionsDisplay: n ? 'none' : 'flex',
       menuDisplay: n ? 'inline-flex' : 'none',
-      hdrCols: n ? '1fr auto' : '160px 1fr auto',
-      logoBox: t ? '112px' : '156px',
-      logoH: t ? '42px' : '58px',
-      logoW: t ? '108px' : '150px',
-      logoImg: t ? '154px' : '213px',
-      logoL: t ? '-22px' : '-31px',
-      logoT: t ? '-53px' : '-73px',
+      hdrCols: n ? '1fr auto' : 'var(--sc-pos160,160px) 1fr auto',
+      logoBox: t ? 'var(--sc-pos112,112px)' : 'var(--sc-pos156,156px)',
+      logoH: t ? 'var(--sc-pos42,42px)' : 'var(--sc-pos58,58px)',
+      logoW: t ? 'var(--sc-pos108,108px)' : 'var(--sc-pos150,150px)',
+      logoImg: t ? 'var(--sc-pos154,154px)' : 'var(--sc-pos213,213px)',
+      logoL: t ? 'var(--sc-neg22,-22px)' : 'var(--sc-neg31,-31px)',
+      logoT: t ? 'var(--sc-neg53,-53px)' : 'var(--sc-neg73,-73px)',
       sheetOverlay: this.state.sheet ? 'block' : 'none',
       sheetOpacity: this.state.sheet ? 1 : 0,
       sheetVis: this.state.sheet ? 'visible' : 'hidden',
       sheetTransform: this.state.sheet ? 'translateX(0)' : 'translateX(102%)',
       sheetState: this.state.sheet ? 'open' : 'closed',
-      sheetMax: t ? '325px' : '420px',
-      sheetWidth: t ? 'min(82vw, 325px)' : 'min(92vw, 420px)',
-      sheetPad: t ? '19px' : '28px',
-      sheetLogoH: t ? '41px' : '58px',
-      sheetLogoW: t ? '104px' : '150px',
-      sheetLogoImg: t ? '151px' : '213px',
-      sheetLogoL: t ? '-23px' : '-31px',
-      sheetLogoT: t ? '-51px' : '-73px',
-      sheetNavTop: t ? '21px' : '34px',
-      sheetNavSize: t ? '19px' : '30px',
-      sheetNavCols: t ? '34px 1fr' : '38px 1fr',
-      sheetNavMinH: t ? '47px' : '0',
-      sheetNavPad: t ? '11px 0' : '16px 0',
-      sheetNumSize: t ? '9px' : '8px',
-      sheetActionsTop: t ? '20px' : '18px',
-      sheetFooterGap: t ? '14px' : '20px',
-      sheetFooterPad: t ? '22px 0 max(14px, env(safe-area-inset-bottom))' : '24px 0 0',
-      sheetSocialGap: t ? '22px' : '18px',
-      sheetSocialSize: t ? '24px' : '22px',
-      sheetMailSize: t ? '12px' : '13px',
+      sheetMax: t ? 'var(--sc-pos325,325px)' : 'var(--sc-pos420,420px)',
+      sheetWidth: t ? 'min(82vw, var(--sc-pos325,325px))' : 'min(92vw, var(--sc-pos420,420px))',
+      sheetPad: t ? 'var(--sc-pos19,19px)' : 'var(--sc-pos28,28px)',
+      sheetLogoH: t ? 'var(--sc-pos41,41px)' : 'var(--sc-pos58,58px)',
+      sheetLogoW: t ? 'var(--sc-pos104,104px)' : 'var(--sc-pos150,150px)',
+      sheetLogoImg: t ? 'var(--sc-pos151,151px)' : 'var(--sc-pos213,213px)',
+      sheetLogoL: t ? 'var(--sc-neg23,-23px)' : 'var(--sc-neg31,-31px)',
+      sheetLogoT: t ? 'var(--sc-neg51,-51px)' : 'var(--sc-neg73,-73px)',
+      sheetNavTop: t ? 'var(--sc-pos21,21px)' : 'var(--sc-pos34,34px)',
+      sheetNavSize: t ? 'var(--sc-pos19,19px)' : 'var(--sc-pos30,30px)',
+      sheetNavCols: t ? 'var(--sc-pos34,34px) 1fr' : 'var(--sc-pos38,38px) 1fr',
+      sheetNavMinH: t ? 'var(--sc-pos47,47px)' : '0',
+      sheetNavPad: t ? 'var(--sc-pos11,11px) 0' : 'var(--sc-pos16,16px) 0',
+      sheetNumSize: t ? 'var(--sc-pos9,9px)' : 'var(--sc-pos8,8px)',
+      sheetActionsTop: t ? 'var(--sc-pos20,20px)' : 'var(--sc-pos18,18px)',
+      sheetFooterGap: t ? 'var(--sc-pos14,14px)' : 'var(--sc-pos20,20px)',
+      sheetFooterPad: t ? 'var(--sc-pos22,22px) 0 max(var(--sc-pos14,14px), env(safe-area-inset-bottom))' : 'var(--sc-pos24,24px) 0 0',
+      sheetSocialGap: t ? 'var(--sc-pos22,22px)' : 'var(--sc-pos18,18px)',
+      sheetSocialSize: t ? 'var(--sc-pos24,24px)' : 'var(--sc-pos22,22px)',
+      sheetMailSize: t ? 'var(--sc-pos12,12px)' : 'var(--sc-pos13,13px)',
       openSheet: () => this.setState({ sheet: true }),
       closeSheet: () => this.setState({ sheet: false }),
       inqDisplay: this.state.inquiry ? 'flex' : 'none',
-      inqKickerSize: t ? '46px' : '40px',
+      inqKickerSize: t ? 'var(--sc-pos46,46px)' : 'var(--sc-pos40,40px)',
       inqNarrow: t,
       inqAlign: 'safe center',
       inqMargin: 'auto',
-      inqOverlayPad: t ? '20px 16px calc(20px + env(safe-area-inset-bottom))' : 'clamp(20px,3vh,42px) 24px',
-      inqDialogMax: t ? '710px' : 'min(1180px, calc(100vw - 48px))',
-      inqDialogMaxH: t ? 'calc(100dvh - 40px)' : 'calc(100svh - 48px)',
-      inqDialogPad: t ? '0' : '12px 10px',
-      inqReceiptMargin: t ? '0' : '0 8px',
+      inqOverlayPad: t ? 'var(--sc-pos20,20px) var(--sc-pos16,16px) calc(var(--sc-pos20,20px) + env(safe-area-inset-bottom))' : 'clamp(var(--sc-pos20,20px),3vh,var(--sc-pos42,42px)) var(--sc-pos24,24px)',
+      inqDialogMax: t ? 'var(--sc-pos710,710px)' : 'min(var(--sc-pos1180,1180px), calc(100vw - var(--sc-pos48,48px)))',
+      inqDialogMaxH: t ? 'calc(100dvh - var(--sc-pos40,40px))' : 'calc(100svh - var(--sc-pos48,48px))',
+      inqDialogPad: t ? '0' : 'var(--sc-pos12,12px) var(--sc-pos10,10px)',
+      inqReceiptMargin: t ? '0' : '0 var(--sc-pos8,8px)',
       inqReceiptMinH: 'auto',
-      inqReceiptPad: t ? '28px 24px 32px' : 'clamp(30px,3.5vh,46px) clamp(38px,4.5vw,62px) clamp(36px,4vh,54px)',
+      inqReceiptPad: t ? 'var(--sc-pos28,28px) var(--sc-pos24,24px) var(--sc-pos32,32px)' : 'clamp(var(--sc-pos30,30px),3.5vh,var(--sc-pos46,46px)) clamp(var(--sc-pos38,38px),4.5vw,var(--sc-pos62,62px)) clamp(var(--sc-pos36,36px),4vh,var(--sc-pos54,54px))',
       inqFormDisplay: this.state.inquiryDone ? 'none' : (t ? 'block' : 'grid'),
       inqLedgerDisplay: this.state.inquiryDone ? 'none' : 'grid',
       inqDoneDisplay: this.state.inquiryDone ? 'block' : 'none',
@@ -453,18 +453,18 @@ class Component extends DCLogic {
           .catch(() => this.setState({ inquiryError: 'WE COULD NOT SEND YOUR INQUIRY JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
       resDisplay: this.state.res ? 'flex' : 'none',
-      resDialogMaxW: t ? '620px' : 'min(900px, calc(100vw - 28px))',
+      resDialogMaxW: t ? 'var(--sc-pos620,620px)' : 'min(var(--sc-pos900,900px), calc(100vw - var(--sc-pos28,28px)))',
       resCols: t ? '1fr' : '1fr 1.08fr',
       resPhotoDisplay: 'block',
-      resPhotoMax: t ? '165px' : 'none',
-      resPhotoMin: t ? '165px' : '100%',
-      resDialogMinH: t ? 'min(640px, calc(100dvh - 40px))' : 'min(560px, calc(100svh - 56px))',
-      resDialogMaxH: t ? 'none' : 'calc(100svh - 28px)',
+      resPhotoMax: t ? 'var(--sc-pos165,165px)' : 'none',
+      resPhotoMin: t ? 'var(--sc-pos165,165px)' : '100%',
+      resDialogMinH: t ? 'min(var(--sc-pos640,640px), calc(100dvh - var(--sc-pos40,40px)))' : 'min(var(--sc-pos560,560px), calc(100svh - var(--sc-pos56,56px)))',
+      resDialogMaxH: t ? 'none' : 'calc(100svh - var(--sc-pos28,28px))',
       resCloseBg: t ? '#f5efe6' : '#ac746c',
       resCloseColor: t ? '#ac746c' : '#f5efe6',
       resCloseBorder: '#311d03',
-      resContentMinH: t ? 'auto' : '560px',
-      resContentPad: t ? '24px 24px 26px' : '40px 34px 32px',
+      resContentMinH: t ? 'auto' : 'var(--sc-pos560,560px)',
+      resContentPad: t ? 'var(--sc-pos24,24px) var(--sc-pos24,24px) var(--sc-pos26,26px)' : 'var(--sc-pos40,40px) var(--sc-pos34,34px) var(--sc-pos32,32px)',
       resFormDisplay: this.state.resDone ? 'none' : 'block',
       resDoneDisplay: this.state.resDone ? 'block' : 'none',
       closeRes: () => this.closeReservation(),
@@ -500,3 +500,4 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
+

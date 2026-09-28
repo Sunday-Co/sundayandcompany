@@ -6,10 +6,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/site.css?v=20260928-05" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-05" />
+<link rel="stylesheet" href="/assets/site.css?v=20260928-06" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-06" />
 <script src="/support.js?v=20260927-37"></script>
-<script defer data-sunday-site-js src="/assets/site.js?v=20260928-05"></script>
+<script defer data-sunday-site-js src="/assets/site.js?v=20260928-06"></script>
 </head>
 <body>
 <x-dc>
@@ -43,10 +43,10 @@
 <style>
   :root { accent-color: #ac746c; }
   *:focus { outline-color: #ac746c; }
-  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
     border-color: #ac746c !important;
-    box-shadow: 0 0 0 1px #ac746c !important;
+    box-shadow: 0 0 0 1px #ac746c !important;    box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c !important;
     outline: none !important;
   }
   *, *::before, *::after { box-sizing: border-box; }
@@ -61,11 +61,11 @@
     *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
     html { scroll-behavior: auto !important; }
   }
-  :focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  :focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
 
   input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
   textarea:-webkit-autofill, select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #fffdf8 inset !important;
     -webkit-text-fill-color: #311d03 !important;
     caret-color: #311d03;
     transition: background-color 9999s ease-out 0s;
@@ -74,31 +74,31 @@
   input::placeholder, textarea::placeholder { color: rgba(49,29,3,.5); opacity: 1; }
   input:focus, textarea:focus, select:focus, button:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 1px solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c;
+    outline: 1px solid #ac746c;    outline: var(--sc-pos1,1px) solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c; box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c;
   }
   input:invalid, textarea:invalid { box-shadow: none; }
 
   [aria-label="Newsletter"] input:-webkit-autofill,
   [aria-label="Newsletter"] input:-webkit-autofill:hover,
   [aria-label="Newsletter"] input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #311d03 inset !important;
     -webkit-text-fill-color: #f5efe6 !important;
     caret-color: #f5efe6;
   }
   [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
-  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
+  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; box-shadow: 0 var(--sc-pos1,1px) 0 0 #ac746c; }
   @media (max-width: 900px) {
-    input, textarea, select, button { font-size: 16px; }
-    input, textarea, select { min-height: 46px; }
-    textarea { min-height: 96px; }
+    input, textarea, select, button { font-size: 16px; font-size: var(--sc-pos16,16px); }
+    input, textarea, select { min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 96px; min-height: var(--sc-pos96,96px); }
   }
 
 
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
   @media (max-width: 900px) {
     /* iOS force-zooms any field under 16px */
-    input, textarea, select { font-size: 16px !important; min-height: 46px; }
-    textarea { min-height: 100px; }
+    input, textarea, select { font-size: 16px !important; font-size: var(--sc-pos16,16px) !important; min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 100px; min-height: var(--sc-pos100,100px); }
     button { font-size: inherit; }
     /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
        Compact receipt/status rows stay horizontal. */
@@ -107,17 +107,17 @@
     button > span[style*="align-items: start"][style*="grid-template-columns"],
     button > span[style*="align-items:start"][style*="grid-template-columns"] {
       grid-template-columns: 1fr !important;
-      row-gap: 14px !important;
+      row-gap: 14px !important;      row-gap: var(--sc-pos14,14px) !important;
     }
   }
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header[data-site-header] > a[aria-label] { width: 120px !important; }
-    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] { width: 120px !important; width: var(--sc-pos120,120px) !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; height: var(--sc-pos44,44px) !important; width: 116px !important; width: var(--sc-pos116,116px) !important; }
     header[data-site-header] > a[aria-label] > span > img {
-      height: 164px !important; width: 164px !important;
-      left: -24px !important; top: -57px !important;
+      height: 164px !important;      height: var(--sc-pos164,164px) !important; width: 164px !important; width: var(--sc-pos164,164px) !important;
+      left: -24px !important;      left: var(--sc-neg24,-24px) !important; top: -57px !important; top: var(--sc-neg57,-57px) !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
   }
@@ -125,13 +125,13 @@
   @media (max-width: 900px) {
     /* project inquiry form: one column and condensed, popup and Services page
        both, since they are the same component */
-    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
+    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; gap: var(--sc-pos7,7px) !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 9.5px !important; }
-    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
-    form[data-inq] textarea { min-height: 74px !important; }
-    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; font-size: var(--sc-pos9_5,9.5px) !important; }
+    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; min-height: var(--sc-pos42,42px) !important; }
+    form[data-inq] textarea { min-height: 74px !important; min-height: var(--sc-pos74,74px) !important; }
+    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; margin-top: var(--sc-pos2,2px) !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
   }
 
@@ -157,86 +157,86 @@
 
   <main id="main-content" tabindex="-1">
 
-  <section id="top" aria-labelledby="work-title" style="scroll-margin-top:92px;margin:0 auto;max-width:1360px;padding:clamp(132px,13vw,172px) clamp(24px,5vw,72px) clamp(40px,5vw,60px)">
-    <div style="align-items:end;display:grid;gap:clamp(36px,5vw,80px);grid-template-columns:{{ hg0 }}">
+  <section id="top" aria-labelledby="work-title" style="scroll-margin-top:92px;scroll-margin-top:var(--sc-pos92,92px);margin:0 auto;max-width:1360px;max-width:var(--sc-pos1360,1360px);padding:clamp(132px,13vw,172px) clamp(24px,5vw,72px) clamp(40px,5vw,60px);padding:clamp(var(--sc-pos132,132px),13vw,var(--sc-pos172,172px)) clamp(var(--sc-pos24,24px),5vw,var(--sc-pos72,72px)) clamp(var(--sc-pos40,40px),5vw,var(--sc-pos60,60px))">
+    <div style="align-items:end;display:grid;gap:clamp(36px,5vw,80px);gap:clamp(var(--sc-pos36,36px),5vw,var(--sc-pos80,80px));grid-template-columns:{{ hg0 }}">
       <div>
-        <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.24em;line-height:1.4;margin:0 0 22px;text-transform:uppercase;visibility:hidden" aria-hidden="true">Selected Work</p>
-        <h1 id="work-title" style="font-size:clamp(58px,7vw,108px);font-weight:400;letter-spacing:-.06em;line-height:.82;margin:0">Brands We’ve<span style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:{{ scSize }};font-weight:400;letter-spacing:-.02em;margin-left:{{ scIndent }};margin-top:.04em;white-space:{{ scWrap }}">Helped Build.</span></h1>
-        <p style="font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;line-height:2;margin:clamp(26px,3vw,38px) 0 0;max-width:560px;text-transform:uppercase;text-wrap:pretty">Brand identities, websites and digital marketing built to help thoughtful businesses show up clearly, connect with the right audience and grow with intention.</p>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.24em;line-height:1.4;margin:0 0 22px;margin:0 0 var(--sc-pos22,22px);text-transform:uppercase;visibility:hidden" aria-hidden="true">Selected Work</p>
+        <h1 id="work-title" style="font-size:clamp(58px,7vw,108px);font-size:clamp(var(--sc-pos58,58px),7vw,var(--sc-pos108,108px));font-weight:400;letter-spacing:-.06em;line-height:.82;margin:0">Brands We’ve<span style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:{{ scSize }};font-weight:400;letter-spacing:-.02em;margin-left:{{ scIndent }};margin-top:.04em;white-space:{{ scWrap }}">Helped Build.</span></h1>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:10px;font-size:var(--sc-pos10,10px);font-weight:500;letter-spacing:.2em;line-height:2;margin:clamp(26px,3vw,38px) 0 0;margin:clamp(var(--sc-pos26,26px),3vw,var(--sc-pos38,38px)) 0 0;max-width:560px;max-width:var(--sc-pos560,560px);text-transform:uppercase;text-wrap:pretty">Brand identities, websites and digital marketing built to help thoughtful businesses show up clearly, connect with the right audience and grow with intention.</p>
       </div>
-      <div data-work-receipt style="background:#fffdf8;border:1px solid #311d03;padding:0;position:relative">
-        <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Bill Of Work</span></div>
-        <div style="padding:16px 18px 14px">
-          <div style="align-items:baseline;display:flex;gap:12px;justify-content:space-between">
-            <span style="font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.16em;opacity:.72;text-transform:uppercase">Borrower</span>
-            <span style="font-family:'Inter Tight',sans-serif;font-size:7px;letter-spacing:.16em;opacity:.72;text-transform:uppercase">No. 001</span>
+      <div data-work-receipt style="background:#fffdf8;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;padding:0;position:relative">
+        <div style="align-items:center;border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.18em;padding:9px 18px;padding:var(--sc-pos9,9px) var(--sc-pos18,18px);text-transform:uppercase"><span>Sunday &amp; Company</span><span>Bill Of Work</span></div>
+        <div style="padding:16px 18px 14px;padding:var(--sc-pos16,16px) var(--sc-pos18,18px) var(--sc-pos14,14px)">
+          <div style="align-items:baseline;display:flex;gap:12px;gap:var(--sc-pos12,12px);justify-content:space-between">
+            <span style="font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.16em;opacity:.72;text-transform:uppercase">Borrower</span>
+            <span style="font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);letter-spacing:.16em;opacity:.72;text-transform:uppercase">No. 001</span>
           </div>
-          <p style="border-bottom:1px solid #311d03;font-family:'Pinyon Script',cursive;font-size:30px;line-height:1;margin:2px 0 0;padding-bottom:4px">Sunday &amp; Co.</p>
-          <div style="display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.13em;margin-top:14px;text-transform:uppercase">
-          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Services</span><span style="text-align:right">Branding · Websites<br />Marketing</span></div>
-          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Markets</span><span style="text-align:right">DMV<br />Serving Everywhere</span></div>
-          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Filed</span><span style="text-align:right">2026</span></div>
-          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);display:flex;gap:12px;justify-content:space-between;padding:7px 0"><span>Availability</span><span style="text-align:right">Open</span></div>
+          <p style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;font-family:'Pinyon Script',cursive;font-size:30px;font-size:var(--sc-pos30,30px);line-height:1;margin:2px 0 0;margin:var(--sc-pos2,2px) 0 0;padding-bottom:4px;padding-bottom:var(--sc-pos4,4px)">Sunday &amp; Co.</p>
+          <div style="display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.13em;margin-top:14px;margin-top:var(--sc-pos14,14px);text-transform:uppercase">
+          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:flex;gap:12px;gap:var(--sc-pos12,12px);justify-content:space-between;padding:7px 0;padding:var(--sc-pos7,7px) 0"><span>Services</span><span style="text-align:right">Branding · Websites<br />Marketing</span></div>
+          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:flex;gap:12px;gap:var(--sc-pos12,12px);justify-content:space-between;padding:7px 0;padding:var(--sc-pos7,7px) 0"><span>Markets</span><span style="text-align:right">DMV<br />Serving Everywhere</span></div>
+          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:flex;gap:12px;gap:var(--sc-pos12,12px);justify-content:space-between;padding:7px 0;padding:var(--sc-pos7,7px) 0"><span>Filed</span><span style="text-align:right">2026</span></div>
+          <div style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.3);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.3);display:flex;gap:12px;gap:var(--sc-pos12,12px);justify-content:space-between;padding:7px 0;padding:var(--sc-pos7,7px) 0"><span>Availability</span><span style="text-align:right">Open</span></div>
           </div>
         </div>
-        <div style="border-top:1px dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;gap:0;grid-template-columns:1fr 1fr 1fr;letter-spacing:.13em;text-transform:uppercase">
-          <span style="border-right:1px solid rgba(49,29,3,.3);opacity:.72;padding:8px 10px">Date Filed</span>
-          <span style="border-right:1px solid rgba(49,29,3,.3);opacity:.72;padding:8px 10px">Discipline</span>
-          <span style="opacity:.72;padding:8px 10px;text-align:right">Market</span>
-          <span style="border-right:1px solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);padding:8px 10px">2026</span>
-          <span style="border-right:1px solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);padding:8px 10px">Brand</span>
-          <span style="border-top:1px solid rgba(49,29,3,.3);padding:8px 10px;text-align:right">NC</span>
-          <span style="border-right:1px solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);padding:8px 10px">2026</span>
-          <span style="border-right:1px solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);padding:8px 10px">Web</span>
-          <span style="border-top:1px solid rgba(49,29,3,.3);padding:8px 10px;text-align:right">DMV</span>
+        <div style="border-top:1px dashed rgba(49,29,3,.5);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);gap:0;grid-template-columns:1fr 1fr 1fr;letter-spacing:.13em;text-transform:uppercase">
+          <span style="border-right:1px solid rgba(49,29,3,.3);border-right:var(--sc-pos1,1px) solid rgba(49,29,3,.3);opacity:.72;padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px)">Date Filed</span>
+          <span style="border-right:1px solid rgba(49,29,3,.3);border-right:var(--sc-pos1,1px) solid rgba(49,29,3,.3);opacity:.72;padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px)">Discipline</span>
+          <span style="opacity:.72;padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px);text-align:right">Market</span>
+          <span style="border-right:1px solid rgba(49,29,3,.3);border-right:var(--sc-pos1,1px) solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px)">2026</span>
+          <span style="border-right:1px solid rgba(49,29,3,.3);border-right:var(--sc-pos1,1px) solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px)">Brand</span>
+          <span style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px);text-align:right">NC</span>
+          <span style="border-right:1px solid rgba(49,29,3,.3);border-right:var(--sc-pos1,1px) solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px)">2026</span>
+          <span style="border-right:1px solid rgba(49,29,3,.3);border-right:var(--sc-pos1,1px) solid rgba(49,29,3,.3);border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px)">Web</span>
+          <span style="border-top:1px solid rgba(49,29,3,.3);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.3);padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px);text-align:right">DMV</span>
         </div>
-        <div style="align-items:center;border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.16em;padding:9px 18px;text-transform:uppercase"><span>On File At Sunday &amp; Co.</span><span style="opacity:.72">Keep This Card</span></div>
+        <div style="align-items:center;border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.16em;padding:9px 18px;padding:var(--sc-pos9,9px) var(--sc-pos18,18px);text-transform:uppercase"><span>On File At Sunday &amp; Co.</span><span style="opacity:.72">Keep This Card</span></div>
       </div>
     </div>
   </section>
 
-  <section aria-label="Project gallery" style="display:grid;gap:clamp(20px,2.6vw,40px);grid-template-columns:{{ hg1 }};margin:0 auto;max-width:1360px;padding:0 clamp(24px,5vw,72px) clamp(44px,5vw,66px)">
-    <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,40px)">
+  <section aria-label="Project gallery" style="display:grid;gap:clamp(20px,2.6vw,40px);gap:clamp(var(--sc-pos20,20px),2.6vw,var(--sc-pos40,40px));grid-template-columns:{{ hg1 }};margin:0 auto;max-width:1360px;max-width:var(--sc-pos1360,1360px);padding:0 clamp(24px,5vw,72px) clamp(44px,5vw,66px);padding:0 clamp(var(--sc-pos24,24px),5vw,var(--sc-pos72,72px)) clamp(var(--sc-pos44,44px),5vw,var(--sc-pos66,66px))">
+    <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,40px);gap:clamp(var(--sc-pos20,20px),2.6vw,var(--sc-pos40,40px))">
 
       <a data-reveal="true" href="/our-work/pizzeria-coco" aria-label="Pizzeria Coco" style="display:block;position:relative">
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-coco.jpg" alt="Pizzeria Coco website displayed on a laptop and mobile phone" style="height:100%;object-fit:cover;width:100%" /></figure>
-        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
+        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);padding:clamp(var(--sc-pos18,18px),2vw,var(--sc-pos30,30px));position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#7c8cf0;display:inline-block;height:8px;width:8px"></span>01 · Mobile Catering</span>
-            <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Pizzeria Coco</span>
+            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);gap:10px;gap:var(--sc-pos10,10px);letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#7c8cf0;display:inline-block;height:8px;height:var(--sc-pos8,8px);width:8px;width:var(--sc-pos8,8px)"></span>01 · Mobile Catering</span>
+            <span style="display:block;font-size:clamp(26px,2.6vw,38px);font-size:clamp(var(--sc-pos26,26px),2.6vw,var(--sc-pos38,38px));letter-spacing:-.04em;line-height:1.05;margin-top:8px;margin-top:var(--sc-pos8,8px)">Pizzeria Coco</span>
           </span>
         </span>
       </a>
 
       <a data-reveal="true" href="/our-work/luckys-cafe-bakery" aria-label="Lucky’s Café &amp; Bakery" style="display:block;position:relative">
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-luckys.jpg" alt="Lucky’s Café and Bakery website displayed on a laptop and mobile phone" style="height:100%;object-fit:cover;width:100%" /></figure>
-        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
+        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);padding:clamp(var(--sc-pos18,18px),2vw,var(--sc-pos30,30px));position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#c8563f;display:inline-block;height:8px;width:8px"></span>03 · Hospitality</span>
-            <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Lucky’s Café <em style="font-style:italic">&amp; Bakery</em></span>
+            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);gap:10px;gap:var(--sc-pos10,10px);letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#c8563f;display:inline-block;height:8px;height:var(--sc-pos8,8px);width:8px;width:var(--sc-pos8,8px)"></span>03 · Hospitality</span>
+            <span style="display:block;font-size:clamp(26px,2.6vw,38px);font-size:clamp(var(--sc-pos26,26px),2.6vw,var(--sc-pos38,38px));letter-spacing:-.04em;line-height:1.05;margin-top:8px;margin-top:var(--sc-pos8,8px)">Lucky’s Café <em style="font-style:italic">&amp; Bakery</em></span>
           </span>
         </span>
       </a>
 
     </div>
-    <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,40px);padding-top:clamp(40px,7vw,110px)">
+    <div style="display:flex;flex-direction:column;gap:clamp(20px,2.6vw,40px);gap:clamp(var(--sc-pos20,20px),2.6vw,var(--sc-pos40,40px));padding-top:clamp(40px,7vw,110px);padding-top:clamp(var(--sc-pos40,40px),7vw,var(--sc-pos110,110px))">
 
       <a data-reveal="true" href="/our-work/petti-pathways" aria-label="Petti Pathways" style="display:block;position:relative">
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-petti.jpg" alt="Petti Pathways Counseling website displayed on a laptop and mobile phone" style="height:100%;object-fit:cover;width:100%" /></figure>
-        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
+        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);padding:clamp(var(--sc-pos18,18px),2vw,var(--sc-pos30,30px));position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6cbdb8;display:inline-block;height:8px;width:8px"></span>02 · Mental Health</span>
-            <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Petti Pathways</span>
+            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);gap:10px;gap:var(--sc-pos10,10px);letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6cbdb8;display:inline-block;height:8px;height:var(--sc-pos8,8px);width:8px;width:var(--sc-pos8,8px)"></span>02 · Mental Health</span>
+            <span style="display:block;font-size:clamp(26px,2.6vw,38px);font-size:clamp(var(--sc-pos26,26px),2.6vw,var(--sc-pos38,38px));letter-spacing:-.04em;line-height:1.05;margin-top:8px;margin-top:var(--sc-pos8,8px)">Petti Pathways</span>
           </span>
         </span>
       </a>
 
       <a data-reveal="true" href="/our-work/folake" aria-label="Foláké &amp; Co." style="display:block;position:relative">
         <figure style="aspect-ratio:4 / 5;margin:0;overflow:hidden"><img src="/assets/portfolio-folake-ipad.png" alt="Foláké and Company website shown on a tablet" style="height:100%;object-fit:cover;width:100%" /></figure>
-        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
+        <span style="align-items:flex-end;background:linear-gradient(0deg, rgba(26,14,2,.72) 0%, rgba(26,14,2,.12) 46%, transparent 72%);color:#f5efe6;display:flex;inset:0;opacity:0;padding:clamp(18px,2vw,30px);padding:clamp(var(--sc-pos18,18px),2vw,var(--sc-pos30,30px));position:absolute;transition:opacity 420ms ease" style-hover="opacity:1">
           <span style="display:block">
-            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;gap:10px;letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6fae94;display:inline-block;height:8px;width:8px"></span>04 · Mobile Café</span>
-            <span style="display:block;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.04em;line-height:1.05;margin-top:8px">Foláké <em style="font-style:italic">&amp; Co.</em></span>
+            <span style="align-items:center;display:flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);gap:10px;gap:var(--sc-pos10,10px);letter-spacing:.2em;text-transform:uppercase"><span aria-hidden="true" style="background:#6fae94;display:inline-block;height:8px;height:var(--sc-pos8,8px);width:8px;width:var(--sc-pos8,8px)"></span>04 · Mobile Café</span>
+            <span style="display:block;font-size:clamp(26px,2.6vw,38px);font-size:clamp(var(--sc-pos26,26px),2.6vw,var(--sc-pos38,38px));letter-spacing:-.04em;line-height:1.05;margin-top:8px;margin-top:var(--sc-pos8,8px)">Foláké <em style="font-style:italic">&amp; Co.</em></span>
           </span>
         </span>
       </a>
@@ -244,12 +244,12 @@
     </div>
   </section>
 
-  <section data-mobile-wrap-row style="align-items:end;display:flex;gap:40px;justify-content:space-between;margin:0 auto;max-width:1200px;padding:clamp(52px,6vw,84px) clamp(24px,5vw,72px) clamp(64px,8vw,104px)">
+  <section data-mobile-wrap-row style="align-items:end;display:flex;gap:40px;gap:var(--sc-pos40,40px);justify-content:space-between;margin:0 auto;max-width:1200px;max-width:var(--sc-pos1200,1200px);padding:clamp(52px,6vw,84px) clamp(24px,5vw,72px) clamp(64px,8vw,104px);padding:clamp(var(--sc-pos52,52px),6vw,var(--sc-pos84,84px)) clamp(var(--sc-pos24,24px),5vw,var(--sc-pos72,72px)) clamp(var(--sc-pos64,64px),8vw,var(--sc-pos104,104px))">
     <div>
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase;visibility:hidden" aria-hidden="true">A Seat At Our Table</p>
-      <h2 style="font-size:clamp(38px,4.2vw,60px);font-weight:400;letter-spacing:-.055em;line-height:.96;margin:14px 0 0;max-width:720px;text-wrap:pretty">Ready To Build Something <em style="color:#ac746c;font-style:italic">Worth Remembering?</em></h2>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;margin:0;text-transform:uppercase;visibility:hidden" aria-hidden="true">A Seat At Our Table</p>
+      <h2 style="font-size:clamp(38px,4.2vw,60px);font-size:clamp(var(--sc-pos38,38px),4.2vw,var(--sc-pos60,60px));font-weight:400;letter-spacing:-.055em;line-height:.96;margin:14px 0 0;margin:var(--sc-pos14,14px) 0 0;max-width:720px;max-width:var(--sc-pos720,720px);text-wrap:pretty">Ready To Build Something <em style="color:#ac746c;font-style:italic">Worth Remembering?</em></h2>
     </div>
-    <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;display:inline-flex;flex:0 0 auto;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;gap:12px;letter-spacing:.18em;min-height:44px;padding:0 20px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#311d03">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+    <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;color:#f5efe6;display:inline-flex;flex:0 0 auto;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;gap:12px;gap:var(--sc-pos12,12px);letter-spacing:.18em;min-height:44px;min-height:var(--sc-pos44,44px);padding:0 20px;padding:0 var(--sc-pos20,20px);text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#311d03">Start A Project<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;height:var(--sc-pos15,15px);width:15px;width:var(--sc-pos15,15px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
   </section>
 
     </main>
@@ -276,15 +276,15 @@ class Component extends DCLogic {
     const respGrids = {
       scWrap: nw ? 'normal' : 'nowrap',
       scSize: nw ? '0.92em' : '1.12em',
-      scIndent: nw ? '0' : 'clamp(26px,5vw,84px)',
-      railW: nw ? 'min(66vw,300px)' : 'min(74vw,400px)',
+      scIndent: nw ? '0' : 'clamp(var(--sc-pos26,26px),5vw,var(--sc-pos84,84px))',
+      railW: nw ? 'min(66vw,var(--sc-pos300,300px))' : 'min(74vw,var(--sc-pos400,400px))',
       hg0: nw ? '1fr' : 'minmax(0,1.4fr) minmax(0,.62fr)',
       hg1: nw ? '1fr' : 'repeat(2,minmax(0,1fr))',
     };
     const n = this.state && this.state.narrow;
     return {
       openInquiry: () => { if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('sunday:open-inquiry')); },
-      idxGrid: n ? "38px minmax(0,1fr) 28px" : "52px minmax(0,1.05fr) minmax(0,1.15fr) minmax(0,.5fr) minmax(0,.42fr) 34px",
+      idxGrid: n ? "var(--sc-pos38,38px) minmax(0,1fr) var(--sc-pos28,28px)" : "var(--sc-pos52,52px) minmax(0,1.05fr) minmax(0,1.15fr) minmax(0,.5fr) minmax(0,.42fr) var(--sc-pos34,34px)",
       idxCell: n ? "none" : "block",
       idxStack: n ? "block" : "none",
       ...respGrids,
@@ -294,3 +294,4 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
+

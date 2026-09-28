@@ -6,15 +6,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/site.css?v=20260928-05" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-05" />
+<link rel="stylesheet" href="/assets/site.css?v=20260928-06" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-06" />
 <script src="/support.js?v=20260927-37"></script>
-<script defer data-sunday-site-js src="/assets/site.js?v=20260928-05"></script>
+<script defer data-sunday-site-js src="/assets/site.js?v=20260928-06"></script>
 <style>
 /* COMPONENT FORM GUIDANCE MICROTYPE · 2026-09-13 */
 form[data-editorial-labels] label > span:first-child,
 form[data-editorial-labels] > label[for] {
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.05em !important;
 }
@@ -25,7 +25,7 @@ form[data-editorial-labels] > label[for] {
    never sees a focused editable control below 16px after the 0.84 phone scale. */
 @media (max-width:900px) {
   form input:not([type="hidden"]), form textarea, form select, form [contenteditable="true"] {
-    font-size:16px !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
     line-height:1.25 !important;
     touch-action:manipulation !important;
     transform:none !important;
@@ -35,13 +35,13 @@ html[data-phone-viewport-scale="1"] form input:not([type="hidden"]),
 html[data-phone-viewport-scale="1"] form textarea,
 html[data-phone-viewport-scale="1"] form select,
 html[data-phone-viewport-scale="1"] form [contenteditable="true"] {
-  font-size:20px !important;
+  font-size:20px !important;  font-size:var(--sc-pos20,20px) !important;
 }
 form [data-form-error-field="true"],
 form [aria-invalid="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12) !important;
 }
 </style>
 <style>
@@ -49,7 +49,7 @@ form [aria-invalid="true"] {
 form [role="alert"] {
   color:#8c2f22 !important;
   font-family:'Inter Tight',sans-serif !important;
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.065em !important;
   line-height:1.4 !important;
@@ -89,10 +89,10 @@ form [role="alert"] {
 <style>
   :root { accent-color: #ac746c; }
   *:focus { outline-color: #ac746c; }
-  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
     border-color: #ac746c !important;
-    box-shadow: 0 0 0 1px #ac746c !important;
+    box-shadow: 0 0 0 1px #ac746c !important;    box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c !important;
     outline: none !important;
   }
   *, *::before, *::after { box-sizing: border-box; }
@@ -107,11 +107,11 @@ form [role="alert"] {
     *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
     html { scroll-behavior: auto !important; }
   }
-  :focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  :focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
 
   input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
   textarea:-webkit-autofill, select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #fffdf8 inset !important;
     -webkit-text-fill-color: #311d03 !important;
     caret-color: #311d03;
     transition: background-color 9999s ease-out 0s;
@@ -120,31 +120,31 @@ form [role="alert"] {
   input::placeholder, textarea::placeholder { color: rgba(49,29,3,.5); opacity: 1; }
   input:focus, textarea:focus, select:focus, button:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 1px solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c;
+    outline: 1px solid #ac746c;    outline: var(--sc-pos1,1px) solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c; box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c;
   }
   input:invalid, textarea:invalid { box-shadow: none; }
 
   [aria-label="Newsletter"] input:-webkit-autofill,
   [aria-label="Newsletter"] input:-webkit-autofill:hover,
   [aria-label="Newsletter"] input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #311d03 inset !important;
     -webkit-text-fill-color: #f5efe6 !important;
     caret-color: #f5efe6;
   }
   [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
-  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
+  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; box-shadow: 0 var(--sc-pos1,1px) 0 0 #ac746c; }
   @media (max-width: 900px) {
-    input, textarea, select, button { font-size: 16px; }
-    input, textarea, select { min-height: 46px; }
-    textarea { min-height: 96px; }
+    input, textarea, select, button { font-size: 16px; font-size: var(--sc-pos16,16px); }
+    input, textarea, select { min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 96px; min-height: var(--sc-pos96,96px); }
   }
 
 
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
   @media (max-width: 900px) {
     /* iOS force-zooms any field under 16px */
-    input, textarea, select { font-size: 16px !important; min-height: 46px; }
-    textarea { min-height: 100px; }
+    input, textarea, select { font-size: 16px !important; font-size: var(--sc-pos16,16px) !important; min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 100px; min-height: var(--sc-pos100,100px); }
     button { font-size: inherit; }
     /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
        Compact receipt/status rows stay horizontal. */
@@ -153,17 +153,17 @@ form [role="alert"] {
     button > span[style*="align-items: start"][style*="grid-template-columns"],
     button > span[style*="align-items:start"][style*="grid-template-columns"] {
       grid-template-columns: 1fr !important;
-      row-gap: 14px !important;
+      row-gap: 14px !important;      row-gap: var(--sc-pos14,14px) !important;
     }
   }
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header[data-site-header] > a[aria-label] { width: 120px !important; }
-    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] { width: 120px !important; width: var(--sc-pos120,120px) !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; height: var(--sc-pos44,44px) !important; width: 116px !important; width: var(--sc-pos116,116px) !important; }
     header[data-site-header] > a[aria-label] > span > img {
-      height: 164px !important; width: 164px !important;
-      left: -24px !important; top: -57px !important;
+      height: 164px !important;      height: var(--sc-pos164,164px) !important; width: 164px !important; width: var(--sc-pos164,164px) !important;
+      left: -24px !important;      left: var(--sc-neg24,-24px) !important; top: -57px !important; top: var(--sc-neg57,-57px) !important;
     }
     /* newsletter popup — taller receipt with room for the image on signup and confirmation */
   }
@@ -171,13 +171,13 @@ form [role="alert"] {
   @media (max-width: 900px) {
     /* project inquiry form: one column and condensed, popup and Services page
        both, since they are the same component */
-    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
+    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; gap: var(--sc-pos7,7px) !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 9.5px !important; }
-    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
-    form[data-inq] textarea { min-height: 74px !important; }
-    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; font-size: var(--sc-pos9_5,9.5px) !important; }
+    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; min-height: var(--sc-pos42,42px) !important; }
+    form[data-inq] textarea { min-height: 74px !important; min-height: var(--sc-pos74,74px) !important; }
+    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; margin-top: var(--sc-pos2,2px) !important; }
     /* Keep the receipt identity and status rows visible on mobile. */
   }
 
@@ -193,7 +193,7 @@ form [role="alert"] {
   }
   form[data-editorial-labels] label > span:first-child {
     font-family: 'Inter Tight', sans-serif !important;
-    font-size: 9.5px !important;
+    font-size: 9.5px !important;    font-size: var(--sc-pos9_5,9.5px) !important;
     font-weight: 300 !important;
     letter-spacing: .12em !important;
     text-transform: uppercase;
@@ -217,117 +217,117 @@ form [role="alert"] {
 
   <main id="main-content" tabindex="-1">
 
-  <section id="top" aria-labelledby="contact-title" style="scroll-margin-top:92px;align-items:end;background:#311d03;color:#f5efe6;display:grid;gap:18px 60px;grid-template-columns:{{ gc1 }};min-height:58svh;padding:145px clamp(22px,7vw,110px) clamp(54px,7vw,92px);overflow:hidden;position:relative">
-    <span aria-hidden="true" style="color:rgba(245,239,230,.045);font-size:clamp(100px,18vw,285px);left:50%;line-height:.65;position:absolute;top:45%;transform:translate(-50%, -50%);white-space:nowrap">CONTACT</span>
-    <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;grid-column:1 / -1;letter-spacing:.22em;line-height:1.4;position:relative;text-transform:uppercase;z-index:1;visibility:hidden" aria-hidden="true">Contact Sunday</p>
-    <h1 id="contact-title" style="font-size:clamp(62px,8.5vw,126px);font-weight:400;letter-spacing:-.07em;line-height:.78;margin:0;position:relative;z-index:1">Send Us A <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:.95em;font-style:normal;font-weight:400;margin-left:.55em">Note</em></h1>
-    <p style="align-self:end;border-top:1px solid rgba(245,239,230,.45);font-size:15px;line-height:1.55;max-width:550px;padding-top:22px;position:relative;z-index:1">Have a question before you inquire? Use the form below and your message will come directly to Sunday &amp; Company.</p>
+  <section id="top" aria-labelledby="contact-title" style="scroll-margin-top:92px;scroll-margin-top:var(--sc-pos92,92px);align-items:end;background:#311d03;color:#f5efe6;display:grid;gap:18px 60px;gap:var(--sc-pos18,18px) var(--sc-pos60,60px);grid-template-columns:{{ gc1 }};min-height:58svh;padding:145px clamp(22px,7vw,110px) clamp(54px,7vw,92px);padding:var(--sc-pos145,145px) clamp(var(--sc-pos22,22px),7vw,var(--sc-pos110,110px)) clamp(var(--sc-pos54,54px),7vw,var(--sc-pos92,92px));overflow:hidden;position:relative">
+    <span aria-hidden="true" style="color:rgba(245,239,230,.045);font-size:clamp(100px,18vw,285px);font-size:clamp(var(--sc-pos100,100px),18vw,var(--sc-pos285,285px));left:50%;line-height:.65;position:absolute;top:45%;transform:translate(-50%, -50%);white-space:nowrap">CONTACT</span>
+    <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;grid-column:1 / -1;letter-spacing:.22em;line-height:1.4;position:relative;text-transform:uppercase;z-index:1;visibility:hidden" aria-hidden="true">Contact Sunday</p>
+    <h1 id="contact-title" style="font-size:clamp(62px,8.5vw,126px);font-size:clamp(var(--sc-pos62,62px),8.5vw,var(--sc-pos126,126px));font-weight:400;letter-spacing:-.07em;line-height:.78;margin:0;position:relative;z-index:1">Send Us A <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:.95em;font-style:normal;font-weight:400;margin-left:.55em">Note</em></h1>
+    <p style="align-self:end;border-top:1px solid rgba(245,239,230,.45);border-top:var(--sc-pos1,1px) solid rgba(245,239,230,.45);font-size:15px;font-size:var(--sc-pos15,15px);line-height:1.55;max-width:550px;max-width:var(--sc-pos550,550px);padding-top:22px;padding-top:var(--sc-pos22,22px);position:relative;z-index:1">Have a question before you inquire? Use the form below and your message will come directly to Sunday &amp; Company.</p>
   </section>
 
-  <section aria-label="Contact Sunday and Company" style="align-items:stretch;background:#f5efe6;color:#311d03;display:grid;gap:clamp(34px,6vw,96px);grid-template-columns:{{ gc0 }};padding:clamp(40px,4.4vw,64px) clamp(22px,6vw,84px)">
-    <aside aria-labelledby="contact-details-title" style="align-self:stretch;background:#311d03;border:1px solid rgba(245,239,230,.4);color:#f5efe6;display:flex;flex-direction:column;height:100%;padding:0">
-      <div style="align-items:center;border-bottom:1px solid rgba(245,239,230,.4);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.72">Card No. 002</span></div>
-      <div style="display:flex;flex:1;flex-direction:column;padding:clamp(20px,2.4vw,32px) clamp(18px,2.2vw,28px) clamp(16px,2vw,24px)">
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">The Details</p>
-      <h2 id="contact-details-title" style="font-size:clamp(38px,4vw,58px);font-weight:400;letter-spacing:-.06em;line-height:.88;margin:14px 0 30px">Pull Up A <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Chair</em></h2>
-      <div style="border-top:1px solid rgba(245,239,230,.45)">
-        <div style="border-bottom:1px solid rgba(245,239,230,.45);display:grid;gap:18px;grid-template-columns:{{ gc2 }};padding:20px 0">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Email</span>
-          <a href="mailto:hello@sundayandcompany.co" style="font-size:14px;line-height:1.5">hello@sundayandcompany.co</a>
+  <section aria-label="Contact Sunday and Company" style="align-items:stretch;background:#f5efe6;color:#311d03;display:grid;gap:clamp(34px,6vw,96px);gap:clamp(var(--sc-pos34,34px),6vw,var(--sc-pos96,96px));grid-template-columns:{{ gc0 }};padding:clamp(40px,4.4vw,64px) clamp(22px,6vw,84px);padding:clamp(var(--sc-pos40,40px),4.4vw,var(--sc-pos64,64px)) clamp(var(--sc-pos22,22px),6vw,var(--sc-pos84,84px))">
+    <aside aria-labelledby="contact-details-title" style="align-self:stretch;background:#311d03;border:1px solid rgba(245,239,230,.4);border:var(--sc-pos1,1px) solid rgba(245,239,230,.4);color:#f5efe6;display:flex;flex-direction:column;height:100%;padding:0">
+      <div style="align-items:center;border-bottom:1px solid rgba(245,239,230,.4);border-bottom:var(--sc-pos1,1px) solid rgba(245,239,230,.4);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.18em;padding:9px 18px;padding:var(--sc-pos9,9px) var(--sc-pos18,18px);text-transform:uppercase"><span>Sunday &amp; Company</span><span style="opacity:.72">Card No. 002</span></div>
+      <div style="display:flex;flex:1;flex-direction:column;padding:clamp(20px,2.4vw,32px) clamp(18px,2.2vw,28px) clamp(16px,2vw,24px);padding:clamp(var(--sc-pos20,20px),2.4vw,var(--sc-pos32,32px)) clamp(var(--sc-pos18,18px),2.2vw,var(--sc-pos28,28px)) clamp(var(--sc-pos16,16px),2vw,var(--sc-pos24,24px))">
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">The Details</p>
+      <h2 id="contact-details-title" style="font-size:clamp(38px,4vw,58px);font-size:clamp(var(--sc-pos38,38px),4vw,var(--sc-pos58,58px));font-weight:400;letter-spacing:-.06em;line-height:.88;margin:14px 0 30px;margin:var(--sc-pos14,14px) 0 var(--sc-pos30,30px)">Pull Up A <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Chair</em></h2>
+      <div style="border-top:1px solid rgba(245,239,230,.45);border-top:var(--sc-pos1,1px) solid rgba(245,239,230,.45)">
+        <div style="border-bottom:1px solid rgba(245,239,230,.45);border-bottom:var(--sc-pos1,1px) solid rgba(245,239,230,.45);display:grid;gap:18px;gap:var(--sc-pos18,18px);grid-template-columns:{{ gc2 }};padding:20px 0;padding:var(--sc-pos20,20px) 0">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.14em;text-transform:uppercase">Email</span>
+          <a href="mailto:hello@sundayandcompany.co" style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.5">hello@sundayandcompany.co</a>
         </div>
-        <div style="border-bottom:1px solid rgba(245,239,230,.45);display:grid;gap:18px;grid-template-columns:{{ gc2 }};padding:20px 0">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Based Between</span>
-          <p style="font-size:14px;line-height:1.5">North Carolina And The DMV<br />(D.C., Maryland, Virginia)</p>
+        <div style="border-bottom:1px solid rgba(245,239,230,.45);border-bottom:var(--sc-pos1,1px) solid rgba(245,239,230,.45);display:grid;gap:18px;gap:var(--sc-pos18,18px);grid-template-columns:{{ gc2 }};padding:20px 0;padding:var(--sc-pos20,20px) 0">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.14em;text-transform:uppercase">Based Between</span>
+          <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.5">North Carolina And The DMV<br />(D.C., Maryland, Virginia)</p>
         </div>
-        <div style="border-bottom:1px solid rgba(245,239,230,.45);display:grid;gap:18px;grid-template-columns:{{ gc2 }};padding:20px 0">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Working With</span>
-          <p style="font-size:14px;line-height:1.5">Lifestyle Brands Everywhere</p>
+        <div style="border-bottom:1px solid rgba(245,239,230,.45);border-bottom:var(--sc-pos1,1px) solid rgba(245,239,230,.45);display:grid;gap:18px;gap:var(--sc-pos18,18px);grid-template-columns:{{ gc2 }};padding:20px 0;padding:var(--sc-pos20,20px) 0">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.14em;text-transform:uppercase">Working With</span>
+          <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.5">Lifestyle Brands Everywhere</p>
         </div>
-        <div style="border-bottom:1px solid rgba(245,239,230,.45);display:grid;gap:18px;grid-template-columns:{{ gc2 }};padding:20px 0">
-          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase">Follow Along</span>
-          <p style="display:flex;flex-wrap:wrap;gap:14px 20px">
-            <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:7px;letter-spacing:.1em;padding-bottom:3px;text-transform:uppercase">Instagram <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:11px;width:11px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
-            <a href="https://www.tiktok.com/@sundayand_co" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:7px;letter-spacing:.1em;padding-bottom:3px;text-transform:uppercase">TikTok <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:11px;width:11px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
-            <a href="https://www.linkedin.com/company/sundayand-co/" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;gap:7px;letter-spacing:.1em;padding-bottom:3px;text-transform:uppercase">LinkedIn <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:11px;width:11px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+        <div style="border-bottom:1px solid rgba(245,239,230,.45);border-bottom:var(--sc-pos1,1px) solid rgba(245,239,230,.45);display:grid;gap:18px;gap:var(--sc-pos18,18px);grid-template-columns:{{ gc2 }};padding:20px 0;padding:var(--sc-pos20,20px) 0">
+          <span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.14em;text-transform:uppercase">Follow Along</span>
+          <p style="display:flex;flex-wrap:wrap;gap:14px 20px;gap:var(--sc-pos14,14px) var(--sc-pos20,20px)">
+            <a href="https://www.instagram.com/sundayand_co/" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);gap:7px;gap:var(--sc-pos7,7px);letter-spacing:.1em;padding-bottom:3px;padding-bottom:var(--sc-pos3,3px);text-transform:uppercase">Instagram <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:11px;height:var(--sc-pos11,11px);width:11px;width:var(--sc-pos11,11px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+            <a href="https://www.tiktok.com/@sundayand_co" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);gap:7px;gap:var(--sc-pos7,7px);letter-spacing:.1em;padding-bottom:3px;padding-bottom:var(--sc-pos3,3px);text-transform:uppercase">TikTok <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:11px;height:var(--sc-pos11,11px);width:11px;width:var(--sc-pos11,11px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+            <a href="https://www.linkedin.com/company/sundayand-co/" rel="noreferrer" target="_blank" style="align-items:center;border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);gap:7px;gap:var(--sc-pos7,7px);letter-spacing:.1em;padding-bottom:3px;padding-bottom:var(--sc-pos3,3px);text-transform:uppercase">LinkedIn <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="height:11px;height:var(--sc-pos11,11px);width:11px;width:var(--sc-pos11,11px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
           </p>
         </div>
       </div>
-      <div style="align-items:center;display:flex;flex-wrap:wrap;gap:18px 24px;justify-content:space-between;margin-top:auto;padding-top:30px">
-        <p style="flex:1 1 190px;font-size:16px;max-width:210px">Ready to talk about a project?</p>
-        <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#f5efe6;border:1px solid #f5efe6;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;gap:12px;letter-spacing:.18em;min-height:42px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#f5efe6">Fill Out The Inquiry Form<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+      <div style="align-items:center;display:flex;flex-wrap:wrap;gap:18px 24px;gap:var(--sc-pos18,18px) var(--sc-pos24,24px);justify-content:space-between;margin-top:auto;padding-top:30px;padding-top:var(--sc-pos30,30px)">
+        <p style="flex:1 1 190px;flex:1 1 var(--sc-pos190,190px);font-size:16px;font-size:var(--sc-pos16,16px);max-width:210px;max-width:var(--sc-pos210,210px)">Ready to talk about a project?</p>
+        <button type="button" onClick="{{ openInquiry }}" style="align-items:center;background:#f5efe6;border:1px solid #f5efe6;border:var(--sc-pos1,1px) solid #f5efe6;color:#311d03;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;gap:12px;gap:var(--sc-pos12,12px);letter-spacing:.18em;min-height:42px;min-height:var(--sc-pos42,42px);padding:0 19px;padding:0 var(--sc-pos19,19px);text-transform:uppercase;transition:background 180ms ease,color 180ms ease;white-space:nowrap" style-hover="background:transparent;color:#f5efe6">Fill Out The Inquiry Form<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;height:var(--sc-pos15,15px);width:15px;width:var(--sc-pos15,15px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
       </div>
       </div>
-      <div style="align-items:center;border-top:1px dashed rgba(245,239,230,.28);display:flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;justify-content:space-between;letter-spacing:.15em;opacity:.72;padding:8px 18px;text-transform:uppercase"><span>A Seat At Our Table</span><span>Keep This Card</span></div>
+      <div style="align-items:center;border-top:1px dashed rgba(245,239,230,.28);border-top:var(--sc-pos1,1px) dashed rgba(245,239,230,.28);display:flex;font-family:'Inter Tight',sans-serif;font-size:6.5px;font-size:var(--sc-pos6_5,6.5px);justify-content:space-between;letter-spacing:.15em;opacity:.72;padding:8px 18px;padding:var(--sc-pos8,8px) var(--sc-pos18,18px);text-transform:uppercase"><span>A Seat At Our Table</span><span>Keep This Card</span></div>
     </aside>
 
-    <div style="background:#fffdf8;border:1px solid #311d03;box-shadow:0 18px 42px rgba(49,29,3,.13);height:100%;padding:clamp(22px,2.4vw,32px);position:relative">
-      <div data-receipt-meta aria-hidden="true" style="border-bottom:1px dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.15em;margin-bottom:18px;padding-bottom:11px;text-transform:uppercase"><span>Sunday &amp; Company</span><span>Receipt No. 002</span></div>
-      <div style="margin-bottom:18px;text-align:center">
-        <p style="font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:500;letter-spacing:.18em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Send A Message</p>
-        <h2 style="font-size:clamp(38px,4vw,56px);font-weight:400;letter-spacing:-.06em;line-height:.88;margin:10px 0 12px">Write To <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.15em;font-style:normal;font-weight:400">Sunday</em></h2>
-        <p style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.11em;text-transform:uppercase" data-form-instruction>Fields marked with an asterisk are required.</p>
+    <div style="background:#fffdf8;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;box-shadow:0 18px 42px rgba(49,29,3,.13);box-shadow:0 var(--sc-pos18,18px) var(--sc-pos42,42px) rgba(49,29,3,.13);height:100%;padding:clamp(22px,2.4vw,32px);padding:clamp(var(--sc-pos22,22px),2.4vw,var(--sc-pos32,32px));position:relative">
+      <div data-receipt-meta aria-hidden="true" style="border-bottom:1px dashed rgba(49,29,3,.5);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.15em;margin-bottom:18px;margin-bottom:var(--sc-pos18,18px);padding-bottom:11px;padding-bottom:var(--sc-pos11,11px);text-transform:uppercase"><span>Sunday &amp; Company</span><span>Receipt No. 002</span></div>
+      <div style="margin-bottom:18px;margin-bottom:var(--sc-pos18,18px);text-align:center">
+        <p style="font-family:'Inter Tight',sans-serif;font-size:8.5px;font-size:var(--sc-pos8_5,8.5px);font-weight:500;letter-spacing:.18em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Send A Message</p>
+        <h2 style="font-size:clamp(38px,4vw,56px);font-size:clamp(var(--sc-pos38,38px),4vw,var(--sc-pos56,56px));font-weight:400;letter-spacing:-.06em;line-height:.88;margin:10px 0 12px;margin:var(--sc-pos10,10px) 0 var(--sc-pos12,12px)">Write To <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.15em;font-style:normal;font-weight:400">Sunday</em></h2>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.11em;text-transform:uppercase" data-form-instruction>Fields marked with an asterisk are required.</p>
       </div>
-      <div data-receipt-meta aria-hidden="true" style="border-bottom:1px dashed rgba(49,29,3,.55);border-top:1px dashed rgba(49,29,3,.55);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;gap:7px 10px;grid-template-columns:auto 1fr auto;letter-spacing:.12em;margin:18px 0;padding:11px 0;text-transform:uppercase">
+      <div data-receipt-meta aria-hidden="true" style="border-bottom:1px dashed rgba(49,29,3,.55);border-bottom:var(--sc-pos1,1px) dashed rgba(49,29,3,.55);border-top:1px dashed rgba(49,29,3,.55);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.55);display:grid;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);gap:7px 10px;gap:var(--sc-pos7,7px) var(--sc-pos10,10px);grid-template-columns:auto 1fr auto;letter-spacing:.12em;margin:18px 0;margin:var(--sc-pos18,18px) 0;padding:11px 0;padding:var(--sc-pos11,11px) 0;text-transform:uppercase">
         <span>01</span><span>Your Details</span><span style="text-align:right">Required</span>
         <span>02</span><span>Your Note</span><span style="text-align:right">Required</span>
         <span>03</span><span>Sunday Reply</span><span style="text-align:right">Next</span>
       </div>
-      <div style="padding:34px 0 26px;text-align:center;display:{{ noteDoneDisplay }}">
-        <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:0 0 10px;text-transform:uppercase">Sunday &amp; Company</p>
-        <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;margin:0 0 10px;text-transform:uppercase">Your Note</p>
-        <h3 style="font-size:clamp(28px,3vw,40px);font-weight:400;letter-spacing:-.05em;line-height:.94;margin:0">Your Note Is <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Sent.</em></h3>
-        <p style="font-size:12px;line-height:1.55;margin:14px auto 0;max-width:400px">Thank you for writing to Sunday. We have received your message and will reply from hello@sundayandcompany.co.</p>
-        <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.16em;margin:22px auto 0;padding-top:12px;text-transform:uppercase;width:min(300px,100%)">Status: Message Delivered</p>
+      <div style="padding:34px 0 26px;padding:var(--sc-pos34,34px) 0 var(--sc-pos26,26px);text-align:center;display:{{ noteDoneDisplay }}">
+        <p data-receipt-meta style="font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.16em;margin:0 0 10px;margin:0 0 var(--sc-pos10,10px);text-transform:uppercase">Sunday &amp; Company</p>
+        <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;margin:0 0 10px;margin:0 0 var(--sc-pos10,10px);text-transform:uppercase">Your Note</p>
+        <h3 style="font-size:clamp(28px,3vw,40px);font-size:clamp(var(--sc-pos28,28px),3vw,var(--sc-pos40,40px));font-weight:400;letter-spacing:-.05em;line-height:.94;margin:0">Your Note Is <em style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Sent.</em></h3>
+        <p style="font-size:12px;font-size:var(--sc-pos12,12px);line-height:1.55;margin:14px auto 0;margin:var(--sc-pos14,14px) auto 0;max-width:400px;max-width:var(--sc-pos400,400px)">Thank you for writing to Sunday. We have received your message and will reply from hello@sundayandcompany.co.</p>
+        <p data-receipt-meta style="border-top:1px dashed rgba(49,29,3,.45);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.45);font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.16em;margin:22px auto 0;margin:var(--sc-pos22,22px) auto 0;padding-top:12px;padding-top:var(--sc-pos12,12px);text-transform:uppercase;width:min(300px,100%);width:min(var(--sc-pos300,300px),100%)">Status: Message Delivered</p>
       </div>
-      <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearNoteError }}" onSubmit="{{ submitNote }}" style="display:grid;gap:9px;display:{{ noteFormDisplay }}">
-    <div aria-hidden="true" style="height:0;left:-9999px;overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Business Name</span><input autocomplete="organization" name="business" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Subject *</span><input name="message_subject" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;min-height:44px;padding:5px 10px" maxlength="120" /></label>
-        <label style="display:grid;gap:5px"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Message *</span><textarea name="message" required="required" rows="6" style="background:transparent;border:1px solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;padding:8px 10px"maxlength="2000"></textarea></label>
-        <p role="alert" style="color:#8c2f22;font-size:11px;margin:0;display:{{ noteErrorDisplay }}">{{ noteError }}</p>
-        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;gap:12px;justify-content:center;letter-spacing:.18em;min-height:44px;padding:0 19px;text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ noteLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;width:15px"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
-        <p data-form-privacy style="font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:300;letter-spacing:.035em;line-height:1.45;margin:1px 0 0;opacity:.72">By submitting this form, you acknowledge our <a href="/privacy-policy" style="border-bottom:1px solid currentColor;padding-bottom:1px">Privacy Policy</a>.</p>
+      <form data-editorial-labels noValidate="{{ true }}" onInput="{{ clearNoteError }}" onSubmit="{{ submitNote }}" style="display:grid;gap:9px;gap:var(--sc-pos9,9px);display:{{ noteFormDisplay }}">
+    <div aria-hidden="true" style="height:0;left:-9999px;left:var(--sc-neg9999,-9999px);overflow:hidden;position:absolute;width:0"><label>Do not fill this field<input name="botcheck" tabindex="-1" type="text" autocomplete="off" /></label></div>
+        <label style="display:grid;gap:5px;gap:var(--sc-pos5,5px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Name *</span><input autocomplete="name" name="name" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border:var(--sc-pos1,1px) solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);min-height:44px;min-height:var(--sc-pos44,44px);padding:5px 10px;padding:var(--sc-pos5,5px) var(--sc-pos10,10px)" maxlength="120" /></label>
+        <label style="display:grid;gap:5px;gap:var(--sc-pos5,5px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Email Address *</span><input autocomplete="email" name="email" required="required" type="email" maxlength="120" style="background:transparent;border:1px solid rgba(49,29,3,.34);border:var(--sc-pos1,1px) solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);min-height:44px;min-height:var(--sc-pos44,44px);padding:5px 10px;padding:var(--sc-pos5,5px) var(--sc-pos10,10px)" /></label>
+        <label style="display:grid;gap:5px;gap:var(--sc-pos5,5px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Business Name</span><input autocomplete="organization" name="business" style="background:transparent;border:1px solid rgba(49,29,3,.34);border:var(--sc-pos1,1px) solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);min-height:44px;min-height:var(--sc-pos44,44px);padding:5px 10px;padding:var(--sc-pos5,5px) var(--sc-pos10,10px)" maxlength="120" /></label>
+        <label style="display:grid;gap:5px;gap:var(--sc-pos5,5px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Subject *</span><input name="message_subject" required="required" style="background:transparent;border:1px solid rgba(49,29,3,.34);border:var(--sc-pos1,1px) solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);min-height:44px;min-height:var(--sc-pos44,44px);padding:5px 10px;padding:var(--sc-pos5,5px) var(--sc-pos10,10px)" maxlength="120" /></label>
+        <label style="display:grid;gap:5px;gap:var(--sc-pos5,5px)"><span style="font-family:'Inter Tight',sans-serif;font-size:9.5px!important;font-size:var(--sc-pos9_5,9.5px)!important;font-weight:400;letter-spacing:.075em;text-transform:uppercase">Your Message *</span><textarea name="message" required="required" rows="6" style="background:transparent;border:1px solid rgba(49,29,3,.34);border:var(--sc-pos1,1px) solid rgba(49,29,3,.34);border-radius:0;color:inherit;font-family:inherit;font-size:16px;font-size:var(--sc-pos16,16px);padding:8px 10px;padding:var(--sc-pos8,8px) var(--sc-pos10,10px)"maxlength="2000"></textarea></label>
+        <p role="alert" style="color:#8c2f22;font-size:11px;font-size:var(--sc-pos11,11px);margin:0;display:{{ noteErrorDisplay }}">{{ noteError }}</p>
+        <button type="submit" disabled="{{ busy }}" style="align-items:center;background:#311d03;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;color:#f5efe6;cursor:pointer;display:inline-flex;font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;gap:12px;gap:var(--sc-pos12,12px);justify-content:center;letter-spacing:.18em;min-height:44px;min-height:var(--sc-pos44,44px);padding:0 19px;padding:0 var(--sc-pos19,19px);text-transform:uppercase;transition:background 180ms ease,color 180ms ease" style-hover="background:transparent;color:#311d03">{{ noteLabel }}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="height:15px;height:var(--sc-pos15,15px);width:15px;width:var(--sc-pos15,15px)"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+        <p data-form-privacy style="font-family:'Inter Tight',sans-serif;font-size:8.5px;font-size:var(--sc-pos8_5,8.5px);font-weight:300;letter-spacing:.035em;line-height:1.45;margin:1px 0 0;margin:var(--sc-pos1,1px) 0 0;opacity:.72">By submitting this form, you acknowledge our <a href="/privacy-policy" style="border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;padding-bottom:1px;padding-bottom:var(--sc-pos1,1px)">Privacy Policy</a>.</p>
       </form>
-      <div style="border-top:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.12em;margin-top:22px;padding:11px 0 0;text-transform:uppercase"><span>Sunday &amp; Company</span><span>A Seat At Our Table</span></div>
+      <div style="border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.12em;margin-top:22px;margin-top:var(--sc-pos22,22px);padding:11px 0 0;padding:var(--sc-pos11,11px) 0 0;text-transform:uppercase"><span>Sunday &amp; Company</span><span>A Seat At Our Table</span></div>
     </div>
   </section>
 
-  <section aria-labelledby="faq-title" style="background:#f5efe6;color:#311d03;display:grid;gap:clamp(34px,6vw,96px);grid-template-columns:{{ gc3 }};padding:clamp(46px,5.5vw,80px) clamp(22px,7vw,110px) clamp(56px,6.5vw,96px)">
+  <section aria-labelledby="faq-title" style="background:#f5efe6;color:#311d03;display:grid;gap:clamp(34px,6vw,96px);gap:clamp(var(--sc-pos34,34px),6vw,var(--sc-pos96,96px));grid-template-columns:{{ gc3 }};padding:clamp(46px,5.5vw,80px) clamp(22px,7vw,110px) clamp(56px,6.5vw,96px);padding:clamp(var(--sc-pos46,46px),5.5vw,var(--sc-pos80,80px)) clamp(var(--sc-pos22,22px),7vw,var(--sc-pos110,110px)) clamp(var(--sc-pos56,56px),6.5vw,var(--sc-pos96,96px))">
     <div style="align-self:start;position:{{ faqPosition }};top:{{ faqTop }}">
-      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Before You Reach Out</p>
-      <h2 id="faq-title" style="font-size:clamp(38px,4.5vw,64px);font-weight:400;letter-spacing:-.06em;line-height:.88;margin:16px 0 24px">Frequently Asked <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Questions</em></h2>
-      <p style="font-size:14px;line-height:1.6;max-width:420px">More detail about our services, pricing and what happens after you inquire.</p>
+      <p style="font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:500;letter-spacing:.22em;line-height:1.4;text-transform:uppercase;visibility:hidden" aria-hidden="true">Before You Reach Out</p>
+      <h2 id="faq-title" style="font-size:clamp(38px,4.5vw,64px);font-size:clamp(var(--sc-pos38,38px),4.5vw,var(--sc-pos64,64px));font-weight:400;letter-spacing:-.06em;line-height:.88;margin:16px 0 24px;margin:var(--sc-pos16,16px) 0 var(--sc-pos24,24px)">Frequently Asked <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.05em;font-style:normal;font-weight:400">Questions</em></h2>
+      <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.6;max-width:420px;max-width:var(--sc-pos420,420px)">More detail about our services, pricing and what happens after you inquire.</p>
     </div>
-    <div style="border-top:1px solid #311d03">
-      <div style="border-bottom:1px solid #311d03">
-        <button type="button" onClick="{{ togF0 }}" aria-expanded="{{ openF0 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-weight:400;gap:15px;grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em">01</span>What Services Does Sunday &amp; Company Offer?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;transition:transform 260ms ease;width:16px;transform:{{ rotF0 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <p style="font-size:14px;line-height:1.65;max-width:740px;padding:0 52px 24px;display:{{ bodyF0 }}">We work with lifestyle brands through branding, website design and digital marketing. Branding covers the strategy and visual identity. Website design includes the structure, custom design and development of your site. Digital marketing covers the ongoing work that keeps your brand visible, including content planning, copywriting and campaign support.</p>
+    <div style="border-top:1px solid #311d03;border-top:var(--sc-pos1,1px) solid #311d03">
+      <div style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03">
+        <button type="button" onClick="{{ togF0 }}" aria-expanded="{{ openF0 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-size:clamp(var(--sc-pos15,15px),1.2vw,var(--sc-pos18,18px));font-weight:400;gap:15px;gap:var(--sc-pos15,15px);grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;padding:var(--sc-pos19,19px) 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em">01</span>What Services Does Sunday &amp; Company Offer?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);transition:transform 260ms ease;width:16px;width:var(--sc-pos16,16px);transform:{{ rotF0 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:740px;max-width:var(--sc-pos740,740px);padding:0 52px 24px;padding:0 var(--sc-pos52,52px) var(--sc-pos24,24px);display:{{ bodyF0 }}">We work with lifestyle brands through branding, website design and digital marketing. Branding covers the strategy and visual identity. Website design includes the structure, custom design and development of your site. Digital marketing covers the ongoing work that keeps your brand visible, including content planning, copywriting and campaign support.</p>
       </div>
-      <div style="border-bottom:1px solid #311d03">
-        <button type="button" onClick="{{ togF1 }}" aria-expanded="{{ openF1 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-weight:400;gap:15px;grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em">02</span>How Do I Know Which Service Is Right For My Project?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;transition:transform 260ms ease;width:16px;transform:{{ rotF1 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <p style="font-size:14px;line-height:1.65;max-width:740px;padding:0 52px 24px;display:{{ bodyF1 }}">You do not need to diagnose the project before reaching out. Tell us what is changing in the business, what currently feels unclear and what you want the work to support. We will review the context and recommend the service or combined scope that fits the project.</p>
+      <div style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03">
+        <button type="button" onClick="{{ togF1 }}" aria-expanded="{{ openF1 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-size:clamp(var(--sc-pos15,15px),1.2vw,var(--sc-pos18,18px));font-weight:400;gap:15px;gap:var(--sc-pos15,15px);grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;padding:var(--sc-pos19,19px) 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em">02</span>How Do I Know Which Service Is Right For My Project?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);transition:transform 260ms ease;width:16px;width:var(--sc-pos16,16px);transform:{{ rotF1 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:740px;max-width:var(--sc-pos740,740px);padding:0 52px 24px;padding:0 var(--sc-pos52,52px) var(--sc-pos24,24px);display:{{ bodyF1 }}">You do not need to diagnose the project before reaching out. Tell us what is changing in the business, what currently feels unclear and what you want the work to support. We will review the context and recommend the service or combined scope that fits the project.</p>
       </div>
-      <div style="border-bottom:1px solid #311d03">
-        <button type="button" onClick="{{ togF2 }}" aria-expanded="{{ openF2 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-weight:400;gap:15px;grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em">03</span>What Does Starting At Mean?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;transition:transform 260ms ease;width:16px;transform:{{ rotF2 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <p style="font-size:14px;line-height:1.65;max-width:740px;padding:0 52px 24px;display:{{ bodyF2 }}">The starting price is the entry point for that service. Your final investment depends on the size of the project, the deliverables involved and the condition of what already exists. You will receive a defined scope and price before the work begins.</p>
+      <div style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03">
+        <button type="button" onClick="{{ togF2 }}" aria-expanded="{{ openF2 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-size:clamp(var(--sc-pos15,15px),1.2vw,var(--sc-pos18,18px));font-weight:400;gap:15px;gap:var(--sc-pos15,15px);grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;padding:var(--sc-pos19,19px) 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em">03</span>What Does Starting At Mean?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);transition:transform 260ms ease;width:16px;width:var(--sc-pos16,16px);transform:{{ rotF2 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:740px;max-width:var(--sc-pos740,740px);padding:0 52px 24px;padding:0 var(--sc-pos52,52px) var(--sc-pos24,24px);display:{{ bodyF2 }}">The starting price is the entry point for that service. Your final investment depends on the size of the project, the deliverables involved and the condition of what already exists. You will receive a defined scope and price before the work begins.</p>
       </div>
-      <div style="border-bottom:1px solid #311d03">
-        <button type="button" onClick="{{ togF3 }}" aria-expanded="{{ openF3 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-weight:400;gap:15px;grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em">04</span>Can I Book More Than One Service?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;transition:transform 260ms ease;width:16px;transform:{{ rotF3 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <p style="font-size:14px;line-height:1.65;max-width:740px;padding:0 52px 24px;display:{{ bodyF3 }}">Yes. Branding and website design are often completed together, and digital marketing can follow once the foundation is ready. If your project crosses more than one service, we will organize it into a clear scope instead of asking you to piece separate offers together.</p>
+      <div style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03">
+        <button type="button" onClick="{{ togF3 }}" aria-expanded="{{ openF3 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-size:clamp(var(--sc-pos15,15px),1.2vw,var(--sc-pos18,18px));font-weight:400;gap:15px;gap:var(--sc-pos15,15px);grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;padding:var(--sc-pos19,19px) 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em">04</span>Can I Book More Than One Service?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);transition:transform 260ms ease;width:16px;width:var(--sc-pos16,16px);transform:{{ rotF3 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:740px;max-width:var(--sc-pos740,740px);padding:0 52px 24px;padding:0 var(--sc-pos52,52px) var(--sc-pos24,24px);display:{{ bodyF3 }}">Yes. Branding and website design are often completed together, and digital marketing can follow once the foundation is ready. If your project crosses more than one service, we will organize it into a clear scope instead of asking you to piece separate offers together.</p>
       </div>
-      <div style="border-bottom:1px solid #311d03">
-        <button type="button" onClick="{{ togF4 }}" aria-expanded="{{ openF4 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-weight:400;gap:15px;grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em">05</span>What Should I Include In My Inquiry?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;transition:transform 260ms ease;width:16px;transform:{{ rotF4 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <p style="font-size:14px;line-height:1.65;max-width:740px;padding:0 52px 24px;display:{{ bodyF4 }}">Share your business name, current website or social profile, the service you are considering, your preferred timing and the investment range you have planned. Include anything that would help us understand what is already working and where you need more clarity.</p>
+      <div style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03">
+        <button type="button" onClick="{{ togF4 }}" aria-expanded="{{ openF4 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-size:clamp(var(--sc-pos15,15px),1.2vw,var(--sc-pos18,18px));font-weight:400;gap:15px;gap:var(--sc-pos15,15px);grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;padding:var(--sc-pos19,19px) 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em">05</span>What Should I Include In My Inquiry?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);transition:transform 260ms ease;width:16px;width:var(--sc-pos16,16px);transform:{{ rotF4 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:740px;max-width:var(--sc-pos740,740px);padding:0 52px 24px;padding:0 var(--sc-pos52,52px) var(--sc-pos24,24px);display:{{ bodyF4 }}">Share your business name, current website or social profile, the service you are considering, your preferred timing and the investment range you have planned. Include anything that would help us understand what is already working and where you need more clarity.</p>
       </div>
-      <div style="border-bottom:1px solid #311d03">
-        <button type="button" onClick="{{ togF5 }}" aria-expanded="{{ openF5 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-weight:400;gap:15px;grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em">06</span>What Happens After I Submit?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;transition:transform 260ms ease;width:16px;transform:{{ rotF5 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <p style="font-size:14px;line-height:1.65;max-width:740px;padding:0 52px 24px;display:{{ bodyF5 }}">We review the information and the links you provide before responding. If the project fits our services, the next step is a conversation about the scope and what you need from the work. You will understand the recommended direction before making a commitment.</p>
+      <div style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03">
+        <button type="button" onClick="{{ togF5 }}" aria-expanded="{{ openF5 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-size:clamp(var(--sc-pos15,15px),1.2vw,var(--sc-pos18,18px));font-weight:400;gap:15px;gap:var(--sc-pos15,15px);grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;padding:var(--sc-pos19,19px) 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em">06</span>What Happens After I Submit?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);transition:transform 260ms ease;width:16px;width:var(--sc-pos16,16px);transform:{{ rotF5 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:740px;max-width:var(--sc-pos740,740px);padding:0 52px 24px;padding:0 var(--sc-pos52,52px) var(--sc-pos24,24px);display:{{ bodyF5 }}">We review the information and the links you provide before responding. If the project fits our services, the next step is a conversation about the scope and what you need from the work. You will understand the recommended direction before making a commitment.</p>
       </div>
-      <div style="border-bottom:1px solid #311d03">
-        <button type="button" onClick="{{ togF6 }}" aria-expanded="{{ openF6 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-weight:400;gap:15px;grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.12em">07</span>Where Is Sunday &amp; Company Based?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;transition:transform 260ms ease;width:16px;transform:{{ rotF6 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <p style="font-size:14px;line-height:1.65;max-width:740px;padding:0 52px 24px;display:{{ bodyF6 }}">Sunday &amp; Company works remotely across the DMV and North Carolina, with clients everywhere else. Every project runs the same way regardless of where you are: shared documents, scheduled reviews and clear written decisions, so distance never changes the quality of the work.</p>
+      <div style="border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03">
+        <button type="button" onClick="{{ togF6 }}" aria-expanded="{{ openF6 }}" style="align-items:baseline;background:transparent;border:0;color:#311d03;cursor:pointer;display:grid;font-family:'Playfair Display',Georgia,serif;font-size:clamp(15px,1.2vw,18px);font-size:clamp(var(--sc-pos15,15px),1.2vw,var(--sc-pos18,18px));font-weight:400;gap:15px;gap:var(--sc-pos15,15px);grid-template-columns:{{ gc4 }};line-height:1.3;padding:19px 0;padding:var(--sc-pos19,19px) 0;text-align:left;width:100%"><span style="color:#ac746c;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.12em">07</span>Where Is Sunday &amp; Company Based?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="height:16px;height:var(--sc-pos16,16px);transition:transform 260ms ease;width:16px;width:var(--sc-pos16,16px);transform:{{ rotF6 }}"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p style="font-size:14px;font-size:var(--sc-pos14,14px);line-height:1.65;max-width:740px;max-width:var(--sc-pos740,740px);padding:0 52px 24px;padding:0 var(--sc-pos52,52px) var(--sc-pos24,24px);display:{{ bodyF6 }}">Sunday &amp; Company works remotely across the DMV and North Carolina, with clients everywhere else. Every project runs the same way regardless of where you are: shared documents, scheduled reviews and clear written decisions, so distance never changes the quality of the work.</p>
       </div>
     </div>
   </section>
@@ -437,11 +437,11 @@ class Component extends DCLogic {
       },
       gc0: n ? '1fr' : '.85fr 1.15fr',
       gc1: n ? '1fr' : '1fr 1fr',
-      gc2: n ? '1fr' : '112px 1fr',
+      gc2: n ? '1fr' : 'var(--sc-pos112,112px) 1fr',
       gc3: n ? '1fr' : '.8fr 1.2fr',
-      gc4: n ? '26px 1fr auto' : '34px 1fr auto',
+      gc4: n ? 'var(--sc-pos26,26px) 1fr auto' : 'var(--sc-pos34,34px) 1fr auto',
       faqPosition: n ? 'static' : 'sticky',
-      faqTop: n ? 'auto' : '120px',};
+      faqTop: n ? 'auto' : 'var(--sc-pos120,120px)',};
     for (let i = 0; i < 7; i++) {
       const on = this.state.faq === i;
       out['openF' + i] = on;
@@ -455,3 +455,4 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
+

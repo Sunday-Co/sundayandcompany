@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20260928-05';
+    link.href = '/assets/rendered-corrections.css?v=20260928-06';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -549,9 +549,9 @@
     var labels = document.querySelectorAll('[data-start-date-label]');
     for (var i = 0; i < labels.length; i++) {
       var label = labels[i];
-      if (label.style.getPropertyValue('font-size') !== '9.5px' || label.style.getPropertyPriority('font-size') !== 'important') {
+      if (label.style.getPropertyValue('font-size') !== 'var(--sc-pos9_5,9.5px)' || label.style.getPropertyPriority('font-size') !== 'important') {
         label.style.setProperty('font-family', "'Inter Tight', sans-serif", 'important');
-        label.style.setProperty('font-size', '9.5px', 'important');
+        label.style.setProperty('font-size', 'var(--sc-pos9_5,9.5px)', 'important');
         label.style.setProperty('font-weight', '400', 'important');
         label.style.setProperty('letter-spacing', '.055em', 'important');
         label.style.setProperty('line-height', '1.25', 'important');

@@ -55,7 +55,7 @@ a[style*="font-family:'Inter Tight'"],
   input,
   textarea,
   select {
-    font-size: 16px !important;
+    font-size: 16px !important;    font-size: var(--sc-pos16,16px) !important;
   }
 
   html {
@@ -70,7 +70,7 @@ a[style*="font-family:'Inter Tight'"],
 #vision [data-vision-quote] {
   color: var(--sunday-espresso);
   font-family: var(--sunday-serif) !important;
-  font-size: clamp(17px, 1.35vw, 20px) !important;
+  font-size: clamp(17px, 1.35vw, 20px) !important;  font-size: clamp(var(--sc-pos17,17px), 1.35vw, var(--sc-pos20,20px)) !important;
   font-style: italic;
   font-weight: 400 !important;
   letter-spacing: -0.012em !important;
@@ -100,7 +100,7 @@ a[style*="font-family:'Inter Tight'"],
 
 #vision [data-vision-body] {
   font-family: var(--sunday-serif) !important;
-  font-size: 15px !important;
+  font-size: 15px !important;  font-size: var(--sc-pos15,15px) !important;
   font-weight: 400 !important;
   line-height: 1.68 !important;
 }
@@ -127,7 +127,7 @@ html {
   form textarea,
   form select,
   form [contenteditable="true"] {
-    font-size:16px !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
     line-height:1.25;
     touch-action:manipulation;
   }
@@ -139,7 +139,7 @@ html {
   html[data-phone-viewport-scale="1"] form textarea,
   html[data-phone-viewport-scale="1"] form select,
   html[data-phone-viewport-scale="1"] form [contenteditable="true"] {
-    font-size:20px !important;
+    font-size:20px !important;    font-size:var(--sc-pos20,20px) !important;
   }
 
   form input:not([type="hidden"]):focus,
@@ -165,7 +165,7 @@ html {
 form [role="alert"] {
   color:#8c2f22 !important;
   font-family:var(--sunday-sans) !important;
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.065em !important;
   line-height:1.35 !important;
@@ -175,11 +175,11 @@ form [role="alert"] {
 form [data-form-error-field="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12);
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12);  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12);
 }
 
 [data-program-listbox] {
-  bottom:calc(100% + 1px) !important;
+  bottom:calc(100% + 1px) !important;  bottom:calc(100% + var(--sc-pos1,1px)) !important;
   top:auto !important;
 }
 
@@ -189,7 +189,7 @@ form[data-editorial-labels] label > span:first-child,
 form[data-editorial-labels] > label[for],
 form[data-editorial-labels] > div > span:first-child {
   font-family: var(--sunday-sans) !important;
-  font-size: 10.25px !important;
+  font-size: 10.25px !important;  font-size: var(--sc-pos10_25,10.25px) !important;
   font-weight: 400 !important;
   letter-spacing: .055em !important;
   line-height: 1.32 !important;
@@ -214,7 +214,7 @@ form[data-editorial-labels] button[type="submit"],
 [aria-label="Newsletter"] form button[type="submit"],
 [aria-label="The Sunday Reservation"] form button[type="submit"] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .085em !important;
 }
@@ -223,7 +223,7 @@ form[data-editorial-labels] [aria-haspopup="listbox"],
 form[data-editorial-labels] [role="option"],
 form[data-inq] [aria-haspopup="dialog"] {
   font-family: var(--sunday-sans) !important;
-  font-size: 14px !important;
+  font-size: 14px !important;  font-size: var(--sc-pos14,14px) !important;
   font-weight: 400 !important;
   letter-spacing: 0 !important;
 }
@@ -233,7 +233,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 [aria-label="Project inquiry"] [data-inquiry-receipt-meta],
 #inquiry [data-inquiry-receipt-meta] {
   font-family: var(--sunday-sans) !important;
-  font-size: 8.5px !important;
+  font-size: 8.5px !important;  font-size: var(--sc-pos8_5,8.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .085em !important;
   line-height: 1.4 !important;
@@ -242,7 +242,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 
 [data-form-instruction] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9px !important;
+  font-size: 9px !important;  font-size: var(--sc-pos9,9px) !important;
   font-weight: 400 !important;
   letter-spacing: .065em !important;
   line-height: 1.42 !important;
@@ -254,7 +254,7 @@ form[data-editorial-labels] [role="alert"],
 [aria-label="Newsletter"] [role="alert"],
 [aria-label="The Sunday Reservation"] [role="alert"] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   line-height: 1.4 !important;
   text-transform: uppercase !important;
 }
@@ -262,7 +262,7 @@ form[data-editorial-labels] [role="alert"],
 form[data-inq] [data-stepnav] span,
 #inquiry form[data-inq] [data-stepnav] span {
   font-family: var(--sunday-sans) !important;
-  font-size: 9px !important;
+  font-size: 9px !important;  font-size: var(--sc-pos9,9px) !important;
   font-weight: 400 !important;
   letter-spacing: .04em !important;
   line-height: 1.2 !important;
@@ -273,17 +273,17 @@ form[data-inq] [data-stepnav] span,
 [data-screen-label="Contact"] form[data-editorial-labels] textarea,
 [data-screen-label="Sunday School"] form[data-editorial-labels] input,
 [aria-label="Newsletter"] form input {
-  font-size: 16px !important;
+  font-size: 16px !important;  font-size: var(--sc-pos16,16px) !important;
 }
 
 [aria-label="Newsletter"] form button,
 [data-screen-label="Sunday School"] form[data-editorial-labels] button {
-  min-height: 44px !important;
+  min-height: 44px !important;  min-height: var(--sc-pos44,44px) !important;
 }
 
 [aria-label="Newsletter"] [data-news-receipt] {
   font-family: var(--sunday-sans) !important;
-  font-size: 8.5px !important;
+  font-size: 8.5px !important;  font-size: var(--sc-pos8_5,8.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .085em !important;
   line-height: 1.45 !important;
@@ -291,7 +291,7 @@ form[data-inq] [data-stepnav] span,
 
 [aria-label="Newsletter"] [data-news-fineprint] {
   font-family: var(--sunday-sans) !important;
-  font-size: 8.25px !important;
+  font-size: 8.25px !important;  font-size: var(--sc-pos8_25,8.25px) !important;
   font-weight: 300 !important;
   letter-spacing: .035em !important;
   line-height: 1.45 !important;
@@ -303,14 +303,14 @@ footer[data-site-footer] nav a,
 footer[data-site-footer] a[href*="instagram.com/sundayand_co"],
 footer[data-site-footer] [data-footer-location] {
   font-family: var(--sunday-sans) !important;
-  font-size: 12.5px !important;
+  font-size: 12.5px !important;  font-size: var(--sc-pos12_5,12.5px) !important;
   font-weight: 300 !important;
   letter-spacing: .01em !important;
   line-height: 1.4 !important;
 }
 footer[data-site-footer] a[href^="mailto:"] {
   font-family: var(--sunday-sans) !important;
-  font-size: 13.25px !important;
+  font-size: 13.25px !important;  font-size: var(--sc-pos13_25,13.25px) !important;
   font-weight: 400 !important;
   letter-spacing: .005em !important;
   line-height: 1.4 !important;
@@ -322,7 +322,7 @@ footer[data-site-footer] [data-footer-label] {
 }
 footer[data-site-footer] [data-footer-legal] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9px !important;
+  font-size: 9px !important;  font-size: var(--sc-pos9,9px) !important;
   font-weight: 400 !important;
   letter-spacing: .10em !important;
 }
@@ -330,7 +330,7 @@ footer[data-site-footer] [data-footer-legal] {
 /* Footer source alignment: secondary-font tagline, readable email, and real bottom breathing room. */
 footer[data-site-footer] [data-footer-tagline] {
   font-family: var(--sunday-sans) !important;
-  font-size: clamp(15px, 1.3vw, 18px) !important;
+  font-size: clamp(15px, 1.3vw, 18px) !important;  font-size: clamp(var(--sc-pos15,15px), 1.3vw, var(--sc-pos18,18px)) !important;
   font-style: normal !important;
   font-weight: 300 !important;
   letter-spacing: .015em !important;
@@ -345,10 +345,10 @@ footer[data-site-footer] [data-footer-tagline] em {
 
 @media (max-width: 900px) {
   footer[data-site-footer] {
-    padding-bottom: calc(44px + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(44px + env(safe-area-inset-bottom)) !important;    padding-bottom: calc(var(--sc-pos44,44px) + env(safe-area-inset-bottom)) !important;
   }
   footer[data-site-footer] a[href^="mailto:"] {
-    font-size: 15.5px !important;
+    font-size: 15.5px !important;    font-size: var(--sc-pos15_5,15.5px) !important;
     font-weight: 400 !important;
     letter-spacing: 0 !important;
   }
@@ -372,19 +372,19 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
 #inquiry [data-inquiry-kicker] {
   color: var(--sunday-rose) !important;
   font-family: var(--sunday-sans) !important;
-  font-size: 10px !important;
+  font-size: 10px !important;  font-size: var(--sc-pos10,10px) !important;
   font-style: normal !important;
   font-weight: 400 !important;
   letter-spacing: .095em !important;
   line-height: 1.3 !important;
-  margin: 0 0 5px !important;
+  margin: 0 0 5px !important;  margin: 0 0 var(--sc-pos5,5px) !important;
   text-transform: uppercase !important;
 }
 [aria-label="Project inquiry"] [data-inquiry-title],
 #inquiry [data-inquiry-title] {
   color: var(--sunday-espresso) !important;
   font-family: var(--sunday-serif) !important;
-  font-size: 31px !important;
+  font-size: 31px !important;  font-size: var(--sc-pos31,31px) !important;
   font-style: normal !important;
   font-weight: 400 !important;
   letter-spacing: -.045em !important;
@@ -396,12 +396,12 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
 #inquiry [data-inquiry-support],
 #inquiry header h2 + p {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.75px !important;
+  font-size: 9.75px !important;  font-size: var(--sc-pos9_75,9.75px) !important;
   font-weight: 300 !important;
   letter-spacing: .065em !important;
   line-height: 1.45 !important;
-  margin-top: 6px !important;
-  max-width: 520px !important;
+  margin-top: 6px !important;  margin-top: var(--sc-pos6,6px) !important;
+  max-width: 520px !important;  max-width: var(--sc-pos520,520px) !important;
   text-transform: uppercase !important;
 }
 [aria-label="Project inquiry"] form[data-inq] [data-stepbtns] button,
@@ -410,21 +410,21 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
 #inquiry form[data-inq] [data-stepbtns] button,
 #inquiry form[data-inq] > button {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .085em !important;
 }
 
 @media (min-width: 901px) {
   [aria-label="Project inquiry"] {
-    width: min(880px, calc(100vw - 64px)) !important;
-    max-width: 880px !important;
-    max-height: calc(100vh - 64px) !important;
+    width: min(880px, calc(100vw - 64px)) !important;    width: min(var(--sc-pos880,880px), calc(100vw - var(--sc-pos64,64px))) !important;
+    max-width: 880px !important;    max-width: var(--sc-pos880,880px) !important;
+    max-height: calc(100vh - 64px) !important;    max-height: calc(100vh - var(--sc-pos64,64px)) !important;
     overflow-y: auto !important;
   }
   [aria-label="Project inquiry"] > div {
     min-height: 0 !important;
-    padding: 30px 38px 46px !important;
+    padding: 30px 38px 46px !important;    padding: var(--sc-pos30,30px) var(--sc-pos38,38px) var(--sc-pos46,46px) !important;
   }
 }
 
@@ -432,33 +432,33 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
     align-items: center !important;
     justify-content: center !important;
-    padding: 18px 12px calc(18px + env(safe-area-inset-bottom)) !important;
+    padding: 18px 12px calc(18px + env(safe-area-inset-bottom)) !important;    padding: var(--sc-pos18,18px) var(--sc-pos12,12px) calc(var(--sc-pos18,18px) + env(safe-area-inset-bottom)) !important;
     overflow-y: auto !important;
   }
   [aria-label="Project inquiry"] {
     margin: auto !important;
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    max-height: calc(100dvh - 36px) !important;
+    width: calc(100vw - 24px) !important;    width: calc(100vw - var(--sc-pos24,24px)) !important;
+    max-width: calc(100vw - 24px) !important;    max-width: calc(100vw - var(--sc-pos24,24px)) !important;
+    max-height: calc(100dvh - 36px) !important;    max-height: calc(100dvh - var(--sc-pos36,36px)) !important;
     overflow-y: auto !important;
   }
   [aria-label="Project inquiry"] > div {
-    min-height: min(620px, 70svh) !important;
-    padding: 22px 18px 48px !important;
+    min-height: min(620px, 70svh) !important;    min-height: min(var(--sc-pos620,620px), 70svh) !important;
+    padding: 22px 18px 48px !important;    padding: var(--sc-pos22,22px) var(--sc-pos18,18px) var(--sc-pos48,48px) !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-kicker],
   #inquiry [data-inquiry-kicker] {
-    font-size: 9.5px !important;
+    font-size: 9.5px !important;    font-size: var(--sc-pos9_5,9.5px) !important;
     letter-spacing: .09em !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-title],
   #inquiry [data-inquiry-title] {
-    font-size: 24px !important;
+    font-size: 24px !important;    font-size: var(--sc-pos24,24px) !important;
     line-height: 1 !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-support],
   #inquiry [data-inquiry-support] {
-    font-size: 9.25px !important;
+    font-size: 9.25px !important;    font-size: var(--sc-pos9_25,9.25px) !important;
     letter-spacing: .06em !important;
   }
   [aria-label="Project inquiry"] form[data-inq] label > span:first-child,
@@ -468,11 +468,11 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   form[data-editorial-labels] label > span:first-child,
   form[data-editorial-labels] > label[for],
   form[data-editorial-labels] > div > span:first-child {
-    font-size: 10px !important;
+    font-size: 10px !important;    font-size: var(--sc-pos10,10px) !important;
     letter-spacing: .05em !important;
   }
   [data-form-instruction] {
-    font-size: 8.75px !important;
+    font-size: 8.75px !important;    font-size: var(--sc-pos8_75,8.75px) !important;
     letter-spacing: .06em !important;
   }
   [aria-label="Project inquiry"] form[data-inq] input,
@@ -484,12 +484,12 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
   form[data-editorial-labels] input,
   form[data-editorial-labels] textarea,
   form[data-editorial-labels] select {
-    font-size: 16px !important;
+    font-size: 16px !important;    font-size: var(--sc-pos16,16px) !important;
   }
   form[data-editorial-labels] input,
-  form[data-editorial-labels] select { min-height: 44px !important; }
-  form[data-editorial-labels] textarea { min-height: 112px !important; }
-  form[data-editorial-labels] button { min-height: 44px !important; }
+  form[data-editorial-labels] select { min-height: 44px !important; min-height: var(--sc-pos44,44px) !important; }
+  form[data-editorial-labels] textarea { min-height: 112px !important; min-height: var(--sc-pos112,112px) !important; }
+  form[data-editorial-labels] button { min-height: 44px !important; min-height: var(--sc-pos44,44px) !important; }
 }
 
 [aria-label="The Sunday Reservation"] {
@@ -498,14 +498,14 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
 }
 [aria-label="The Sunday Reservation"] h2 + p {
   font-family: var(--sunday-sans) !important;
-  font-size: 11.25px !important;
+  font-size: 11.25px !important;  font-size: var(--sc-pos11_25,11.25px) !important;
   font-weight: 300 !important;
   letter-spacing: .005em !important;
   line-height: 1.48 !important;
 }
 [aria-label="The Sunday Reservation"] [data-res-fineprint] {
   font-family: var(--sunday-sans) !important;
-  font-size: 8.5px !important;
+  font-size: 8.5px !important;  font-size: var(--sc-pos8_5,8.5px) !important;
   font-weight: 300 !important;
   letter-spacing: .04em !important;
   line-height: 1.42 !important;
@@ -514,11 +514,11 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
 
 @media (min-width: 901px) {
   [aria-label="The Sunday Reservation"] {
-    width: min(800px, calc(100vw - 56px)) !important;
-    max-width: 800px !important;
-    height: 540px !important;
+    width: min(800px, calc(100vw - 56px)) !important;    width: min(var(--sc-pos800,800px), calc(100vw - var(--sc-pos56,56px))) !important;
+    max-width: 800px !important;    max-width: var(--sc-pos800,800px) !important;
+    height: 540px !important;    height: var(--sc-pos540,540px) !important;
     min-height: 0 !important;
-    max-height: calc(100vh - 56px) !important;
+    max-height: calc(100vh - 56px) !important;    max-height: calc(100vh - var(--sc-pos56,56px)) !important;
     grid-template-columns: 1fr 1.06fr !important;
     overflow: hidden !important;
   }
@@ -538,44 +538,44 @@ div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
     height: 100% !important;
     min-height: 0 !important;
     overflow-y: auto !important;
-    padding: 34px 32px 28px !important;
+    padding: 34px 32px 28px !important;    padding: var(--sc-pos34,34px) var(--sc-pos32,32px) var(--sc-pos28,28px) !important;
   }
 }
 
 @media (max-width: 900px) {
   [aria-label="The Sunday Reservation"] {
-    width: calc(100vw - 28px) !important;
-    max-width: calc(100vw - 28px) !important;
+    width: calc(100vw - 28px) !important;    width: calc(100vw - var(--sc-pos28,28px)) !important;
+    max-width: calc(100vw - 28px) !important;    max-width: calc(100vw - var(--sc-pos28,28px)) !important;
     min-height: 0 !important;
     height: auto !important;
-    max-height: calc(100svh - 28px) !important;
+    max-height: calc(100svh - 28px) !important;    max-height: calc(100svh - var(--sc-pos28,28px)) !important;
     grid-template-columns: 1fr !important;
     overflow-y: auto !important;
   }
   [aria-label="The Sunday Reservation"] > div[aria-hidden] {
-    height: 180px !important;
-    min-height: 180px !important;
-    max-height: 180px !important;
+    height: 180px !important;    height: var(--sc-pos180,180px) !important;
+    min-height: 180px !important;    min-height: var(--sc-pos180,180px) !important;
+    max-height: 180px !important;    max-height: var(--sc-pos180,180px) !important;
   }
   [aria-label="The Sunday Reservation"] > div:last-child {
     min-height: 0 !important;
     height: auto !important;
-    padding: 22px 20px 21px !important;
+    padding: 22px 20px 21px !important;    padding: var(--sc-pos22,22px) var(--sc-pos20,20px) var(--sc-pos21,21px) !important;
   }
   [aria-label="The Sunday Reservation"] h2 + p {
-    font-size: 11.5px !important;
+    font-size: 11.5px !important;    font-size: var(--sc-pos11_5,11.5px) !important;
     line-height: 1.48 !important;
-    margin-top: 11px !important;
-    max-width: 310px !important;
+    margin-top: 11px !important;    margin-top: var(--sc-pos11,11px) !important;
+    max-width: 310px !important;    max-width: var(--sc-pos310,310px) !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-fineprint] {
-    font-size: 8px !important;
+    font-size: 8px !important;    font-size: var(--sc-pos8,8px) !important;
     letter-spacing: .035em !important;
     line-height: 1.42 !important;
-    margin-top: 7px !important;    opacity: .78 !important;
+    margin-top: 7px !important;    margin-top: var(--sc-pos7,7px) !important;    opacity: .78 !important;
   }
-  [aria-label="The Sunday Reservation"] input { font-size: 16px !important; }
-  [aria-label="The Sunday Reservation"] form button { min-height: 44px !important; }
+  [aria-label="The Sunday Reservation"] input { font-size: 16px !important; font-size: var(--sc-pos16,16px) !important; }
+  [aria-label="The Sunday Reservation"] form button { min-height: 44px !important; min-height: var(--sc-pos44,44px) !important; }
 }
 
 html,
@@ -638,30 +638,30 @@ img[data-sunday-static-hero="true"] {
 
 @media (max-width: 900px) {
   aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
-    font-size: 10px !important;
+    font-size: 10px !important;    font-size: var(--sc-pos10,10px) !important;
     font-weight: 400 !important;
     letter-spacing: .12em !important;
-    min-height: 44px !important;
+    min-height: 44px !important;    min-height: var(--sc-pos44,44px) !important;
   }
 
   [data-about-team-cta] {
-    font-size: 10px !important;
+    font-size: 10px !important;    font-size: var(--sc-pos10,10px) !important;
     letter-spacing: .11em !important;
-    min-height: 44px !important;
+    min-height: 44px !important;    min-height: var(--sc-pos44,44px) !important;
   }
 
   [data-screen-label="Services"] [data-service-meta],
   [data-screen-label="Services"] [data-service-number],
   [data-screen-label="Services"] [data-service-included] {
     font-family: var(--sunday-sans) !important;
-    font-size: 10.5px !important;
+    font-size: 10.5px !important;    font-size: var(--sc-pos10_5,10.5px) !important;
     font-weight: 400 !important;
     letter-spacing: .095em !important;
   }
 
   [data-screen-label="Services"] [data-service-price] {
     font-family: var(--sunday-sans) !important;
-    font-size: 11.5px !important;
+    font-size: 11.5px !important;    font-size: var(--sc-pos11_5,11.5px) !important;
     font-weight: 400 !important;
     letter-spacing: .10em !important;
   }
@@ -678,7 +678,7 @@ section#top[data-hero-fallback="ready"] {
 
 @media (max-width: 900px) {
   section#top[data-screen-hero="home"] {
-    height: clamp(680px, 100svh, 820px) !important;
+    height: clamp(680px, 100svh, 820px) !important;    height: clamp(var(--sc-pos680,680px), 100svh, var(--sc-pos820,820px)) !important;
   }
 }
 
@@ -689,7 +689,7 @@ section#top[data-hero-fallback="ready"] {
 @keyframes sunday-modal-in {
   from {
     opacity: 1;
-    transform: translateY(8px) scale(.995);
+    transform: translateY(8px) scale(.995);    transform: translateY(var(--sc-pos8,8px)) scale(.995);
   }
 
   to {
@@ -700,7 +700,7 @@ section#top[data-hero-fallback="ready"] {
 
 .sc-reveal {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(14px);  transform: translateY(var(--sc-pos14,14px));
   transition:
     opacity 620ms cubic-bezier(.22,.75,.18,1),
     transform 620ms cubic-bezier(.22,.75,.18,1);
@@ -729,7 +729,7 @@ a[href="#inquiry"] svg {
 button[onClick*="openInquiry"]:hover svg,
 a[href="/contact"]:hover svg,
 a[href="#inquiry"]:hover svg {
-  transform: translate(2px,-1px);
+  transform: translate(2px,-1px);  transform: translate(var(--sc-pos2,2px),var(--sc-neg1,-1px));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -760,8 +760,8 @@ body {
 }
 
 section#top[data-screen-hero="home"] {
-  height: clamp(680px, 66.5vw, 900px) !important;
-  min-height: 680px !important;
+  height: clamp(680px, 66.5vw, 900px) !important;  height: clamp(var(--sc-pos680,680px), 66.5vw, var(--sc-pos900,900px)) !important;
+  min-height: 680px !important;  min-height: var(--sc-pos680,680px) !important;
   background-position: 50% 48% !important;
 }
 
@@ -774,23 +774,23 @@ section#top[data-hero-fallback="ready"] {
 
 @media (max-width: 900px) {
   section#top[data-screen-hero="home"] {
-    height: clamp(680px, 185vw, 820px) !important;
-    min-height: 680px !important;
+    height: clamp(680px, 185vw, 820px) !important;    height: clamp(var(--sc-pos680,680px), 185vw, var(--sc-pos820,820px)) !important;
+    min-height: 680px !important;    min-height: var(--sc-pos680,680px) !important;
   }
 }
 
 @keyframes sunday-step-in {
-  from { opacity: 0; transform: translateY(5px); }
+  from { opacity: 0; transform: translateY(5px); transform: translateY(var(--sc-pos5,5px)); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes sunday-accordion-in {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(4px); transform: translateY(var(--sc-pos4,4px)); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes sunday-menu-row-in {
-  from { opacity: 0; transform: translateX(7px); }
+  from { opacity: 0; transform: translateX(7px); transform: translateX(var(--sc-pos7,7px)); }
   to { opacity: 1; transform: translateX(0); }
 }
 
@@ -807,7 +807,7 @@ form[data-inq] [data-step-panel] {
 .sc-reveal h2 [style*="Pinyon Script"],
 .sc-reveal h3 [style*="Pinyon Script"] {
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(4px);  transform: translateY(var(--sc-pos4,4px));
   transition: opacity 360ms ease 90ms, transform 360ms cubic-bezier(.22,.75,.18,1) 90ms;
 }
 
@@ -838,7 +838,7 @@ form[data-inq] [data-step-panel] {
 
 @media (hover: hover) and (pointer: fine) {
   [data-love-letter]:hover {
-    filter: drop-shadow(0 9px 12px rgba(49,29,3,.08));
+    filter: drop-shadow(0 9px 12px rgba(49,29,3,.08));    filter: drop-shadow(0 var(--sc-pos9,9px) var(--sc-pos12,12px) rgba(49,29,3,.08));
   }
 }
 
@@ -866,20 +866,20 @@ form[data-inq] [data-step-panel] {
 /* BATCH 1 FINAL: FUNCTIONAL MICROTYPE AUDIT */
 
 header[data-site-header] nav[aria-label="Primary navigation"] {
-  font-size: 10px !important;
+  font-size: 10px !important;  font-size: var(--sc-pos10,10px) !important;
   letter-spacing: .14em !important;
 }
 
 header[data-site-header] > div button[onClick*="openInquiry"],
 header[data-site-header] > div > a[href="/contact"] {
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .12em !important;
 }
 
 header[data-site-header] > button[aria-label="Open menu"],
 a[href="#top"]:first-child {
-  font-size: 10px !important;
+  font-size: 10px !important;  font-size: var(--sc-pos10,10px) !important;
   letter-spacing: .13em !important;
 }
 
@@ -890,7 +890,7 @@ a[href="#top"]:first-child {
 [data-screen-label="Services"] a[href^="mailto:"],
 [data-screen-label="Contact"] button[onClick*="openInquiry"] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .12em !important;
 }
@@ -898,66 +898,66 @@ a[href="#top"]:first-child {
 [data-screen-label="Contact"] a[href*="instagram.com"],
 [data-screen-label="Contact"] a[href*="tiktok.com"],
 [data-screen-label="Contact"] a[href*="linkedin.com"] {
-  font-size: 9px !important;
+  font-size: 9px !important;  font-size: var(--sc-pos9,9px) !important;
   font-weight: 400 !important;
   letter-spacing: .10em !important;
 }
 
 [aria-label="Newsletter"] form button {
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .11em !important;
 }
 
 footer[data-site-footer] [data-footer-legal] {
-  font-size: 9px !important;
+  font-size: 9px !important;  font-size: var(--sc-pos9,9px) !important;
   letter-spacing: .12em !important;
 }
 
 [data-screen-label="Services"] [data-service-number],
 [data-screen-label="Services"] [data-service-meta],
 [data-screen-label="Services"] [data-service-included] {
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   letter-spacing: .10em !important;
 }
 
 [data-screen-label="Services"] [data-service-price] {
-  font-size: 10.5px !important;
+  font-size: 10.5px !important;  font-size: var(--sc-pos10_5,10.5px) !important;
   letter-spacing: .11em !important;
 }
 
 [data-program-cards] [data-program-action] {
   font-family: var(--sunday-sans) !important;
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .11em !important;
 }
 
 @media (max-width: 900px) {
-  header[data-site-header] nav[aria-label="Primary navigation"] { font-size: 10px !important; }
+  header[data-site-header] nav[aria-label="Primary navigation"] { font-size: 10px !important; font-size: var(--sc-pos10,10px) !important; }
 
   [data-screen-label="Services"] [data-service-number],
   [data-screen-label="Services"] [data-service-meta],
   [data-screen-label="Services"] [data-service-included] {
-    font-size: 10.5px !important;
+    font-size: 10.5px !important;    font-size: var(--sc-pos10_5,10.5px) !important;
     letter-spacing: .095em !important;
   }
 
   [data-screen-label="Services"] [data-service-price] {
-    font-size: 11.5px !important;
+    font-size: 11.5px !important;    font-size: var(--sc-pos11_5,11.5px) !important;
     letter-spacing: .10em !important;
   }
 
   [data-program-cards] [data-program-action] {
-    font-size: 10px !important;
-    min-height: 44px !important;
+    font-size: 10px !important;    font-size: var(--sc-pos10,10px) !important;
+    min-height: 44px !important;    min-height: var(--sc-pos44,44px) !important;
   }
 }
 
 /* BATCH 7 WEBKIT: PROGRAM CARD FLIP COMPATIBILITY */
 [data-program-cards] > article {
-  -webkit-perspective: 1400px !important;
-  perspective: 1400px !important;
+  -webkit-perspective: 1400px !important;  -webkit-perspective: var(--sc-pos1400,1400px) !important;
+  perspective: 1400px !important;  perspective: var(--sc-pos1400,1400px) !important;
 }
 
 [data-program-cards] > article > div {
@@ -975,40 +975,40 @@ footer[data-site-footer] [data-footer-legal] {
 /* FINAL FORM CONTROL READABILITY */
 form[data-inq] [aria-label="Choose a start date"] > div:first-child > span {
   font-family:var(--sunday-sans) !important;
-  font-size:10.5px !important;
+  font-size:10.5px !important;  font-size:var(--sc-pos10_5,10.5px) !important;
   font-weight:400 !important;
   letter-spacing:.07em !important;
 }
 form[data-inq] [aria-label="Choose a start date"] > div:nth-child(2) {
   font-family:var(--sunday-sans) !important;
-  font-size:10.5px !important;
+  font-size:10.5px !important;  font-size:var(--sc-pos10_5,10.5px) !important;
   font-weight:400 !important;
   letter-spacing:.04em !important;
 }
 form[data-inq] [aria-label="Choose a start date"] > div:last-child button {
   font-family:var(--sunday-sans) !important;
-  font-size:11.5px !important;
+  font-size:11.5px !important;  font-size:var(--sc-pos11_5,11.5px) !important;
   font-weight:400 !important;
-  min-height:36px !important;
+  min-height:36px !important;  min-height:var(--sc-pos36,36px) !important;
 }
-form[data-inq] [role="checkbox"] { min-height:40px !important; }
+form[data-inq] [role="checkbox"] { min-height:40px !important; min-height:var(--sc-pos40,40px) !important; }
 form[data-inq] [role="checkbox"] span:last-child {
   font-family:var(--sunday-sans) !important;
-  font-size:11px !important;
+  font-size:11px !important;  font-size:var(--sc-pos11,11px) !important;
   font-weight:400 !important;
   letter-spacing:.07em !important;
 }
 [data-program-action] {
   font-family:var(--sunday-sans) !important;
-  font-size:10px !important;
+  font-size:10px !important;  font-size:var(--sc-pos10,10px) !important;
   font-weight:400 !important;
   letter-spacing:.085em !important;
 }
-button[data-program-action] { min-height:44px !important; }
+button[data-program-action] { min-height:44px !important; min-height:var(--sc-pos44,44px) !important; }
 @media (max-width:900px) {
   form[data-editorial-labels] [aria-haspopup="listbox"],
-  form[data-inq] [aria-haspopup="dialog"] { font-size:16px !important; min-height:44px !important; }
-  [data-program-action] { font-size:10.5px !important; }
+  form[data-inq] [aria-haspopup="dialog"] { font-size:16px !important; font-size:var(--sc-pos16,16px) !important; min-height:44px !important; min-height:var(--sc-pos44,44px) !important; }
+  [data-program-action] { font-size:10.5px !important; font-size:var(--sc-pos10_5,10.5px) !important; }
 }
 
 
@@ -1023,7 +1023,7 @@ section#top[data-screen-hero="home"] {
 }
 section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
   display: block !important;
-  height: clamp(680px, 66.5vw, 900px) !important;
+  height: clamp(680px, 66.5vw, 900px) !important;  height: clamp(var(--sc-pos680,680px), 66.5vw, var(--sc-pos900,900px)) !important;
   max-width: none !important;
   object-fit: cover !important;
   object-position: 50% 48% !important;
@@ -1036,14 +1036,14 @@ section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
 }
 @media (max-width: 900px) {
   section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
-    height: clamp(680px, 185vw, 820px) !important;
+    height: clamp(680px, 185vw, 820px) !important;    height: clamp(var(--sc-pos680,680px), 185vw, var(--sc-pos820,820px)) !important;
   }
 }
 
 /* Keep utility copy editorial but readable on a phone. */
 @media (max-width: 900px) {
   [aria-label="Newsletter"] [data-news-fineprint] {
-    font-size: 8.25px !important;
+    font-size: 8.25px !important;    font-size: var(--sc-pos8_25,8.25px) !important;
     font-weight: 300 !important;
     letter-spacing: .03em !important;
     line-height: 1.5 !important;
@@ -1063,8 +1063,8 @@ section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
   header[data-site-header] a[aria-label="Instagram"],
   header[data-site-header] a[aria-label="TikTok"],
   header[data-site-header] a[aria-label="LinkedIn"] {
-    min-height: 44px !important;
-    min-width: 44px !important;
+    min-height: 44px !important;    min-height: var(--sc-pos44,44px) !important;
+    min-width: 44px !important;    min-width: var(--sc-pos44,44px) !important;
   }
 }
 
@@ -1072,13 +1072,13 @@ section#top[data-screen-hero="home"] > img[data-sunday-static-hero="true"] {
 [role="dialog"][aria-label="Fellows Table"]::after,
 [role="dialog"][aria-label="Espresso Club"]::after,
 [role="dialog"][aria-label="Founders Club"]::after {
-  font-size: 8px !important;
+  font-size: 8px !important;  font-size: var(--sc-pos8,8px) !important;
 }
 @media (max-width: 900px) {
   [role="dialog"][aria-label="Fellows Table"]::after,
   [role="dialog"][aria-label="Espresso Club"]::after,
   [role="dialog"][aria-label="Founders Club"]::after {
-    font-size: 7.5px !important;
+    font-size: 7.5px !important;    font-size: var(--sc-pos7_5,7.5px) !important;
   }
 }
 
@@ -1090,7 +1090,7 @@ form textarea::placeholder,
 form input::-webkit-input-placeholder,
 form textarea::-webkit-input-placeholder {
   font-family: var(--sunday-sans) !important;
-  font-size: 12px !important;
+  font-size: 12px !important;  font-size: var(--sc-pos12,12px) !important;
   font-weight: 300 !important;
   letter-spacing: .01em !important;
   line-height: 1.3 !important;
@@ -1102,7 +1102,7 @@ form[data-editorial-labels] label > span:first-child,
 form[data-editorial-labels] > label[for],
 form[data-editorial-labels] > div > span:first-child,
 [aria-label="The Sunday Reservation"] label[for="reservationEmail"] {
-  font-size: 9.5px !important;
+  font-size: 9.5px !important;  font-size: var(--sc-pos9_5,9.5px) !important;
   font-weight: 400 !important;
   letter-spacing: .05em !important;
   line-height: 1.3 !important;
@@ -1110,7 +1110,7 @@ form[data-editorial-labels] > div > span:first-child,
 
 form[data-editorial-labels] [aria-haspopup="listbox"],
 form[data-inq] [aria-haspopup="dialog"] {
-  font-size: 12.5px !important;
+  font-size: 12.5px !important;  font-size: var(--sc-pos12_5,12.5px) !important;
   font-weight: 400 !important;
 }
 
@@ -1119,7 +1119,7 @@ form[data-inq] [aria-haspopup="dialog"] {
   form textarea::placeholder,
   form input::-webkit-input-placeholder,
   form textarea::-webkit-input-placeholder {
-    font-size: 12px !important;
+    font-size: 12px !important;    font-size: var(--sc-pos12,12px) !important;
   }
 }
 
@@ -1127,7 +1127,7 @@ form[data-inq] [aria-haspopup="dialog"] {
    Narrow correction for the Services runtime utility-size collision. */
 @media (max-width: 900px) {
   [data-screen-label="Services"] footer[data-site-footer] a[data-footer-ui][href^="mailto:"] {
-    font-size: 15.5px !important;
+    font-size: 15.5px !important;    font-size: var(--sc-pos15_5,15.5px) !important;
     font-weight: 400 !important;
     letter-spacing: 0 !important;
   }
@@ -1145,10 +1145,10 @@ form[data-inq] [aria-haspopup="dialog"] {
 /* Services inquiry spacing is owned here at every viewport so the intro,
    support line, and shared step navigation stay visually connected. */
 [data-screen-label="Services"] #inquiry [data-inquiry-support] {
-  margin-top:6px !important;
+  margin-top:6px !important;  margin-top:var(--sc-pos6,6px) !important;
 }
 [data-screen-label="Services"] #inquiry [data-services-inquiry-form] {
-  margin-top:12px !important;
+  margin-top:12px !important;  margin-top:var(--sc-pos12,12px) !important;
 }
 [data-screen-label="Services"] #inquiry [data-services-inquiry-form] form[data-inq] {
   margin-top:0 !important;
@@ -1158,7 +1158,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 @media (max-width: 900px) {
   [data-mobile-wrap-row] {
     flex-wrap: wrap !important;
-    row-gap: 20px !important;
+    row-gap: 20px !important;    row-gap: var(--sc-pos20,20px) !important;
   }
   [data-mobile-wrap-row] > * {
     min-width: 0 !important;
@@ -1166,7 +1166,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 
   #map-section {
     aspect-ratio: auto !important;
-    padding: clamp(26px,5vw,36px) clamp(22px,6vw,30px) 6px !important;
+    padding: clamp(26px,5vw,36px) clamp(22px,6vw,30px) 6px !important;    padding: clamp(var(--sc-pos26,26px),5vw,var(--sc-pos36,36px)) clamp(var(--sc-pos22,22px),6vw,var(--sc-pos30,30px)) var(--sc-pos6,6px) !important;
   }
   #map-copy {
     height: auto !important;
@@ -1180,7 +1180,7 @@ form[data-inq] [aria-haspopup="dialog"] {
     height: auto !important;
     inset: auto !important;
     justify-content: flex-end !important;
-    margin: 0 calc(-1 * clamp(22px,6vw,30px)) !important;
+    margin: 0 calc(-1 * clamp(22px,6vw,30px)) !important;    margin: 0 calc(-1 * clamp(var(--sc-pos22,22px),6vw,var(--sc-pos30,30px))) !important;
     overflow: hidden !important;
     position: static !important;
   }
@@ -1210,70 +1210,70 @@ form[data-inq] [aria-haspopup="dialog"] {
   [data-screen-label] main > section[style*="clamp(22px,7vw"],
   [data-screen-label] main > section[style*="clamp(22px,6vw"],
   [data-screen-label] main > section[style*="clamp(22px,5vw"] {
-    padding-left:clamp(28px,3.6vw,40px) !important;
-    padding-right:clamp(28px,3.6vw,40px) !important;
+    padding-left:clamp(28px,3.6vw,40px) !important;    padding-left:clamp(var(--sc-pos28,28px),3.6vw,var(--sc-pos40,40px)) !important;
+    padding-right:clamp(28px,3.6vw,40px) !important;    padding-right:clamp(var(--sc-pos28,28px),3.6vw,var(--sc-pos40,40px)) !important;
   }
 
-  [data-program-cards] { gap:10px !important; }
-  [data-program-cards] > article { height:330px !important; }
+  [data-program-cards] { gap:10px !important; gap:var(--sc-pos10,10px) !important; }
+  [data-program-cards] > article { height:330px !important; height:var(--sc-pos330,330px) !important; }
   [data-program-cards] > article > div > button > span:first-child,
   [data-program-cards] > article > div > div:nth-child(2) > span:first-child {
-    font-size:8.5px !important;
+    font-size:8.5px !important;    font-size:var(--sc-pos8_5,8.5px) !important;
     letter-spacing:.11em !important;
-    padding-left:13px !important;
-    padding-right:13px !important;
+    padding-left:13px !important;    padding-left:var(--sc-pos13,13px) !important;
+    padding-right:13px !important;    padding-right:var(--sc-pos13,13px) !important;
   }
   [data-program-cards] > article > div > button > span:last-child {
-    padding-left:13px !important;
-    padding-right:13px !important;
+    padding-left:13px !important;    padding-left:var(--sc-pos13,13px) !important;
+    padding-right:13px !important;    padding-right:var(--sc-pos13,13px) !important;
   }
   [data-program-cards] [data-program-action] {
-    font-size:8.75px !important;
+    font-size:8.75px !important;    font-size:var(--sc-pos8_75,8.75px) !important;
     letter-spacing:.10em !important;
   }
 
   section[aria-label="Newsletter"] {
-    column-gap:18px !important;
-    grid-template-columns:minmax(240px,.92fr) minmax(0,1.08fr) !important;
-    padding-left:30px !important;
-    padding-right:30px !important;
+    column-gap:18px !important;    column-gap:var(--sc-pos18,18px) !important;
+    grid-template-columns:minmax(240px,.92fr) minmax(0,1.08fr) !important;    grid-template-columns:minmax(var(--sc-pos240,240px),.92fr) minmax(0,1.08fr) !important;
+    padding-left:30px !important;    padding-left:var(--sc-pos30,30px) !important;
+    padding-right:30px !important;    padding-right:var(--sc-pos30,30px) !important;
   }
   section[aria-label="Newsletter"] form {
-    column-gap:10px !important;
+    column-gap:10px !important;    column-gap:var(--sc-pos10,10px) !important;
     grid-template-columns:minmax(0,1fr) auto !important;
     min-width:0 !important;
   }
   section[aria-label="Newsletter"] form button {
-    padding-left:10px !important;
-    padding-right:10px !important;
+    padding-left:10px !important;    padding-left:var(--sc-pos10,10px) !important;
+    padding-right:10px !important;    padding-right:var(--sc-pos10,10px) !important;
     white-space:nowrap !important;
   }
 
   footer[data-site-footer] {
-    padding-left:30px !important;
-    padding-right:30px !important;
+    padding-left:30px !important;    padding-left:var(--sc-pos30,30px) !important;
+    padding-right:30px !important;    padding-right:var(--sc-pos30,30px) !important;
   }
   footer[data-site-footer] > div:first-child {
-    gap:14px 18px !important;
-    grid-template-columns:minmax(72px,.58fr) minmax(105px,.72fr) minmax(190px,1.22fr) minmax(105px,.68fr) !important;
+    gap:14px 18px !important;    gap:var(--sc-pos14,14px) var(--sc-pos18,18px) !important;
+    grid-template-columns:minmax(72px,.58fr) minmax(105px,.72fr) minmax(190px,1.22fr) minmax(105px,.68fr) !important;    grid-template-columns:minmax(var(--sc-pos72,72px),.58fr) minmax(var(--sc-pos105,105px),.72fr) minmax(var(--sc-pos190,190px),1.22fr) minmax(var(--sc-pos105,105px),.68fr) !important;
   }
   footer[data-site-footer] > div:first-child > * { min-width:0 !important; }
-  footer[data-site-footer] img[src*="monogram"] { width:82px !important; }
-  footer[data-site-footer] [data-footer-ui] { font-size:11.5px !important; }
+  footer[data-site-footer] img[src*="monogram"] { width:82px !important; width:var(--sc-pos82,82px) !important; }
+  footer[data-site-footer] [data-footer-ui] { font-size:11.5px !important; font-size:var(--sc-pos11_5,11.5px) !important; }
   footer[data-site-footer] a[data-footer-ui][href^="mailto:"],
-  footer[data-site-footer] a[href^="mailto:"] { font-size:12px !important; }
+  footer[data-site-footer] a[href^="mailto:"] { font-size:12px !important; font-size:var(--sc-pos12,12px) !important; }
   footer[data-site-footer] [data-footer-location] {
-    font-size:11.25px !important;
+    font-size:11.25px !important;    font-size:var(--sc-pos11_25,11.25px) !important;
     line-height:1.4 !important;
   }
   footer[data-site-footer] p[style*="color:#c88f87"] {
-    font-size:7.75px !important;
+    font-size:7.75px !important;    font-size:var(--sc-pos7_75,7.75px) !important;
     letter-spacing:.16em !important;
   }
-  footer[data-site-footer] [data-footer-tagline] { font-size:13px !important; }
+  footer[data-site-footer] [data-footer-tagline] { font-size:13px !important; font-size:var(--sc-pos13,13px) !important; }
   footer[data-site-footer] [data-footer-legal] {
-    column-gap:12px !important;
-    font-size:8.25px !important;
+    column-gap:12px !important;    column-gap:var(--sc-pos12,12px) !important;
+    font-size:8.25px !important;    font-size:var(--sc-pos8_25,8.25px) !important;
     grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr) auto !important;
     letter-spacing:.09em !important;
   }
@@ -1281,16 +1281,16 @@ form[data-inq] [aria-haspopup="dialog"] {
 
 @media (min-width:901px) and (max-width:1240px) {
   aside[aria-label="Sunday & Company navigation"] {
-    width:clamp(292px,31vw,335px) !important;
-    max-width:335px !important;
-    padding:20px !important;
+    width:clamp(292px,31vw,335px) !important;    width:clamp(var(--sc-pos292,292px),31vw,var(--sc-pos335,335px)) !important;
+    max-width:335px !important;    max-width:var(--sc-pos335,335px) !important;
+    padding:20px !important;    padding:var(--sc-pos20,20px) !important;
   }
   aside[aria-label="Sunday & Company navigation"] nav > a {
-    column-gap:10px !important;
-    font-size:18px !important;
-    grid-template-columns:34px minmax(0,1fr) !important;
-    min-height:48px !important;
-    padding:11px 0 !important;
+    column-gap:10px !important;    column-gap:var(--sc-pos10,10px) !important;
+    font-size:18px !important;    font-size:var(--sc-pos18,18px) !important;
+    grid-template-columns:34px minmax(0,1fr) !important;    grid-template-columns:var(--sc-pos34,34px) minmax(0,1fr) !important;
+    min-height:48px !important;    min-height:var(--sc-pos48,48px) !important;
+    padding:11px 0 !important;    padding:var(--sc-pos11,11px) 0 !important;
     text-align:left !important;
   }
   aside[aria-label="Sunday & Company navigation"] nav > a > span {
@@ -1306,46 +1306,46 @@ form[data-inq] [aria-haspopup="dialog"] {
    ========================================================== */
 @media (max-width:900px) {
   header[data-site-header] {
-    height:64px !important;
-    padding-left:18px !important;
-    padding-right:18px !important;
+    height:64px !important;    height:var(--sc-pos64,64px) !important;
+    padding-left:18px !important;    padding-left:var(--sc-pos18,18px) !important;
+    padding-right:18px !important;    padding-right:var(--sc-pos18,18px) !important;
   }
   header[data-site-header] > button[aria-label="Open menu"] {
-    font-size:12px !important;
+    font-size:12px !important;    font-size:var(--sc-pos12,12px) !important;
     letter-spacing:.11em !important;
-    gap:9px !important;
+    gap:9px !important;    gap:var(--sc-pos9,9px) !important;
   }
   header[data-site-header] > button[aria-label="Open menu"] svg {
-    width:23px !important;
-    height:23px !important;
+    width:23px !important;    width:var(--sc-pos23,23px) !important;
+    height:23px !important;    height:var(--sc-pos23,23px) !important;
   }
 
   aside[aria-label="Sunday & Company navigation"] {
-    width:min(82vw,325px) !important;
-    max-width:325px !important;
-    padding:19px !important;
+    width:min(82vw,325px) !important;    width:min(82vw,var(--sc-pos325,325px)) !important;
+    max-width:325px !important;    max-width:var(--sc-pos325,325px) !important;
+    padding:19px !important;    padding:var(--sc-pos19,19px) !important;
   }
-  aside[aria-label="Sunday & Company navigation"] nav { margin-top:21px !important; }
+  aside[aria-label="Sunday & Company navigation"] nav { margin-top:21px !important; margin-top:var(--sc-pos21,21px) !important; }
   aside[aria-label="Sunday & Company navigation"] nav > a {
-    column-gap:11px !important;
-    font-size:19px !important;
-    grid-template-columns:34px minmax(0,1fr) !important;
-    min-height:47px !important;
-    padding:11px 0 !important;
+    column-gap:11px !important;    column-gap:var(--sc-pos11,11px) !important;
+    font-size:19px !important;    font-size:var(--sc-pos19,19px) !important;
+    grid-template-columns:34px minmax(0,1fr) !important;    grid-template-columns:var(--sc-pos34,34px) minmax(0,1fr) !important;
+    min-height:47px !important;    min-height:var(--sc-pos47,47px) !important;
+    padding:11px 0 !important;    padding:var(--sc-pos11,11px) 0 !important;
     text-align:left !important;
   }
   aside[aria-label="Sunday & Company navigation"] nav > a > span {
-    font-size:9px !important;
+    font-size:9px !important;    font-size:var(--sc-pos9,9px) !important;
     justify-self:start !important;
     text-align:left !important;
   }
   aside[aria-label="Sunday & Company navigation"] [data-sheet-cta] {
-    font-size:9.5px !important;
+    font-size:9.5px !important;    font-size:var(--sc-pos9_5,9.5px) !important;
     letter-spacing:.11em !important;
-    min-height:42px !important;
+    min-height:42px !important;    min-height:var(--sc-pos42,42px) !important;
   }
   aside[aria-label="Sunday & Company navigation"] a[href^="mailto:"] {
-    font-size:12px !important;
+    font-size:12px !important;    font-size:var(--sc-pos12,12px) !important;
   }
 
   div[role="presentation"]:has(> [aria-label="Project inquiry"]) {
@@ -1353,79 +1353,79 @@ form[data-inq] [aria-haspopup="dialog"] {
     justify-content:center !important;
     overflow-x:hidden !important;
     overflow-y:auto !important;
-    padding:20px 16px calc(20px + env(safe-area-inset-bottom)) !important;
+    padding:20px 16px calc(20px + env(safe-area-inset-bottom)) !important;    padding:var(--sc-pos20,20px) var(--sc-pos16,16px) calc(var(--sc-pos20,20px) + env(safe-area-inset-bottom)) !important;
   }
   [aria-label="Project inquiry"] {
     box-sizing:border-box !important;
     margin:auto !important;
     width:100% !important;
-    max-width:710px !important;
+    max-width:710px !important;    max-width:var(--sc-pos710,710px) !important;
     max-height:none !important;
     overflow:hidden !important;
   }
   [aria-label="Project inquiry"] > div {
-    min-height:min(660px, calc(100dvh - 40px)) !important;
+    min-height:min(660px, calc(100dvh - 40px)) !important;    min-height:min(var(--sc-pos660,660px), calc(100dvh - var(--sc-pos40,40px))) !important;
     max-height:none !important;
     overflow:hidden !important;
-    padding:28px 24px 32px !important;
+    padding:28px 24px 32px !important;    padding:var(--sc-pos28,28px) var(--sc-pos24,24px) var(--sc-pos32,32px) !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-receipt-meta] {
-    font-size:9px !important;
+    font-size:9px !important;    font-size:var(--sc-pos9,9px) !important;
     letter-spacing:.085em !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-kicker] {
-    font-size:9.5px !important;
+    font-size:9.5px !important;    font-size:var(--sc-pos9_5,9.5px) !important;
     letter-spacing:.07em !important;
-    margin-bottom:4px !important;
+    margin-bottom:4px !important;    margin-bottom:var(--sc-pos4,4px) !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-title] {
-    font-size:24px !important;
+    font-size:24px !important;    font-size:var(--sc-pos24,24px) !important;
     line-height:1.03 !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-support] {
-    font-size:10.25px !important;
+    font-size:10.25px !important;    font-size:var(--sc-pos10_25,10.25px) !important;
     letter-spacing:.035em !important;
     line-height:1.48 !important;
-    margin-top:6px !important;
+    margin-top:6px !important;    margin-top:var(--sc-pos6,6px) !important;
   }
   [aria-label="Project inquiry"] form[data-inq] {
-    gap:12px 12px !important;
-    margin-top:12px !important;
+    gap:12px 12px !important;    gap:var(--sc-pos12,12px) var(--sc-pos12,12px) !important;
+    margin-top:12px !important;    margin-top:var(--sc-pos12,12px) !important;
   }
   [aria-label="Project inquiry"] form[data-inq] [data-stepnav] {
-    margin-bottom:14px !important;
-    padding:9px 0 !important;
+    margin-bottom:14px !important;    margin-bottom:var(--sc-pos14,14px) !important;
+    padding:9px 0 !important;    padding:var(--sc-pos9,9px) 0 !important;
   }
   [aria-label="Project inquiry"] form[data-inq] [data-stepnav] span {
-    font-size:9.5px !important;
+    font-size:9.5px !important;    font-size:var(--sc-pos9_5,9.5px) !important;
     line-height:1.22 !important;
-    padding:9px 5px !important;
+    padding:9px 5px !important;    padding:var(--sc-pos9,9px) var(--sc-pos5,5px) !important;
   }
   [aria-label="Project inquiry"] form[data-inq] label > span:first-child,
   [aria-label="Project inquiry"] form[data-inq] fieldset > legend,
   [aria-label="Project inquiry"] form[data-inq] [data-start-date-label] {
-    font-size:10px !important;
+    font-size:10px !important;    font-size:var(--sc-pos10,10px) !important;
     letter-spacing:.035em !important;
   }
   [aria-label="Project inquiry"] form[data-inq] input,
   [aria-label="Project inquiry"] form[data-inq] select {
-    min-height:46px !important;
-    font-size:16px !important;
+    min-height:46px !important;    min-height:var(--sc-pos46,46px) !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
   }
   [aria-label="Project inquiry"] form[data-inq] textarea {
-    min-height:92px !important;
-    font-size:16px !important;
+    min-height:92px !important;    min-height:var(--sc-pos92,92px) !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
   }
   [aria-label="Project inquiry"] form[data-inq] [data-stepbtns] button,
   [aria-label="Project inquiry"] form[data-inq] > button[type="submit"] {
-    min-height:46px !important;
-    font-size:9.5px !important;
+    min-height:46px !important;    min-height:var(--sc-pos46,46px) !important;
+    font-size:9.5px !important;    font-size:var(--sc-pos9_5,9.5px) !important;
     letter-spacing:.075em !important;
   }
   [aria-label="Project inquiry"] [data-inquiry-ledger] {
-    font-size:9px !important;
-    margin-top:18px !important;
-    padding:10px 0 !important;
+    font-size:9px !important;    font-size:var(--sc-pos9,9px) !important;
+    margin-top:18px !important;    margin-top:var(--sc-pos18,18px) !important;
+    padding:10px 0 !important;    padding:var(--sc-pos10,10px) 0 !important;
   }
 
   div[role="presentation"]:has(> [aria-label="The Sunday Reservation"]) {
@@ -1433,80 +1433,80 @@ form[data-inq] [aria-haspopup="dialog"] {
     justify-content:center !important;
     overflow-x:hidden !important;
     overflow-y:auto !important;
-    padding:20px 16px calc(20px + env(safe-area-inset-bottom)) !important;
+    padding:20px 16px calc(20px + env(safe-area-inset-bottom)) !important;    padding:var(--sc-pos20,20px) var(--sc-pos16,16px) calc(var(--sc-pos20,20px) + env(safe-area-inset-bottom)) !important;
   }
   [aria-label="The Sunday Reservation"] {
     box-sizing:border-box !important;
     width:100% !important;
-    max-width:620px !important;
+    max-width:620px !important;    max-width:var(--sc-pos620,620px) !important;
     height:auto !important;
-    min-height:min(640px, calc(100dvh - 40px)) !important;
+    min-height:min(640px, calc(100dvh - 40px)) !important;    min-height:min(var(--sc-pos640,640px), calc(100dvh - var(--sc-pos40,40px))) !important;
     max-height:none !important;
     overflow:hidden !important;
     grid-template-columns:1fr !important;
   }
   [aria-label="The Sunday Reservation"] > div[aria-hidden] {
-    height:165px !important;
-    min-height:165px !important;
-    max-height:165px !important;
+    height:165px !important;    height:var(--sc-pos165,165px) !important;
+    min-height:165px !important;    min-height:var(--sc-pos165,165px) !important;
+    max-height:165px !important;    max-height:var(--sc-pos165,165px) !important;
   }
   [aria-label="The Sunday Reservation"] > div:last-child {
     height:auto !important;
     min-height:0 !important;
-    padding:24px 24px 26px !important;
+    padding:24px 24px 26px !important;    padding:var(--sc-pos24,24px) var(--sc-pos24,24px) var(--sc-pos26,26px) !important;
   }
-  [aria-label="The Sunday Reservation"] h2 { font-size:28px !important; }
+  [aria-label="The Sunday Reservation"] h2 { font-size:28px !important; font-size:var(--sc-pos28,28px) !important; }
   [aria-label="The Sunday Reservation"] [data-res-intro] {
-    font-size:10.25px !important;
+    font-size:10.25px !important;    font-size:var(--sc-pos10_25,10.25px) !important;
     font-weight:300 !important;
     letter-spacing:.055em !important;
     line-height:1.48 !important;
-    margin-top:10px !important;
-    max-width:350px !important;
+    margin-top:10px !important;    margin-top:var(--sc-pos10,10px) !important;
+    max-width:350px !important;    max-width:var(--sc-pos350,350px) !important;
     text-transform:uppercase !important;
   }
   [aria-label="The Sunday Reservation"] form {
-    gap:6px !important;
+    gap:6px !important;    gap:var(--sc-pos6,6px) !important;
   }
   [aria-label="The Sunday Reservation"] > div:last-child > div > div[aria-hidden][style*="grid-template-columns:auto 1fr auto"] {
-    font-size:9px !important;
-    row-gap:8px !important;
-    margin:22px 0 19px !important;
-    padding:10px 0 !important;
+    font-size:9px !important;    font-size:var(--sc-pos9,9px) !important;
+    row-gap:8px !important;    row-gap:var(--sc-pos8,8px) !important;
+    margin:22px 0 19px !important;    margin:var(--sc-pos22,22px) 0 var(--sc-pos19,19px) !important;
+    padding:10px 0 !important;    padding:var(--sc-pos10,10px) 0 !important;
   }
-  [aria-label="The Sunday Reservation"] label { font-size:10px !important; }
+  [aria-label="The Sunday Reservation"] label { font-size:10px !important; font-size:var(--sc-pos10,10px) !important; }
   [aria-label="The Sunday Reservation"] input {
-    min-height:46px !important;
-    font-size:16px !important;
+    min-height:46px !important;    min-height:var(--sc-pos46,46px) !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
   }
   [aria-label="The Sunday Reservation"] form button[type="submit"] {
-    min-height:46px !important;
-    font-size:9.5px !important;
+    min-height:46px !important;    min-height:var(--sc-pos46,46px) !important;
+    font-size:9.5px !important;    font-size:var(--sc-pos9_5,9.5px) !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-total],
   [aria-label="The Sunday Reservation"] [data-res-fineprint],
   [aria-label="The Sunday Reservation"] [data-res-keep],
   [aria-label="The Sunday Reservation"] [data-res-number] {
-    font-size:8.75px !important;
+    font-size:8.75px !important;    font-size:var(--sc-pos8_75,8.75px) !important;
     line-height:1.48 !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-total] {
     letter-spacing:.12em !important;
-    margin-top:16px !important;
-    padding:9px 0 !important;
+    margin-top:16px !important;    margin-top:var(--sc-pos16,16px) !important;
+    padding:9px 0 !important;    padding:var(--sc-pos9,9px) 0 !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-fineprint] {
     letter-spacing:.03em !important;
-    margin-top:6px !important;
+    margin-top:6px !important;    margin-top:var(--sc-pos6,6px) !important;
     opacity:.67 !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-keep] {
     letter-spacing:.13em !important;
-    margin-top:13px !important;
+    margin-top:13px !important;    margin-top:var(--sc-pos13,13px) !important;
   }
   [aria-label="The Sunday Reservation"] [data-res-number] {
     letter-spacing:.10em !important;
-    margin-top:17px !important;
+    margin-top:17px !important;    margin-top:var(--sc-pos17,17px) !important;
     opacity:.82 !important;
   }
 
@@ -1517,36 +1517,36 @@ form[data-inq] [aria-haspopup="dialog"] {
   }
   [data-screen-label="Services"] #inquiry [data-inquiry-kicker] { display:none !important; }
   [data-screen-label="Services"] #inquiry [data-inquiry-support] {
-    font-size:10.25px !important;
+    font-size:10.25px !important;    font-size:var(--sc-pos10_25,10.25px) !important;
     line-height:1.48 !important;
-    margin:6px 0 0 !important;
+    margin:6px 0 0 !important;    margin:var(--sc-pos6,6px) 0 0 !important;
   }
   [data-screen-label="Services"] #inquiry [data-services-inquiry-form] {
     display:block !important;
-    margin-top:12px !important;
+    margin-top:12px !important;    margin-top:var(--sc-pos12,12px) !important;
   }
   [data-screen-label="Services"] #inquiry [data-services-inquiry-form] form[data-inq] {
     margin-top:0 !important;
   }
   [data-screen-label="Services"] #inquiry [data-services-inquiry-ledger],
   [data-screen-label="Services"] #inquiry > div > a[href^="mailto:"] {
-    font-size:9.5px !important;
+    font-size:9.5px !important;    font-size:var(--sc-pos9_5,9.5px) !important;
   }
 
   section[aria-label="Newsletter"] h2 + p {
-    font-size:10.75px !important;
+    font-size:10.75px !important;    font-size:var(--sc-pos10_75,10.75px) !important;
     line-height:1.45 !important;
     text-transform:uppercase !important;
     letter-spacing:.03em !important;
   }
-  section[aria-label="Newsletter"] [data-news-fineprint] { font-size:9px !important; }
-  footer[data-site-footer] [data-footer-ui] { font-size:13.5px !important; }
+  section[aria-label="Newsletter"] [data-news-fineprint] { font-size:9px !important; font-size:var(--sc-pos9,9px) !important; }
+  footer[data-site-footer] [data-footer-ui] { font-size:13.5px !important; font-size:var(--sc-pos13_5,13.5px) !important; }
   footer[data-site-footer] a[data-footer-ui][href^="mailto:"],
-  footer[data-site-footer] a[href^="mailto:"] { font-size:14px !important; }
-  footer[data-site-footer] [data-footer-location] { font-size:13px !important; }
-  footer[data-site-footer] [data-footer-tagline] { font-size:14.5px !important; }
+  footer[data-site-footer] a[href^="mailto:"] { font-size:14px !important; font-size:var(--sc-pos14,14px) !important; }
+  footer[data-site-footer] [data-footer-location] { font-size:13px !important; font-size:var(--sc-pos13,13px) !important; }
+  footer[data-site-footer] [data-footer-tagline] { font-size:14.5px !important; font-size:var(--sc-pos14_5,14.5px) !important; }
   footer[data-site-footer] [data-footer-legal] {
-    font-size:9.25px !important;
+    font-size:9.25px !important;    font-size:var(--sc-pos9_25,9.25px) !important;
     letter-spacing:.055em !important;
   }
 
@@ -1570,7 +1570,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 footer[data-site-footer] [data-footer-legal-nav] {
   display:flex !important;
   flex-wrap:nowrap !important;
-  gap:0 clamp(6px,1.25vw,10px) !important;
+  gap:0 clamp(6px,1.25vw,10px) !important;  gap:0 clamp(var(--sc-pos6,6px),1.25vw,var(--sc-pos10,10px)) !important;
   min-width:0 !important;
   white-space:nowrap !important;
   width:100% !important;
@@ -1592,13 +1592,13 @@ footer[data-site-footer] [data-footer-legal-nav] a {
   [data-screen-label] main [style*="font-size:6.5px"],
   [data-screen-label] main [style*="font-size:7px"],
   [data-screen-label] main [style*="font-size:7.5px"] {
-    font-size:8.75px !important;
+    font-size:8.75px !important;    font-size:var(--sc-pos8_75,8.75px) !important;
   }
 
   [data-screen-label] main [style*="font-size:8px"],
   [data-screen-label] main [style*="font-size:8.25px"],
   [data-screen-label] main [style*="font-size:8.5px"] {
-    font-size:9.25px !important;
+    font-size:9.25px !important;    font-size:var(--sc-pos9_25,9.25px) !important;
   }
 }
 
@@ -1612,7 +1612,7 @@ footer[data-site-footer] [data-footer-legal-nav] a {
   html[data-phone-viewport-scale="1"] body form textarea,
   html[data-phone-viewport-scale="1"] body form select,
   html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
-    font-size:19.25px !important;
+    font-size:19.25px !important;    font-size:var(--sc-pos19_25,19.25px) !important;
     line-height:1.25 !important;
     transform:none !important;
   }
@@ -1627,36 +1627,36 @@ footer[data-site-footer] [data-footer-legal-nav] a {
   margin:0 !important;
 }
 [aria-label="Project inquiry"] [data-inquiry-support] {
-  margin:6px 0 0 !important;
+  margin:6px 0 0 !important;  margin:var(--sc-pos6,6px) 0 0 !important;
 }
 [aria-label="Project inquiry"] form[data-inq] {
-  margin-top:12px !important;
+  margin-top:12px !important;  margin-top:var(--sc-pos12,12px) !important;
 }
 
 /* Unified invalid-state treatment for native and custom controls. */
 form [data-form-error-field="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12) !important;
 }
 
 
 /* NEWSLETTER BANNER MOBILE TYPE REFINEMENT · 2026-09-27 */
 @media (max-width:900px) {
   section[aria-label="Newsletter"] h2 {
-    font-size:23px !important;
+    font-size:23px !important;    font-size:var(--sc-pos23,23px) !important;
   }
   section[aria-label="Newsletter"] [data-news-blurb] {
     font-family:var(--sunday-sans) !important;
     color:#c88f87 !important;
-    font-size:8.75px !important;
+    font-size:8.75px !important;    font-size:var(--sc-pos8_75,8.75px) !important;
     font-weight:400 !important;
     letter-spacing:.035em !important;
     line-height:1.35 !important;
     white-space:nowrap !important;
   }
   section[aria-label="Newsletter"] [data-news-fineprint] {
-    font-size:9.25px !important;
+    font-size:9.25px !important;    font-size:var(--sc-pos9_25,9.25px) !important;
   }
 }
 
@@ -1670,7 +1670,7 @@ form [data-form-error-field="true"] {
   body form textarea,
   body form select,
   body form [contenteditable="true"] {
-    font-size:16px !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
     line-height:1.25 !important;
     touch-action:manipulation !important;
     -webkit-text-size-adjust:100% !important;
@@ -1684,7 +1684,7 @@ form [data-form-error-field="true"] {
   html[data-phone-viewport-scale="1"] body form textarea,
   html[data-phone-viewport-scale="1"] body form select,
   html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
-    font-size:20px !important;
+    font-size:20px !important;    font-size:var(--sc-pos20,20px) !important;
   }
 
   body form input:not([type="hidden"]):focus,
@@ -1702,7 +1702,7 @@ body form [data-form-error-field="true"],
 body form [aria-invalid="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12) !important;
 }
 
 /* Footer newsletter support line: one compact rose utility line on phones. */
@@ -1710,7 +1710,7 @@ body form [aria-invalid="true"] {
   section[aria-label="Newsletter"] [data-news-blurb] {
     color:#c88f87 !important;
     font-family:var(--sunday-sans) !important;
-    font-size:8.75px !important;
+    font-size:8.75px !important;    font-size:var(--sc-pos8_75,8.75px) !important;
     font-weight:400 !important;
     letter-spacing:.035em !important;
     line-height:1.35 !important;
@@ -1726,7 +1726,7 @@ body form [aria-invalid="true"] {
   body form textarea,
   body form select,
   body form [contenteditable="true"] {
-    font-size:16px !important;
+    font-size:16px !important;    font-size:var(--sc-pos16,16px) !important;
     line-height:1.25 !important;
     touch-action:manipulation !important;
     transform:none !important;
@@ -1736,18 +1736,18 @@ html[data-phone-viewport-scale="1"] body form input:not([type="hidden"]),
 html[data-phone-viewport-scale="1"] body form textarea,
 html[data-phone-viewport-scale="1"] body form select,
 html[data-phone-viewport-scale="1"] body form [contenteditable="true"] {
-  font-size:20px !important;
+  font-size:20px !important;  font-size:var(--sc-pos20,20px) !important;
 }
 body form [data-form-error-field="true"],
 body form [aria-invalid="true"] {
   background:rgba(172,116,108,.12) !important;
   border-color:rgba(172,116,108,.72) !important;
-  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;
+  box-shadow:inset 0 0 0 1px rgba(172,116,108,.12) !important;  box-shadow:inset 0 0 0 var(--sc-pos1,1px) rgba(172,116,108,.12) !important;
 }
 body form [role="alert"] {
   color:#8c2f22 !important;
   font-family:var(--sunday-sans, 'Inter Tight', sans-serif) !important;
-  font-size:9.5px !important;
+  font-size:9.5px !important;  font-size:var(--sc-pos9_5,9.5px) !important;
   font-weight:400 !important;
   letter-spacing:.065em !important;
   line-height:1.4 !important;
@@ -1761,72 +1761,213 @@ footer[data-site-footer] form [role="alert"],
   color:#f5efe6 !important;
 }
 
-/* PHONE PROPORTIONS AT NATIVE VIEWPORT · 2026-09-28
-   The old 0.84 viewport visually reduced fixed pixel sizes. Restore their
-   proportions in CSS while keeping device-width and a stable scale of 1.
-   The vw coefficient stays the same: 0.84 × 7vw of (width / 0.84) = 7vw.
-   Editable fields keep their separate 16px minimum to avoid focus zoom. */
+/* Native-width phone sizing. Every fixed length keeps its original
+   authored fallback and resolves to the 0.84 visual size on phones. */
 @media (max-width:599px) {
-  h1[style*="font-size:clamp(48px,6.2vw,84px)"] { font-size:clamp(37.09px,5.704vw,64.92px) !important; }
-  h1[style*="font-size:clamp(50px,5.8vw,82px)"] { font-size:clamp(38.64px,5.336vw,63.37px) !important; }
-  h1[style*="font-size:clamp(52px,6.4vw,96px)"] { font-size:clamp(40.19px,5.888vw,74.19px) !important; }
-  h1[style*="font-size:clamp(53px,7.2vw,112px)"] { font-size:clamp(40.96px,6.624vw,86.55px) !important; }
-  h1[style*="font-size:clamp(56px,6.8vw,100px)"] { font-size:clamp(43.28px,6.256vw,77.28px) !important; }
-  h1[style*="font-size:clamp(58px,7.4vw,102px)"] { font-size:clamp(44.82px,6.808vw,78.83px) !important; }
-  h1[style*="font-size:clamp(58px,7vw,108px)"] { font-size:clamp(44.82px,6.440vw,83.46px) !important; }
-  h1[style*="font-size:clamp(62px,8.5vw,126px)"] { font-size:clamp(47.91px,7.820vw,97.37px) !important; }
-  h2[style*="font-size:clamp(17px,1.7vw,22px)"] { font-size:clamp(13.14px,1.564vw,17.00px) !important; }
-  h2[style*="font-size:clamp(18px,2.2vw,24px)"] { font-size:clamp(13.91px,2.024vw,18.55px) !important; }
-  h2[style*="font-size:clamp(21px,2vw,29px)"] { font-size:clamp(16.23px,1.840vw,22.41px) !important; }
-  h2[style*="font-size:clamp(22px,2.2vw,28px)"] { font-size:clamp(17.00px,2.024vw,21.64px) !important; }
-  h2[style*="font-size:clamp(24px,2.4vw,36px)"] { font-size:clamp(18.55px,2.208vw,27.82px) !important; }
-  h2[style*="font-size:clamp(25px,2.7vw,34px)"] { font-size:clamp(19.32px,2.484vw,26.28px) !important; }
-  h2[style*="font-size:clamp(28px,2.8vw,40px)"] { font-size:clamp(21.64px,2.576vw,30.91px) !important; }
-  h2[style*="font-size:clamp(34px,3.5vw,54px)"] { font-size:clamp(26.28px,3.220vw,41.73px) !important; }
-  h2[style*="font-size:clamp(34px,3.6vw,52px)"] { font-size:clamp(26.28px,3.312vw,40.19px) !important; }
-  h2[style*="font-size:clamp(34px,4vw,56px)"] { font-size:clamp(26.28px,3.680vw,43.28px) !important; }
-  h2[style*="font-size:clamp(36px,4vw,60px)"] { font-size:clamp(27.82px,3.680vw,46.37px) !important; }
-  h2[style*="font-size:clamp(38px,4.2vw,56px)"] { font-size:clamp(29.37px,3.864vw,43.28px) !important; }
-  h2[style*="font-size:clamp(38px,4.2vw,60px)"] { font-size:clamp(29.37px,3.864vw,46.37px) !important; }
-  h2[style*="font-size:clamp(38px,4.5vw,58px)"] { font-size:clamp(29.37px,4.140vw,44.82px) !important; }
-  h2[style*="font-size:clamp(38px,4.5vw,64px)"] { font-size:clamp(29.37px,4.140vw,49.46px) !important; }
-  h2[style*="font-size:clamp(38px,4.5vw,66px)"] { font-size:clamp(29.37px,4.140vw,51.00px) !important; }
-  h2[style*="font-size:clamp(38px,4vw,56px)"] { font-size:clamp(29.37px,3.680vw,43.28px) !important; }
-  h2[style*="font-size:clamp(38px,4vw,58px)"] { font-size:clamp(29.37px,3.680vw,44.82px) !important; }
-  h2[style*="font-size:clamp(38px,4vw,60px)"] { font-size:clamp(29.37px,3.680vw,46.37px) !important; }
-  h2[style*="font-size:clamp(42px,4.8vw,72px)"] { font-size:clamp(32.46px,4.416vw,55.64px) !important; }
-  h2[style*="font-size:clamp(44px,5vw,62px)"] { font-size:clamp(34.00px,4.600vw,47.91px) !important; }
-  h3[style*="font-size:clamp(26px,2.8vw,36px)"] { font-size:clamp(20.09px,2.576vw,27.82px) !important; }
-  h3[style*="font-size:clamp(26px,2.8vw,38px)"] { font-size:clamp(20.09px,2.576vw,29.37px) !important; }
-  h3[style*="font-size:clamp(28px,3vw,40px)"] { font-size:clamp(21.64px,2.760vw,30.91px) !important; }
-  p[style*="font-size:clamp(17px,1.35vw,20px)"] { font-size:clamp(13.14px,1.242vw,15.46px) !important; }
-  p[style*="font-size:clamp(18px,1.8vw,25px)"] { font-size:clamp(13.91px,1.656vw,19.32px) !important; }
-  p[style*="font-size:clamp(26px,3vw,36px)"] { font-size:clamp(20.09px,2.760vw,27.82px) !important; }
-  p[style*="font-size:clamp(58px,8vw,116px)"] { font-size:clamp(44.82px,7.360vw,89.64px) !important; }
-  #about-hero-title { font-size:clamp(20.09px,6.808vw,27.82px) !important; }
-  #results-title { font-size:clamp(18.55px,6.808vw,23.18px) !important; }
-  p[style*="font-size:15px"] { font-size:12px !important; }
-  p[style*="font-size:16px"] { font-size:12.5px !important; }
-  #vision [data-vision-quote] { font-size:clamp(13.14px,1.242vw,15.46px) !important; }
-  #vision [data-vision-body] { font-size:12px !important; }
-  header[data-site-header] { height:51px !important; padding-left:14px !important; padding-right:14px !important; }
-  header[data-site-header] > a[aria-label] { width:94px !important; }
-  header[data-site-header] > a[aria-label] > span { width:91px !important; height:35px !important; }
-  header[data-site-header] > a[aria-label] > span > img { width:129px !important; height:129px !important; left:-19px !important; top:-45px !important; }
-  header[data-site-header] > button[aria-label="Open menu"] { font-size:9.5px !important; gap:7px !important; }
-  header[data-site-header] > button[aria-label="Open menu"] svg { width:18px !important; height:18px !important; }
-  aside[aria-label="Sunday & Company navigation"] { width:min(82vw,255px) !important; max-width:255px !important; padding:15px !important; }
-  aside[aria-label="Sunday & Company navigation"] nav > a { font-size:15px !important; min-height:38px !important; padding:8px 0 !important; }
-  [aria-label="Project inquiry"] [data-inquiry-title] { font-size:22px !important; }
-  [aria-label="Project inquiry"] [data-inquiry-support] { font-size:9.5px !important; }
-  body [aria-label="The Sunday Reservation"] { min-height:min(520px, calc(100svh - 34px)) !important; }
-  [aria-label="The Sunday Reservation"] > div[aria-hidden="true"] { min-height:132px !important; max-height:132px !important; }
-  [aria-label="The Sunday Reservation"] > div:not([aria-hidden]) { padding:18px 18px 20px !important; }
-  [aria-label="The Sunday Reservation"] h2 { font-size:23px !important; }
-  [aria-label="The Sunday Reservation"] [data-res-intro] { font-size:8.75px !important; }
-  footer[data-site-footer] [data-footer-ui] { font-size:10.75px !important; }
-  footer[data-site-footer] a[data-footer-ui][href^="mailto:"],
-  footer[data-site-footer] a[href^="mailto:"] { font-size:11.25px !important; }
-  footer[data-site-footer] [data-footer-location] { font-size:10.25px !important; }
-  footer[data-site-footer] [data-footer-tagline] { font-size:11.25px !important; }
+  :root {
+    --sc-neg1:-0.8400px;
+    --sc-neg12:-10.0800px;
+    --sc-neg2:-1.6800px;
+    --sc-neg22:-18.4800px;
+    --sc-neg23:-19.3200px;
+    --sc-neg24:-20.1600px;
+    --sc-neg26:-21.8400px;
+    --sc-neg3:-2.5200px;
+    --sc-neg31:-26.0400px;
+    --sc-neg4:-3.3600px;
+    --sc-neg5:-4.2000px;
+    --sc-neg51:-42.8400px;
+    --sc-neg53:-44.5200px;
+    --sc-neg57:-47.8800px;
+    --sc-neg5_5:-4.6200px;
+    --sc-neg6:-5.0400px;
+    --sc-neg60:-50.4000px;
+    --sc-neg73:-61.3200px;
+    --sc-neg9:-7.5600px;
+    --sc-neg9999:-8399.1600px;
+    --sc-pos1:0.8400px;
+    --sc-pos10:8.4000px;
+    --sc-pos100:84.0000px;
+    --sc-pos102:85.6800px;
+    --sc-pos104:87.3600px;
+    --sc-pos105:88.2000px;
+    --sc-pos108:90.7200px;
+    --sc-pos1080:907.2000px;
+    --sc-pos10_25:8.6100px;
+    --sc-pos10_5:8.8200px;
+    --sc-pos10_75:9.0300px;
+    --sc-pos11:9.2400px;
+    --sc-pos110:92.4000px;
+    --sc-pos1100:924.0000px;
+    --sc-pos112:94.0800px;
+    --sc-pos115:96.6000px;
+    --sc-pos116:97.4400px;
+    --sc-pos118:99.1200px;
+    --sc-pos1180:991.2000px;
+    --sc-pos11_25:9.4500px;
+    --sc-pos11_5:9.6600px;
+    --sc-pos12:10.0800px;
+    --sc-pos120:100.8000px;
+    --sc-pos1200:1008.0000px;
+    --sc-pos122:102.4800px;
+    --sc-pos124:104.1600px;
+    --sc-pos1240:1041.6000px;
+    --sc-pos125:105.0000px;
+    --sc-pos126:105.8400px;
+    --sc-pos128:107.5200px;
+    --sc-pos12_5:10.5000px;
+    --sc-pos13:10.9200px;
+    --sc-pos132:110.8800px;
+    --sc-pos1320:1108.8000px;
+    --sc-pos1360:1142.4000px;
+    --sc-pos138:115.9200px;
+    --sc-pos13_25:11.1300px;
+    --sc-pos13_5:11.3400px;
+    --sc-pos14:11.7600px;
+    --sc-pos1400:1176.0000px;
+    --sc-pos145:121.8000px;
+    --sc-pos14_5:12.1800px;
+    --sc-pos15:12.6000px;
+    --sc-pos150:126.0000px;
+    --sc-pos151:126.8400px;
+    --sc-pos154:129.3600px;
+    --sc-pos156:131.0400px;
+    --sc-pos15_5:13.0200px;
+    --sc-pos16:13.4400px;
+    --sc-pos160:134.4000px;
+    --sc-pos164:137.7600px;
+    --sc-pos165:138.6000px;
+    --sc-pos17:14.2800px;
+    --sc-pos170:142.8000px;
+    --sc-pos172:144.4800px;
+    --sc-pos174:146.1600px;
+    --sc-pos18:15.1200px;
+    --sc-pos180:151.2000px;
+    --sc-pos19:15.9600px;
+    --sc-pos190:159.6000px;
+    --sc-pos19_25:16.1700px;
+    --sc-pos2:1.6800px;
+    --sc-pos20:16.8000px;
+    --sc-pos200:168.0000px;
+    --sc-pos205:172.2000px;
+    --sc-pos21:17.6400px;
+    --sc-pos210:176.4000px;
+    --sc-pos213:178.9200px;
+    --sc-pos22:18.4800px;
+    --sc-pos23:19.3200px;
+    --sc-pos235:197.4000px;
+    --sc-pos236:198.2400px;
+    --sc-pos24:20.1600px;
+    --sc-pos240:201.6000px;
+    --sc-pos25:21.0000px;
+    --sc-pos26:21.8400px;
+    --sc-pos27:22.6800px;
+    --sc-pos272:228.4800px;
+    --sc-pos28:23.5200px;
+    --sc-pos280:235.2000px;
+    --sc-pos285:239.4000px;
+    --sc-pos29:24.3600px;
+    --sc-pos290:243.6000px;
+    --sc-pos292:245.2800px;
+    --sc-pos3:2.5200px;
+    --sc-pos30:25.2000px;
+    --sc-pos300:252.0000px;
+    --sc-pos31:26.0400px;
+    --sc-pos310:260.4000px;
+    --sc-pos32:26.8800px;
+    --sc-pos320:268.8000px;
+    --sc-pos325:273.0000px;
+    --sc-pos330:277.2000px;
+    --sc-pos335:281.4000px;
+    --sc-pos34:28.5600px;
+    --sc-pos340:285.6000px;
+    --sc-pos35:29.4000px;
+    --sc-pos350:294.0000px;
+    --sc-pos36:30.2400px;
+    --sc-pos360:302.4000px;
+    --sc-pos370:310.8000px;
+    --sc-pos38:31.9200px;
+    --sc-pos380:319.2000px;
+    --sc-pos39:32.7600px;
+    --sc-pos390:327.6000px;
+    --sc-pos4:3.3600px;
+    --sc-pos40:33.6000px;
+    --sc-pos400:336.0000px;
+    --sc-pos41:34.4400px;
+    --sc-pos42:35.2800px;
+    --sc-pos420:352.8000px;
+    --sc-pos43:36.1200px;
+    --sc-pos430:361.2000px;
+    --sc-pos44:36.9600px;
+    --sc-pos440:369.6000px;
+    --sc-pos45:37.8000px;
+    --sc-pos46:38.6400px;
+    --sc-pos460:386.4000px;
+    --sc-pos47:39.4800px;
+    --sc-pos470:394.8000px;
+    --sc-pos475:399.0000px;
+    --sc-pos48:40.3200px;
+    --sc-pos480:403.2000px;
+    --sc-pos5:4.2000px;
+    --sc-pos50:42.0000px;
+    --sc-pos500:420.0000px;
+    --sc-pos52:43.6800px;
+    --sc-pos520:436.8000px;
+    --sc-pos53:44.5200px;
+    --sc-pos54:45.3600px;
+    --sc-pos540:453.6000px;
+    --sc-pos55:46.2000px;
+    --sc-pos550:462.0000px;
+    --sc-pos56:47.0400px;
+    --sc-pos560:470.4000px;
+    --sc-pos570:478.8000px;
+    --sc-pos58:48.7200px;
+    --sc-pos590:495.6000px;
+    --sc-pos6:5.0400px;
+    --sc-pos60:50.4000px;
+    --sc-pos62:52.0800px;
+    --sc-pos620:520.8000px;
+    --sc-pos64:53.7600px;
+    --sc-pos640:537.6000px;
+    --sc-pos650:546.0000px;
+    --sc-pos66:55.4400px;
+    --sc-pos660:554.4000px;
+    --sc-pos68:57.1200px;
+    --sc-pos680:571.2000px;
+    --sc-pos6_5:5.4600px;
+    --sc-pos7:5.8800px;
+    --sc-pos70:58.8000px;
+    --sc-pos700:588.0000px;
+    --sc-pos710:596.4000px;
+    --sc-pos72:60.4800px;
+    --sc-pos720:604.8000px;
+    --sc-pos74:62.1600px;
+    --sc-pos740:621.6000px;
+    --sc-pos76:63.8400px;
+    --sc-pos760:638.4000px;
+    --sc-pos780:655.2000px;
+    --sc-pos7_5:6.3000px;
+    --sc-pos7_75:6.5100px;
+    --sc-pos8:6.7200px;
+    --sc-pos80:67.2000px;
+    --sc-pos800:672.0000px;
+    --sc-pos82:68.8800px;
+    --sc-pos820:688.8000px;
+    --sc-pos84:70.5600px;
+    --sc-pos86:72.2400px;
+    --sc-pos88:73.9200px;
+    --sc-pos880:739.2000px;
+    --sc-pos8_25:6.9300px;
+    --sc-pos8_5:7.1400px;
+    --sc-pos8_75:7.3500px;
+    --sc-pos9:7.5600px;
+    --sc-pos90:75.6000px;
+    --sc-pos900:756.0000px;
+    --sc-pos92:77.2800px;
+    --sc-pos930:781.2000px;
+    --sc-pos96:80.6400px;
+    --sc-pos9_25:7.7700px;
+    --sc-pos9_5:7.9800px;
+    --sc-pos9_75:8.1900px;
+  }
 }

@@ -53,6 +53,8 @@ for path in ROOT.rglob("*"):
     if not path.is_file() or path.suffix.lower() not in {".html", ".css", ".js"}:
         continue
     text = path.read_text(encoding="utf-8", errors="ignore")
+    if re.search(r"matchMedia\([^;\n]*var\(--sc-", text):
+        errors.append(f"{path.relative_to(ROOT)}: matchMedia breakpoint uses a CSS size token")
     if re.search(r"user-scalable\s*=\s*no|maximum-scale\s*=\s*(?:0|1)(?:[\"',\s]|$)", text, re.I):
         errors.append(f"{path.relative_to(ROOT)}: prohibited viewport zoom restriction")
 
@@ -72,6 +74,18 @@ if not re.search(r'max-width:\s*599px[\s\S]{0,700}Sunday and Company services[\s
     errors.append("index.html: very-small-mobile Home service marquee is not 8.5px")
 
 site_css = (ROOT / "assets/site.css").read_text(encoding="utf-8")
+if "--sc-pos53:44.5200px" not in site_css or "--sc-pos640:537.6000px" not in site_css:
+    errors.append("assets/site.css: phone size tokens no longer match the established visual scale")
+phone_tokens = set(re.findall(r"--sc-([\w]+):[-\d.]+px", site_css))
+for path in ROOT.rglob("*"):
+    if path.is_file() and path.suffix.lower() in {".html", ".css", ".js"}:
+        used = set(re.findall(r"var\(--sc-([\w]+),", path.read_text(encoding="utf-8", errors="ignore")))
+        if used - phone_tokens:
+            errors.append(f"{path.relative_to(ROOT)}: undefined phone size tokens")
+if "var(--sc-pos53,53px)" not in home:
+    errors.append("index.html: phone hero title is missing its fixed-length size token")
+if "matchMedia('(max-width: var(--sc-" in home:
+    errors.append("index.html: JavaScript breakpoint cannot use CSS variables")
 if not re.search(r'data-news-blurb[\s\S]{0,500}white-space:\s*nowrap', site_css, re.I):
     errors.append("assets/site.css: footer newsletter support line lost nowrap")
 if "font-size:16px !important" not in site_css:
@@ -87,7 +101,7 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 
 # Cache/version guardrails for shared site assets and DC imports.
-ASSET_REVISION = "20260928-05"
+ASSET_REVISION = "20260928-06"
 SUPPORT_REVISION = "20260927-37"
 PUBLIC_ROUTES = (
     "404.html",
@@ -174,7 +188,8 @@ if program_component.count('aria-label="Close"') < 3:
 
 
 # Popup close-button visibility and adaptive-height guardrails.
-if 'background:#ac746c;border:1px solid #311d03;color:#f5efe6' not in header_component:
+close_style = r'background:#ac746c[^"]{0,130}border:1px solid #311d03[^"]{0,130}color:#f5efe6'
+if not re.search(close_style, header_component):
     errors.append("Site Header.dc.html: cream-surface popup close button lost rose/cream treatment")
 if "resCloseBg: t ? '#f5efe6' : '#ac746c'" not in header_component or "resCloseColor: t ? '#ac746c' : '#f5efe6'" not in header_component:
     errors.append("Site Header.dc.html: Reservation close button no longer reverses over photography")
@@ -182,9 +197,9 @@ if "inqDialogMaxH:" not in header_component or "inqReceiptMinH: 'auto'" not in h
     errors.append("Site Header.dc.html: Project Inquiry no longer grows naturally to its viewport cap")
 if 'overflow-y:auto;padding:{{ inqOverlayPad }}' not in header_component:
     errors.append("Site Header.dc.html: Project Inquiry overlay cannot scroll when content exceeds the viewport")
-if program_component.count('background:#ac746c;border:1px solid #311d03;color:#f5efe6') < 3:
+if len(re.findall(close_style, program_component)) < 3:
     errors.append("Program Cards.dc.html: Program Details close buttons are not consistently rose/cream")
-if "dialogMaxHeight: t ? 'calc(100svh - 24px)' : 'calc(100svh - 36px)'" not in program_component:
+if not re.search(r"dialogMaxHeight: t \? 'calc\(100svh - var\(--sc-pos24,24px\)\)' : 'calc\(100svh - var\(--sc-pos36,36px\)\)'", program_component):
     errors.append("Program Cards.dc.html: Program Details no longer grows to the intended viewport cap")
 
 
@@ -201,18 +216,18 @@ if 'font-size:clamp(25px,2.7vw,34px)' not in services_text:
 
 
 # Global popup-card footer action guardrails.
-popup_keep_style = "color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px;font-weight:600"
+popup_keep_style = r"color:#ac746c;cursor:pointer;display:block;font-family:'Inter Tight',sans-serif;font-size:8.5px[^\"]{0,100}font-weight:600"
 if header_component.count('data-popup-keep') < 2:
     errors.append("Site Header.dc.html: Project Inquiry and Reservation need bottom KEEP BROWSING actions")
 if header_component.count('>KEEP BROWSING</button>') < 2:
     errors.append("Site Header.dc.html: popup KEEP BROWSING labels are incomplete")
-if popup_keep_style not in header_component:
+if not re.search(popup_keep_style, header_component):
     errors.append("Site Header.dc.html: global rose Inter Tight KEEP BROWSING treatment changed")
 if program_component.count('data-popup-keep') < 3:
     errors.append("Program Cards.dc.html: all three Program Details cards need bottom KEEP BROWSING actions")
 if program_component.count('>KEEP BROWSING</button>') < 3:
     errors.append("Program Cards.dc.html: Program Details KEEP BROWSING labels are incomplete")
-if popup_keep_style not in program_component:
+if not re.search(popup_keep_style, program_component):
     errors.append("Program Cards.dc.html: global rose Inter Tight KEEP BROWSING treatment changed")
 
 if errors:

@@ -4,6 +4,7 @@
 - Compact Menu through 1240px; full navigation at 1241px+.
 - Never fake responsiveness with document zoom, a forced 1280px viewport, or matchMedia rewriting.
 - All pages use a static `width=device-width, initial-scale=1, viewport-fit=cover` meta tag in the real head. Keep the viewport unchanged on focus.
+- Phones retain the original visual proportions through `--sc-pos*` and `--sc-neg*` fixed-length tokens in CSS, inline styles and component size strings. Their authored pixel values remain as fallbacks; the phone token values are 0.84 of those values. Preserve this system when adding sizes. Keep `matchMedia` breakpoint strings numeric.
 - Keep one consolidated mobile override block at the end of assets/site.css.
 - Project Inquiry and Sunday Reservation auto-size on normal phones and should not have an internal scrollbar in the normal/default state.
 - Editable mobile fields stay at 16px or larger.

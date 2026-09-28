@@ -6,10 +6,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/site.css?v=20260928-05" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-05" />
+<link rel="stylesheet" href="/assets/site.css?v=20260928-06" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20260928-06" />
 <script src="/support.js?v=20260927-37"></script>
-<script defer data-sunday-site-js src="/assets/site.js?v=20260928-05"></script>
+<script defer data-sunday-site-js src="/assets/site.js?v=20260928-06"></script>
 </head>
 <body>
 <x-dc>
@@ -42,10 +42,10 @@
 <style>
   :root { accent-color: #ac746c; }
   *:focus { outline-color: #ac746c; }
-  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline-offset: 2px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid #ac746c; outline: var(--sc-pos2,2px) solid #ac746c; outline-offset: 2px; outline-offset: var(--sc-pos2,2px); }
   input:focus, textarea:focus, select:focus, input:focus-visible, textarea:focus-visible, select:focus-visible {
     border-color: #ac746c !important;
-    box-shadow: 0 0 0 1px #ac746c !important;
+    box-shadow: 0 0 0 1px #ac746c !important;    box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c !important;
     outline: none !important;
   }
   *, *::before, *::after { box-sizing: border-box; }
@@ -61,7 +61,7 @@
 
   input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
   textarea:-webkit-autofill, select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #fffdf8 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #fffdf8 inset !important;
     -webkit-text-fill-color: #311d03 !important;
     caret-color: #311d03;
     transition: background-color 9999s ease-out 0s;
@@ -70,31 +70,31 @@
   input::placeholder, textarea::placeholder { color: rgba(49,29,3,.5); opacity: 1; }
   input:focus, textarea:focus, select:focus, button:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 1px solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c;
+    outline: 1px solid #ac746c;    outline: var(--sc-pos1,1px) solid #ac746c; outline-offset: 0; box-shadow: 0 0 0 1px #ac746c; box-shadow: 0 0 0 var(--sc-pos1,1px) #ac746c;
   }
   input:invalid, textarea:invalid { box-shadow: none; }
 
   [aria-label="Newsletter"] input:-webkit-autofill,
   [aria-label="Newsletter"] input:-webkit-autofill:hover,
   [aria-label="Newsletter"] input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;
+    -webkit-box-shadow: 0 0 0 100px #311d03 inset !important;    -webkit-box-shadow: 0 0 0 var(--sc-pos100,100px) #311d03 inset !important;
     -webkit-text-fill-color: #f5efe6 !important;
     caret-color: #f5efe6;
   }
   [aria-label="Newsletter"] input::placeholder { color: rgba(245,239,230,.62); }
-  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; }
+  [aria-label="Newsletter"] input:focus-visible { outline-color: #ac746c; box-shadow: 0 1px 0 0 #ac746c; box-shadow: 0 var(--sc-pos1,1px) 0 0 #ac746c; }
   @media (max-width: 900px) {
-    input, textarea, select, button { font-size: 16px; }
-    input, textarea, select { min-height: 46px; }
-    textarea { min-height: 96px; }
+    input, textarea, select, button { font-size: 16px; font-size: var(--sc-pos16,16px); }
+    input, textarea, select { min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 96px; min-height: var(--sc-pos96,96px); }
   }
 
 
   /* ---- mobile: forms, breathing room, and flex CTAs only. no grid rules. ---- */
   @media (max-width: 900px) {
     /* iOS force-zooms any field under 16px */
-    input, textarea, select { font-size: 16px !important; min-height: 46px; }
-    textarea { min-height: 100px; }
+    input, textarea, select { font-size: 16px !important; font-size: var(--sc-pos16,16px) !important; min-height: 46px; min-height: var(--sc-pos46,46px); }
+    textarea { min-height: 100px; min-height: var(--sc-pos100,100px); }
     button { font-size: inherit; }
     /* Large layout rows wrap only when explicitly marked with data-mobile-wrap-row.
        Compact receipt/status rows stay horizontal. */
@@ -103,17 +103,17 @@
     button > span[style*="align-items: start"][style*="grid-template-columns"],
     button > span[style*="align-items:start"][style*="grid-template-columns"] {
       grid-template-columns: 1fr !important;
-      row-gap: 14px !important;
+      row-gap: 14px !important;      row-gap: var(--sc-pos14,14px) !important;
     }
   }
 
   @media (max-width: 900px) {
     /* masthead logo — same size on every page */
-    header[data-site-header] > a[aria-label] { width: 120px !important; }
-    header[data-site-header] > a[aria-label] > span { height: 44px !important; width: 116px !important; }
+    header[data-site-header] > a[aria-label] { width: 120px !important; width: var(--sc-pos120,120px) !important; }
+    header[data-site-header] > a[aria-label] > span { height: 44px !important; height: var(--sc-pos44,44px) !important; width: 116px !important; width: var(--sc-pos116,116px) !important; }
     header[data-site-header] > a[aria-label] > span > img {
-      height: 164px !important; width: 164px !important;
-      left: -24px !important; top: -57px !important;
+      height: 164px !important;      height: var(--sc-pos164,164px) !important; width: 164px !important; width: var(--sc-pos164,164px) !important;
+      left: -24px !important;      left: var(--sc-neg24,-24px) !important; top: -57px !important; top: var(--sc-neg57,-57px) !important;
     }
     /* newsletter popup — was filling the whole screen */
   }
@@ -121,16 +121,16 @@
   @media (max-width: 900px) {
     /* project inquiry form: one column and condensed, popup and Services page
        both, since they are the same component */
-    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; }
+    form[data-inq] { grid-template-columns: 1fr !important; gap: 7px !important; gap: var(--sc-pos7,7px) !important; }
     form[data-inq] fieldset { grid-template-columns: 1fr !important; }
     form[data-inq] label > span,
-    form[data-inq] legend { font-size: 9.5px !important; }
-    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; }
-    form[data-inq] textarea { min-height: 74px !important; }
-    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; }
+    form[data-inq] legend { font-size: 9.5px !important; font-size: var(--sc-pos9_5,9.5px) !important; }
+    form[data-inq] input, form[data-inq] > label > span + span input { min-height: 42px !important; min-height: var(--sc-pos42,42px) !important; }
+    form[data-inq] textarea { min-height: 74px !important; min-height: var(--sc-pos74,74px) !important; }
+    form[data-inq] > p, form[data-inq] > button { margin-top: 2px !important; margin-top: var(--sc-pos2,2px) !important; }
     /* condense: the decorative ledger and receipt trim are desktop-only */
     [aria-label="Project inquiry"] div[aria-hidden], #inquiry div[aria-hidden] { display: none !important; }
-    #inquiry header p, [aria-label="Project inquiry"] header p { font-size: 11px !important; }
+    #inquiry header p, [aria-label="Project inquiry"] header p { font-size: 11px !important; font-size: var(--sc-pos11,11px) !important; }
   }
 
   @media (max-width: 900px) {
@@ -149,27 +149,27 @@
 
 </helmet>
 
-<div data-screen-label="404" id="top" style="background:#f5efe6;color:#311d03;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;padding-top:76px">
+<div data-screen-label="404" id="top" style="background:#f5efe6;color:#311d03;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;padding-top:76px;padding-top:var(--sc-pos76,76px)">
 
   <dc-import name="/Site Header" tone="dark" hint-size="100%,0px"></dc-import>
 
-  <main id="main-content" tabindex="-1" style="align-items:center;display:flex;flex:1;justify-content:center;padding:clamp(44px,7vw,96px) clamp(20px,6vw,72px)">
-    <div style="background:#fffdf8;border:1px solid #311d03;max-width:620px;width:100%">
-      <div style="align-items:center;border-bottom:1px solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;justify-content:space-between;letter-spacing:.18em;padding:9px 18px;text-transform:uppercase">
+  <main id="main-content" tabindex="-1" style="align-items:center;display:flex;flex:1;justify-content:center;padding:clamp(44px,7vw,96px) clamp(20px,6vw,72px);padding:clamp(var(--sc-pos44,44px),7vw,var(--sc-pos96,96px)) clamp(var(--sc-pos20,20px),6vw,var(--sc-pos72,72px))">
+    <div style="background:#fffdf8;border:1px solid #311d03;border:var(--sc-pos1,1px) solid #311d03;max-width:620px;max-width:var(--sc-pos620,620px);width:100%">
+      <div style="align-items:center;border-bottom:1px solid #311d03;border-bottom:var(--sc-pos1,1px) solid #311d03;display:flex;font-family:'Inter Tight',sans-serif;font-size:7.5px;font-size:var(--sc-pos7_5,7.5px);justify-content:space-between;letter-spacing:.18em;padding:9px 18px;padding:var(--sc-pos9,9px) var(--sc-pos18,18px);text-transform:uppercase">
         <span>Sunday &amp; Company</span><span style="opacity:.7">Card Not On File</span>
       </div>
-      <div style="padding:clamp(26px,4vw,44px) clamp(22px,3.4vw,38px)">
-        <p style="align-items:baseline;color:#ac746c;display:flex;gap:12px"><span style="font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase">Error</span><span style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(34px,4.4vw,50px);font-weight:400;letter-spacing:-.04em;line-height:1">404</span></p>
-        <h1 style="font-size:clamp(42px,6vw,74px);font-weight:400;letter-spacing:-.06em;line-height:.86;margin-top:14px">This Page Isn’t <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.1em;font-style:normal;margin-left:.3em">In The Catalog</em></h1>
-        <p style="font-size:13.5px;line-height:1.7;margin-top:20px;max-width:440px">The page you were looking for has been moved, renamed or never existed. Nothing is broken · the shelf is just empty here.</p>
-        <div style="border-top:1px solid rgba(49,29,3,.35);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;letter-spacing:.14em;margin-top:26px;text-transform:uppercase">
-          <a href="/" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">01</span><span>Home</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Start Again</span></a>
-          <a href="/our-work" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">02</span><span>Our Work</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Selected Projects</span></a>
-          <a href="/services" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">03</span><span>Services</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Ways To Work</span></a>
-          <a href="/contact" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);display:flex;gap:14px;padding:11px 0"><span style="color:#ac746c;width:22px">04</span><span>Contact</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px)"></span><span style="opacity:.7">Send A Note</span></a>
+      <div style="padding:clamp(26px,4vw,44px) clamp(22px,3.4vw,38px);padding:clamp(var(--sc-pos26,26px),4vw,var(--sc-pos44,44px)) clamp(var(--sc-pos22,22px),3.4vw,var(--sc-pos38,38px))">
+        <p style="align-items:baseline;color:#ac746c;display:flex;gap:12px;gap:var(--sc-pos12,12px)"><span style="font-family:'Inter Tight',sans-serif;font-size:10px;font-size:var(--sc-pos10,10px);font-weight:500;letter-spacing:.2em;text-transform:uppercase">Error</span><span style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(34px,4.4vw,50px);font-size:clamp(var(--sc-pos34,34px),4.4vw,var(--sc-pos50,50px));font-weight:400;letter-spacing:-.04em;line-height:1">404</span></p>
+        <h1 style="font-size:clamp(42px,6vw,74px);font-size:clamp(var(--sc-pos42,42px),6vw,var(--sc-pos74,74px));font-weight:400;letter-spacing:-.06em;line-height:.86;margin-top:14px;margin-top:var(--sc-pos14,14px)">This Page Isn’t <em style="color:#ac746c;display:block;font-family:'Pinyon Script',cursive;font-size:1.1em;font-style:normal;margin-left:.3em">In The Catalog</em></h1>
+        <p style="font-size:13.5px;font-size:var(--sc-pos13_5,13.5px);line-height:1.7;margin-top:20px;margin-top:var(--sc-pos20,20px);max-width:440px;max-width:var(--sc-pos440,440px)">The page you were looking for has been moved, renamed or never existed. Nothing is broken · the shelf is just empty here.</p>
+        <div style="border-top:1px solid rgba(49,29,3,.35);border-top:var(--sc-pos1,1px) solid rgba(49,29,3,.35);display:grid;font-family:'Inter Tight',sans-serif;font-size:8px;font-size:var(--sc-pos8,8px);letter-spacing:.14em;margin-top:26px;margin-top:var(--sc-pos26,26px);text-transform:uppercase">
+          <a href="/" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28);display:flex;gap:14px;gap:var(--sc-pos14,14px);padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;width:22px;width:var(--sc-pos22,22px)">01</span><span>Home</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);border-bottom:var(--sc-pos1,1px) dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px);transform:translateY(var(--sc-neg3,-3px))"></span><span style="opacity:.7">Start Again</span></a>
+          <a href="/our-work" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28);display:flex;gap:14px;gap:var(--sc-pos14,14px);padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;width:22px;width:var(--sc-pos22,22px)">02</span><span>Our Work</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);border-bottom:var(--sc-pos1,1px) dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px);transform:translateY(var(--sc-neg3,-3px))"></span><span style="opacity:.7">Selected Projects</span></a>
+          <a href="/services" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28);display:flex;gap:14px;gap:var(--sc-pos14,14px);padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;width:22px;width:var(--sc-pos22,22px)">03</span><span>Services</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);border-bottom:var(--sc-pos1,1px) dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px);transform:translateY(var(--sc-neg3,-3px))"></span><span style="opacity:.7">Ways To Work</span></a>
+          <a href="/contact" style="align-items:baseline;border-bottom:1px solid rgba(49,29,3,.28);border-bottom:var(--sc-pos1,1px) solid rgba(49,29,3,.28);display:flex;gap:14px;gap:var(--sc-pos14,14px);padding:11px 0;padding:var(--sc-pos11,11px) 0"><span style="color:#ac746c;width:22px;width:var(--sc-pos22,22px)">04</span><span>Contact</span><span style="border-bottom:1px dotted rgba(49,29,3,.4);border-bottom:var(--sc-pos1,1px) dotted rgba(49,29,3,.4);flex:1;transform:translateY(-3px);transform:translateY(var(--sc-neg3,-3px))"></span><span style="opacity:.7">Send A Note</span></a>
         </div>
       </div>
-      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;justify-content:space-between;letter-spacing:.15em;opacity:.72;padding:9px 18px;text-transform:uppercase">
+      <div style="align-items:center;border-top:1px dashed rgba(49,29,3,.5);border-top:var(--sc-pos1,1px) dashed rgba(49,29,3,.5);display:flex;font-family:'Inter Tight',sans-serif;font-size:7px;font-size:var(--sc-pos7,7px);justify-content:space-between;letter-spacing:.15em;opacity:.72;padding:9px 18px;padding:var(--sc-pos9,9px) var(--sc-pos18,18px);text-transform:uppercase">
         <span>Nothing Filed Under This Address</span><span>Keep Browsing</span>
       </div>
     </div>
@@ -180,3 +180,4 @@
 </x-dc>
 </body>
 </html>
+
