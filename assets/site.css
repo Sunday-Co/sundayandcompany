@@ -1336,6 +1336,13 @@ form[data-inq] [aria-haspopup="dialog"] {
    blocks after this section.
    ========================================================== */
 @media (max-width:900px) {
+  /* Services guest check stays readable (about 12-13px) on phones. */
+  [data-screen-label="Services"] [data-guest-check] > p:first-child,
+  [data-screen-label="Services"] [data-guest-check] li > span:first-child { font-size:13px !important; }
+  [data-screen-label="Services"] [data-guest-check] > p:nth-child(2),
+  [data-screen-label="Services"] [data-guest-check] li > span:last-child,
+  [data-screen-label="Services"] [data-guest-check] a[download] { font-size:12px !important; }
+
   header[data-site-header] {
     height:64px !important;    height:var(--sc-pos64,64px) !important;
     padding-left:18px !important;    padding-left:var(--sc-pos18,18px) !important;

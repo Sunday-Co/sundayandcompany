@@ -316,23 +316,16 @@ class Component extends DCLogic {
         this._mqTight.addEventListener('change', this._sync);
       }
     }
-    // Automatic newsletter prompt: once per browser, across pages, tabs and visits.
-    // Checked before scheduling and again right before opening, so a pending
-    // timer cannot reopen it after it was seen or dismissed in another tab.
-    if (!this.newsletterSeen()) {
-      this._resTimer = window.setTimeout(() => {
-        this._resTimer = null;
-        if (this.newsletterSeen()) return;
-        this.markSeen();
-        this.setState({ res: true });
-      }, 650);
-    }
+    this.nlStart();
   }
   componentWillUnmount() {
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
     if (this._onKey) window.removeEventListener('keydown', this._onKey);
     if (this._openInq) window.removeEventListener('sunday:open-inquiry', this._openInq);
-    if (this._resTimer) window.clearTimeout(this._resTimer);
+    this.nlStop();
+    if (this._nlOnStorage) window.removeEventListener('storage', this._nlOnStorage);
+    if (this._nlOnSubscribed) window.removeEventListener('sunday:newsletter-subscribed', this._nlOnSubscribed);
+    if (this._nlOpen) window.removeEventListener('sunday:open-newsletter', this._nlOpen);
     if (this._mq && this._mq.removeEventListener && this._sync) {
       this._mq.removeEventListener('change', this._sync);
       this._mqTight.removeEventListener('change', this._sync);
@@ -342,21 +335,127 @@ class Component extends DCLogic {
     const mod = await import('./web3forms.js');
     return mod.submitToWeb3Forms(form, mod.WEB3FORM_KEYS[keyName], subject, extra || {});
   }
-  // Stable, site-wide key. Keep this name unchanged in future updates.
-  newsletterSeen() {
-    try { if (window.localStorage.getItem('sunday_newsletter_seen')) return true; } catch (e) {}
-    try { if (window.sessionStorage.getItem('sunday-reservation-seen')) return true; } catch (e) {}
-    return !!window.__sundayNewsletterSeen;
+  /* AUTOMATIC NEWSLETTER PROMPT
+     Shown only to visitors not recognised as subscribers, after 45 seconds of
+     active browsing (tab visible and focused, carried across pages in this
+     session) AND 25% scroll depth on an eligible page. At most once per
+     rolling 14 days. Persistent record, one stable key for the whole site:
+       localStorage 'sunday_newsletter_state' = { next: <ms>, subscribed: true }
+     Session timer: sessionStorage 'sunday_newsletter_session_ms'.
+     Keep both key names unchanged in future updates. */
+  nlRead() {
+    try {
+      const ls = window.localStorage;
+      let s = null;
+      const raw = ls.getItem('sunday_newsletter_state');
+      if (raw) { try { s = JSON.parse(raw); } catch (e) { s = null; } }
+      if (!s) {
+        s = {};
+        // One-time migration from the earlier "seen" flag (a timestamp).
+        const legacy = ls.getItem('sunday_newsletter_seen');
+        if (legacy) {
+          const at = parseInt(legacy, 10);
+          s = { next: (at > 0 ? at : Date.now()) + 14 * 864e5 };
+          ls.setItem('sunday_newsletter_state', JSON.stringify(s));
+          ls.removeItem('sunday_newsletter_seen');
+        }
+      }
+      return { next: Number(s.next) || 0, subscribed: s.subscribed === true };
+    } catch (e) {
+      return null; // storage unavailable: frequency cap cannot be honoured
+    }
   }
-  markSeen() {
-    window.__sundayNewsletterSeen = true;
-    try { window.localStorage.setItem('sunday_newsletter_seen', String(Date.now())); } catch (e) {}
-    // Fallback for browsers that block persistent storage: at least this tab stays quiet.
-    try { window.sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (e) {}
+  nlWrite(patch) {
+    const cur = this.nlRead();
+    if (!cur) return false;
+    const s = Object.assign({}, cur, patch);
+    const out = {};
+    if (s.next) out.next = s.next;
+    if (s.subscribed) out.subscribed = true;
+    try { window.localStorage.setItem('sunday_newsletter_state', JSON.stringify(out)); return true; } catch (e) { return false; }
+  }
+  nlSuppress() { this.nlWrite({ next: Date.now() + 14 * 864e5 }); }
+  nlEligibleNow() {
+    const st = this.nlRead();
+    return !!(st && !st.subscribed && Date.now() >= st.next);
+  }
+  nlSessionMs() {
+    try { return parseInt(window.sessionStorage.getItem('sunday_newsletter_session_ms'), 10) || 0; } catch (e) { return this._nlMs || 0; }
+  }
+  nlSetSessionMs(ms) {
+    this._nlMs = ms;
+    try { window.sessionStorage.setItem('sunday_newsletter_session_ms', String(ms)); } catch (e) {}
+  }
+  nlDepth() {
+    const d = document.documentElement;
+    const dist = Math.max(d.scrollHeight, document.body ? document.body.scrollHeight : 0) - window.innerHeight;
+    if (dist <= 0) return 0;
+    return (window.scrollY || d.scrollTop || 0) / dist;
+  }
+  nlBusy() {
+    if (this.state.inquiry || this.state.sheet || this.state.res) return true;
+    const dialogs = Array.from(document.querySelectorAll('[role="dialog"][aria-modal="true"]'));
+    if (dialogs.some((d) => d.offsetWidth > 0 || d.offsetHeight > 0)) return true;
+    const a = document.activeElement;
+    if (a && a !== document.body && ((a.closest && a.closest('form')) || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable)) return true;
+    if (Date.now() - (this._nlFormAt || 0) < 15000) return true;
+    const inq = document.getElementById('inquiry');
+    if (inq) {
+      const r = inq.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) return true;
+    }
+    return false;
+  }
+  nlStart() {
+    const path = (window.location.pathname || '/').toLowerCase();
+    const pageOk = !/^\/(contact|join-our-team)(\/|$)/.test(path);
+    this._nlOnStorage = (e) => {
+      if (e.key === 'sunday_newsletter_state' || e.key === null) { if (!this.nlEligibleNow()) this.nlStop(); }
+    };
+    window.addEventListener('storage', this._nlOnStorage);
+    this._nlOnSubscribed = () => this.nlStop();
+    window.addEventListener('sunday:newsletter-subscribed', this._nlOnSubscribed);
+    // An explicit request may open the newsletter during the cooldown.
+    this._nlOpen = () => { const st = this.nlRead(); if (!(st && st.subscribed)) this.setState({ res: true }); };
+    window.addEventListener('sunday:open-newsletter', this._nlOpen);
+    if (!pageOk || !this.nlEligibleNow()) return;
+    this._nlDepthMax = this.nlDepth();
+    this._nlOnScroll = () => { this._nlDepthMax = Math.max(this._nlDepthMax || 0, this.nlDepth()); };
+    window.addEventListener('scroll', this._nlOnScroll, { passive: true });
+    this._nlOnForm = (e) => { if (e.target && e.target.closest && e.target.closest('form')) this._nlFormAt = Date.now(); };
+    document.addEventListener('input', this._nlOnForm, true);
+    document.addEventListener('focusin', this._nlOnForm, true);
+    this._nlLast = Date.now();
+    this._nlTimer = window.setInterval(() => this.nlTick(), 1000);
+  }
+  nlStop() {
+    if (this._nlTimer) { window.clearInterval(this._nlTimer); this._nlTimer = null; }
+    if (this._nlOnScroll) { window.removeEventListener('scroll', this._nlOnScroll); this._nlOnScroll = null; }
+    if (this._nlOnForm) {
+      document.removeEventListener('input', this._nlOnForm, true);
+      document.removeEventListener('focusin', this._nlOnForm, true);
+      this._nlOnForm = null;
+    }
+  }
+  nlTick() {
+    const now = Date.now();
+    const dt = Math.max(0, Math.min(now - (this._nlLast || now), 1500));
+    this._nlLast = now;
+    if (!this.nlEligibleNow()) { this.nlStop(); return; }
+    const active = document.visibilityState === 'visible' && document.hasFocus();
+    let ms = this.nlSessionMs();
+    if (active && dt) { ms += dt; this.nlSetSessionMs(ms); }
+    this._nlDepthMax = Math.max(this._nlDepthMax || 0, this.nlDepth());
+    if (ms < 45000 || this._nlDepthMax < 0.25) return;
+    if (!active || this.nlBusy()) return; // defer and recheck on the next tick
+    // Read the persistent record again immediately before displaying.
+    if (!this.nlEligibleNow()) { this.nlStop(); return; }
+    if (!this.nlWrite({ next: Date.now() + 14 * 864e5 })) { this.nlStop(); return; }
+    this.nlStop();
+    this.setState({ res: true });
   }
   closeReservation() {
-    if (this._resTimer) window.clearTimeout(this._resTimer);
-    this.markSeen();
+    this.nlSuppress();
     this.setState({ res: false });
   }
   renderVals() {
@@ -500,7 +599,12 @@ class Component extends DCLogic {
         const form = e.target;
         this.setState({ resError: '', sending: true });
         this.send(form, 'reservation', 'New Sunday Reservation Signup')
-          .then(() => { this.markSeen(); this.setState({ resDone: true, sending: false }); })
+          .then(() => {
+            // Confirmed signup only: remember this visitor as a subscriber (no expiry).
+            this.nlWrite({ subscribed: true });
+            try { window.dispatchEvent(new CustomEvent('sunday:newsletter-subscribed')); } catch (err) {}
+            this.setState({ resDone: true, sending: false });
+          })
           .catch(() => this.setState({ resError: 'WE COULD NOT SAVE YOUR SEAT JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
       inquiryError: this.state.inquiryError || '',

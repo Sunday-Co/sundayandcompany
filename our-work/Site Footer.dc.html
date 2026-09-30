@@ -83,6 +83,7 @@ section[aria-label="Newsletter"] [data-news-blurb] {
       <p role="alert" style="font-size:10px;font-size:var(--sc-pos10,10px);grid-column:1 / -1;margin:0;display:{{ newsErrorDisplay }}">{{ newsError }}</p>
     </form>
     <div data-news-receipt role="status" aria-live="polite" style="border:1px solid rgba(245,239,230,.55);border:var(--sc-pos1,1px) solid rgba(245,239,230,.55);display:{{ newsDoneDisplay }};font-family:'Inter Tight',sans-serif;font-size:9px;font-size:var(--sc-pos9,9px);font-weight:300;letter-spacing:.14em;padding:12px 14px;padding:var(--sc-pos12,12px) var(--sc-pos14,14px);text-transform:uppercase">
+      <p data-news-subscribed style="font-family:'Playfair Display',Georgia,serif;font-size:14px;font-size:var(--sc-pos14,14px);font-style:italic;font-weight:400;letter-spacing:0;line-height:1.45;margin:0 0 10px;margin:0 0 var(--sc-pos10,10px);text-transform:none">Your seat is saved. We’ll see you in your inbox.</p>
       <div style="border-bottom:1px dashed rgba(245,239,230,.45);border-bottom:var(--sc-pos1,1px) dashed rgba(245,239,230,.45);display:flex;justify-content:space-between;padding-bottom:8px;padding-bottom:var(--sc-pos8,8px)"><span>Sunday Reservation</span><span>Status: Your Seat Is Saved</span></div>
       <div style="display:flex;justify-content:space-between;padding-top:8px;padding-top:var(--sc-pos8,8px)"><span>Confirmation</span><strong style="font-weight:400">A Seat At Our Table</strong></div>
     </div>
@@ -184,13 +185,33 @@ class Component extends DCLogic {
     form.removeAttribute('data-validation-attempted');
     return '';
   }
-  state = { narrow: false, tight: false, sending: false, newsError: '', newsDone: false };
+  state = { narrow: false, tight: false, sending: false, newsError: '', newsDone: false, subscribed: false };
+  // Shared newsletter record (see Site Header): 'sunday_newsletter_state' = { next, subscribed }.
+  isSubscribed() {
+    try { const s = JSON.parse(window.localStorage.getItem('sunday_newsletter_state') || '{}'); return !!(s && s.subscribed === true); } catch (e) { return false; }
+  }
+  markSubscribed() {
+    try {
+      const ls = window.localStorage;
+      let s = {};
+      try { s = JSON.parse(ls.getItem('sunday_newsletter_state') || '{}') || {}; } catch (e) { s = {}; }
+      const out = { subscribed: true };
+      if (Number(s.next)) out.next = Number(s.next);
+      ls.setItem('sunday_newsletter_state', JSON.stringify(out));
+    } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('sunday:newsletter-subscribed')); } catch (e) {}
+  }
   async send(form, keyName, subject) {
     const mod = await import('./web3forms.js');
     return mod.submitToWeb3Forms(form, mod.WEB3FORM_KEYS[keyName], subject, {});
   }
   componentDidMount() {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
+    if (typeof window === 'undefined') return;
+    this._syncSub = () => { if (this.isSubscribed()) this.setState({ subscribed: true }); };
+    this._syncSub();
+    window.addEventListener('storage', this._syncSub);
+    window.addEventListener('sunday:newsletter-subscribed', this._syncSub);
+    if (!window.matchMedia) return;
     this._mq = window.matchMedia('(max-width: 900px)');
     this._mqTight = window.matchMedia('(max-width: 900px)');
     this._sync = () => this.setState({ narrow: this._mq.matches, tight: this._mqTight.matches });
@@ -201,6 +222,10 @@ class Component extends DCLogic {
     }
   }
   componentWillUnmount() {
+    if (this._syncSub) {
+      window.removeEventListener('storage', this._syncSub);
+      window.removeEventListener('sunday:newsletter-subscribed', this._syncSub);
+    }
     if (this._mq && this._mq.removeEventListener && this._sync) {
       this._mq.removeEventListener('change', this._sync);
       this._mqTight.removeEventListener('change', this._sync);
@@ -214,8 +239,8 @@ class Component extends DCLogic {
       newsLabel: this.state.newsDone ? 'Your Seat Is Saved' : this.state.sending ? 'Saving Your Seat' : 'Reserve My Seat',
       newsError: this.state.newsError,
       newsErrorDisplay: this.state.newsError ? 'block' : 'none',
-      newsFormDisplay: this.state.newsDone ? 'none' : 'grid',
-      newsDoneDisplay: this.state.newsDone ? 'block' : 'none',
+      newsFormDisplay: (this.state.newsDone || this.state.subscribed) ? 'none' : 'grid',
+      newsDoneDisplay: (this.state.newsDone || this.state.subscribed) ? 'block' : 'none',
       clearNewsError: (e) => {
         const el = e && e.target;
         if (el && el.removeAttribute) {
@@ -232,10 +257,8 @@ class Component extends DCLogic {
         this.setState({ newsError: '', sending: true });
         this.send(form, 'reservation', 'New Sunday Reservation Signup')
           .then(() => {
-            // A footer signup also retires the automatic newsletter prompt.
-            try { window.localStorage.setItem('sunday_newsletter_seen', String(Date.now())); } catch (err) {}
-            try { window.sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (err) {}
-            window.__sundayNewsletterSeen = true;
+            // Confirmed signup only: remember this visitor as a subscriber.
+            this.markSubscribed();
             form.reset(); this.setState({ newsDone: true, sending: false });
           })
           .catch(() => this.setState({ newsError: 'WE COULD NOT SAVE YOUR SEAT JUST YET. PLEASE TRY AGAIN.', sending: false }));
