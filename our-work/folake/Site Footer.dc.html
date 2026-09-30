@@ -231,7 +231,13 @@ class Component extends DCLogic {
         const form = e.target;
         this.setState({ newsError: '', sending: true });
         this.send(form, 'reservation', 'New Sunday Reservation Signup')
-          .then(() => { form.reset(); this.setState({ newsDone: true, sending: false }); })
+          .then(() => {
+            // A footer signup also retires the automatic newsletter prompt.
+            try { window.localStorage.setItem('sunday_newsletter_seen', String(Date.now())); } catch (err) {}
+            try { window.sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (err) {}
+            window.__sundayNewsletterSeen = true;
+            form.reset(); this.setState({ newsDone: true, sending: false });
+          })
           .catch(() => this.setState({ newsError: 'WE COULD NOT SAVE YOUR SEAT JUST YET. PLEASE TRY AGAIN.', sending: false }));
       },
       // newsletter: source @900 turns the grid into a block, form to one column

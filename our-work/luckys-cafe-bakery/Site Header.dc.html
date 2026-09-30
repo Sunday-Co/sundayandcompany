@@ -316,9 +316,17 @@ class Component extends DCLogic {
         this._mqTight.addEventListener('change', this._sync);
       }
     }
-    let seen = false;
-    try { seen = !!window.sessionStorage.getItem('sunday-reservation-seen'); } catch (e) { seen = false; }
-    if (!seen) this._resTimer = window.setTimeout(() => this.setState({ res: true }), 650);
+    // Automatic newsletter prompt: once per browser, across pages, tabs and visits.
+    // Checked before scheduling and again right before opening, so a pending
+    // timer cannot reopen it after it was seen or dismissed in another tab.
+    if (!this.newsletterSeen()) {
+      this._resTimer = window.setTimeout(() => {
+        this._resTimer = null;
+        if (this.newsletterSeen()) return;
+        this.markSeen();
+        this.setState({ res: true });
+      }, 650);
+    }
   }
   componentWillUnmount() {
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
@@ -334,7 +342,16 @@ class Component extends DCLogic {
     const mod = await import('./web3forms.js');
     return mod.submitToWeb3Forms(form, mod.WEB3FORM_KEYS[keyName], subject, extra || {});
   }
+  // Stable, site-wide key. Keep this name unchanged in future updates.
+  newsletterSeen() {
+    try { if (window.localStorage.getItem('sunday_newsletter_seen')) return true; } catch (e) {}
+    try { if (window.sessionStorage.getItem('sunday-reservation-seen')) return true; } catch (e) {}
+    return !!window.__sundayNewsletterSeen;
+  }
   markSeen() {
+    window.__sundayNewsletterSeen = true;
+    try { window.localStorage.setItem('sunday_newsletter_seen', String(Date.now())); } catch (e) {}
+    // Fallback for browsers that block persistent storage: at least this tab stays quiet.
     try { window.sessionStorage.setItem('sunday-reservation-seen', 'true'); } catch (e) {}
   }
   closeReservation() {

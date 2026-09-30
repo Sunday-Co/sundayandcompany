@@ -1305,22 +1305,23 @@ form[data-inq] [aria-haspopup="dialog"] {
    their authored sizes. Rendered inline styles read
    "font-size: var(--sc-posN,Npx)", so match the token form.
    The Services #inquiry form and the popup Project Inquiry are
-   excluded so both inquiry forms stay identical. `main` in each
+   excluded so both inquiry forms stay identical, and the guest check
+   keeps its compact receipt scale. `main` in each
    selector outranks the equal-specificity rules in
    rendered-corrections.css, which loads after this file.
    ========================================================== */
 @media (min-width:901px) {
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos12,12px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:15px !important; }
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos13,13px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:16px !important; }
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos14,14px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *),
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos15,15px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:18px !important; }
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: clamp(var(--sc-pos14,14px),1.1vw,var(--sc-pos17,17px))"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:clamp(18px,1.55vw,20px) !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos12,12px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:15px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos13,13px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:16px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos14,14px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *),
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos15,15px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:18px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: clamp(var(--sc-pos14,14px),1.1vw,var(--sc-pos17,17px))"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:clamp(18px,1.55vw,20px) !important; }
 
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos10,10px)"][style*="Inter Tight"]:not([data-service-price]):not([data-menu-amount]),
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos10,10px)"][style*="Inter Tight"]:not([data-service-price]):not([data-menu-amount]):not([data-guest-check] *),
   [data-screen-label="Services"] main [data-service-number],
   [data-screen-label="Services"] main [data-service-meta],
   [data-screen-label="Services"] main [data-service-included],
-  [data-screen-label="Services"] main [data-menu-label] { font-size:12px !important; }
+  [data-screen-label="Services"] main [data-course-label] { font-size:12px !important; }
   [data-screen-label="Services"] main [data-service-price],
   [data-screen-label="Services"] main [data-menu-amount] { font-size:13px !important; }
 
