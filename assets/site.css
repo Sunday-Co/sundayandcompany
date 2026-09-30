@@ -1311,13 +1311,13 @@ form[data-inq] [aria-haspopup="dialog"] {
    rendered-corrections.css, which loads after this file.
    ========================================================== */
 @media (min-width:901px) {
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos12,12px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:15px !important; }
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos13,13px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:16px !important; }
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos14,14px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *),
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos15,15px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:18px !important; }
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: clamp(var(--sc-pos14,14px),1.1vw,var(--sc-pos17,17px))"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *) { font-size:clamp(18px,1.55vw,20px) !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos12,12px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *):not([data-sunday-supper] *):not([data-made-to-order] *) { font-size:15px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos13,13px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *):not([data-sunday-supper] *):not([data-made-to-order] *) { font-size:16px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos14,14px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *):not([data-sunday-supper] *):not([data-made-to-order] *),
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos15,15px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *):not([data-sunday-supper] *):not([data-made-to-order] *) { font-size:18px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: clamp(var(--sc-pos14,14px),1.1vw,var(--sc-pos17,17px))"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *):not([data-guest-check] *):not([data-sunday-supper] *):not([data-made-to-order] *) { font-size:clamp(18px,1.55vw,20px) !important; }
 
-  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos10,10px)"][style*="Inter Tight"]:not([data-service-price]):not([data-menu-amount]):not([data-guest-check] *),
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos10,10px)"][style*="Inter Tight"]:not([data-service-price]):not([data-menu-amount]):not([data-guest-check] *):not([data-sunday-supper] *):not([data-made-to-order] *),
   [data-screen-label="Services"] main [data-service-number],
   [data-screen-label="Services"] main [data-service-meta],
   [data-screen-label="Services"] main [data-service-included],
@@ -1328,6 +1328,8 @@ form[data-inq] [aria-haspopup="dialog"] {
   [data-screen-label="About Us"] main section[aria-labelledby="about-story-title"] p[style*="font-size: clamp(var(--sc-pos14,14px),1vw,var(--sc-pos16,16px))"] { font-size:18px !important; }
   [data-screen-label="About Us"] main p[style*="font-size: clamp(var(--sc-pos18,18px),1.8vw,var(--sc-pos25,25px))"] { font-size:28px !important; }
   [data-screen-label="About Us"] main a[data-about-team-cta] { font-size:11px !important; }
+  [data-screen-label="Services"] main [data-sunday-supper] a[href="#inquiry"] { font-size:11px !important; }
+  [data-screen-label="Services"] main [data-made-to-order] a[href="#inquiry"] { font-size:12px !important; }
 }
 
 /* ==========================================================
@@ -1336,12 +1338,10 @@ form[data-inq] [aria-haspopup="dialog"] {
    blocks after this section.
    ========================================================== */
 @media (max-width:900px) {
-  /* Services guest check stays readable (about 12-13px) on phones. */
-  [data-screen-label="Services"] [data-guest-check] > p:first-child,
-  [data-screen-label="Services"] [data-guest-check] li > span:first-child { font-size:13px !important; }
-  [data-screen-label="Services"] [data-guest-check] > p:nth-child(2),
-  [data-screen-label="Services"] [data-guest-check] li > span:last-child,
-  [data-screen-label="Services"] [data-guest-check] a[download] { font-size:12px !important; }
+  /* Services guest check: small print stays readable on phones. */
+  [data-screen-label="Services"] [data-guest-check] > p { font-size:13px !important; }
+  [data-screen-label="Services"] main [data-guest-check] a,
+  [data-screen-label="Services"] main [data-sunday-supper] a[href="#inquiry"] { font-size:11.5px !important; }
 
   header[data-site-header] {
     height:64px !important;    height:var(--sc-pos64,64px) !important;
