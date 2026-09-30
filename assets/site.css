@@ -1300,6 +1300,36 @@ form[data-inq] [aria-haspopup="dialog"] {
 }
 
 /* ==========================================================
+   DESKTOP READING SIZE · 2026-09-30
+   Web only (901px+): body copy about two steps larger. Phones keep
+   their authored sizes. Rendered inline styles read
+   "font-size: var(--sc-posN,Npx)", so match the token form.
+   The Services #inquiry form and the popup Project Inquiry are
+   excluded so both inquiry forms stay identical. `main` in each
+   selector outranks the equal-specificity rules in
+   rendered-corrections.css, which loads after this file.
+   ========================================================== */
+@media (min-width:901px) {
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos12,12px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:15px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos13,13px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:16px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos14,14px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *),
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos15,15px)"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:18px !important; }
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: clamp(var(--sc-pos14,14px),1.1vw,var(--sc-pos17,17px))"]:not([style*="Inter Tight"]):not([aria-label="Project inquiry"] *) { font-size:clamp(18px,1.55vw,20px) !important; }
+
+  [data-screen-label="Services"] main section:not(#inquiry) [style*="font-size: var(--sc-pos10,10px)"][style*="Inter Tight"]:not([data-service-price]):not([data-menu-amount]),
+  [data-screen-label="Services"] main [data-service-number],
+  [data-screen-label="Services"] main [data-service-meta],
+  [data-screen-label="Services"] main [data-service-included],
+  [data-screen-label="Services"] main [data-menu-label] { font-size:12px !important; }
+  [data-screen-label="Services"] main [data-service-price],
+  [data-screen-label="Services"] main [data-menu-amount] { font-size:13px !important; }
+
+  [data-screen-label="About Us"] main section[aria-labelledby="about-story-title"] p[style*="font-size: clamp(var(--sc-pos14,14px),1vw,var(--sc-pos16,16px))"] { font-size:18px !important; }
+  [data-screen-label="About Us"] main p[style*="font-size: clamp(var(--sc-pos18,18px),1.8vw,var(--sc-pos25,25px))"] { font-size:28px !important; }
+  [data-screen-label="About Us"] main a[data-about-team-cta] { font-size:11px !important; }
+}
+
+/* ==========================================================
    CONSOLIDATED MOBILE FINISH · 2026-09-26
    Final mobile override layer. Avoid adding competing sizing
    blocks after this section.
