@@ -1180,7 +1180,7 @@ form[data-inq] [aria-haspopup="dialog"] {
     height: auto !important;
     inset: auto !important;
     justify-content: flex-end !important;
-    margin: 0 calc(-1 * clamp(22px,6vw,30px)) !important;    margin: 0 calc(-1 * clamp(var(--sc-pos22,22px),6vw,var(--sc-pos30,30px))) !important;
+    margin: 32px calc(-1 * clamp(22px,6vw,30px)) 0 !important;    margin: var(--sc-pos32,32px) calc(-1 * clamp(var(--sc-pos22,22px),6vw,var(--sc-pos30,30px))) 0 !important;
     overflow: hidden !important;
     position: static !important;
   }
@@ -1188,9 +1188,9 @@ form[data-inq] [aria-haspopup="dialog"] {
     display: block !important;
     flex: 0 0 auto !important;
     height: auto !important;
-    margin: -32% -7% -38% auto !important;
+    margin: -36% 0 -36% auto !important;
     max-width: none !important;
-    width: 114% !important;
+    width: 140% !important;
   }
   #map-note {
     margin-left: 0 !important;
