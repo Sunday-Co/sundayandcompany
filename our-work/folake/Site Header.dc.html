@@ -336,7 +336,7 @@ class Component extends DCLogic {
     return mod.submitToWeb3Forms(form, mod.WEB3FORM_KEYS[keyName], subject, extra || {});
   }
   /* AUTOMATIC NEWSLETTER PROMPT
-     Shown only to visitors not recognised as subscribers, after 45 seconds of
+     Shown only to visitors not recognised as subscribers, after 14 seconds of
      active browsing (tab visible and focused, carried across pages in this
      session) AND 25% scroll depth on an eligible page. At most once per
      rolling 14 days. Persistent record, one stable key for the whole site:
@@ -446,7 +446,7 @@ class Component extends DCLogic {
     let ms = this.nlSessionMs();
     if (active && dt) { ms += dt; this.nlSetSessionMs(ms); }
     this._nlDepthMax = Math.max(this._nlDepthMax || 0, this.nlDepth());
-    if (ms < 45000 || this._nlDepthMax < 0.25) return;
+    if (ms < 14000 || this._nlDepthMax < 0.25) return;
     if (!active || this.nlBusy()) return; // defer and recheck on the next tick
     // Read the persistent record again immediately before displaying.
     if (!this.nlEligibleNow()) { this.nlStop(); return; }
