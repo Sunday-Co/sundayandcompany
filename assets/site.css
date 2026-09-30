@@ -1340,7 +1340,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 @media (max-width:900px) {
   /* Home services banner: slightly larger on phones and tablets. */
   [data-screen-label="Home"] [aria-label="Sunday and Company services"] { padding:11px 0 !important; padding:var(--sc-pos11,11px) 0 !important; }
-  [data-screen-label="Home"] [aria-label="Sunday and Company services"] > div > span { font-size:10.5px !important; font-size:var(--sc-pos10_5,10.5px) !important; }
+  [data-screen-label="Home"] [aria-label="Sunday and Company services"] > div > span { font-size:13px !important; font-size:var(--sc-pos13,13px) !important; }
 
   /* Services guest check: small print stays readable on phones. */
   [data-screen-label="Services"] [data-guest-check] > p { font-size:13px !important; }
