@@ -1301,11 +1301,8 @@ form[data-inq] [aria-haspopup="dialog"] {
 
 /* ==========================================================
    MOTION · 2026-10-02
-   One quiet motion language, used sparingly: the Services guest
-   check and case-study receipts "print" once in view, rose script
-   words in headings write themselves in, the Home hero copy rises in,
-   the Services accordion glides open, Our Work previews lift and
-   arrows nudge on hover.
+   Deliberately small set: the Services guest check "prints" once
+   when it scrolls into view, and Our Work previews lift on hover.
    Everything here is skipped for prefers-reduced-motion.
    ========================================================== */
 [data-guest-check][data-gc="ready"] [data-gc-step] { opacity:0; }
@@ -1345,54 +1342,9 @@ form[data-inq] [aria-haspopup="dialog"] {
   [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure):hover img { transform:scale(1.03); }
 }
 
-/* Rose script words in headings write themselves in (site.js marks them). */
-[data-motion="ready"][style*="Pinyon Script"] { opacity:0; }
-[data-motion="play"][style*="Pinyon Script"] { animation:sc-write 1000ms cubic-bezier(.5,0,.3,1) 120ms both; }
-@keyframes sc-write { from { opacity:1; clip-path:inset(-40% 100% -60% -20%); } to { opacity:1; clip-path:inset(-40% -30% -60% -20%); } }
-
-/* Case-study Project Receipt prints row by row. */
-[data-receipt][data-motion="ready"] > *,
-[data-receipt][data-motion="ready"] > :nth-child(2) > * { opacity:0; }
-[data-receipt][data-motion="play"] > *,
-[data-receipt][data-motion="play"] > :nth-child(2) > * { animation:gc-in 460ms cubic-bezier(.22,.8,.25,1) both; }
-[data-receipt][data-motion="play"] > :nth-child(2) { animation:none; opacity:1; }
-[data-receipt][data-motion="play"] > :nth-child(2) > :nth-child(1) { animation-delay:.15s; }
-[data-receipt][data-motion="play"] > :nth-child(2) > :nth-child(2) { animation-delay:.27s; }
-[data-receipt][data-motion="play"] > :nth-child(2) > :nth-child(3) { animation-delay:.39s; }
-[data-receipt][data-motion="play"] > :nth-child(2) > :nth-child(4) { animation-delay:.51s; }
-[data-receipt][data-motion="play"] > :nth-child(3) { animation-delay:.66s; }
-[data-receipt][data-motion="play"] > :nth-child(4) { animation-delay:.8s; }
-
-@media (prefers-reduced-motion:no-preference) {
-  /* Home hero: the copy rises in on load; "Our Table" writes itself in. */
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > * { animation:sc-hero-in 900ms cubic-bezier(.22,.8,.25,1) both; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(1) { animation-delay:.15s; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(2) { animation-delay:.3s; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(3) { animation-delay:.9s; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(4) { animation-delay:1.05s; }
-  section#top[data-screen-hero="home"] h1 > [style*="Pinyon Script"] { animation:sc-write 1100ms cubic-bezier(.5,0,.3,1) .55s both; }
-
-  /* Services accordion glides open instead of snapping. */
-  /* Overrides the 2026-09-12 correction-layer rule that disabled accordion motion; only clip-path animates past its !important locks. */
-  [data-screen-label="Services"] [data-service-body] { animation:sc-unfold 520ms cubic-bezier(.22,.8,.25,1) both !important; }
-}
-@keyframes sc-hero-in { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
-@keyframes sc-unfold { from { opacity:0; clip-path:inset(0 0 100% 0); transform:translateY(-6px); } to { opacity:1; clip-path:inset(0 0 -8% 0); transform:none; } }
-
-/* Arrows nudge in their direction on hover. */
-@media (hover:hover) and (prefers-reduced-motion:no-preference) {
-  :is(a, button) > svg:has(path[d="M7 17 17 7"]),
-  :is(a, button) > svg:has(path[d="M5 12h14"]) { transition:transform 220ms cubic-bezier(.22,.8,.25,1); }
-  :is(a, button):hover > svg:has(path[d="M7 17 17 7"]) { transform:translate(2px,-2px); }
-  :is(a, button):hover > svg:has(path[d="M5 12h14"]) { transform:translateX(3px); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   [data-guest-check] [data-gc-step],
-  [data-guest-check] [data-gc-rule],
-  [data-motion],
-  [data-receipt] > *,
-  [data-receipt] > * > * { animation:none !important; clip-path:none !important; opacity:1 !important; transform:none !important; }
+  [data-guest-check] [data-gc-rule] { animation:none !important; clip-path:none !important; opacity:1 !important; transform:none !important; }
 }
 
 /* ==========================================================
