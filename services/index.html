@@ -6,10 +6,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/site.css?v=20261002-02" />
-<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20261002-02" />
-<script src="/support.js?v=20261002-02"></script>
-<script defer data-sunday-site-js src="/assets/site.js?v=20261002-02"></script>
+<link rel="stylesheet" href="/assets/site.css?v=20261002-03" />
+<link rel="stylesheet" data-sunday-rendered-corrections href="/assets/rendered-corrections.css?v=20261002-03" />
+<script src="/support.js?v=20261002-03"></script>
+<script defer data-sunday-site-js src="/assets/site.js?v=20261002-03"></script>
 </head>
 <body>
 <x-dc>
@@ -311,8 +311,7 @@
         <div data-gc-rule="7" aria-hidden="true" style="border-top:3px double #ac746c;border-top:var(--sc-pos3,3px) double #ac746c"></div>
         <div style="align-items:center;display:grid;gap:14px;gap:var(--sc-pos14,14px);grid-template-columns:{{ gcCheckFoot }};justify-items:{{ checkFootJustify }};padding-top:14px;padding-top:var(--sc-pos14,14px)">
           <p data-gc-step="8" style="color:#ac746c;font-family:'Pinyon Script',cursive;font-size:clamp(32px,3vw,40px);font-size:clamp(var(--sc-pos32,32px),3vw,var(--sc-pos40,40px));line-height:1;justify-self:{{ thanksJustify }}">Thank you</p>
-          <a data-gc-step="9" href="#inquiry" style="align-items:center;display:inline-flex;gap:8px;gap:var(--sc-pos8,8px);border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;color:#311d03;font-family:'Inter Tight',sans-serif;font-size:12px;font-size:var(--sc-pos12,12px);font-weight:500;letter-spacing:.14em;line-height:1.4;text-transform:uppercase;padding-bottom:4px;padding-bottom:var(--sc-pos4,4px)" style-hover="color:#ac746c">Tell Us What You Need <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;height:12px;height:var(--sc-pos12,12px);width:12px;width:var(--sc-pos12,12px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
-          <a data-gc-step="9" href="/assets/sunday-and-company-menu.pdf" target="_blank" rel="noopener" style="align-items:center;display:inline-flex;gap:8px;gap:var(--sc-pos8,8px);border-bottom:1px solid currentColor;border-bottom:var(--sc-pos1,1px) solid currentColor;color:#311d03;font-family:'Inter Tight',sans-serif;font-size:12px;font-size:var(--sc-pos12,12px);font-weight:500;letter-spacing:.14em;line-height:1.4;text-transform:uppercase;justify-self:{{ menuJustify }};padding-bottom:4px;padding-bottom:var(--sc-pos4,4px)" style-hover="color:#ac746c">View The Full Menu <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;height:12px;height:var(--sc-pos12,12px);width:12px;width:var(--sc-pos12,12px)"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+          <p data-gc-step="9" style="align-items:center;display:flex;flex-direction:{{ checkLinksDir }};gap:{{ checkLinksGap }};justify-self:{{ menuJustify }}"><a href="#inquiry" style="color:#311d03;font-family:'Playfair Display',Georgia,serif;font-size:13px;font-size:var(--sc-pos13,13px);letter-spacing:.16em;line-height:1.4;text-decoration:underline;text-decoration-color:rgba(172,116,108,.55);text-decoration-thickness:1px;text-underline-offset:6px;text-underline-offset:var(--sc-pos6,6px);text-transform:uppercase;transition:color 400ms ease, text-decoration-color 400ms ease" style-hover="color:#ac746c;text-decoration-color:#ac746c">Tell Us What You Need</a><span aria-hidden="true" style="color:#ac746c;display:{{ checkDotDisplay }};font-family:'Playfair Display',Georgia,serif;font-size:13px;font-size:var(--sc-pos13,13px)">·</span><a href="/assets/sunday-and-company-menu.pdf" target="_blank" rel="noopener" style="color:#311d03;font-family:'Playfair Display',Georgia,serif;font-size:13px;font-size:var(--sc-pos13,13px);letter-spacing:.16em;line-height:1.4;text-decoration:underline;text-decoration-color:rgba(172,116,108,.55);text-decoration-thickness:1px;text-underline-offset:6px;text-underline-offset:var(--sc-pos6,6px);text-transform:uppercase;transition:color 400ms ease, text-decoration-color 400ms ease" style-hover="color:#ac746c;text-decoration-color:#ac746c">View The Full Menu</a></p>
         </div>
       </div>
     </div>
@@ -489,10 +488,13 @@ class Component extends DCLogic {
       gcCheckHead: n ? '1fr' : '1fr auto 1fr',
       checkHeadAlign: n ? 'center' : 'left',
       checkNoAlign: n ? 'center' : 'right',
-      gcCheckFoot: n ? '1fr' : '1fr auto 1fr',
+      gcCheckFoot: n ? '1fr' : '1fr auto',
       checkFootJustify: 'center',
       thanksJustify: n ? 'center' : 'start',
-      menuJustify: n ? 'center' : 'end',};
+      menuJustify: n ? 'center' : 'end',
+      checkLinksDir: n ? 'column' : 'row',
+      checkLinksGap: n ? 'var(--sc-pos12,12px)' : 'var(--sc-pos18,18px)',
+      checkDotDisplay: n ? 'none' : 'inline',};
     for (let i = 0; i < 3; i++) {
       const on = this.state.svc === i;
       out['open' + i] = on;

@@ -1301,37 +1301,98 @@ form[data-inq] [aria-haspopup="dialog"] {
 
 /* ==========================================================
    MOTION · 2026-10-02
-   Deliberately small set: the Services guest check "prints" once
-   when it scrolls into view, and Our Work previews lift on hover.
-   Everything here is skipped for prefers-reduced-motion.
+   Sunday pace: unhurried, deliberate, never decorative for its own
+   sake. Four moments only, each tied to the hospitality idea:
+   1. Home hero: the guest is seated. Copy settles in on load and
+      "Our Table" is written by hand, like a place card.
+   2. About: the "Sundays are for" drum roll (about/index.html).
+   3. Services: the guest check prints, then is signed "Thank you".
+   4. Our Work: previews lift gently on hover, like picking up a print.
+   Script ink is reserved for the welcome and the thank-you only.
+   The ink is a feathered mask that moves with a handwriting cadence:
+   slower on capitals, a pen lift between words, fluent through the
+   lowercase. The mask exists only inside the keyframes, so swashes are
+   never clipped once the word is written. Reduced motion skips it all.
    ========================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > * { animation:sc-hero-in 1400ms cubic-bezier(.16,1,.3,1) backwards; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(1) { animation-delay:.3s; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(2) { animation-delay:.55s; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(3) { animation-delay:2.3s; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(4) { animation-delay:2.6s; }
+  /* Room for the swashes inside the ink layer; the negative margins
+     cancel the padding so nothing moves (flow-root keeps them from
+     collapsing through the h1). Inline margin-top is .06em. */
+  section#top[data-screen-hero="home"] h1 { display:flow-root; }
+  section#top[data-screen-hero="home"] h1 > [style*="Pinyon Script"] {
+    animation:sc-ink-our-table 2600ms linear 1.25s backwards;
+    margin-top:-.29em !important; margin-right:-.35em; margin-bottom:-.4em;
+    padding:.35em .35em .4em 0;
+    width:fit-content;
+  }
+  [data-guest-check] [data-gc-step="8"] { margin:-.35em -.35em -.4em -.25em; padding:.35em .35em .4em .25em; width:fit-content; }
+}
+@keyframes sc-hero-in { from { opacity:0; transform:translateY(14px); transform:translateY(var(--sc-pos14,14px)); } to { opacity:1; transform:none; } }
+/* The ink layer is 10x the word's width. Its leading edge sits at
+   90% of the layer, so position = 1 - edge/9 (edge in word widths). */
+@keyframes sc-ink-our-table {
+  0%   { -webkit-mask-position:101.4% 0; mask-position:101.4% 0; animation-timing-function:cubic-bezier(.45,0,.55,1); }
+  20%  { -webkit-mask-position:98.4% 0;  mask-position:98.4% 0;  animation-timing-function:cubic-bezier(.3,0,.6,1); }
+  33%  { -webkit-mask-position:96.3% 0;  mask-position:96.3% 0;  animation-timing-function:ease-in-out; }
+  42%  { -webkit-mask-position:95.9% 0;  mask-position:95.9% 0;  animation-timing-function:cubic-bezier(.45,0,.55,1); }
+  60%  { -webkit-mask-position:93.6% 0;  mask-position:93.6% 0;  animation-timing-function:cubic-bezier(.3,0,.4,1); }
+  100% { -webkit-mask-position:86.6% 0;  mask-position:86.6% 0; }
+  0%, 100% {
+    -webkit-mask-image:linear-gradient(90deg,#000 90%,transparent 90.7%); mask-image:linear-gradient(90deg,#000 90%,transparent 90.7%);
+    -webkit-mask-size:1000% 100%; mask-size:1000% 100%;
+    -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  }
+}
+@keyframes sc-ink-thank-you {
+  0%   { -webkit-mask-position:101.4% 0; mask-position:101.4% 0; animation-timing-function:cubic-bezier(.45,0,.55,1); }
+  16%  { -webkit-mask-position:98.9% 0;  mask-position:98.9% 0;  animation-timing-function:cubic-bezier(.3,0,.6,1); }
+  44%  { -webkit-mask-position:94.4% 0;  mask-position:94.4% 0;  animation-timing-function:ease-in-out; }
+  53%  { -webkit-mask-position:94.0% 0;  mask-position:94.0% 0;  animation-timing-function:cubic-bezier(.3,0,.4,1); }
+  100% { -webkit-mask-position:86.6% 0;  mask-position:86.6% 0; }
+  0%, 100% {
+    -webkit-mask-image:linear-gradient(90deg,#000 90%,transparent 90.7%); mask-image:linear-gradient(90deg,#000 90%,transparent 90.7%);
+    -webkit-mask-size:1000% 100%; mask-size:1000% 100%;
+    -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  }
+}
+
 [data-guest-check][data-gc="ready"] [data-gc-step] { opacity:0; }
 [data-guest-check][data-gc="ready"] [data-gc-rule] { transform:scaleX(0); transform-origin:left center; }
-[data-guest-check][data-gc="play"] [data-gc-step] { animation:gc-in 520ms cubic-bezier(.22,.8,.25,1) both; }
-[data-guest-check][data-gc="play"] [data-gc-rule] { animation:gc-rule 620ms cubic-bezier(.65,0,.35,1) both; transform-origin:left center; }
-[data-guest-check][data-gc="play"] [data-gc-step="8"] { animation:gc-write 900ms cubic-bezier(.5,0,.3,1) both; }
-[data-guest-check][data-gc="play"] [data-gc-rule="2"] { animation-delay:.2s; }
-[data-guest-check][data-gc="play"] [data-gc-step="3"] { animation-delay:.4s; }
-[data-guest-check][data-gc="play"] [data-gc-step="4"] { animation-delay:.6s; }
-[data-guest-check][data-gc="play"] [data-gc-rule="5"] { animation-delay:.8s; }
-[data-guest-check][data-gc="play"] [data-gc-step="6"] { animation-delay:1s; }
-[data-guest-check][data-gc="play"] [data-gc-rule="7"] { animation-delay:1.2s; }
-[data-guest-check][data-gc="play"] [data-gc-step="8"] { animation-delay:1.4s; }
-[data-guest-check][data-gc="play"] [data-gc-step="9"] { animation-delay:1.7s; }
+[data-guest-check][data-gc="play"] [data-gc-step] { animation:gc-in 1000ms cubic-bezier(.16,1,.3,1) both; }
+[data-guest-check][data-gc="play"] [data-gc-rule] { animation:gc-rule 1100ms cubic-bezier(.65,0,.35,1) both; transform-origin:left center; }
+[data-guest-check][data-gc="play"] [data-gc-step="8"] { animation:sc-ink-thank-you 2200ms linear backwards; }
+[data-guest-check][data-gc="play"] [data-gc-rule="2"] { animation-delay:.35s; }
+[data-guest-check][data-gc="play"] [data-gc-step="3"] { animation-delay:.7s; }
+[data-guest-check][data-gc="play"] [data-gc-step="4"] { animation-delay:1.05s; }
+[data-guest-check][data-gc="play"] [data-gc-rule="5"] { animation-delay:1.4s; }
+[data-guest-check][data-gc="play"] [data-gc-step="6"] { animation-delay:1.75s; }
+[data-guest-check][data-gc="play"] [data-gc-rule="7"] { animation-delay:2.1s; }
+[data-guest-check][data-gc="play"] [data-gc-step="8"] { animation-delay:2.6s; }
+[data-guest-check][data-gc="play"] [data-gc-step="9"] { animation-delay:4.3s; }
+/* Guest check sign-off links read like the check's own printed lines:
+   Playfair caps at the header's size, a hairline rose underline. */
+[data-screen-label="Services"] main [data-guest-check] a {
+  font-family:'Playfair Display',Georgia,serif !important;
+  font-weight:400 !important;
+  letter-spacing:.16em !important;
+}
 @keyframes gc-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
 @keyframes gc-rule { from { transform:scaleX(0); } to { transform:scaleX(1); } }
-/* Script swashes reach past the text box, so the reveal window is padded on every side. */
-@keyframes gc-write { from { opacity:1; clip-path:inset(-40% 100% -60% -20%); } to { opacity:1; clip-path:inset(-40% -30% -60% -20%); } }
 
 @media (hover:hover) and (prefers-reduced-motion:no-preference) {
   [data-screen-label="Home"] a[href^="/our-work/"]:has(> img),
   [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure) {
-    transition:transform 320ms cubic-bezier(.22,.8,.25,1), box-shadow 320ms ease;
+    transition:transform 520ms cubic-bezier(.16,1,.3,1), box-shadow 520ms ease;
     will-change:transform;
   }
   [data-screen-label="Home"] a[href^="/our-work/"]:has(> img) > img,
   [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure) img {
-    transition:transform 600ms cubic-bezier(.22,.8,.25,1);
+    transition:transform 900ms cubic-bezier(.16,1,.3,1);
   }
   [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover { transform:translateY(-6px); }
   [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover > img { transform:scale(1.02); }
@@ -1344,7 +1405,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 
 @media (prefers-reduced-motion: reduce) {
   [data-guest-check] [data-gc-step],
-  [data-guest-check] [data-gc-rule] { animation:none !important; clip-path:none !important; opacity:1 !important; transform:none !important; }
+  [data-guest-check] [data-gc-rule] { animation:none !important; -webkit-mask:none !important; mask:none !important; opacity:1 !important; transform:none !important; }
 }
 
 /* ==========================================================
@@ -1377,7 +1438,7 @@ form[data-inq] [aria-haspopup="dialog"] {
   [data-screen-label="About Us"] main p[style*="font-size: clamp(var(--sc-pos18,18px),1.8vw,var(--sc-pos25,25px))"] { font-size:28px !important; }
   [data-screen-label="About Us"] main a[data-about-team-cta] { font-size:11px !important; }
   [data-screen-label="Services"] main [data-sunday-supper] a[href="#inquiry"] { font-size:11px !important; }
-  [data-screen-label="Services"] main [data-made-to-order] a[href="#inquiry"] { font-size:12px !important; }
+  [data-screen-label="Services"] main [data-made-to-order] a[href="#inquiry"] { font-size:13px !important; }
 }
 
 /* ==========================================================
@@ -1429,7 +1490,7 @@ form[data-inq] [aria-haspopup="dialog"] {
 
   /* Services guest check: small print stays readable on phones. */
   [data-screen-label="Services"] [data-guest-check] > p { font-size:13px !important; }
-  [data-screen-label="Services"] main [data-guest-check] a,
+  [data-screen-label="Services"] main [data-guest-check] a { font-size:12.5px !important; }
   [data-screen-label="Services"] main [data-sunday-supper] a[href="#inquiry"] { font-size:11.5px !important; }
 
   header[data-site-header] {
