@@ -67,7 +67,7 @@
     #map-desk { display: none !important; }
     #map-mob { display: block !important; }
   }
-  @keyframes about-line-enter { from { opacity: 0; transform: translateY(26px) rotateX(-68deg); transform: translateY(var(--sc-pos26,26px)) rotateX(-68deg); } to { opacity: 1; transform: translateY(0) rotateX(0); } }
+  @keyframes about-line-enter { from { opacity: .25; transform: rotateX(-88deg); } to { opacity: 1; transform: rotateX(0deg); } }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition-duration: .001ms !important; transition-delay: 0ms !important; }
     html { scroll-behavior: auto !important; }
@@ -174,7 +174,7 @@
     <div style="align-items:center;display:flex;inset:0;justify-content:center;padding:80px 32px 0;padding:var(--sc-pos80,80px) var(--sc-pos32,32px) 0;position:absolute;text-align:center;z-index:1">
       <h1 id="about-hero-title" style="align-items:{{ heroAlign }};display:grid;font-size:{{ heroSize }};font-weight:400;grid-template-columns:{{ heroCols }};justify-items:{{ heroItems }};letter-spacing:-.045em;line-height:{{ heroLead }};margin:0;perspective:800px;perspective:var(--sc-pos800,800px);row-gap:{{ heroGap }};text-align:{{ heroText }};white-space:{{ heroWrap }};width:min(92vw,1240px);width:min(92vw,var(--sc-pos1240,1240px))">
         <span style="display:inline-block;justify-self:{{ heroLineJustify }}">SUNDAYS ARE FOR</span>
-        <em style="animation:about-line-enter 560ms cubic-bezier(.22,.8,.25,1) backwards;color:#f5efe6;display:inline-block;font-size:{{ heroEmSize }};font-style:italic;font-weight:400;justify-self:{{ heroEmJustify }};letter-spacing:-.03em;padding-left:{{ heroEmPad }};text-align:{{ heroEmAlign }};transform-origin:center bottom;transition:{{ lineTransition }};opacity:{{ lineOpacity }};transform:{{ lineTransform }}">{{ aboutLine }}</em>
+        <em style="animation:about-line-enter 560ms cubic-bezier(.22,.8,.25,1) backwards;color:#f5efe6;display:inline-block;font-size:{{ heroEmSize }};font-style:italic;font-weight:400;justify-self:{{ heroEmJustify }};letter-spacing:-.03em;padding-left:{{ heroEmPad }};text-align:{{ heroEmAlign }};transform-origin:50% 50% -.55em;transition:{{ lineTransition }};opacity:{{ lineOpacity }};transform:{{ lineTransform }}">{{ aboutLine }}</em>
       </h1>
     </div>
   </section>
@@ -243,7 +243,7 @@ class Component extends DCLogic {
         this._raf = window.requestAnimationFrame(() => {
           this._raf = window.requestAnimationFrame(() => this.setState({ phase: 'idle' }));
         });
-      }, 380);
+      }, 300);
     }, 3000);
   }
   componentWillUnmount() {
@@ -286,11 +286,13 @@ class Component extends DCLogic {
     ];
     const out = {
       aboutLine: lines[this.state.line],
-      lineOpacity: this.state.phase === 'idle' ? 1 : 0,
-      lineTransform: this.state.phase === 'out' ? 'translateY(var(--sc-neg26,-26px)) rotateX(68deg)'
-        : this.state.phase === 'prep' ? 'translateY(var(--sc-pos26,26px)) rotateX(-68deg)' : 'translateY(0) rotateX(0deg)',
-      lineTransition: this.state.phase === 'out' ? 'opacity 380ms ease, transform 380ms cubic-bezier(.55,0,1,.45)'
-        : this.state.phase === 'prep' ? 'none' : 'opacity 420ms ease, transform 520ms cubic-bezier(.22,.8,.25,1)',
+      // Drum: the phrase turns on an axis just behind the text, flattening as it
+      // rolls up and away; the next one unrolls up from below.
+      lineOpacity: this.state.phase === 'idle' ? 1 : .25,
+      lineTransform: this.state.phase === 'out' ? 'rotateX(88deg)'
+        : this.state.phase === 'prep' ? 'rotateX(-88deg)' : 'rotateX(0deg)',
+      lineTransition: this.state.phase === 'out' ? 'opacity 300ms ease-in, transform 300ms cubic-bezier(.5,0,.75,0)'
+        : this.state.phase === 'prep' ? 'none' : 'opacity 260ms ease-out, transform 440ms cubic-bezier(.25,1,.5,1)',
       // Phones: the rotating phrase always fits on one line, so the hero stays two lines.
       heroEmSize: n ? 'min(.94em, 6.3vw)' : '.94em',
       unflip: () => this.setState({ flipped: null }),
