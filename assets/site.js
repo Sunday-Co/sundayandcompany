@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20261002-02';
+    link.href = '/assets/rendered-corrections.css?v=20261002-03';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -610,4 +610,52 @@
   }
 
 
+})();
+
+/* SUNDAY MOTION · 2026-10-02
+   Plays a few signature animations once, the first time each element
+   scrolls into view: rose script words in headings "write" themselves in,
+   and the case-study Project Receipt prints row by row. Styling lives in
+   site.css (MOTION). Nothing is hidden unless this script is running,
+   and it does nothing for prefers-reduced-motion. */
+(function () {
+  if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var TARGETS = 'main h1 [style*="Pinyon Script"], main h2 [style*="Pinyon Script"], main h3 [style*="Pinyon Script"], [data-receipt]';
+  // These already have their own motion.
+  var SKIP = '[data-guest-check], #about-hero-title, section#top[data-screen-hero="home"]';
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.setAttribute('data-motion', 'play');
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.3 });
+
+  function scan() {
+    var els = document.querySelectorAll(TARGETS);
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.hasAttribute('data-motion') || el.closest(SKIP)) continue;
+      el.setAttribute('data-motion', 'ready');
+      io.observe(el);
+    }
+  }
+
+  var pending = false;
+  function queueScan() {
+    if (pending) return;
+    pending = true;
+    window.requestAnimationFrame(function () { pending = false; scan(); });
+  }
+
+  function start() {
+    scan();
+    new MutationObserver(queueScan).observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+  else start();
 })();
