@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20261002-04';
+    link.href = '/assets/rendered-corrections.css?v=20261002-05';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -659,9 +659,27 @@
     window.requestAnimationFrame(function () { queued = false; scan(); });
   }
 
+  // Safety net: a fast scroll or anchor jump can carry a heading past the
+  // viewport without it ever intersecting, so reveal anything at or above
+  // the bottom of the screen once scrolling settles.
+  var settle = 0;
+  function sweep() {
+    var waiting = document.querySelectorAll('[data-sc-rise="wait"]');
+    for (var i = 0; i < waiting.length; i++) {
+      if (waiting[i].getBoundingClientRect().top < window.innerHeight) {
+        waiting[i].setAttribute('data-sc-rise', 'in');
+        io.unobserve(waiting[i]);
+      }
+    }
+  }
+
   function boot() {
     scan();
     new MutationObserver(queue).observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('scroll', function () {
+      window.clearTimeout(settle);
+      settle = window.setTimeout(sweep, 120);
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {
