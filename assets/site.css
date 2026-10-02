@@ -1303,7 +1303,7 @@ form[data-inq] [aria-haspopup="dialog"] {
    DESKTOP READING SIZE · 2026-09-30
    Web only (901px+): body copy about two steps larger. Phones keep
    their authored sizes. Rendered inline styles read
-   "font-size: var(--sc-posN,Npx)", so match the token form.
+   "font-size: var(--sc-pos14,14px)" (and so on for each size), so match the token form.
    The Services #inquiry form and the popup Project Inquiry are
    excluded so both inquiry forms stay identical, and the guest check
    keeps its compact receipt scale. `main` in each

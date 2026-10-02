@@ -66,8 +66,8 @@ for rel in ("assets/site.css", "assets/rendered-corrections.css"):
 
 home = (ROOT / "index.html").read_text(encoding="utf-8")
 
-if not re.search(r'aria-label="Sunday and Company services"[\s\S]{0,600}font-size:9px', home, re.I):
-    errors.append("index.html: desktop Home service marquee is not 9px")
+if not re.search(r'aria-label="Sunday and Company services"[\s\S]{0,600}font-size:11px', home, re.I):
+    errors.append("index.html: desktop Home service marquee is not 11px")
 if not re.search(r'max-width:\s*900px[\s\S]{0,700}Sunday and Company services[\s\S]{0,180}font-size:\s*8px', home, re.I):
     errors.append("index.html: regular-mobile Home service marquee is not 8px")
 if not re.search(r'max-width:\s*599px[\s\S]{0,700}Sunday and Company services[\s\S]{0,180}font-size:\s*8\.5px', home, re.I):
@@ -101,8 +101,8 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 
 # Cache/version guardrails for shared site assets and DC imports.
-ASSET_REVISION = "20260928-08"
-SUPPORT_REVISION = "20260927-37"
+ASSET_REVISION = "20261002-01"
+SUPPORT_REVISION = "20261002-01"
 PUBLIC_ROUTES = (
     "404.html",
     "about/index.html",
