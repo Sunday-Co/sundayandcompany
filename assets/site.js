@@ -5,7 +5,7 @@
     if (document.querySelector('link[data-sunday-rendered-corrections]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/rendered-corrections.css?v=20261002-03';
+    link.href = '/assets/rendered-corrections.css?v=20261002-04';
     link.setAttribute('data-sunday-rendered-corrections', 'true');
     document.head.appendChild(link);
   }
@@ -610,4 +610,63 @@
   }
 
 
+})();
+
+/* SUNDAY SCROLL RISE: section headings below the fold rise in once as they
+   arrive (styles in site.css). Headings already on screen are left alone,
+   and nothing is hidden without IntersectionObserver or with reduced motion. */
+(function () {
+  'use strict';
+  if (!('IntersectionObserver' in window) || !window.matchMedia) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var SKIP = '[data-site-header],[data-site-footer],[role="dialog"],form,[data-screen-hero],[aria-label="Project inquiry"],[aria-label="The Sunday Reservation"]';
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.setAttribute('data-sc-rise', 'in');
+      io.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+
+  function mark(el, delay) {
+    if (!el || el.hasAttribute('data-sc-rise') || el.closest(SKIP)) return;
+    var r = el.getBoundingClientRect();
+    if (!r.height) return;
+    if (r.top < window.innerHeight) { el.setAttribute('data-sc-rise', 'skip'); return; }
+    if (delay) el.style.setProperty('--sunday-rise-delay', delay);
+    el.setAttribute('data-sc-rise', 'wait');
+    io.observe(el);
+  }
+
+  function scan() {
+    var heads = document.querySelectorAll('main h2');
+    // Long reading pages (the legal pages) stay still.
+    if (heads.length > 9) return;
+    for (var i = 0; i < heads.length; i++) {
+      var h = heads[i];
+      if (h.hasAttribute('data-sc-rise')) continue;
+      mark(h, '');
+      var next = h.nextElementSibling;
+      if (next && next.tagName === 'P' && h.getAttribute('data-sc-rise') === 'wait') mark(next, '.15s');
+    }
+  }
+
+  var queued = false;
+  function queue() {
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(function () { queued = false; scan(); });
+  }
+
+  function boot() {
+    scan();
+    new MutationObserver(queue).observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot, { once: true });
+  } else {
+    boot();
+  }
 })();

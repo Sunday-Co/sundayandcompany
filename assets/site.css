@@ -1315,17 +1315,17 @@ form[data-inq] [aria-haspopup="dialog"] {
    never clipped once the word is written. Reduced motion skips it all.
    ========================================================== */
 @media (prefers-reduced-motion: no-preference) {
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > * { animation:sc-hero-in 1400ms cubic-bezier(.16,1,.3,1) backwards; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(1) { animation-delay:.3s; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(2) { animation-delay:.55s; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(3) { animation-delay:2.3s; }
-  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(4) { animation-delay:2.6s; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > * { animation:sc-hero-in 1100ms cubic-bezier(.16,1,.3,1) backwards; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(1) { animation-delay:.15s; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(2) { animation-delay:.3s; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(3) { animation-delay:1.35s; }
+  section#top[data-screen-hero="home"] > div:not([aria-hidden]) > :nth-child(4) { animation-delay:1.55s; }
   /* Room for the swashes inside the ink layer; the negative margins
      cancel the padding so nothing moves (flow-root keeps them from
      collapsing through the h1). Inline margin-top is .06em. */
   section#top[data-screen-hero="home"] h1 { display:flow-root; }
   section#top[data-screen-hero="home"] h1 > [style*="Pinyon Script"] {
-    animation:sc-ink-our-table 2600ms linear 1.25s backwards;
+    animation:sc-ink-our-table 2000ms linear .75s backwards;
     margin-top:-.29em !important; margin-right:-.35em; margin-bottom:-.4em;
     padding:.35em .35em .4em 0;
     width:fit-content;
@@ -1384,24 +1384,106 @@ form[data-inq] [aria-haspopup="dialog"] {
 @keyframes gc-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
 @keyframes gc-rule { from { transform:scaleX(0); } to { transform:scaleX(1); } }
 
+[data-screen-label="Home"] a[href^="/our-work/"]:has(> img) { overflow:hidden; }
 @media (hover:hover) and (prefers-reduced-motion:no-preference) {
   [data-screen-label="Home"] a[href^="/our-work/"]:has(> img),
   [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure) {
-    transition:transform 520ms cubic-bezier(.16,1,.3,1), box-shadow 520ms ease;
+    transition:transform 600ms cubic-bezier(.16,1,.3,1), box-shadow 600ms cubic-bezier(.16,1,.3,1);
     will-change:transform;
   }
   [data-screen-label="Home"] a[href^="/our-work/"]:has(> img) > img,
   [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure) img {
-    transition:transform 900ms cubic-bezier(.16,1,.3,1);
+    transition:transform 1100ms cubic-bezier(.16,1,.3,1);
   }
-  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover { transform:translateY(-6px); }
-  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover > img { transform:scale(1.02); }
+  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure) > span > span {
+    transform:translateY(10px); transform:translateY(var(--sc-pos10,10px));
+    transition:transform 700ms cubic-bezier(.16,1,.3,1);
+  }
+  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover,
   [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure):hover {
-    box-shadow:0 18px 32px -22px rgba(49,29,3,.55);
-    transform:translateY(-5px);
+    box-shadow:0 30px 44px -26px rgba(49,29,3,.6);
+    transform:translateY(-12px); transform:translateY(var(--sc-neg12,-12px));
   }
-  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure):hover img { transform:scale(1.03); }
+  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover > img,
+  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure):hover img { transform:scale(1.05); }
+  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure):hover > span > span { transform:none; }
 }
+
+/* ----------------------------------------------------------
+   BUTTONS. One family, tagged in markup with data-cta:
+   fill = rose pours up from the bottom like coffee into a cup;
+   line = the underline is redrawn left to right like a pen stroke.
+   Primary nav gets a hairline rose rule that grows from the centre.
+   Phones (no hover) get a soft press instead.
+   ---------------------------------------------------------- */
+[data-cta="fill"] { isolation:isolate; overflow:hidden; position:relative; }
+[data-cta="fill"]::before {
+  background:var(--sunday-pour,#ac746c);
+  content:"";
+  inset:0;
+  pointer-events:none;
+  position:absolute;
+  transform:scaleY(0);
+  transform-origin:50% 100%;
+  transition:transform 650ms cubic-bezier(.65,0,.35,1);
+  z-index:-1;
+}
+/* Case-study buttons wear the client's colour, so espresso pours there. */
+[data-screen-label^="Case study"] a[data-cta="fill"][href="/contact"] { --sunday-pour:#311d03; }
+[data-cta="line"] { background-origin:border-box !important; background-repeat:no-repeat !important; }
+nav[aria-label="Primary navigation"] > a {
+  background-image:linear-gradient(#ac746c,#ac746c);
+  background-position:50% 100%;
+  background-repeat:no-repeat;
+  background-size:0 1px; background-size:0 var(--sc-pos1,1px);
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  [data-cta="fill"] { transition:color 160ms ease .26s, border-color 160ms ease .26s !important; }
+  [data-cta="fill"]:not(:disabled):is(:hover,:focus-visible) { border-color:var(--sunday-pour,#ac746c) !important; color:#fffdf8 !important; }
+  [data-cta="fill"]:not(:disabled):is(:hover,:focus-visible)::before { transform:scaleY(1); }
+  [data-cta="line"]:is(:hover,:focus-visible) {
+    animation:sc-pen 850ms cubic-bezier(.65,0,.35,1) both;
+    background-image:linear-gradient(currentColor,currentColor) !important;
+    border-bottom-color:transparent !important;
+  }
+  nav[aria-label="Primary navigation"] > a { transition:background-size 500ms cubic-bezier(.16,1,.3,1); }
+  nav[aria-label="Primary navigation"] > a:is(:hover,:focus-visible) { background-size:100% 1px; background-size:100% var(--sc-pos1,1px); }
+}
+@keyframes sc-pen {
+  0%   { background-position:100% 100%; background-size:100% 1px; background-size:100% var(--sc-pos1,1px); }
+  45%  { background-position:100% 100%; background-size:0 1px; background-size:0 var(--sc-pos1,1px); }
+  46%  { background-position:0 100%; background-size:0 1px; background-size:0 var(--sc-pos1,1px); }
+  100% { background-position:0 100%; background-size:100% 1px; background-size:100% var(--sc-pos1,1px); }
+}
+@media (hover:none) and (prefers-reduced-motion:no-preference) {
+  [data-cta] { transition:transform 160ms ease !important; }
+  [data-cta]:active { transform:scale(.97); }
+}
+
+/* ----------------------------------------------------------
+   SCROLL RISE. site.js marks section headings below the fold
+   data-sc-rise="wait" and flips them to "in" as they arrive.
+   Headings already on screen are never hidden.
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion:no-preference) {
+  [data-sc-rise="wait"] { opacity:0; transform:translateY(18px); transform:translateY(var(--sc-pos18,18px)); }
+  [data-sc-rise="in"] {
+    opacity:1; transform:none;
+    transition:opacity 1000ms cubic-bezier(.16,1,.3,1) var(--sunday-rise-delay,0s), transform 1100ms cubic-bezier(.16,1,.3,1) var(--sunday-rise-delay,0s);
+  }
+}
+
+/* ----------------------------------------------------------
+   PAGE TRANSITIONS. Same-site page changes cross-fade instead of
+   blinking. Browsers without view transitions navigate normally.
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion:no-preference) {
+  @view-transition { navigation:auto; }
+}
+::view-transition-old(root) { animation:sc-page-out 260ms ease both; }
+::view-transition-new(root) { animation:sc-page-in 380ms ease 60ms both; }
+@keyframes sc-page-out { to { opacity:0; } }
+@keyframes sc-page-in { from { opacity:0; } }
 
 @media (prefers-reduced-motion: reduce) {
   [data-guest-check] [data-gc-step],
