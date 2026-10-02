@@ -1300,6 +1300,53 @@ form[data-inq] [aria-haspopup="dialog"] {
 }
 
 /* ==========================================================
+   MOTION · 2026-10-02
+   Deliberately small set: the Services guest check "prints" once
+   when it scrolls into view, and Our Work previews lift on hover.
+   Everything here is skipped for prefers-reduced-motion.
+   ========================================================== */
+[data-guest-check][data-gc="ready"] [data-gc-step] { opacity:0; }
+[data-guest-check][data-gc="ready"] [data-gc-rule] { transform:scaleX(0); transform-origin:left center; }
+[data-guest-check][data-gc="play"] [data-gc-step] { animation:gc-in 520ms cubic-bezier(.22,.8,.25,1) both; }
+[data-guest-check][data-gc="play"] [data-gc-rule] { animation:gc-rule 620ms cubic-bezier(.65,0,.35,1) both; transform-origin:left center; }
+[data-guest-check][data-gc="play"] [data-gc-step="8"] { animation:gc-write 900ms cubic-bezier(.5,0,.3,1) both; }
+[data-guest-check][data-gc="play"] [data-gc-rule="2"] { animation-delay:.2s; }
+[data-guest-check][data-gc="play"] [data-gc-step="3"] { animation-delay:.4s; }
+[data-guest-check][data-gc="play"] [data-gc-step="4"] { animation-delay:.6s; }
+[data-guest-check][data-gc="play"] [data-gc-rule="5"] { animation-delay:.8s; }
+[data-guest-check][data-gc="play"] [data-gc-step="6"] { animation-delay:1s; }
+[data-guest-check][data-gc="play"] [data-gc-rule="7"] { animation-delay:1.2s; }
+[data-guest-check][data-gc="play"] [data-gc-step="8"] { animation-delay:1.4s; }
+[data-guest-check][data-gc="play"] [data-gc-step="9"] { animation-delay:1.7s; }
+@keyframes gc-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+@keyframes gc-rule { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+@keyframes gc-write { from { opacity:1; clip-path:inset(0 100% 0 0); } to { opacity:1; clip-path:inset(0 0 0 0); } }
+
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img),
+  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure) {
+    transition:transform 320ms cubic-bezier(.22,.8,.25,1), box-shadow 320ms ease;
+    will-change:transform;
+  }
+  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img) > img,
+  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure) img {
+    transition:transform 600ms cubic-bezier(.22,.8,.25,1);
+  }
+  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover { transform:translateY(-6px); }
+  [data-screen-label="Home"] a[href^="/our-work/"]:has(> img):hover > img { transform:scale(1.02); }
+  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure):hover {
+    box-shadow:0 18px 32px -22px rgba(49,29,3,.55);
+    transform:translateY(-5px);
+  }
+  [data-screen-label^="Our Work"] main a[href^="/our-work/"]:has(> figure):hover img { transform:scale(1.03); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-guest-check] [data-gc-step],
+  [data-guest-check] [data-gc-rule] { animation:none !important; clip-path:none !important; opacity:1 !important; transform:none !important; }
+}
+
+/* ==========================================================
    DESKTOP READING SIZE · 2026-09-30
    Web only (901px+): body copy about two steps larger. Phones keep
    their authored sizes. Rendered inline styles read

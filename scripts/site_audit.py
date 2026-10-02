@@ -101,8 +101,8 @@ if re.search(r'data-inquiry-kicker[^>]*>\s*A Seat At Our Table\s*<', services, r
 
 
 # Cache/version guardrails for shared site assets and DC imports.
-ASSET_REVISION = "20261002-01"
-SUPPORT_REVISION = "20261002-01"
+ASSET_REVISION = "20261002-02"
+SUPPORT_REVISION = "20261002-02"
 PUBLIC_ROUTES = (
     "404.html",
     "about/index.html",

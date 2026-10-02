@@ -1644,7 +1644,7 @@
       if (r.fetched) return;
       r.fetched = true;
       const url = COMPONENT_DIR + "/" + encodeURIComponent(name) + ".dc.html";
-      const requestUrl = url + "?v=20261002-01";
+      const requestUrl = url + "?v=20261002-02";
       const res = window.__resources;
       const pre = res ? (res[url] || res[requestUrl]) : void 0;
       const target = typeof pre === "string" && pre ? pre : requestUrl;
